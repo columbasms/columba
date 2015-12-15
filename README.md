@@ -1,2 +1,15 @@
-# columba
-Donate your wasted SMS for care!
+# Columba
+
+Are you full of free SMS that you don't use? Donate your wasted SMS for care! 
+
+Columba is a no-profit and open-source service for care agencies to send bunch of SMS simply and for free, thanks to smartphone users who do not use their free SMS (usually provided in bundle with mobile internet connection contracts).
+
+Columba is under development for "Google Technologies for Cloud and Web Development" university workshop.
+
+Concept validation
+==============
+- (Italian) Smartphone users willingness to SMS donation:  [Survey](https://docs.google.com/forms/d/1RPH7VZnYXCnO06nSSoUQWoPMnBNamJU_mpokyxE5JCk/viewform)
+
+Project Presentation
+==============
+- [Idea Presentation](https://drive.google.com/file/d/0Bz1hDzyYqxpxYm1lYzBIalZsdUU/view?usp=sharing)
