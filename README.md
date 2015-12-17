@@ -13,7 +13,3 @@ Concept validation
 Project Presentation
 ==============
 - [Idea Presentation](https://drive.google.com/file/d/0Bz1hDzyYqxpxYm1lYzBIalZsdUU/view?usp=sharing)
-
-Online survey
-==============
-- [Survey](https://docs.google.com/forms/d/1RPH7VZnYXCnO06nSSoUQWoPMnBNamJU_mpokyxE5JCk/edit?usp=sharing)
