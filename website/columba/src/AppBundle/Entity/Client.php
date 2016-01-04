@@ -26,11 +26,6 @@ class Client extends User {
     protected $lastName;
 
     /**
-     * @ORM\Column(name="phone_number", type="string", length=255)
-     */
-    protected $phoneNumber;
-
-    /**
      * @ORM\Column(name="messages_number", type="integer", options={"default" = 0})
      */
     protected $messagesNumber;
@@ -101,30 +96,6 @@ class Client extends User {
     public function getLastName()
     {
         return $this->lastName;
-    }
-
-    /**
-     * Set phoneNumber
-     *
-     * @param string $phoneNumber
-     *
-     * @return Client
-     */
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get phoneNumber
-     *
-     * @return string
-     */
-    public function getPhoneNumber()
-    {
-        return $this->phoneNumber;
     }
 
     /**

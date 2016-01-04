@@ -2,6 +2,8 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@RestBundle/Resources/config/services.yml" }
+    - { resource: "@UserBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -10,7 +12,7 @@ parameters:
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -79,3 +81,83 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: AppBundle\Entity\User
+    service:
+        user_manager: fos.user.manager
+    registration:
+        form:
+            type: AppBundle\Form\RegistrationFormType
+            validation_groups: [OrganizationRegistration]
+    profile:
+        form:
+            type: AppBundle\Form\ProfileFormType
+            validation_groups: [OrganizationProfile]
+
+fos_rest:
+    disable_csrf_role: ROLE_API
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            xml: true
+            json: true
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
+    routing_loader:
+        default_format: json
+
+fos_oauth_server:
+    db_driver: orm
+    client_class: AppBundle\Entity\OAuthClient
+    access_token_class: AppBundle\Entity\OAuthAccessToken
+    refresh_token_class: AppBundle\Entity\OAuthRefreshToken
+    auth_code_class: AppBundle\Entity\OAuthAuthCode
+    service:
+        user_provider: fos.user.manager
+    authorize:
+        form:
+            type: FOS\OAuthServerBundle\Form\Type\AuthorizeFormType
+
+assetic:
+    assets:
+        basic_css:
+            inputs:
+                - 'plugins/pace/pace-theme-flash.css'
+                - 'plugins/boostrapv3/css/bootstrap.css'
+                - 'plugins/font-awesome/css/font-awesome.css'
+                - 'plugins/jquery-scrollbar/jquery.scrollbar.css'
+                - 'css/pages-icons.css'
+                - 'css/pages.css'
+        basic_js:
+            inputs:
+                - 'plugins/pace/pace.min.js'
+                - 'plugins/jquery/jquery-1.11.1.min.js'
+                - 'plugins/modernizr.custom.js'
+                - 'plugins/jquery-ui/jquery-ui.min.js'
+                - 'plugins/boostrapv3/js/bootstrap.min.js'
+                - 'plugins/jquery/jquery-easy.js'
+                - 'plugins/jquery-scrollbar/jquery.scrollbar.min.js'
+                - 'js/pages.js'
+        login_js:
+            inputs:
+                - 'plugins/pace/pace.min.js'
+                - 'plugins/jquery/jquery-1.11.1.min.js'
+                - 'plugins/modernizr.custom.js'
+                - 'plugins/jquery-ui/jquery-ui.min.js'
+                - 'plugins/boostrapv3/js/bootstrap.min.js'
+                - 'plugins/jquery/jquery-easy.js'
+                - 'plugins/jquery-unveil/jquery.unveil.min.js'
+                - 'plugins/jquery-bez/jquery.bez.min.js'
+                - 'plugins/jquery-ios-list/jquery.ioslist.min.js'
+                - 'plugins/jquery-actual/jquery.actual.min.js'
+                - 'plugins/jquery-scrollbar/jquery.scrollbar.min.js'
+                - 'plugins/bootstrap-select2/select2.min.js'
+                - 'plugins/classie/classie.js'
+                - 'plugins/switchery/js/switchery.min.js'
+                - 'plugins/jquery-validation/js/jquery.validate.min.js'
+                - 'js/pages.min.js'

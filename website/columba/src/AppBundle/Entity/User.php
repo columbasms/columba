@@ -3,8 +3,8 @@
 
 namespace AppBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -24,6 +24,11 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @ORM\Column(name="phone_number", type="string", length=255, unique=true, nullable=true)
+     */
+    protected $phoneNumber;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
@@ -35,6 +40,30 @@ class User extends BaseUser
      */
     protected $updatedAt;
 
+
+    /**
+     * Set phoneNumber
+     *
+     * @param string $phoneNumber
+     *
+     * @return Client
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber
+     *
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
 
     /**
      * Set createdAt

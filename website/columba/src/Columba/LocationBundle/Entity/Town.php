@@ -2,7 +2,6 @@
 
 namespace Columba\LocationBundle\Entity;
 
-use Columba\LocationBundle\Entity\Province;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 

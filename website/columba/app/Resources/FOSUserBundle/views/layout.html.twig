@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta content="" name="description" />
+        <meta content="" name="author" />
+        {% block stylesheets %}
+
+            {% stylesheets '@basic_css' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+            <!--[if lte IE 9]>
+                <link rel="stylesheet" href="{{ asset('css/ie9.css') }}" />
+            <![endif]-->
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <script type="text/javascript">
+            window.onload = function()
+            {
+                // fix for windows 8
+                if (navigator.appVersion.indexOf("Windows NT 6.2") != -1)
+                    document.head.innerHTML += '{{ asset('css/windows.chrome.fix.css') }}'
+            }
+        </script>
+    </head>
+    <body class="fixed-header sidebar-visible menu-pin">
+
+    {% block fos_user_content %}{% endblock fos_user_content %}
+
+    {% block javascripts %}
+
+        {% javascripts '@login_js' %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script>
+            $(function() {
+                $('#form-register').validate()
+            })
+        </script>
+
+    {% endblock %}
+
+    </body>
+</html>

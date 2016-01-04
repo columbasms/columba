@@ -4,6 +4,21 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    user.listener:
+        class: AppBundle\EventListener\UserListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+    fos.user.listener:
+        class: AppBundle\EventListener\FOSUserListener
+        arguments: ['@router']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    fos.user.provider:
+        class: AppBundle\Security\EmailUserProvider
+        arguments: ['@fos.user.manager']
+
+    fos.user.manager:
+        class: AppBundle\Repository\UserManager
+        arguments: ['@security.encoder_factory', '@fos_user.util.username_canonicalizer', '@fos_user.util.email_canonicalizer', '@fos_user.entity_manager', '%fos_user.model.user.class%']

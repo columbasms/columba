@@ -37,6 +37,14 @@ class Organization extends User {
      */
     private $messages;
 
+    public function setEmail($email) {
+        $email = is_null($email) ? '' : $email;
+        parent::setEmail($email);
+        $this->setUsername($email);
+
+        return $this;
+    }
+
 
     public function __construct() {
         parent::__construct();
