@@ -1,3 +1,26 @@
 <resources>
-    <string name="app_name">ColumbaSMS</string>
+    <string name="app_name">Columba</string>
+
+    <string name="signin">sign in</string>
+    <string name="next">next</string>
+    <string name="create">create</string>
+
+    <string name="welcome">Welcome to Columba!</string>
+    <string name="welcome_app_description">Free and no-profit service that allow you to donate a branch of your wasted SMS for charity purpose</string>
+    <string name="welcome_terms_and_conditions"><u>terms and conditions</u></string>
+
+    <string name="account_info_hint_title">Create account</string>
+    <string name="account_info_hint_fullname">Full Name</string>
+    <string name="account_info_hint_city">City</string>
+    <string name="account_info_hint_postalCode">Postal Code</string>
+
+    <string name="messages_title">Select messages amount</string>
+    <string name="messages_hint_number">#Messages</string>
+    <string name="messages_question">How many monthly SMS messages do you want to donate?</string>
+
+
+    <string name="organizations_title">Select associations</string>
+    <string name="organizations_question">Select your favorite associations types</string>
+
+    <string name="dgts__login_digits_text">Sign in</string>
 </resources>
