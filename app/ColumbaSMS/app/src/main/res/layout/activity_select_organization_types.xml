@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appbar_height"
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/appbar_text_paddingLeft"
+            android:text="@string/organizations_title"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/large_text_size"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appbar_height"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/appbar_text_paddingLeft"
+                android:paddingRight="5dp"
+                android:text="Choose your favorite associations types"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/primary_text_size"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/selectAll_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                style="@android:style/Widget.Material.Button.Borderless"
+                android:background="@drawable/check_circle"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_associations"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </GridLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="end|center"
+        android:layout_weight="1">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_next_flat_associations"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginRight="15dp"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:text="@string/next"/>
+    </LinearLayout>
+
+</LinearLayout>
