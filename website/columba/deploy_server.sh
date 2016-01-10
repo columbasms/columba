@@ -20,5 +20,7 @@ echo "Dumping and installing assets..."
 php /var/www/columba/website/columba/bin/console assetic:dump --env=prod --no-debug
 php /var/www/columba/website/columba/bin/console assets:install --env=prod --no-debug
 
+sudo chmod -R 777 /var/www/columba/website/columba/var
+
 echo "Starting webserver..."
 sudo service apache2 start
