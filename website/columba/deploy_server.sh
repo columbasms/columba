@@ -2,6 +2,8 @@
 
 echo "---------------------- Symfony deploy script server ----------------------\n\n"
 
+cd /var/www/columba
+
 echo "Stopping webserver..."
 sudo service apache2 stop
 
@@ -9,7 +11,7 @@ echo "Fetching latest changes..."
 git pull origin site
 
 echo "Installing latest dependencies..."
-composer install --working-dir=/var/www/columba/website/columba --no-dev --optimize-autoloader
+composer install --working-dir=/var/www/columba/website/columba --optimize-autoloader
 
 echo "Clearing cache..."
 php /var/www/columba/website/columba/bin/console cache:clear --env=prod --no-debug
