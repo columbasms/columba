@@ -1,0 +1,24 @@
+services:
+    admin.topic:
+        class: AdminBundle\Admin\TopicAdmin
+        arguments: [~, AppBundle\Entity\Topic, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Topic }
+
+    admin.organization:
+        class: AdminBundle\Admin\OrganizationAdmin
+        arguments: [~, AppBundle\Entity\Organization, AdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Users", label: Organizations }
+
+    app.admin.client:
+        class: AdminBundle\Admin\ClientAdmin
+        arguments: [~, AppBundle\Entity\Client, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Client }
+
+    app.block.organization.recents:
+        class: AdminBundle\Block\RecentOrganizationsBlock
+        arguments: [app.block.organization.recents, "@templating", "@doctrine"]
+        tags:
+            - { name: sonata.block }

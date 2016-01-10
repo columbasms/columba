@@ -4,6 +4,7 @@ imports:
     - { resource: services.yml }
     - { resource: "@RestBundle/Resources/config/services.yml" }
     - { resource: "@UserBundle/Resources/config/services.yml" }
+    - { resource: "@AdminBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -28,7 +29,6 @@ framework:
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
-        # handler_id set to null will use default session handler from php.ini
         handler_id:  ~
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
     fragments:       ~
@@ -161,3 +161,23 @@ assetic:
                 - 'plugins/switchery/js/switchery.min.js'
                 - 'plugins/jquery-validation/js/jquery.validate.min.js'
                 - 'js/pages.min.js'
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+        sonata.block.service.text:
+        app.block.organization.recents: ~
+
+sonata_admin:
+    title: 'Columba'
+    dashboard:
+        blocks:
+            - { position: left, type: app.block.organization.recents }
+        groups:
+            menu_dashboard:
+                provider: 'AppBundle:Builder:dashboardMenu'
+            menu_users:
+                provider: 'AppBundle:Builder:usersMenu'
+                icon: '<i class="fa fa-users"></i>'

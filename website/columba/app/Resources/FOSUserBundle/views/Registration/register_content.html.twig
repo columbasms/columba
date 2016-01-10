@@ -1,14 +1,62 @@
-{% extends 'FOSUserBundle::layout.html.twig' %}
+{% extends "FOSUserBundle::main.html.twig" %}
+
 {% trans_default_domain 'FOSUserBundle' %}
+
+{% block h3 %}{{ 'registration.title'|trans }}{% endblock h3 %}
 
 {% block fos_user_content %}
 
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.plainPassword) }}
-<div>
-    <input type="submit" value="{{ 'registration.submit'|trans }}" />
-</div>
-{{ form_end(form) }}
+    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'p-t-15', 'role': 'form', 'id': 'form-register'}}) }}
 
-{% endblock %}
+        {% if not form.vars.valid %}
+            <div class="alert alert-danger">
+                {% if form.children.email.vars.errors %}
+                    {{ form_errors(form.email) }}
+                {% endif %}
+                {% if form.children.plainPassword.children.first.vars.errors %}
+                    {{ form_errors(form.plainPassword.first) }}
+                {% endif %}
+                {% if form.children.plainPassword.children.second.vars.errors %}
+                    {{ form_errors(form.plainPassword.second) }}
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group form-group-default">
+                    {{ form_label(form.email, 'form.email'|trans) }}
+                    {{ form_widget(form.email, { 'attr': { 'class': 'form-control' } }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group form-group-default">
+                    {{ form_label(form.plainPassword.first, 'form.password'|trans) }}
+                    {{ form_widget(form.plainPassword.first, { 'attr': { 'class': 'form-control' } }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group form-group-default">
+                    {{ form_label(form.plainPassword.second, 'form.password_confirmation'|trans) }}
+                    {{ form_widget(form.plainPassword.second, { 'attr': { 'class': 'form-control' } }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-t-10">
+            <div class="col-md-6">
+                <p>I agree to the <a href="#" class="text-info small">Terms</a> and <a href="#" class="text-info small">Privacy</a>.</p>
+            </div>
+        </div>
+
+        <button class="btn btn-primary btn-cons m-t-10" type="submit">{{ 'registration.submit'|trans }}</button>
+
+    {{ form_end(form) }}
+
+{% endblock fos_user_content %}

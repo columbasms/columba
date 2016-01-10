@@ -35,7 +35,7 @@ security:
             stateless:  true
 
     access_control:
-        - { path: "^/admin", roles: ROLE_ADMIN }
+        - { path: "^/admin", roles: ROLE_SONATA_ADMIN }
 
     encoders:
         FOS\UserBundle\Model\UserInterface: bcrypt
