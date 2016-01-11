@@ -1,0 +1,53 @@
+{% extends 'AdminBundle:Block:block_base.html.twig' %}
+
+{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+
+{% block block_title %} <i class="fa fa-users"></i> {{ settings.title }} {% endblock %}
+
+{% block block_body %}
+
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Account status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for organization in organizations %}
+                <tr>
+                    <td><a href="{{ url('admin_app_organization_show', { 'id': organization.getId() }) }}">{{ organization.getEmail() }}</a></td>
+                    {% if organization.isLocked() %}
+                        <td>
+                                <span class="label label-danger">Locked</span>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-default" href="{{ url('admin_app_organization_unlock', { 'id': organization.id, 'currentPath': currentPath }) }}">
+                                <i class="fa fa-unlock"></i>
+                                Unlock
+                            </a>
+                        </td>
+                    {% else %}
+                        <td>
+                            <span class="label label-success">Unlocked</span>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-default" href="{{ url('admin_app_organization_lock', { 'id': organization.id, 'currentPath': currentPath }) }}">
+                                <i class="fa fa-lock"></i>
+                                Lock
+                            </a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block block_footer %}
+
+        <a href="{{ url('admin_app_organization_list') }}" class="btn btn-primary btn-block"><i class="fa fa-list"></i> View all Organizations</a>
+
+{% endblock %}

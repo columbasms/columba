@@ -1,0 +1,183 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@RestBundle/Resources/config/services.yml" }
+    - { resource: "@UserBundle/Resources/config/services.yml" }
+    - { resource: "@AdminBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+
+framework:
+    #esi:             ~
+    translator:      { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        handler_id:  ~
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
+stof_doctrine_extensions:
+    default_locale: en
+    orm:
+        default:
+            timestampable: true
+            sluggable: true
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    service:
+        user_manager: fos.user.manager
+    registration:
+        form:
+            type: AppBundle\Form\RegistrationFormType
+            validation_groups: [OrganizationRegistration]
+    profile:
+        form:
+            type: AppBundle\Form\ProfileFormType
+            validation_groups: [OrganizationProfile]
+
+fos_rest:
+    disable_csrf_role: ROLE_API
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            xml: true
+            json: true
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
+    routing_loader:
+        default_format: json
+
+fos_oauth_server:
+    db_driver: orm
+    client_class: AppBundle\Entity\OAuthClient
+    access_token_class: AppBundle\Entity\OAuthAccessToken
+    refresh_token_class: AppBundle\Entity\OAuthRefreshToken
+    auth_code_class: AppBundle\Entity\OAuthAuthCode
+    service:
+        user_provider: fos.user.manager
+    authorize:
+        form:
+            type: FOS\OAuthServerBundle\Form\Type\AuthorizeFormType
+
+assetic:
+    assets:
+        basic_css:
+            inputs:
+                - 'plugins/pace/pace-theme-flash.css'
+                - 'plugins/boostrapv3/css/bootstrap.css'
+                - 'plugins/font-awesome/css/font-awesome.css'
+                - 'plugins/jquery-scrollbar/jquery.scrollbar.css'
+                - 'css/pages-icons.css'
+                - 'css/pages.css'
+        basic_js:
+            inputs:
+                - 'plugins/pace/pace.min.js'
+                - 'plugins/jquery/jquery-1.11.1.min.js'
+                - 'plugins/modernizr.custom.js'
+                - 'plugins/jquery-ui/jquery-ui.min.js'
+                - 'plugins/boostrapv3/js/bootstrap.min.js'
+                - 'plugins/jquery/jquery-easy.js'
+                - 'plugins/jquery-scrollbar/jquery.scrollbar.min.js'
+                - 'js/pages.js'
+        login_js:
+            inputs:
+                - 'plugins/pace/pace.min.js'
+                - 'plugins/jquery/jquery-1.11.1.min.js'
+                - 'plugins/modernizr.custom.js'
+                - 'plugins/jquery-ui/jquery-ui.min.js'
+                - 'plugins/boostrapv3/js/bootstrap.min.js'
+                - 'plugins/jquery/jquery-easy.js'
+                - 'plugins/jquery-unveil/jquery.unveil.min.js'
+                - 'plugins/jquery-bez/jquery.bez.min.js'
+                - 'plugins/jquery-ios-list/jquery.ioslist.min.js'
+                - 'plugins/jquery-actual/jquery.actual.min.js'
+                - 'plugins/jquery-scrollbar/jquery.scrollbar.min.js'
+                - 'plugins/bootstrap-select2/select2.min.js'
+                - 'plugins/classie/classie.js'
+                - 'plugins/switchery/js/switchery.min.js'
+                - 'plugins/jquery-validation/js/jquery.validate.min.js'
+                - 'js/pages.min.js'
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+        sonata.block.service.text:
+        app.block.organization.recents: ~
+
+sonata_admin:
+    title: 'Columba'
+    dashboard:
+        blocks:
+            - { position: left, type: app.block.organization.recents }
+        groups:
+            menu_dashboard:
+                provider: 'AppBundle:Builder:dashboardMenu'
+            menu_users:
+                provider: 'AppBundle:Builder:usersMenu'
+                icon: '<i class="fa fa-users"></i>'
