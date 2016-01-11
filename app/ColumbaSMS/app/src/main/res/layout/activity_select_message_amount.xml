@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appbar_height"
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/appbar_text_paddingLeft"
+            android:text="@string/messages_title"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/large_text_size"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appbar_height"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/appbar_text_paddingLeft"
+                android:paddingRight="5dp"
+                android:text="@string/messages_question"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/primary_text_size"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_edit_text_layout"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_edit_text_layout_small"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/editText_icon_width"
+                android:layout_height="@dimen/editText_icon_height"
+                android:background="@drawable/message"/>
+
+            <android.support.v7.widget.AppCompatEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/editText_paddingBottom"
+                android:layout_marginLeft="@dimen/editText_marginLeft"
+                android:layout_marginRight="@dimen/editText_marginRight"
+                android:hint="#messages"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_edit_text_layout"
+            android:layout_gravity="end">
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_next"
+                android:text="@string/next"
+                android:textColor="@color/colorText"
+                android:background="@color/colorPrimary"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -8,13 +8,44 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:name=".CreateAccountActivity" >
+        </activity>
+
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:name=".SelectionMexAmountActivity" >
+        </activity>
+
+
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:name=".SelectionOrgTypesActivity" >
+        </activity>
+
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:name=".MainActivity" >
+        </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="83542be45fe846536111fce705ca7bd4dc2e38dd" />
+
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
