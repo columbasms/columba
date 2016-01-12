@@ -88,13 +88,6 @@ public class LoginActivity extends AppCompatActivity{
 
             @Override
             public void success(DigitsSession session, String phoneNumber) {
-                // TODO: associate the session userID with your user model
-
-                /* Debug info
-                Toast.makeText(getApplicationContext(), "Authentication successful for "
-                        + phoneNumber, Toast.LENGTH_LONG).show();
-                */
-
 
                 //BACKEND COMMUNICATION
                 TwitterAuthConfig authConfig = TwitterCore.getInstance().getAuthConfig();
@@ -108,7 +101,6 @@ public class LoginActivity extends AppCompatActivity{
                 for (Map.Entry<String, String> entry : authHeaders.entrySet()) {
                     nameValuePair.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
                 }
-
 
 
                 //PERFORM HTTP POST
@@ -133,8 +125,7 @@ public class LoginActivity extends AppCompatActivity{
                     StringBuilder sb = new StringBuilder();
                     try {
                         //System.out.println("###############HTTP POST RESPONSE LENGHT: " + response.getEntity().getContentLength());
-                        BufferedReader reader =
-                                new BufferedReader(new InputStreamReader(response.getEntity().getContent()), 65728);
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()), 65728);
                         String line = null;
 
                         while ((line = reader.readLine()) != null) {
@@ -153,7 +144,6 @@ public class LoginActivity extends AppCompatActivity{
                     // Log exception
                     e.printStackTrace();
                 }
-
 
                 //Change activity after successful authentication
                 LoginActivity.this.finish();
