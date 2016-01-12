@@ -34,6 +34,7 @@ class AppKernel extends Kernel
             new Sonata\DatagridBundle\SonataDatagridBundle(),
             new AppBundle\AppBundle(),
             new AdminBundle\AdminBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

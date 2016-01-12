@@ -110,6 +110,7 @@ fos_rest:
         default_engine: twig
     routing_loader:
         default_format: json
+        include_format: false
 
 fos_oauth_server:
     db_driver: orm
@@ -181,3 +182,5 @@ sonata_admin:
             menu_users:
                 provider: 'AppBundle:Builder:usersMenu'
                 icon: '<i class="fa fa-users"></i>'
+
+nelmio_api_doc: ~

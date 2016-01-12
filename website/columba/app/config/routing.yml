@@ -32,3 +32,7 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
