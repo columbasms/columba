@@ -9,7 +9,7 @@
     <!-- General text size -->
     <dimen name="primary_text_size">16sp</dimen>
     <dimen name="secondary_text_size">14sp</dimen>
-    <dimen name="large_text_size">24sp</dimen>
+    <dimen name="large_text_size">22sp</dimen>
 
     <!-- General text padding -->
     <dimen name="primary_text_padding">10dp</dimen>

@@ -24,7 +24,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/appbar_height"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        >
+
+        <TextView
+            android:paddingLeft="@dimen/appbar_text_paddingLeft"
+            android:paddingRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account_info_subtitle"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/primary_text_size"/>
 
     </LinearLayout>
 
@@ -98,30 +108,6 @@
                 android:layout_marginLeft="@dimen/editText_marginLeft"
                 android:layout_marginRight="@dimen/editText_marginRight"
                 android:hint="@string/account_info_hint_city"/>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_margin="@dimen/margin_edit_text_layout_small"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="@dimen/editText_icon_width"
-                android:layout_height="@dimen/editText_icon_height"
-                android:background="@drawable/local_post_office"/>
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/postal_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/editText_paddingBottom"
-                android:layout_marginLeft="@dimen/editText_marginLeft"
-                android:layout_marginRight="@dimen/editText_marginRight"
-                android:hint="@string/account_info_hint_postalCode"/>
 
         </LinearLayout>
 

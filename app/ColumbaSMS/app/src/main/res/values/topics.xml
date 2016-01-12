@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="topics_array">
+        <item>User Level</item>
+        <item>#Messages</item>
+        <item>News</item>
+    </string-array>
+</resources>

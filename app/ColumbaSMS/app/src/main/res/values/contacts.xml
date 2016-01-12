@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="contacts_array">
+        <item>Rachel Radcliff</item>
+        <item>Paolo Fornari</item>
+        <item>Robert Marley</item>
+        <item>Carol Lancaster</item>
+        <item>Hugo Cabret</item>
+        <item>Mario Mario</item>
+        <item>Luigi Mario</item>
+        <item>Rachel Radcliff</item>
+        <item>Paolo Fornari</item>
+        <item>Robert Marley</item>
+        <item>Carol Lancaster</item>
+        <item>Hugo Cabret</item>
+        <item>Mario Mario</item>
+        <item>Luigi Mario</item>
+    </string-array>
+</resources>

@@ -9,7 +9,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -29,10 +28,10 @@ public class SelectionOrgTypesActivity extends AppCompatActivity implements View
         Button selectAll_button = (Button)findViewById(R.id.selectAll_button);
         selectAll_button.setOnClickListener(this);
 
-        /*
-        Button next_button = (Button)findViewById(R.id.next_button);
+
+        Button next_button = (Button)findViewById(R.id.button_next_flat_associations);
         next_button.setOnClickListener(this);
-        */
+
 
         Resources res = getResources();
         String[] associations_types = res.getStringArray(R.array.associations_types_array);
@@ -61,6 +60,10 @@ public class SelectionOrgTypesActivity extends AppCompatActivity implements View
     public void onClick(View v) {
         if(v.getId()==R.id.selectAll_button){
             ((Button)v).setBackgroundResource(R.drawable.check_circle_deselected);
+        }else if(v.getId()==R.id.button_next_flat_associations){
+            SelectionOrgTypesActivity.this.finish();
+            Intent intent = new Intent(getApplicationContext(), SelectionContactsActivity.class);
+            startActivity(intent);
         }
 
     }
