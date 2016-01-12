@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.columbasms.columbasms.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorDivider">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/Toolbar_Theme"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:layout_marginTop="56dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/main_message"
+        android:gravity="center"
+        android:textSize="@dimen/large_text_size"
+        android:textColor="@color/colorText"
+        />
 
+    <ImageView
+        android:id="@+id/imagef"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="135dp"
+        android:background="@drawable/colomba_icns" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="215dp"
+        android:layout_marginStart="115dp"
+        android:text="@string/joined_msg"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="265dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_topics"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
+
+

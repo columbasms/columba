@@ -44,7 +44,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         countries.setAdapter(adapter);
 
         city = (EditText) findViewById(R.id.city);
-        postal_code = (EditText) findViewById(R.id.postal_code);
+        //postal_code = (EditText) findViewById(R.id.postal_code);
         warningtext = (TextView) findViewById(R.id.warningtext);
     }
 
@@ -58,7 +58,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     }
 
     private boolean checkField(){
-        if( !full_name.getText().toString().equals("") && !city.getText().toString().equals("") && !postal_code.getText().toString().equals("") )
+        if( !full_name.getText().toString().equals("") && !city.getText().toString().equals("") )
                 return true;
         else{
             warningtext.setText("Please set all fields!");

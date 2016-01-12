@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/appbar_text_paddingLeft"
-                android:paddingRight="5dp"
+                android:paddingRight="16dp"
                 android:text="@string/messages_question"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/primary_text_size"/>
