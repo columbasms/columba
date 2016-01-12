@@ -11,6 +11,7 @@ use FOS\RestBundle\Request\ParamFetcher;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller implements ClassResourceInterface {
 //class UserController extends FOSRestController {
@@ -54,10 +55,16 @@ class UserController extends Controller implements ClassResourceInterface {
      * @return string
      * @ApiDoc()
      */
-    public function postRegisterAndroidUserAction(ParamFetcher $paramFetcher)
+    public function postRegisterAndroidUserAction(ParamFetcher $paramFetcher, Request $request)
     {
-        $provider = $paramFetcher->get('provider');
-        $auth = $paramFetcher->get('auth');
+
+//        though HTTP Parmas
+//        $provider = $paramFetcher->get('provider');
+//        $auth = $paramFetcher->get('auth');
+
+//        through HTTP Headers
+        $provider = $request->headers->get('X-Auth-Service-Provider');
+        $auth = $request->headers->get('X-Verify-Credentials-Authorization');
 
         return json_encode($this->twitterVerifyAuth($provider, $auth));
 //        capture oauthEcho request and check it trough twitterVerifyAuth()
