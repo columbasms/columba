@@ -12,7 +12,23 @@
 namespace FOS\OAuthServerBundle\Entity;
 
 use FOS\OAuthServerBundle\Model\Client as BaseClient;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Table("oauth_clients")
+ * @ORM\Entity
+ */
 class Client extends BaseClient
 {
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 }
