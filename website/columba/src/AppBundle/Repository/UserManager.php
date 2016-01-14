@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Organization;
+use AppBundle\Entity\Client;
 use FOS\UserBundle\Model\UserInterface;
 
 class UserManager extends \FOS\UserBundle\Doctrine\UserManager {
@@ -31,4 +32,7 @@ class UserManager extends \FOS\UserBundle\Doctrine\UserManager {
         return new Organization();
     }
 
+    public function createClient(){
+        return new Client();
+    }
 }
