@@ -50,6 +50,7 @@
                 android:id="@+id/selectAll_button"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:tag="1"
                 style="@android:style/Widget.Material.Button.Borderless"
                 android:background="@drawable/check_circle"/>
 

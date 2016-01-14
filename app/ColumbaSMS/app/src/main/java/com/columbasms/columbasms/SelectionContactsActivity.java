@@ -1,9 +1,11 @@
 package com.columbasms.columbasms;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,7 +14,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.columbasms.columbasms.adapter.ContactsAdapter;
+import com.columbasms.columbasms.model.AssociationType;
+import com.columbasms.columbasms.model.Contact;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -20,13 +26,16 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Federico on 10/01/16.
+ * Created by Federico Fanara, edited by Matteo Brienza on 10/01/16.
  */
 public class SelectionContactsActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private ContactsAdapter adapter;
+    private List<Contact> contactList;
+    /*
     ArrayList<JSONObject> contacts = new ArrayList<>();
 
-    /*public void addContacts(){
+    public void addContacts(){
 
         //to store name-number pair
         JSONObject obj = new JSONObject();
@@ -62,9 +71,10 @@ public class SelectionContactsActivity extends AppCompatActivity implements View
 
         Resources res = getResources();
         String[] contacts_names = res.getStringArray(R.array.contacts_array);
-
-
-        List<String> contacts_list = Arrays.asList(contacts_names);
+        contactList = new ArrayList<Contact>();
+        for (int i = 0; i < contacts_names.length; i++) {
+            contactList.add(new Contact(contacts_names[i],"33312345678",true));
+        }
 
         // Lookup the recyclerview in activity layout
         RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rv_contacts);
@@ -72,9 +82,8 @@ public class SelectionContactsActivity extends AppCompatActivity implements View
         // Set layout manager to position the items
         rvContacts.setLayoutManager(new GridLayoutManager(this,1));
 
-
         // Create adapter passing in the sample user data
-        ContactsAdapter adapter = new ContactsAdapter(contacts_list);
+        adapter = new ContactsAdapter(contactList);
 
         // Attach the adapter to the recyclerview to populate items
         rvContacts.setAdapter(adapter);
@@ -87,12 +96,52 @@ public class SelectionContactsActivity extends AppCompatActivity implements View
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.selectAll_button){
-            ((Button)v).setBackgroundResource(R.drawable.check_circle_deselected);
+            Button b = (Button)v;
+            Contact temp;
+            if(b.getTag().equals("1")){
+                b.setBackgroundResource(R.drawable.check_circle_deselected);
+                b.setTag("0");
+                for (int i = 0; i <contactList.size() ; i++) {
+                    temp = contactList.get(i);
+                    contactList.set(i,new Contact(temp.getContact_name(),temp.getContact_number(),false));
+                }
+            }else{
+                b.setBackgroundResource(R.drawable.check_circle);
+                b.setTag("1");
+                for (int i = 0; i <contactList.size() ; i++) {
+                    temp = contactList.get(i);
+                    contactList.set(i,new Contact(temp.getContact_name(),temp.getContact_number(),true));
+                }
+            }
+            adapter.notifyDataSetChanged();
         }
         if(v.getId()==R.id.button_done_flat_contacts){
-        SelectionContactsActivity.this.finish();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+
+                //store selected contacts
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                JSONArray jsonArray = new JSONArray();
+                String jsonObjName = "contacts";
+                List<Contact> contacts_withSelection = adapter.getContacts();
+                Contact temp;
+                for (int i = 0; i < adapter.getItemCount(); i++) {
+                    temp = contacts_withSelection.get(i);
+                    if(temp.isSelected())jsonArray.put(temp.getContact_name());
+                }
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(jsonObjName, jsonArray.toString());
+
+                JSONObject jsonObj = new JSONObject();
+                try {
+                    jsonObj.put(jsonObjName, jsonArray);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(jsonObj.toString());
+                editor.commit();
+
+                SelectionContactsActivity.this.finish();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
         }
 
     }

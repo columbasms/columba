@@ -1,7 +1,9 @@
 package com.columbasms.columbasms;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -51,9 +53,20 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         if(checkField() == true) {
+
+                //SAVE NAME, COUNTRIES, CITY AND POSTAL CODE
+                SharedPreferences account_information = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor_account_information = account_information.edit();
+                editor_account_information.putString("name", full_name.getText().toString());
+                editor_account_information.putString("countries", countries.getSelectedItem().toString());
+                editor_account_information.putString("city", city.getText().toString());
+                //editor_account_information.putString("postalCode",postal_code.getText().toString() );
+                editor_account_information.commit();
+
                 CreateAccountActivity.this.finish();
                 Intent intent = new Intent(getApplicationContext(), SelectionMexAmountActivity.class);
                 startActivity(intent);
+
         }
     }
 

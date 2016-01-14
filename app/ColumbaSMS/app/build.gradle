@@ -51,4 +51,5 @@ dependencies {
     compile('com.digits.sdk.android:digits:1.9.2@aar') {
         transitive = true;
     }
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

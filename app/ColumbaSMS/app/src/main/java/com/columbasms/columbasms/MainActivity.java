@@ -1,6 +1,8 @@
 package com.columbasms.columbasms;
 
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +13,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.columbasms.columbasms.adapter.MainAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView rvTopics = (RecyclerView) findViewById(R.id.rv_topics);
 
         // Set layout manager to position the items
-        rvTopics.setLayoutManager(new GridLayoutManager(this,1));
+        rvTopics.setLayoutManager(new GridLayoutManager(this, 1));
 
 
         // Create adapter passing in the sample user data
@@ -42,6 +48,22 @@ public class MainActivity extends AppCompatActivity {
         // Attach the adapter to the recyclerview to populate items
         rvTopics.setAdapter(adapter);
 
+        SharedPreferences account_information = PreferenceManager.getDefaultSharedPreferences(this);
+        JSONObject jsonObj = new JSONObject();
+        try {
+                jsonObj.put("name",account_information.getString("name",null) );
+                jsonObj.put("countries",account_information.getString("countries",null) );
+                jsonObj.put("city",account_information.getString("city",null) );
+                jsonObj.put("messageAmount",account_information.getString("messageAmount", null));
+                JSONArray fat = new JSONArray(account_information.getString("favourite_associations_types",""));
+                jsonObj.put("favourite_association_types",fat);
+                JSONArray c = new JSONArray(account_information.getString("contacts","") );
+                jsonObj.put("contacts",c);
+
+        } catch (JSONException e) {
+                e.printStackTrace();
+        }
+        System.out.println(jsonObj.toString().replaceAll("\\\\", ""));
 
     }
 
