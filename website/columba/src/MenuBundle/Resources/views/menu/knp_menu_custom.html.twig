@@ -1,0 +1,30 @@
+{% extends 'MenuBundle:Menu:knp_menu.html.twig' %}
+
+{% block linkElement %}
+    {% import 'MenuBundle:Menu:knp_menu.html.twig' as knp_menu %}
+
+    <a href="{{ item.uri }}"{{ knp_menu.attributes(item.linkAttributes) }}>
+        <span class="title" style="width: auto;">{{ block('label') }}</span>
+        {% if item.hasChildren and options.depth is not same as(0) %}
+            <span class="arrow"></span>
+        {% endif %}
+    </a>
+    <span class="{{ matcher.isCurrent(item) ? 'bg-success' : '' }} icon-thumbnail">
+        <i class="{{ item.attribute('icon') }}"></i>
+    </span>
+{% endblock %}
+
+{% block spanElement %}
+    {% import 'MenuBundle:Menu:knp_menu.html.twig' as knp_menu %}
+
+    <a href="javascript:;"{{ knp_menu.attributes(item.linkAttributes) }}>
+        <span class="title">{{ block('label') }}</span>
+        {% if item.hasChildren and options.depth is not same as(0) %}
+            <span class="arrow"></span>
+        {% endif %}
+    </a>
+    <span class="{{ matcher.isCurrent(item) ? 'bg-success' : '' }} icon-thumbnail">
+        <i class="{{ item.attribute('icon') }}"></i>
+    </span>
+
+{% endblock %}

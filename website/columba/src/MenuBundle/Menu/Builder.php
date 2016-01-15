@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Menu;
+namespace MenuBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -24,6 +24,31 @@ class Builder implements ContainerAwareInterface {
 
         $menu->addChild('Organizations', array('route' => 'admin_app_organization_list'));
         $menu->addChild('Clients', array('route' => 'admin_app_client_list'));
+
+        return $menu;
+
+    }
+
+    public function mainMenu(FactoryInterface $factory, array $options) {
+
+        $menu = $factory->createItem('Home', array(
+            'childrenAttributes' => array(
+                'class' => 'menu-items'
+            )
+        ));
+
+        $menu->addChild('Home', array(
+            'route' => 'dashboard',
+            'label' => 'Dashboard',
+            'childrenAttributes' => array(
+                'class' => 'sub-menu'
+            )
+        ))->setAttribute('icon', 'pg-home');
+
+        $menu->addChild('NewCampaign', array(
+            'route' => 'app_campaign_new',
+            'label' => 'New campaign'
+        ))->setAttribute('icon', 'pg-plus');
 
         return $menu;
 

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b906b8efbc63c2dd430cea419b883423",
-    "content-hash": "278c5e72c78262207ceeb6427efef950",
+    "hash": "ccc2fbf181dce5c2cf320ca587428f53",
+    "content-hash": "ace00e672cc597bdce3c2d27d37c631e",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -436,16 +436,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.5.3",
+            "version": "v2.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "2fbcea96eae34a53183377cdbb0b9bec33974648"
+                "reference": "abbdfd1cff43a7b99d027af3be709bc8fc7d4769"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/2fbcea96eae34a53183377cdbb0b9bec33974648",
-                "reference": "2fbcea96eae34a53183377cdbb0b9bec33974648",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/abbdfd1cff43a7b99d027af3be709bc8fc7d4769",
+                "reference": "abbdfd1cff43a7b99d027af3be709bc8fc7d4769",
                 "shasum": ""
             },
             "require": {
@@ -503,7 +503,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2015-12-25 16:28:24"
+            "time": "2016-01-05 22:11:12"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -923,22 +923,26 @@
             "time": "2015-12-25 15:50:05"
         },
         {
-            "name": "endroid/twitter",
-            "version": "1.1.7",
+            "name": "endroid/gcm",
+            "version": "1.2.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/endroid/Twitter.git",
-                "reference": "3273567736a76896fca33a019f439183c60d5f43"
+                "url": "https://github.com/endroid/Gcm.git",
+                "reference": "c40973cfdd09209922c468e55c4828de525f3f54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/Twitter/zipball/3273567736a76896fca33a019f439183c60d5f43",
-                "reference": "3273567736a76896fca33a019f439183c60d5f43",
+                "url": "https://api.github.com/repos/endroid/Gcm/zipball/c40973cfdd09209922c468e55c4828de525f3f54",
+                "reference": "c40973cfdd09209922c468e55c4828de525f3f54",
                 "shasum": ""
             },
             "require": {
-                "kriswallsmith/buzz": "^0.6",
+                "kriswallsmith/buzz": "~0.3",
                 "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "~1.0",
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "extra": {
@@ -948,7 +952,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Endroid\\Twitter\\": [
+                    "Endroid\\Gcm\\": [
                         "src/",
                         "tests/"
                     ]
@@ -965,30 +969,36 @@
                     "homepage": "http://endroid.nl/"
                 }
             ],
-            "description": "Endroid Twitter",
-            "homepage": "https://github.com/endroid/Twitter",
+            "description": "Endroid Google Cloud Messaging",
+            "homepage": "https://github.com/endroid/Gcm",
             "keywords": [
+                "cloud",
                 "endroid",
-                "twitter"
+                "gcm",
+                "google",
+                "messaging",
+                "notification",
+                "notifications",
+                "push"
             ],
-            "time": "2016-01-01 19:39:08"
+            "time": "2016-01-01 19:34:48"
         },
         {
-            "name": "endroid/twitter-bundle",
-            "version": "1.1.7",
+            "name": "endroid/gcm-bundle",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/endroid/EndroidTwitterBundle.git",
-                "reference": "927e61edfdfda97ac688803665f0c6c382ed4828"
+                "url": "https://github.com/endroid/EndroidGcmBundle.git",
+                "reference": "0a25ba52683c7bcc3ff79ea089f9aabf892aef80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/EndroidTwitterBundle/zipball/927e61edfdfda97ac688803665f0c6c382ed4828",
-                "reference": "927e61edfdfda97ac688803665f0c6c382ed4828",
+                "url": "https://api.github.com/repos/endroid/EndroidGcmBundle/zipball/0a25ba52683c7bcc3ff79ea089f9aabf892aef80",
+                "reference": "0a25ba52683c7bcc3ff79ea089f9aabf892aef80",
                 "shasum": ""
             },
             "require": {
-                "endroid/twitter": "~1.0",
+                "endroid/gcm": "^1.0",
                 "php": ">=5.3.0"
             },
             "type": "library",
@@ -999,7 +1009,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Endroid\\Bundle\\TwitterBundle\\": [
+                    "Endroid\\Bundle\\GcmBundle\\": [
                         "src/",
                         "tests/"
                     ]
@@ -1016,15 +1026,21 @@
                     "homepage": "http://endroid.nl/"
                 }
             ],
-            "description": "Endroid Twitter Bundle for Symfony",
-            "homepage": "https://github.com/endroid/EndroidTwitterBundle",
+            "description": "Endroid Google Cloud Messaging Bundle for Symfony",
+            "homepage": "https://github.com/endroid/EndroidGcmBundle",
             "keywords": [
                 "bundle",
+                "cloud",
                 "endroid",
-                "symfony",
-                "twitter"
+                "gcm",
+                "google",
+                "messaging",
+                "notification",
+                "notifications",
+                "push",
+                "symfony"
             ],
-            "time": "2016-01-01 19:40:29"
+            "time": "2016-01-05 20:17:46"
         },
         {
             "name": "friendsofsymfony/oauth2-php",
@@ -1647,16 +1663,16 @@
         },
         {
             "name": "knplabs/knp-menu",
-            "version": "v2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenu.git",
-                "reference": "c6ad49933babd06a27b2f962a3469601ec9038b8"
+                "reference": "9917b999a3c3d3901386d60c4888b07679291031"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/c6ad49933babd06a27b2f962a3469601ec9038b8",
-                "reference": "c6ad49933babd06a27b2f962a3469601ec9038b8",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/9917b999a3c3d3901386d60c4888b07679291031",
+                "reference": "9917b999a3c3d3901386d60c4888b07679291031",
                 "shasum": ""
             },
             "require": {
@@ -1665,7 +1681,8 @@
             "require-dev": {
                 "pimple/pimple": "~1.0",
                 "silex/silex": "~1.0",
-                "symfony/phpunit-bridge": "~2.7",
+                "symfony/phpunit-bridge": "~2.7|~3.0",
+                "symfony/routing": "~2.3|~3.0",
                 "twig/twig": "~1.16|~2.0"
             },
             "suggest": {
@@ -1708,7 +1725,7 @@
                 "menu",
                 "tree"
             ],
-            "time": "2015-09-20 08:23:47"
+            "time": "2016-01-08 15:42:54"
         },
         {
             "name": "knplabs/knp-menu-bundle",
@@ -1846,20 +1863,23 @@
         },
         {
             "name": "kriswallsmith/buzz",
-            "version": "v0.6",
+            "version": "v0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/Buzz.git",
-                "reference": "4b0c0865f7db5a744c9bec64f154536cab7dfcf7"
+                "reference": "d4041666c3ffb379af02a92dabe81c904b35fab8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/4b0c0865f7db5a744c9bec64f154536cab7dfcf7",
-                "reference": "4b0c0865f7db5a744c9bec64f154536cab7dfcf7",
+                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/d4041666c3ffb379af02a92dabe81c904b35fab8",
+                "reference": "d4041666c3ffb379af02a92dabe81c904b35fab8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
             },
             "suggest": {
                 "ext-curl": "*"
@@ -1887,7 +1907,7 @@
                 "curl",
                 "http client"
             ],
-            "time": "2012-05-25 13:19:16"
+            "time": "2015-06-25 17:26:56"
         },
         {
             "name": "michelf/php-markdown",
@@ -2103,16 +2123,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47"
+                "reference": "dd8998b7c846f6909f4e7a5f67fabebfc412a4f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/d762ee5b099a29044603cd4649851e81aa66cb47",
-                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/dd8998b7c846f6909f4e7a5f67fabebfc412a4f7",
+                "reference": "dd8998b7c846f6909f4e7a5f67fabebfc412a4f7",
                 "shasum": ""
             },
             "require": {
@@ -2147,7 +2167,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2015-12-10 14:48:13"
+            "time": "2016-01-06 13:31:20"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -3801,16 +3821,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.23.1",
+            "version": "v1.23.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "d9b6333ae8dd2c8e3fd256e127548def0bc614c6"
+                "reference": "ae53fc2c312fdee63773b75cb570304f85388b08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/d9b6333ae8dd2c8e3fd256e127548def0bc614c6",
-                "reference": "d9b6333ae8dd2c8e3fd256e127548def0bc614c6",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ae53fc2c312fdee63773b75cb570304f85388b08",
+                "reference": "ae53fc2c312fdee63773b75cb570304f85388b08",
                 "shasum": ""
             },
             "require": {
@@ -3858,7 +3878,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-11-05 12:49:06"
+            "time": "2016-01-11 14:02:19"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -4069,7 +4089,8 @@
         "sonata-project/doctrine-orm-admin-bundle": 20,
         "symfony/security-acl": 20,
         "sonata-project/easy-extends-bundle": 20,
-        "sonata-project/datagrid-bundle": 20
+        "sonata-project/datagrid-bundle": 20,
+        "endroid/gcm-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

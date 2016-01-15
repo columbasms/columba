@@ -38,7 +38,8 @@
         "symfony/security-acl": "dev-master",
         "sonata-project/easy-extends-bundle": "dev-master",
         "sonata-project/datagrid-bundle": "dev-master",
-        "nelmio/api-doc-bundle": "2.11.2"
+        "nelmio/api-doc-bundle": "2.11.2",
+        "endroid/gcm-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

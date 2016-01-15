@@ -15,7 +15,6 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-
         oauth_token:
             pattern:    ^/oauth/v2/token
             security:   false
@@ -41,6 +40,8 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
+                always_use_default_target_path: false
+                default_target_path:            /dashboard
             logout: true
             anonymous: true
 
@@ -49,4 +50,5 @@ security:
         - { path: "^/admin", roles: ROLE_SONATA_ADMIN }
 #        - { path: "^/api", roles: [ ROLE_API ], requires_channel: https } ~
 #        - { path: "^/api", roles: ROLE_API }
+        - { path: "^/dashboard", roles: ROLE_USER }
 

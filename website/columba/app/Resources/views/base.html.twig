@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Columba{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-touch-fullscreen" content="yes">
@@ -36,7 +36,17 @@
 
         {% endblock %}
 
-        {% block body %}{% endblock %}
+        <div class="page-container">
+            {% block header %} {{ include('header.html.twig') }} {% endblock %}
+
+            <div class="page-content-wrapper ">
+                <div class="content sm-gutter">
+                    <div class="container-fluid padding-25 sm-padding-10">
+                        {% block body %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
         {% block javascripts %}
             {% javascripts '@basic_js' %}
                 <script src="{{ asset_url }}"></script>

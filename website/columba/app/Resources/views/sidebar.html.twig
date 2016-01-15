@@ -16,7 +16,10 @@
     <!-- END SIDEBAR HEADER -->
     <!-- BEGIN SIDEBAR MENU -->
     <div class="sidebar-menu">
-        <ul class="menu-items">
+
+        {{ knp_menu_render('MenuBundle:Builder:mainMenu', { 'template': 'MenuBundle:Menu:knp_menu_custom.html.twig' }) }}
+
+        <!--<ul class="menu-items">
             <li class="m-t-30">
                 <a href="#" class="detailed">
                     <span class="title">Page 1</span>
@@ -51,7 +54,7 @@
                     </li>
                 </ul>
             </li>
-        </ul>
+        </ul>-->
         <div class="clearfix"></div>
     </div>
     <!-- END SIDEBAR MENU -->

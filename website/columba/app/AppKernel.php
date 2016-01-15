@@ -35,6 +35,8 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new AdminBundle\AdminBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new MenuBundle\MenuBundle(),
+            new Endroid\Bundle\GcmBundle\EndroidGcmBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
