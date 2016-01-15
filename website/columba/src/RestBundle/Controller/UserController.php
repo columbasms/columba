@@ -96,7 +96,7 @@ class UserController extends Controller implements ClassResourceInterface
 
 //        return the oauth2 tokens for the user to access the API
 //        return $idAndPass;
-        return json_encode(['client_id' => $idAndPass[0], 'client_secret' => $idAndPass[1], 'user_name' => $idAndPass[2], 'user_psw' => $idAndPass[3]]);
+        return json_encode(['client_id' => $idAndPass[0], 'client_secret' => $idAndPass[1], 'username' => $idAndPass[2], 'password' => $idAndPass[3]]);
     }
 
     /**
