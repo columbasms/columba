@@ -55,6 +55,8 @@ class UserController extends Controller implements ClassResourceInterface
     }
 
     /**
+     * Register an android user into the system
+     *
      * @Rest\Post("/register")
      * @Rest\View()
      *
@@ -152,7 +154,7 @@ class UserController extends Controller implements ClassResourceInterface
 
         $newUser = $userManager->createClient();
         $newUser->setUsername($digitsCredential['id_str']);
-        $newUser->setEmail('sms.'.$digitsCredential['id_str'].'@columba.com');
+        $newUser->setEmail('sms.' . $digitsCredential['id_str'] . '@columba.com');
         $password = substr($tokenGenerator->generateToken(), 0, 25);
         $newUser->setPlainPassword($password);
         $newUser->setEnabled(true);
@@ -185,6 +187,87 @@ class UserController extends Controller implements ClassResourceInterface
         $clientManager->updateClient($client);
         return ['client_id' => $client->getPublicId(), 'client_secret' => $client->getSecret()];
 
+    }
+
+    /**
+     * Retrieve all the user info
+     *
+     * @Rest\Get("/user/{username}")
+     * @Rest\View()
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
+     * @ApiDoc()
+     */
+    public function getUserAction(Request $request)
+    {
+//        $userManager = $this->get('fos_user.user_manager');
+//        $accessTokenManager= $this->get('fos_oauth_server.access_token_manager');
+
+        $context = $this->get('security.token_storage');
+        $token = $context->getToken();
+        if ($token->getUsername() != $request->get('username')) {
+            return 'you are not allowed to access other user information fellon!';
+        }
+        return $token->getUser();
+    }
+
+    /**
+     * Retrieve user's phone number
+     *
+     * @Rest\Get("/user/{username}/phone")
+     * @Rest\View()
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
+     * @ApiDoc()
+     */
+    public function getUserPhoneNumberAction(Request $request)
+    {
+//        $userManager = $this->get('fos_user.user_manager');
+//        $accessTokenManager= $this->get('fos_oauth_server.access_token_manager');
+
+        $context = $this->get('security.token_storage');
+        $token = $context->getToken();
+        if ($token->getUsername() != $request->get('username')) {
+            return 'you are not allowed to access other user information fellon!';
+        }
+        return $token->getUser()->getPhoneNumber();
+    }
+
+    /**
+     * Update user's phone number
+     *
+     * @Rest\Put("/user/{username}/phone/{newPhoneNumber}")
+     * @Rest\View()
+     *
+     * @param Request $request
+     *
+     * @return String
+     *
+     * @ApiDoc()
+     */
+    public function putUserPhoneNumberAction(Request $request)
+    {
+//        $userManager = $this->get('fos_user.user_manager');
+//        $accessTokenManager= $this->get('fos_oauth_server.access_token_manager');
+
+        $context = $this->get('security.token_storage');
+        $token = $context->getToken();
+        if ($token->getUsername() != $request->get('username')) {
+            return 'you are not allowed to access other user information fellon!';
+        }
+        $user = $token->getUser();
+        $user->setPhoneNumber($request->get('newPhoneNumber'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+        return $user->getPhoneNumber();
     }
 
 }
