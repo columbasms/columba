@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ecc6655104870cc8d40fee7eaa3de05e",
-    "content-hash": "e64c25bc868bce8d067be5b9b3e2b8f0",
+    "hash": "e1821d18d1cb84ec56dd0662b8f3f918",
+    "content-hash": "eabb219d78dc4a6c76e1d58e94c76e28",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -923,6 +923,126 @@
             "time": "2015-12-25 15:50:05"
         },
         {
+            "name": "endroid/gcm",
+            "version": "1.2.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/endroid/Gcm.git",
+                "reference": "c40973cfdd09209922c468e55c4828de525f3f54"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/endroid/Gcm/zipball/c40973cfdd09209922c468e55c4828de525f3f54",
+                "reference": "c40973cfdd09209922c468e55c4828de525f3f54",
+                "shasum": ""
+            },
+            "require": {
+                "kriswallsmith/buzz": "~0.3",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "~1.0",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Endroid\\Gcm\\": [
+                        "src/",
+                        "tests/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen van den Enden",
+                    "email": "info@endroid.nl",
+                    "homepage": "http://endroid.nl/"
+                }
+            ],
+            "description": "Endroid Google Cloud Messaging",
+            "homepage": "https://github.com/endroid/Gcm",
+            "keywords": [
+                "cloud",
+                "endroid",
+                "gcm",
+                "google",
+                "messaging",
+                "notification",
+                "notifications",
+                "push"
+            ],
+            "time": "2016-01-01 19:34:48"
+        },
+        {
+            "name": "endroid/gcm-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/endroid/EndroidGcmBundle.git",
+                "reference": "0a25ba52683c7bcc3ff79ea089f9aabf892aef80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/endroid/EndroidGcmBundle/zipball/0a25ba52683c7bcc3ff79ea089f9aabf892aef80",
+                "reference": "0a25ba52683c7bcc3ff79ea089f9aabf892aef80",
+                "shasum": ""
+            },
+            "require": {
+                "endroid/gcm": "^1.0",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Endroid\\Bundle\\GcmBundle\\": [
+                        "src/",
+                        "tests/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen van den Enden",
+                    "email": "info@endroid.nl",
+                    "homepage": "http://endroid.nl/"
+                }
+            ],
+            "description": "Endroid Google Cloud Messaging Bundle for Symfony",
+            "homepage": "https://github.com/endroid/EndroidGcmBundle",
+            "keywords": [
+                "bundle",
+                "cloud",
+                "endroid",
+                "gcm",
+                "google",
+                "messaging",
+                "notification",
+                "notifications",
+                "push",
+                "symfony"
+            ],
+            "time": "2016-01-05 20:17:46"
+        },
+        {
             "name": "friendsofsymfony/oauth2-php",
             "version": "dev-master",
             "source": {
@@ -1072,7 +1192,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/e5e7a2b8984da8dfedaf44adc7e5f60a62ad280c",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/6ccff96434c0ac7fee077d1dce90966341dfd278",
                 "reference": "e5e7a2b8984da8dfedaf44adc7e5f60a62ad280c",
                 "shasum": ""
             },
@@ -1741,6 +1861,54 @@
             "time": "2015-11-12 13:51:40"
         },
         {
+            "name": "kriswallsmith/buzz",
+            "version": "v0.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kriswallsmith/Buzz.git",
+                "reference": "d4041666c3ffb379af02a92dabe81c904b35fab8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/d4041666c3ffb379af02a92dabe81c904b35fab8",
+                "reference": "d4041666c3ffb379af02a92dabe81c904b35fab8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "ext-curl": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Buzz": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
+                }
+            ],
+            "description": "Lightweight HTTP client",
+            "homepage": "https://github.com/kriswallsmith/Buzz",
+            "keywords": [
+                "curl",
+                "http client"
+            ],
+            "time": "2015-06-25 17:26:56"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.17.2",
             "source": {
@@ -2164,7 +2332,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/2e68c08ed1d8680c64f91e90d1119effc60811dd",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/03d3ee058cc94670aa3da8817c5ad29b315f6f45",
                 "reference": "2e68c08ed1d8680c64f91e90d1119effc60811dd",
                 "shasum": ""
             },
@@ -2507,7 +2675,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/e2044367a94de8c74239a1c987aa4c7428a2d565",
+                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/f3abdfcfaca3f61b37e7b194fd4aa48c172796db",
                 "reference": "e2044367a94de8c74239a1c987aa4c7428a2d565",
                 "shasum": ""
             },
@@ -3785,7 +3953,8 @@
         "sonata-project/doctrine-orm-admin-bundle": 20,
         "symfony/security-acl": 20,
         "sonata-project/easy-extends-bundle": 20,
-        "sonata-project/datagrid-bundle": 20
+        "sonata-project/datagrid-bundle": 20,
+        "endroid/gcm-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

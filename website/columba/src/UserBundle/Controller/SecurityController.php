@@ -22,7 +22,7 @@ class SecurityController extends BaseController
     public function loginAction(Request $request)
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('dashboard');
         }
 
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */

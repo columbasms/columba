@@ -5,6 +5,7 @@ imports:
     - { resource: "@RestBundle/Resources/config/services.yml" }
     - { resource: "@UserBundle/Resources/config/services.yml" }
     - { resource: "@AdminBundle/Resources/config/services.yml" }
+    - { resource: "@MenuBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -127,15 +128,14 @@ assetic:
     assets:
         basic_css:
             inputs:
-                - 'plugins/pace/pace-theme-flash.css'
                 - 'plugins/boostrapv3/css/bootstrap.css'
                 - 'plugins/font-awesome/css/font-awesome.css'
                 - 'plugins/jquery-scrollbar/jquery.scrollbar.css'
                 - 'css/pages-icons.css'
                 - 'css/pages.css'
+                - 'css/style.css'
         basic_js:
             inputs:
-                - 'plugins/pace/pace.min.js'
                 - 'plugins/jquery/jquery-1.11.1.min.js'
                 - 'plugins/modernizr.custom.js'
                 - 'plugins/jquery-ui/jquery-ui.min.js'
@@ -145,7 +145,6 @@ assetic:
                 - 'js/pages.js'
         login_js:
             inputs:
-                - 'plugins/pace/pace.min.js'
                 - 'plugins/jquery/jquery-1.11.1.min.js'
                 - 'plugins/modernizr.custom.js'
                 - 'plugins/jquery-ui/jquery-ui.min.js'
@@ -177,7 +176,10 @@ sonata_admin:
             - { position: left, type: app.block.organization.recents }
         groups:
             menu_dashboard:
-                provider: 'AppBundle:Builder:dashboardMenu'
+                provider: 'MenuBundle:Builder:dashboardMenu'
             menu_users:
-                provider: 'AppBundle:Builder:usersMenu'
+                provider: 'MenuBundle:Builder:usersMenu'
                 icon: '<i class="fa fa-users"></i>'
+
+endroid_gcm:
+    api_key: "Your API Key (use the Browser key)"

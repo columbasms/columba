@@ -34,6 +34,8 @@ class AppKernel extends Kernel
             new Sonata\DatagridBundle\SonataDatagridBundle(),
             new AppBundle\AppBundle(),
             new AdminBundle\AdminBundle(),
+            new MenuBundle\MenuBundle(),
+            new Endroid\Bundle\GcmBundle\EndroidGcmBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
