@@ -1,7 +1,7 @@
-{% extends 'MenuBundle:Menu:knp_menu.html.twig' %}
+{% extends 'MenuBundle:menu:knp_menu.html.twig' %}
 
 {% block linkElement %}
-    {% import 'MenuBundle:Menu:knp_menu.html.twig' as knp_menu %}
+    {% import 'MenuBundle:menu:knp_menu.html.twig' as knp_menu %}
 
     <a href="{{ item.uri }}"{{ knp_menu.attributes(item.linkAttributes) }}>
         <span class="title" style="width: auto;">{{ block('label') }}</span>
@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block spanElement %}
-    {% import 'MenuBundle:Menu:knp_menu.html.twig' as knp_menu %}
+    {% import 'MenuBundle:menu:knp_menu.html.twig' as knp_menu %}
 
     <a href="javascript:;"{{ knp_menu.attributes(item.linkAttributes) }}>
         <span class="title">{{ block('label') }}</span>
