@@ -78,6 +78,8 @@ class UserController extends Controller implements ClassResourceInterface
         $provider = $request->headers->get('X-Auth-Service-Provider');
         $auth = $request->headers->get('X-Verify-Credentials-Authorization');
 
+//        $gcm_token= $request->headers->get('gcm-token');
+
         $digitsCredential = $this->twitterVerifyAuthCurl($provider, $auth);
 //          check if response is 200
         if ($digitsCredential[0]['http_code'] != 200) {

@@ -24,6 +24,11 @@ security:
             pattern:    ^/oauth/v2/auth
             http_basic: ~
 
+        # to let any user regisatrate to the api
+        free_area:
+            pattern: ^/api/register
+            anonymous: true
+
         api:
             pattern:    ^/api
             fos_oauth:  true
