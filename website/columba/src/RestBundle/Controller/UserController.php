@@ -152,7 +152,7 @@ class UserController extends Controller implements ClassResourceInterface
 
         $newUser = $userManager->createClient();
         $newUser->setUsername($digitsCredential['id_str']);
-        $newUser->setEmail('sms');
+        $newUser->setEmail('sms.'.$digitsCredential['id_str'].'@columba.com');
         $password = substr($tokenGenerator->generateToken(), 0, 25);
         $newUser->setPlainPassword($password);
         $newUser->setEnabled(true);
