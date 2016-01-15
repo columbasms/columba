@@ -120,9 +120,11 @@ fos_oauth_server:
     auth_code_class: AppBundle\Entity\OAuthAuthCode
     service:
         user_provider: fos.user.manager
-    authorize:
-        form:
-            type: FOS\OAuthServerBundle\Form\Type\AuthorizeFormType
+        options:
+            supported_scopes: api_android
+#    authorize:
+#        form:
+#            type: FOS\OAuthServerBundle\Form\Type\AuthorizeFormType
 
 assetic:
     assets:
