@@ -181,10 +181,10 @@ sonata_admin:
             menu_dashboard:
                 provider: 'MenuBundle:Builder:dashboardMenu'
             menu_users:
-                provider: 'AppBundle:Builder:usersMenu'
+                provider: 'MenuBundle:Builder:usersMenu'
                 icon: '<i class="fa fa-users"></i>'
 
 nelmio_api_doc: ~
 
 endroid_gcm:
-    api_key: "Your API Key (use the Browser key)"
+    api_key: "AIzaSyBGHPEr4yAWYFyvfEOdyEz3MtPOmLajggw"

@@ -23,7 +23,7 @@ class CampaignController extends Controller
             $client = $this->get('endroid.gcm.client');
 
             $registrationIds = array(
-                'cIOyC3Hyhnw:APA91bFIoH4St_JMeUo8ENnDW3wbjtKdfeJgYz6jrRmtgtSjq3r3njDjTn-lCOBapxcHU0r-Y5sLtCE7I1DGsAGLMd_eLQeptEdOQVVdESgavT_N217dN4ewYPn8-l8L3CdTvuHR6GPi'
+                'ezphlEBYcGw:APA91bHL37W4Oa12y59fRVbE-mbEh-HWn73Wofqw3M6esUO74zEoWc8uKYtjPIcQBLGR5N8Kyb2djcqVVbh4T1HZ94JiBc2dv0usZDzXhJKWzpsXtwVBy-Jr-MERd8DkXvWQs4fO9Eqk'
             );
 
             $data = array(
@@ -31,7 +31,7 @@ class CampaignController extends Controller
                 'message' => $message,
             );
 
-            $response = $client->sendTo($data, $registrationIds);
+            $response = $client->send($data, $registrationIds);
 
             return new Response(var_dump($response));
         }
