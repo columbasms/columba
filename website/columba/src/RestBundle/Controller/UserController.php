@@ -38,15 +38,6 @@ class UserController extends Controller implements ClassResourceInterface {
      */
     public function randomAction(Request $request)
     {
-        // We only handle non-authorized scope here.
-        try {
-            return $this->get('authbucket_oauth2.oauth2_controller')->authorizeAction($request);
-        } catch (InvalidScopeException $exception) {
-            $message = unserialize($exception->getMessage());
-            if ($message['error_description'] !== 'The requested scope is invalid.') {
-                throw $exception;
-            }
-        }
         return array('data');
     }
 
