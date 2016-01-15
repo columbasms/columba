@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.columbasms.columbasms.R;
+import com.columbasms.columbasms.model.AssociationType;
 
 import java.util.List;
 
@@ -18,38 +19,37 @@ import java.util.List;
 
 public class AssociationsTypesAdapter extends RecyclerView.Adapter<AssociationsTypesAdapter.ViewHolder> {
 
-    private List<String> associations;
-    static int s = 0;
+    private static List<AssociationType> associationTypes;
 
     // Pass in the contact array into the constructor
-    public AssociationsTypesAdapter(List<String> ass) {
-        associations = ass;
+    public AssociationsTypesAdapter(List<AssociationType> ass) {
+        associationTypes = ass;
     }
 
     // Provide a direct reference to each of the views within a data item
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView nameTextView;
         public ImageView favourite;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
-
             nameTextView = (TextView) itemView.findViewById(R.id.association_name);
             favourite = (ImageView) itemView.findViewById(R.id.favourite);
-            favourite.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(s == 0) {
-                        favourite.setBackgroundResource(R.drawable.check_circle_deselected);
-                        s=1;
-                    }else{
-                        favourite.setBackgroundResource(R.drawable.check_circle_selected);
-                        s=0;
-                    }
-                }
-            });
+            favourite.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View v) {
+            int pos = getAdapterPosition();
+            AssociationType n = associationTypes.get(pos);
+            if(n.isSelected()) {
+                v.setBackgroundResource(R.drawable.check_circle_deselected);
+                n.setSelected(false);
+            }else{
+                v.setBackgroundResource(R.drawable.check_circle_selected);
+                n.setSelected(true);
+            }
+            associationTypes.set(pos, n);
         }
     }
 
@@ -71,18 +71,30 @@ public class AssociationsTypesAdapter extends RecyclerView.Adapter<AssociationsT
     @Override
     public void onBindViewHolder(AssociationsTypesAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
-        String a = associations.get(position);
+        AssociationType ass = associationTypes.get(position);
+        String type_name = ass.getType_name();
+        boolean isSelected = ass.isSelected();
 
         // Set item views based on the data model
         TextView textView = viewHolder.nameTextView;
-        textView.setText(a);
+        textView.setText(type_name);
 
         ImageView button = viewHolder.favourite;
+        if (isSelected==false){
+            button.setBackgroundResource(R.drawable.check_circle_deselected);
+        }else button.setBackgroundResource(R.drawable.check_circle_selected);
+
     }
+
 
     // Return the total count of items
     @Override
     public int getItemCount() {
-        return associations.size();
+        return associationTypes.size();
     }
+
+    public List<AssociationType> getAssociationTypes(){
+        return associationTypes;
+    }
+
 }

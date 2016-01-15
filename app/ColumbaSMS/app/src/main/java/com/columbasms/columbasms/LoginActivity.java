@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity{
                     catch (Exception e) { e.printStackTrace(); }
 
 
-                    //System.out.println("###############HTTP POST RESPONSE TEXT: " + sb.toString());
+                    System.out.println("###############HTTP POST RESPONSE TEXT: " + sb.toString());
                 } catch (ClientProtocolException e) {
                     // Log exception
                     e.printStackTrace();
