@@ -50,6 +50,8 @@
       <sourceFolder url="file://$MODULE_DIR$/vendor/symfony/symfony/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/vendor/jms/metadata/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/vendor/jms/metadata/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/authbucket/oauth2-php" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/authbucket/oauth2-symfony-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/behat/transliterator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bmatzner/fontawesome-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cocur/slugify" />
@@ -71,6 +73,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofsymfony/rest-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofsymfony/user-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/gedmo/doctrine-extensions" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/incenteev/composer-parameter-handler" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/jdorn/sql-formatter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/jms/metadata" />
@@ -87,6 +92,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/paragonie/random_compat" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpcollection/phpcollection" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpoption/phpoption" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sensio/distribution-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sensio/framework-extra-bundle" />
@@ -135,6 +141,8 @@
     <orderEntry type="module-library">
       <library name="PHP">
         <CLASSES>
+          <root url="file://$MODULE_DIR$/vendor/authbucket/oauth2-php" />
+          <root url="file://$MODULE_DIR$/vendor/authbucket/oauth2-symfony-bundle" />
           <root url="file://$MODULE_DIR$/vendor/behat/transliterator" />
           <root url="file://$MODULE_DIR$/vendor/bmatzner/fontawesome-bundle" />
           <root url="file://$MODULE_DIR$/vendor/cocur/slugify" />
@@ -156,6 +164,9 @@
           <root url="file://$MODULE_DIR$/vendor/friendsofsymfony/rest-bundle" />
           <root url="file://$MODULE_DIR$/vendor/friendsofsymfony/user-bundle" />
           <root url="file://$MODULE_DIR$/vendor/gedmo/doctrine-extensions" />
+          <root url="file://$MODULE_DIR$/vendor/guzzlehttp/guzzle" />
+          <root url="file://$MODULE_DIR$/vendor/guzzlehttp/promises" />
+          <root url="file://$MODULE_DIR$/vendor/guzzlehttp/psr7" />
           <root url="file://$MODULE_DIR$/vendor/incenteev/composer-parameter-handler" />
           <root url="file://$MODULE_DIR$/vendor/jdorn/sql-formatter" />
           <root url="file://$MODULE_DIR$/vendor/jms/metadata" />
@@ -172,6 +183,7 @@
           <root url="file://$MODULE_DIR$/vendor/paragonie/random_compat" />
           <root url="file://$MODULE_DIR$/vendor/phpcollection/phpcollection" />
           <root url="file://$MODULE_DIR$/vendor/phpoption/phpoption" />
+          <root url="file://$MODULE_DIR$/vendor/psr/http-message" />
           <root url="file://$MODULE_DIR$/vendor/psr/log" />
           <root url="file://$MODULE_DIR$/vendor/sensio/distribution-bundle" />
           <root url="file://$MODULE_DIR$/vendor/sensio/framework-extra-bundle" />
@@ -204,6 +216,8 @@
           <root url="file://$MODULE_DIR$/vendor/willdurand/negotiation" />
         </CLASSES>
         <SOURCES>
+          <root url="file://$MODULE_DIR$/vendor/authbucket/oauth2-php" />
+          <root url="file://$MODULE_DIR$/vendor/authbucket/oauth2-symfony-bundle" />
           <root url="file://$MODULE_DIR$/vendor/behat/transliterator" />
           <root url="file://$MODULE_DIR$/vendor/bmatzner/fontawesome-bundle" />
           <root url="file://$MODULE_DIR$/vendor/cocur/slugify" />
@@ -225,6 +239,9 @@
           <root url="file://$MODULE_DIR$/vendor/friendsofsymfony/rest-bundle" />
           <root url="file://$MODULE_DIR$/vendor/friendsofsymfony/user-bundle" />
           <root url="file://$MODULE_DIR$/vendor/gedmo/doctrine-extensions" />
+          <root url="file://$MODULE_DIR$/vendor/guzzlehttp/guzzle" />
+          <root url="file://$MODULE_DIR$/vendor/guzzlehttp/promises" />
+          <root url="file://$MODULE_DIR$/vendor/guzzlehttp/psr7" />
           <root url="file://$MODULE_DIR$/vendor/incenteev/composer-parameter-handler" />
           <root url="file://$MODULE_DIR$/vendor/jdorn/sql-formatter" />
           <root url="file://$MODULE_DIR$/vendor/jms/metadata" />
@@ -241,6 +258,7 @@
           <root url="file://$MODULE_DIR$/vendor/paragonie/random_compat" />
           <root url="file://$MODULE_DIR$/vendor/phpcollection/phpcollection" />
           <root url="file://$MODULE_DIR$/vendor/phpoption/phpoption" />
+          <root url="file://$MODULE_DIR$/vendor/psr/http-message" />
           <root url="file://$MODULE_DIR$/vendor/psr/log" />
           <root url="file://$MODULE_DIR$/vendor/sensio/distribution-bundle" />
           <root url="file://$MODULE_DIR$/vendor/sensio/framework-extra-bundle" />
