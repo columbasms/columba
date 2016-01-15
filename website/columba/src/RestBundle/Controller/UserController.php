@@ -16,7 +16,8 @@ use Symfony\Component\Security\Http\Authentication;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 //use AppBundle\Entity\Client;
 
-class UserController extends Controller implements ClassResourceInterface {
+class UserController extends Controller implements ClassResourceInterface
+{
 //class UserController extends FOSRestController {
 
 //    /**
@@ -79,8 +80,8 @@ class UserController extends Controller implements ClassResourceInterface {
 
         $digitsCredential = $this->twitterVerifyAuthCurl($provider, $auth);
 //          check if response is 200
-        if ($digitsCredential[0]['http_code']!=200){
-            return json_decode($digitsCredential[1],true);
+        if ($digitsCredential[0]['http_code'] != 200) {
+            return json_decode($digitsCredential[1], true);
         }
         $digitsCredential = json_decode($digitsCredential[1], true);
 
@@ -89,11 +90,11 @@ class UserController extends Controller implements ClassResourceInterface {
             return 'Provided user already exists';
 
 //        add user to DB
-        $idAndPass=$this->registerUserToDB($digitsCredential);
+        $idAndPass = $this->registerUserToDB($digitsCredential);
 
 //        return the oauth2 tokens for the user to access the API
 //        return $idAndPass;
-        return json_encode(['client_id'=>$idAndPass[0],'client_secret'=>$idAndPass[1],'user_name'=>$idAndPass[2],'user_psw'=>$idAndPass[3]]);
+        return json_encode(['client_id' => $idAndPass[0], 'client_secret' => $idAndPass[1], 'user_name' => $idAndPass[2], 'user_psw' => $idAndPass[3]]);
     }
 
     /**
@@ -104,22 +105,23 @@ class UserController extends Controller implements ClassResourceInterface {
      * @return array:   -info:      infos of http response
      *                  -content:   digits credentials
      */
-    private function twitterVerifyAuthCurl($provider, $auth) {
+    private function twitterVerifyAuthCurl($provider, $auth)
+    {
         $curl = curl_init();
-        curl_setopt($curl,CURLOPT_URL, $provider);
-        curl_setopt($curl,CURLOPT_HTTPHEADER, array(
+        curl_setopt($curl, CURLOPT_URL, $provider);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
             'Content-length: 0',
             'Content-type: application/json',
-            'Authorization: '.$auth,
+            'Authorization: ' . $auth,
         ));
-        curl_setopt($curl,CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $content = curl_exec($curl);
         $info = curl_getinfo($curl);
         curl_close($curl);
 //        MAKE it return also the user data if respose ==200
 //        return $info['http_code'] == 200;
 //        return $content;
-        return [$info,$content];
+        return [$info, $content];
     }
 
     /**
@@ -128,13 +130,11 @@ class UserController extends Controller implements ClassResourceInterface {
      * @param $userId
      * @return bool
      */
-    private function searchUserInDB($userId){
+    private function searchUserInDB($phone_number)
+    {
         $userManager = $this->get('fos_user.user_manager');
-        return $userManager->findUserByPhoneNumber($userId);
-//        $newUser = $this->getDoctrine()
-//            ->getRepository('AppBundle:Client')
-//            ->find($userId);
-//        return $newUser;
+        return $userManager->findUserByPhoneNumber($phone_number);
+//
     }
 
     /**
@@ -143,34 +143,30 @@ class UserController extends Controller implements ClassResourceInterface {
      * @param $digitsCredential
      * @return int
      */
-    private function registerUserToDB($digitsCredential){
+    private function registerUserToDB($digitsCredential)
+    {
         $userManager = $this->get('fos_user.user_manager');
         $tokenGenerator = $this->get('fos_user.util.token_generator');
 
-
         $newUser = $userManager->createClient();
         $newUser->setUsername($digitsCredential['id_str']);
-        $newUser->setEmail('null');
-        $newUser->setPassword(substr($tokenGenerator->generateToken(), 0, 25));
+        $newUser->setEmail('sms');
+        $password = substr($tokenGenerator->generateToken(), 0, 25);
+        $newUser->setPlainPassword($password);
+        $newUser->setEnabled(true);
         $newUser->setPhoneNumber($digitsCredential['phone_number']);
         $newUser->setRoles(['ROLE_API']);
-        $newUser->setEnabled(true);
 
+//        $token=exec('fos:oauth-server:client:create --grant-type="authorization_code" --grant-type="password" --grant-type="refresh_token" --grant-type="token" --grant-type="client_credentials"');
+        $oauthTokens = $this->createOauthClient(['authorization_code', 'password', 'refresh_token', 'client_credentials']);
+
+        //write down user in db
         $em = $this->getDoctrine()->getManager();
         $em->persist($newUser);
         $em->flush();
 
-//        $token=exec('fos:oauth-server:client:create --grant-type="authorization_code" --grant-type="password" --grant-type="refresh_token" --grant-type="token" --grant-type="client_credentials"');
-        $oauthTokens=$this->createOauthClient(['authorization_code','password','refresh_token','client_credentials']);
-//        $token = new UsernamePasswordToken($newUser, $newUser->getPassword(), 'api_resource', $newUser->getRoles());
-//
-//        $this->get('security.token_storage')->setToken($token);
-
-
 //        return ['client_id','client_secret','user_name','user_psw']
-//        return [$newUser->getId(),$token,$newUser->getUsername(),$newUser->getPassword()];
-        return [$oauthTokens['client_id'],$oauthTokens['client_secret'],$newUser->getUsername(),$newUser->getPassword()];
-//        return $token;
+        return [$oauthTokens['client_id'], $oauthTokens['client_secret'], $newUser->getUsername(), $password];
     }
 
     /**
@@ -185,7 +181,7 @@ class UserController extends Controller implements ClassResourceInterface {
 //        $client->setRedirectUris($input->getOption('redirect-uri'));
         $client->setAllowedGrantTypes($grantTypes);
         $clientManager->updateClient($client);
-        return ['client_id'=>$client->getPublicId(),'client_secret'=>$client->getSecret()];
+        return ['client_id' => $client->getPublicId(), 'client_secret' => $client->getSecret()];
 
     }
 
