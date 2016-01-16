@@ -53,6 +53,4 @@ security:
     access_control:
         - { path: "^/admin", roles: ROLE_SONATA_ADMIN, requires_channel: https }
         - { path: "^/dashboard", roles: ROLE_USER, requires_channel: https }
-        - { path: "^/api", requires_channel: https }
-#        - { path: "^/api", roles: [ ROLE_API ], requires_channel: https } ~
-#        - { path: "^/api", roles: ROLE_API }
+        - { path: "^/api", roles: ROLE_API, requires_channel: https }
