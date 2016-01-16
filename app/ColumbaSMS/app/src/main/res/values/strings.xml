@@ -29,4 +29,5 @@
     <string name="contacts_title">Select contacts</string>
 
     <string name="dgts__login_digits_text">Sign in</string>
+    <string name="setImage">set_image</string>
 </resources>

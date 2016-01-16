@@ -32,31 +32,23 @@ public class SelectionContactsActivity extends AppCompatActivity implements View
 
     private ContactsAdapter adapter;
     private List<Contact> contactList;
-    /*
-    ArrayList<JSONObject> contacts = new ArrayList<>();
 
     public void addContacts(){
-
-        //to store name-number pair
-        JSONObject obj = new JSONObject();
-
+        contactList = new ArrayList<Contact>();
         try {
             Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
 
             while (phones.moveToNext()) {
                 String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                 String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                obj.put(name, phoneNumber);
-                contacts.add(obj);
-
-                //Log.e("Contact list with name & numbers", " " + contacts);
+                contactList.add(new Contact(name,phoneNumber,true));
             }
             phones.close();
         }
         catch (Exception e){
             e.printStackTrace();
         }
-    }*/
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +61,8 @@ public class SelectionContactsActivity extends AppCompatActivity implements View
         Button done_button = (Button)findViewById(R.id.button_done_flat_contacts);
         done_button.setOnClickListener(this);
 
-        Resources res = getResources();
-        String[] contacts_names = res.getStringArray(R.array.contacts_array);
-        contactList = new ArrayList<Contact>();
-        for (int i = 0; i < contacts_names.length; i++) {
-            contactList.add(new Contact(contacts_names[i],"33312345678",true));
-        }
-
+        addContacts();
+        System.out.println(contactList.toString());
         // Lookup the recyclerview in activity layout
         RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rv_contacts);
 
@@ -137,12 +124,17 @@ public class SelectionContactsActivity extends AppCompatActivity implements View
                     e.printStackTrace();
                 }
                 System.out.println(jsonObj.toString());
+
+
+                //SAVE AUTHENTICATION STATE
+                editor.putString("isAuthenticated","true");
                 editor.commit();
 
-                SelectionContactsActivity.this.finish();
+            SelectionContactsActivity.this.finish();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
         }
 
     }
+
 }

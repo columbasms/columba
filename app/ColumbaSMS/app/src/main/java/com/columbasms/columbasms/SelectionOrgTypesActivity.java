@@ -19,9 +19,6 @@ import android.widget.ImageView;
 
 import com.columbasms.columbasms.adapter.AssociationsTypesAdapter;
 import com.columbasms.columbasms.model.AssociationType;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;

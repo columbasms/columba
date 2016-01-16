@@ -2,7 +2,5 @@
 <resources>
     <string-array name="topics_array">
         <item>User Level</item>
-        <item>#Messages</item>
-        <item>News</item>
     </string-array>
 </resources>

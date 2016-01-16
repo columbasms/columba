@@ -18,7 +18,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".SelectionContactsActivity">
+
+        </activity>
 
         <activity
             android:screenOrientation="portrait"
@@ -39,18 +41,13 @@
         </activity>
 
         <activity
-            android:name=".SelectionContactsActivity">
+            android:name=".MainActivity">
         </activity>
 
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="83542be45fe846536111fce705ca7bd4dc2e38dd" />
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
 
     </application>
 

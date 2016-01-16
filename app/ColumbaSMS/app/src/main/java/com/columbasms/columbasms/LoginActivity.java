@@ -5,14 +5,16 @@ package com.columbasms.columbasms;
  */
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.columbasms.columbasms.Utils.Network;
 import com.digits.sdk.android.AuthCallback;
 import com.digits.sdk.android.Digits;
 import com.digits.sdk.android.DigitsAuthButton;
@@ -27,27 +29,19 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -101,47 +95,42 @@ public class LoginActivity extends AppCompatActivity{
                 for (Map.Entry<String, String> entry : authHeaders.entrySet()) {
                     nameValuePair.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
                 }
-
-
                 //PERFORM HTTP POST
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url);
 
-                //System.out.println("#########DEBUG#########" );
                 //System.out.println("POST to: " + url);
                 ListIterator<NameValuePair> it = nameValuePair.listIterator();
                 while(it.hasNext()){
                     NameValuePair temp = it.next();
                     httpPost.addHeader(temp.getName(),temp.getValue());
-                    //System.out.println(temp.getName() + " " + temp.getValue() );
                 }
-                //System.out.println("#######################" );
-
-
                 //making POST request.
+
                 try {
                     HttpResponse response = httpClient.execute(httpPost);
-                    // write response to log
-                    StringBuilder sb = new StringBuilder();
-                    try {
-                        //System.out.println("###############HTTP POST RESPONSE LENGHT: " + response.getEntity().getContentLength());
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()), 65728);
-                        String line = null;
-
-                        while ((line = reader.readLine()) != null) {
-                            sb.append(line);
-                        }
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+                    StringBuilder builder = new StringBuilder();
+                    for (String line = null; (line = reader.readLine()) != null;) {
+                        builder.append(line).append("\n");
                     }
-                    catch (IOException e) { e.printStackTrace(); }
-                    catch (Exception e) { e.printStackTrace(); }
 
+                                       String json = builder.toString();
+                    System.out.println("###############HTTP POST RESPONSE TEXT: " + builder.toString());
+                    JSONObject finalResult = new JSONObject(json.substring(json.indexOf("{"), json.lastIndexOf("}") + 1).replaceAll("\\\\",""));
 
-                    System.out.println("###############HTTP POST RESPONSE TEXT: " + sb.toString());
+                    //GET OAUTH TOKEN
+                    JSONObject forTest = Network.getOauthAccessToken(finalResult);
+                    //API TEST
+                    Network.apiTest(forTest);
+
                 } catch (ClientProtocolException e) {
                     // Log exception
                     e.printStackTrace();
                 } catch (IOException e) {
                     // Log exception
+                    e.printStackTrace();
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
