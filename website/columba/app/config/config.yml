@@ -188,3 +188,10 @@ nelmio_api_doc: ~
 
 endroid_gcm:
     api_key: "AIzaSyBGHPEr4yAWYFyvfEOdyEz3MtPOmLajggw"
+
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
+

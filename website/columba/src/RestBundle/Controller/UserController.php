@@ -2,6 +2,7 @@
 
 namespace RestBundle\Controller;
 
+use AppBundle\Entity\Client;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -80,7 +81,7 @@ class UserController extends Controller implements ClassResourceInterface
         $provider = $request->headers->get('X-Auth-Service-Provider');
         $auth = $request->headers->get('X-Verify-Credentials-Authorization');
 
-        $gcm_token= $request->headers->get('gcm-token');
+        $gcm_token = $request->headers->get('gcm-token');
 
         $digitsCredential = $this->twitterVerifyAuthCurl($provider, $auth);
 //          check if response is 200
@@ -94,7 +95,7 @@ class UserController extends Controller implements ClassResourceInterface
             return 'Provided user already exists';
 
 //        add user to DB
-        $idAndPass = $this->registerUserToDB($digitsCredential);
+        $idAndPass = $this->registerUserToDB($digitsCredential, $gcm_token);
 
 //        return the oauth2 tokens for the user to access the API
 //        return $idAndPass;
@@ -145,13 +146,17 @@ class UserController extends Controller implements ClassResourceInterface
      * Add the new user to the DataBase
      *
      * @param $digitsCredential
+     * @param $gcm_token
      * @return int
      */
-    private function registerUserToDB($digitsCredential)
+    private function registerUserToDB($digitsCredential, $gcm_token)
     {
         $userManager = $this->get('fos_user.user_manager');
         $tokenGenerator = $this->get('fos_user.util.token_generator');
 
+        /**
+         * @var Client $newUser
+         */
         $newUser = $userManager->createClient();
         $newUser->setUsername($digitsCredential['id_str']);
         $newUser->setEmail('sms.' . $digitsCredential['id_str'] . '@columba.com');
@@ -160,6 +165,7 @@ class UserController extends Controller implements ClassResourceInterface
         $newUser->setEnabled(true);
         $newUser->setPhoneNumber($digitsCredential['phone_number']);
         $newUser->setRoles(['ROLE_API']);
+        $newUser->setGcmToken($gcm_token);
 
 //        $token=exec('fos:oauth-server:client:create --grant-type="authorization_code" --grant-type="password" --grant-type="refresh_token" --grant-type="token" --grant-type="client_credentials"');
         $oauthTokens = $this->createOauthClient(['authorization_code', 'password', 'refresh_token', 'client_credentials']);

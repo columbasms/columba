@@ -39,7 +39,8 @@
         "sonata-project/easy-extends-bundle": "dev-master",
         "sonata-project/datagrid-bundle": "dev-master",
         "nelmio/api-doc-bundle": "2.11.2",
-        "endroid/gcm-bundle": "dev-master"
+        "endroid/gcm-bundle": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

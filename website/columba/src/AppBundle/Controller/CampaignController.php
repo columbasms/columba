@@ -22,9 +22,13 @@ class CampaignController extends Controller
 
             $client = $this->get('endroid.gcm.client');
 
-            $registrationIds = array(
-                'ezphlEBYcGw:APA91bHL37W4Oa12y59fRVbE-mbEh-HWn73Wofqw3M6esUO74zEoWc8uKYtjPIcQBLGR5N8Kyb2djcqVVbh4T1HZ94JiBc2dv0usZDzXhJKWzpsXtwVBy-Jr-MERd8DkXvWQs4fO9Eqk'
-            );
+            $clients = $this->getDoctrine()->getManager()->getRepository('AppBundle:Client')->findAll();
+
+            $registrationIds = array();
+
+            foreach ($clients as $key => $value) {
+                $registrationIds[] = $value->getGcmToken();
+            }
 
             $data = array(
                 'title' => 'Message title',

@@ -31,6 +31,11 @@ class Client extends User {
     protected $messagesNumber;
 
     /**
+     * @ORM\Column(name="gcm_token", type="string", length=1000)
+     */
+    protected $gcmToken;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Contact", inversedBy="clients")
      * @ORM\JoinTable(name="clients_contacts")
      */
@@ -188,5 +193,29 @@ class Client extends User {
     public function getTopics()
     {
         return $this->topics;
+    }
+
+    /**
+     * Set gcmToken
+     *
+     * @param string $gcmToken
+     *
+     * @return Client
+     */
+    public function setGcmToken($gcmToken)
+    {
+        $this->gcmToken = $gcmToken;
+
+        return $this;
+    }
+
+    /**
+     * Get gcmToken
+     *
+     * @return string
+     */
+    public function getGcmToken()
+    {
+        return $this->gcmToken;
     }
 }
