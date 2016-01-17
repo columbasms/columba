@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="col-md-6 col-center">
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <div class="panel-title">
+                    Campaign successfully created
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <p>Your campaign has been successfully created</p>
+
+                <a href="{{ url('dashboard') }}" class="btn btn-primary btn-cons m-t-10" type="submit">Dashboard</a>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

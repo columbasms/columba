@@ -46,7 +46,7 @@ class Builder implements ContainerAwareInterface {
         ))->setAttribute('icon', 'pg-home');
 
         $menu->addChild('NewCampaign', array(
-            'route' => 'app_campaign_new',
+            'route' => 'campaign_new',
             'label' => 'New campaign'
         ))->setAttribute('icon', 'pg-plus');
 

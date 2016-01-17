@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CampaignController extends Controller
 {
     /**
-     * @Route("/new", methods={"POST", "GET"})
+     * @Route("/new", name="campaign_new", methods={"POST", "GET"})
      */
     public function newAction(Request $request) {
 
@@ -37,10 +37,21 @@ class CampaignController extends Controller
 
             $response = $client->send($data, $registrationIds);
 
-            return new Response(var_dump($response));
+            if ($response) {
+                return $this->redirectToRoute('campaing_complete');
+            } else {
+                $this->addFlash('warning', 'There was a problem with your request. Plese try again later');
+            }
         }
 
-        return $this->render('AppBundle:Campaign:new.html.twig');
+        return $this->render(':campaign:new.html.twig');
+    }
+
+    /**
+     * @Route("/complete", name="campaing_complete")
+     */
+    public function completeAction() {
+        return $this->render(':campaign:complete.html.twig');
     }
 
 }

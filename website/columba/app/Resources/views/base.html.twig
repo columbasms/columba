@@ -42,6 +42,17 @@
             <div class="page-content-wrapper ">
                 <div class="content sm-gutter">
                     <div class="container-fluid padding-25 sm-padding-10">
+
+                        {% if app.request.hasPreviousSession %}
+                            {% for type, messages in app.session.flashbag.all() %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ type }}">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+
                         {% block body %}{% endblock %}
                     </div>
                 </div>

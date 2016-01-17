@@ -22,3 +22,9 @@ services:
         arguments: [app.block.organization.recents, "@templating", "@doctrine"]
         tags:
             - { name: sonata.block }
+
+    app.block.client.recents:
+        class: AdminBundle\Block\RecentClientsBlock
+        arguments: [app.block.client.recents, "@templating", "@doctrine"]
+        tags:
+            - { name: sonata.block }

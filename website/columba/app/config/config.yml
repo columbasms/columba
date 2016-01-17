@@ -171,12 +171,14 @@ sonata_block:
             contexts: [admin]
         sonata.block.service.text:
         app.block.organization.recents: ~
+        app.block.client.recents: ~
 
 sonata_admin:
     title: 'Columba'
     dashboard:
         blocks:
             - { position: left, type: app.block.organization.recents }
+            - { position: right, type: app.block.client.recents }
         groups:
             menu_dashboard:
                 provider: 'MenuBundle:Builder:dashboardMenu'

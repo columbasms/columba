@@ -51,8 +51,8 @@ security:
 
 
     access_control:
-        - { path: "^/admin", roles: ROLE_SONATA_ADMIN, requires_channel: https }
-        - { path: "^/dashboard", roles: ROLE_USER, requires_channel: https }
-        - { path: "^/api/doc", roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: "^/api/register", roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: "^/api", roles: ROLE_API, requires_channel: https }
+        - { path: "^/admin", roles: ROLE_SONATA_ADMIN }
+        - { path: "^/dashboard", roles: ROLE_USER }
+        - { path: "^/api/doc", roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: "^/api/register", roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: "^/api", roles: ROLE_API }
