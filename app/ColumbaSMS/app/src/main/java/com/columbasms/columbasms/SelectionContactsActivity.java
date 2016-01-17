@@ -36,8 +36,7 @@ public class SelectionContactsActivity extends AppCompatActivity implements View
     public void addContacts(){
         contactList = new ArrayList<Contact>();
         try {
-            Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
-
+            Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
             if (phones != null) {
                 while (phones.moveToNext()) {
                     String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
