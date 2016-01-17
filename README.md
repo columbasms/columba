@@ -9,6 +9,7 @@ Columba is under development for "Google Technologies for Cloud and Web Developm
 Concept validation
 ==============
 - (Italian) Smartphone users willingness to SMS donation:  [Survey](https://docs.google.com/forms/d/1RPH7VZnYXCnO06nSSoUQWoPMnBNamJU_mpokyxE5JCk/viewform) -> [Results] (https://docs.google.com/forms/d/1RPH7VZnYXCnO06nSSoUQWoPMnBNamJU_mpokyxE5JCk/viewanalytics)
+- (Italian) Smartphone users sending and receiving SMS attitude: [Survey](https://docs.google.com/forms/d/1Eooic5emMm6p8HkpTPg-8ZzU593N83MvK6sM6imW5R0/viewform)
 
 Project Presentation
 ==============
