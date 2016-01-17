@@ -38,10 +38,12 @@ public class SelectionContactsActivity extends AppCompatActivity implements View
         try {
             Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
 
-            while (phones.moveToNext()) {
-                String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                contactList.add(new Contact(name,phoneNumber,true));
+            if (phones != null) {
+                while (phones.moveToNext()) {
+                    String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                    String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    contactList.add(new Contact(name,phoneNumber,true));
+                }
             }
             phones.close();
         }
@@ -62,7 +64,6 @@ public class SelectionContactsActivity extends AppCompatActivity implements View
         done_button.setOnClickListener(this);
 
         addContacts();
-        System.out.println(contactList.toString());
         // Lookup the recyclerview in activity layout
         RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rv_contacts);
 
@@ -112,7 +113,7 @@ public class SelectionContactsActivity extends AppCompatActivity implements View
                 Contact temp;
                 for (int i = 0; i < adapter.getItemCount(); i++) {
                     temp = contacts_withSelection.get(i);
-                    if(temp.isSelected())jsonArray.put(temp.getContact_name());
+                    if(temp.isSelected())jsonArray.put(temp.getContact_number());
                 }
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString(jsonObjName, jsonArray.toString());
@@ -123,14 +124,13 @@ public class SelectionContactsActivity extends AppCompatActivity implements View
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                System.out.println(jsonObj.toString());
 
 
                 //SAVE AUTHENTICATION STATE
                 editor.putString("isAuthenticated","true");
                 editor.commit();
 
-            SelectionContactsActivity.this.finish();
+                SelectionContactsActivity.this.finish();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
         }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.columbasms.columbasms.R;
@@ -29,9 +30,12 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView nameTextView;
         public ImageView favourite;
+        public LinearLayout cl;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            cl = (LinearLayout)itemView.findViewById(R.id.contact_layout);
+            cl.setOnClickListener(this);
             nameTextView = (TextView) itemView.findViewById(R.id.contacts_name);
             favourite = (ImageView) itemView.findViewById(R.id.favourite);
             favourite.setOnClickListener(this);
@@ -42,10 +46,10 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             int pos = getAdapterPosition();
             Contact n = contacts.get(pos);
             if(n.isSelected()) {
-                v.setBackgroundResource(R.drawable.check_circle_deselected);
+                favourite.setBackgroundResource(R.drawable.check_circle_deselected);
                 n.setSelected(false);
             }else{
-                v.setBackgroundResource(R.drawable.check_circle_selected);
+                favourite.setBackgroundResource(R.drawable.check_circle_selected);
                 n.setSelected(true);
             }
             contacts.set(pos, n);

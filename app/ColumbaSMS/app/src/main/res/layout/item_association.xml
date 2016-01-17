@@ -9,6 +9,7 @@
     <!--252 is a fixed size to show 4 cards in one screen, only for xxhdpi screens-->
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
+        android:id="@+id/card_layout"
         android:layout_height="252dp"
         android:layout_weight="1"
         android:layout_margin="4dp">
@@ -46,8 +47,8 @@
                 <ImageView
                     android:layout_gravity="end"
                     android:id="@+id/favourite"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_margin="15dp"
                     android:background="@drawable/check_circle_selected"/>
 

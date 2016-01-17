@@ -29,17 +29,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimary"
+            android:orientation="vertical"
             android:gravity="bottom"
             android:paddingRight="16dp"
             android:paddingBottom="16dp">
 
                 <TextView
+                    android:id="@+id/main_activity_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorText"
-                    android:text="Matteo Brienza"
                     android:layout_marginLeft="@dimen/appbar_text_paddingLeft"
                     android:textSize="40sp"/>
+                <TextView
+                    android:id="@+id/main_activity_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorText"
+                    android:layout_marginLeft="@dimen/appbar_text_paddingLeft"
+                    android:textSize="16sp"/>
         </LinearLayout>
 
     </LinearLayout>

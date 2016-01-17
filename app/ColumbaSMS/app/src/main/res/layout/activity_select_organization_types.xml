@@ -44,13 +44,15 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:gravity="end"
             android:layout_weight="1">
 
             <Button
                 android:id="@+id/selectAll_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:tag="1"
+                android:layout_marginRight="19dp"
                 style="@android:style/Widget.Material.Button.Borderless"
                 android:background="@drawable/check_circle"/>
 

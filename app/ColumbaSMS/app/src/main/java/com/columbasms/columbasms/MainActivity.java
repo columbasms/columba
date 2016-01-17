@@ -1,5 +1,6 @@
 package com.columbasms.columbasms;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
@@ -9,10 +10,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.columbasms.columbasms.adapter.MainAdapter;
+import com.columbasms.columbasms.service.GCMService;
+import com.google.android.gms.gcm.GcmReceiver;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +29,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences app_state = PreferenceManager.getDefaultSharedPreferences(this);
+        if (app_state.getString("isAuthenticated",null)==null) {
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+            MainActivity.this.finish();
+            return;
+        }
+
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -48,12 +60,20 @@ public class MainActivity extends AppCompatActivity {
         // Attach the adapter to the recyclerview to populate items
         rvTopics.setAdapter(adapter);
 
+
         SharedPreferences account_information = PreferenceManager.getDefaultSharedPreferences(this);
+        String name = account_information.getString("name", null);
+        String city = account_information.getString("city", null);
+        String countries = account_information.getString("countries",null);
+        TextView n = (TextView)findViewById(R.id.main_activity_name);
+        n.setText(name);
+        TextView f = (TextView)findViewById(R.id.main_activity_from);
+        f.setText(city + ", " + countries);
         JSONObject jsonObj = new JSONObject();
         try {
-                jsonObj.put("name",account_information.getString("name",null) );
-                jsonObj.put("countries",account_information.getString("countries",null) );
-                jsonObj.put("city",account_information.getString("city",null) );
+                jsonObj.put("name",name);
+                jsonObj.put("countries", countries );
+                jsonObj.put("city",city);
                 jsonObj.put("messageAmount",account_information.getString("messageAmount", null));
                 JSONArray fat = new JSONArray(account_information.getString("favourite_associations_types",""));
                 jsonObj.put("favourite_association_types",fat);
@@ -65,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         }
         System.out.println(jsonObj.toString().replaceAll("\\\\", ""));
 
+        Intent intentGCMListen = new Intent(this,GcmReceiver.class);
+        startService(intentGCMListen);
     }
 
     @Override
@@ -87,5 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
 
 }

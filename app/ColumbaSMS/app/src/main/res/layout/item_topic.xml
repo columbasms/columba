@@ -5,17 +5,13 @@
     android:layout_height="match_parent">
     <!-- A CardView that contains a TextView -->
     <android.support.v7.widget.CardView
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
-        android:layout_margin="16dp"
-    android:layout_width="match_parent"
-    android:layout_height="150dp"
-    card_view:cardCornerRadius="4dp">
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+            android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        card_view:cardCornerRadius="4dp">
 
-<TextView
-    android:id="@+id/topics_name"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:textSize="15sp"/>
+
 </android.support.v7.widget.CardView>
     </LinearLayout>

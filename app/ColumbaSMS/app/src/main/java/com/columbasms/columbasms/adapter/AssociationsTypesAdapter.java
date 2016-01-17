@@ -1,11 +1,13 @@
 package com.columbasms.columbasms.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.columbasms.columbasms.R;
@@ -28,11 +30,14 @@ public class AssociationsTypesAdapter extends RecyclerView.Adapter<AssociationsT
 
     // Provide a direct reference to each of the views within a data item
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public CardView cl;
         public TextView nameTextView;
         public ImageView favourite;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            cl = (CardView)itemView.findViewById(R.id.card_layout);
+            cl.setOnClickListener(this);
             nameTextView = (TextView) itemView.findViewById(R.id.association_name);
             favourite = (ImageView) itemView.findViewById(R.id.favourite);
             favourite.setOnClickListener(this);
@@ -43,10 +48,10 @@ public class AssociationsTypesAdapter extends RecyclerView.Adapter<AssociationsT
             int pos = getAdapterPosition();
             AssociationType n = associationTypes.get(pos);
             if(n.isSelected()) {
-                v.setBackgroundResource(R.drawable.check_circle_deselected);
+                favourite.setBackgroundResource(R.drawable.check_circle_deselected);
                 n.setSelected(false);
             }else{
-                v.setBackgroundResource(R.drawable.check_circle_selected);
+                favourite.setBackgroundResource(R.drawable.check_circle_selected);
                 n.setSelected(true);
             }
             associationTypes.set(pos, n);
