@@ -1,52 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorDivider">
+    android:background="@color/colorBackground">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/Toolbar_Theme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="135dp"
-        android:layout_marginTop="56dp"
-        android:background="@color/colorPrimary"
-        android:text="@string/main_message"
-        android:gravity="center"
-        android:textSize="@dimen/large_text_size"
-        android:textColor="@color/colorText"
-        />
-
-    <ImageView
-        android:id="@+id/imagef"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="135dp"
-        android:background="@drawable/colomba_icns" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="215dp"
-        android:layout_marginStart="115dp"
-        android:text="@string/joined_msg"
-        />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="265dp">
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1.5">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/Toolbar_Theme"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/main_activity_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorText"
+                    android:layout_marginLeft="@dimen/appbar_text_paddingLeft"
+                    android:textSize="40sp"/>
+                <TextView
+                    android:id="@+id/main_activity_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorText"
+                    android:layout_marginLeft="@dimen/appbar_text_paddingLeft"
+                    android:textSize="16sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_topics"
@@ -56,6 +69,6 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
 
 

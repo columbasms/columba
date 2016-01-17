@@ -27,14 +27,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     // Provide a direct reference to each of the views within a data item
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView nameTextView;
+        //public TextView nameTextView;
         //public ImageView favourite;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
 
-            nameTextView = (TextView) itemView.findViewById(R.id.topics_name);
+            //nameTextView = (TextView) itemView.findViewById(R.id.topics_name);
 
         }
     }
@@ -60,8 +60,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         String t = topics.get(position);
 
         // Set item views based on the data model
-        TextView textView = viewHolder.nameTextView;
-        textView.setText(t);
+        //TextView textView = viewHolder.nameTextView;
+        //textView.setText(t);
 
         //ImageView button = viewHolder.favourite;
     }

@@ -35,7 +35,6 @@ public class SelectionMexAmountActivity extends AppCompatActivity implements Vie
             SharedPreferences.Editor editor_account_information = account_information.edit();
             editor_account_information.putString("messageAmount", ma);
             editor_account_information.commit();
-
             SelectionMexAmountActivity.this.finish();
             Intent intent = new Intent(this, SelectionOrgTypesActivity.class);
             startActivity(intent);

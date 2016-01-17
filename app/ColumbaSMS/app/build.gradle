@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         applicationId "com.columbasms.columbasms"
-        minSdkVersion 23
+        minSdkVersion 10
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -53,4 +53,5 @@ dependencies {
         transitive = true;
     }
     compile "com.google.android.gms:play-services-gcm:8.3.0"
+
 }

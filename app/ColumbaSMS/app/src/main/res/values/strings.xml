@@ -31,4 +31,5 @@
     <string name="dgts__login_digits_text">Sign in</string>
 
     <string name="gcm_sender_ID">879251508715</string>
+    <string name="setImage">set_image</string>
 </resources>

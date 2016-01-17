@@ -11,7 +11,7 @@ public class Contact {
 
     public Contact (String contact_name, String contact_number, boolean isSelected){
         this.contact_name = contact_name;
-        this.contact_number = contact_name;
+        this.contact_number = contact_number;
         this.isSelected = isSelected;
     }
 

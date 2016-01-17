@@ -26,8 +26,7 @@ public class RegistrationService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         InstanceID instanceID = InstanceID.getInstance(this);
         try {
-            String token = instanceID.getToken(getString(R.string.gcm_sender_ID),
-                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+            String token = instanceID.getToken(getString(R.string.gcm_sender_ID), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor_account_information = sp.edit();
             editor_account_information.putString("gcm-token", token);
