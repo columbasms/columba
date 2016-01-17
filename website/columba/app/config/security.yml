@@ -48,6 +48,11 @@ security:
                 default_target_path:            /dashboard
             logout: true
             anonymous: true
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+                secure: true
 
 
     access_control:
