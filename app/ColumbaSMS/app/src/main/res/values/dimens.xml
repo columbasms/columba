@@ -2,4 +2,38 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Special text size -->
+    <dimen name="appname_text_size">60sp</dimen>
+
+    <!-- General text size -->
+    <dimen name="primary_text_size">16sp</dimen>
+    <dimen name="secondary_text_size">14sp</dimen>
+    <dimen name="large_text_size">22sp</dimen>
+
+    <!-- General text padding -->
+    <dimen name="primary_text_padding">10dp</dimen>
+    <dimen name="large_text_padding">25dp</dimen>
+
+    <!-- General customized margin-->
+    <dimen name="margin_edit_text_layout">35dp</dimen>
+    <dimen name="margin_edit_text_layout_small">5dp</dimen>
+
+    <!-- AppBar metrics-->
+    <dimen name="appbar_height">56dp</dimen>
+    <dimen name="appbar_padding">16dp</dimen>
+    <dimen name="appbar_text_paddingLeft">72dp</dimen>
+
+    <!-- EditText metrics-->
+    <dimen name="editText_icon_width">45dp</dimen>
+    <dimen name="editText_icon_height">45dp</dimen>
+    <dimen name="editText_paddingBottom">15dp</dimen>
+    <dimen name="editText_marginLeft">20dp</dimen>
+    <dimen name="editText_marginRight">20dp</dimen>
+
+    <!-- Spinner metrics-->
+    <dimen name="spinner_marginLeft">15dp</dimen>
+    <dimen name="spinner_item_padding">10dp</dimen>
+    <dimen name="spinner_item_text_size">18sp</dimen>
+
 </resources>

@@ -1,0 +1,22 @@
+{% extends 'base_no_content.html.twig' %}
+
+{% block body %}
+
+    <div class="full-height">
+        <div class="container-sm-height full-height">
+            <div class="row row-sm-height">
+                <div class="col-sm-12 col-sm-height col-middle text-center">
+                    <img src="{{ asset('img/columba.png') }}" alt="logo" class="brand" data-src="{{ asset('img/columba.png') }}" width="150" height="150">
+                    <h1>Welcome to Columba</h1>
+                    {% if app.user %}
+                        <a href="{{ url('dashboard') }}">Dashboard</a>
+                    {% else %}
+                        <a class="m-r-30" href="{{ url('fos_user_security_login') }}">Login</a>
+                        <a href="{{ url('fos_user_registration_register') }}">Request an account</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

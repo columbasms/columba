@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Columba{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta content="" name="description" />
+        <meta content="" name="author" />
+        {% block stylesheets %}
+
+            {% stylesheets '@basic_css' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+            <!--[if lte IE 9]>
+                <link rel="stylesheet" href="{{ asset('css/ie9.css') }}" />
+            <![endif]-->
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <script type="text/javascript">
+            window.onload = function()
+            {
+                // fix for windows 8
+                if (navigator.appVersion.indexOf("Windows NT 6.2") != -1)
+                    document.head.innerHTML += '{{ asset('css/windows.chrome.fix.css') }}'
+            }
+        </script>
+    </head>
+    <body class="fixed-header sidebar-visible menu-pin">
+
+        {% block sidebar %}
+
+            {{ include('sidebar.html.twig') }}
+
+        {% endblock %}
+
+        <div class="page-container">
+            {% block header %} {{ include('header.html.twig') }} {% endblock %}
+
+            <div class="page-content-wrapper ">
+                <div class="content sm-gutter">
+                    <div class="container-fluid padding-25 sm-padding-10">
+
+                        {% if app.request.hasPreviousSession %}
+                            {% for type, messages in app.session.flashbag.all() %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ type }}">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+
+                        {% block body %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% block javascripts %}
+            {% javascripts '@basic_js' %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+    </body>
+</html>
