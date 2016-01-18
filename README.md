@@ -14,3 +14,7 @@ Concept validation
 Project Presentation
 ==============
 - [Idea Presentation](https://docs.google.com/presentation/d/17rD1E-jecodD0Xn6OHY4I-4PqranIXT8noGd9qQkYWc/present?slide)
+
+Milestone 1 - Proof Of Concept
+==============
+- [Presentation](https://docs.google.com/presentation/d/13PM9ZOeuu_qwNcWmSas6EMMbuZNPBDkvzrR7QQrRvHQ/present)
