@@ -10,4 +10,5 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="RVM: ruby-2.2.3" project-jdk-type="RUBY_SDK" />
 </project>

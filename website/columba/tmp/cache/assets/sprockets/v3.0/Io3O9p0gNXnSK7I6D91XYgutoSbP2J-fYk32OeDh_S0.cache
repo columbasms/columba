@@ -1,0 +1,71 @@
+{:uriI"†file://app/assets/javascripts/plugins/bootstrap-select2/component.json?type=application/json&id=9db3db002dbd5c307bf9e2fea9bf999400fea8f17aaf712bed3725fa36be7224:ET:load_pathI"app/assets/javascripts;T:filenameI"Dapp/assets/javascripts/plugins/bootstrap-select2/component.json;T:	nameI"(plugins/bootstrap-select2/component;T:logical_pathI"-plugins/bootstrap-select2/component.json;T:content_typeI"application/json;T:sourceI"ƒ{
+  "name": "select2",
+  "repo": "ivaynberg/select2",
+  "description": "Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.",
+  "version": "3.5.1",
+  "demo": "http://ivaynberg.github.io/select2/",
+  "keywords": [
+    "jquery"
+  ],
+  "main": "select2.js",
+  "styles": [
+    "select2.css",
+    "select2-bootstrap.css"
+  ],
+  "scripts": [
+    "select2.js",
+    "select2_locale_ar.js",
+    "select2_locale_bg.js",
+    "select2_locale_ca.js",
+    "select2_locale_cs.js",
+    "select2_locale_da.js",
+    "select2_locale_de.js",
+    "select2_locale_el.js",
+    "select2_locale_es.js",
+    "select2_locale_et.js",
+    "select2_locale_eu.js",
+    "select2_locale_fa.js",
+    "select2_locale_fi.js",
+    "select2_locale_fr.js",
+    "select2_locale_gl.js",
+    "select2_locale_he.js",
+    "select2_locale_hr.js",
+    "select2_locale_hu.js",
+    "select2_locale_id.js",
+    "select2_locale_is.js",
+    "select2_locale_it.js",
+    "select2_locale_ja.js",
+    "select2_locale_ka.js",
+    "select2_locale_ko.js",
+    "select2_locale_lt.js",
+    "select2_locale_lv.js",
+    "select2_locale_mk.js",
+    "select2_locale_ms.js",
+    "select2_locale_nl.js",
+    "select2_locale_no.js",
+    "select2_locale_pl.js",
+    "select2_locale_pt-BR.js",
+    "select2_locale_pt-PT.js",
+    "select2_locale_ro.js",
+    "select2_locale_ru.js",
+    "select2_locale_sk.js",
+    "select2_locale_sv.js",
+    "select2_locale_th.js",
+    "select2_locale_tr.js",
+    "select2_locale_uk.js",
+    "select2_locale_vi.js",
+    "select2_locale_zh-CN.js",
+    "select2_locale_zh-TW.js"
+  ],
+  "images": [
+    "select2-spinner.gif",
+    "select2.png",
+    "select2x2.png"
+  ],
+  "license": "MIT"
+}
+;T:metadata{	:dependencieso:Set:
+@hash{	I"environment-version;TTI"environment-paths;TTI"@processors:type=application/json&file_type=application/json;TTI"Rfile-digest://app/assets/javascripts/plugins/bootstrap-select2/component.json;TT:charsetI"
+utf-8;F:digest"%¨P?¶qI’¥™öD.
+ÏO¬Çñî/f∑ÒÍ\:lengthiƒ:dependencies_digest"%Vê·åÑRé†˜¥≥™<·¯áî	SfDîø6|:idI"E9db3db002dbd5c307bf9e2fea9bf999400fea8f17aaf712bed3725fa36be7224;F:
+mtimel+Æﬁ~V

@@ -1,0 +1,13 @@
+{:uriI"œfile://app/assets/javascripts/plugins/bootstrap-select2/bower.json?type=application/json&id=b4b1f3d6a44388daf8d85e1c7c3db27b1f8cf58258add28ad8dbaac32745bb46:ET:load_pathI"app/assets/javascripts;T:filenameI"@app/assets/javascripts/plugins/bootstrap-select2/bower.json;T:	nameI"$plugins/bootstrap-select2/bower;T:logical_pathI")plugins/bootstrap-select2/bower.json;T:content_typeI"application/json;T:sourceI"Î{
+    "name": "select2",
+    "version": "3.5.1",
+    "main": ["select2.js", "select2.css", "select2.png", "select2x2.png", "select2-spinner.gif"],
+    "dependencies": {
+        "jquery": ">= 1.7.1"
+    }
+}
+;T:metadata{	:dependencieso:Set:
+@hash{	I"environment-version;TTI"environment-paths;TTI"@processors:type=application/json&file_type=application/json;TTI"Nfile-digest://app/assets/javascripts/plugins/bootstrap-select2/bower.json;TT:charsetI"
+utf-8;F:digest"%YÙKà„î·Èø*Ø]BıñŠ°+_ÔO¡š‡ëU^:lengthiÎ:dependencies_digest"%83mU1øæ¥&áa~*fVf
+ÇÃ¦şï(ÈÆé¿eŒÓş:idI"Eb4b1f3d6a44388daf8d85e1c7c3db27b1f8cf58258add28ad8dbaac32745bb46;F:
+mtimel+¬Ş~V
