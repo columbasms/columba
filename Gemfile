@@ -32,6 +32,7 @@ gem 'paperclip'
 gem 'activeadmin', github: 'activeadmin'
 gem 'curb'
 gem 'puma'
+gem 'dotenv-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
