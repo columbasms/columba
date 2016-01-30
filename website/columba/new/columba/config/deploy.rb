@@ -5,7 +5,7 @@ server '52.29.186.216', port: 22, roles: [:web, :app, :db], primary: true
 
 set :application, 'columba'
 set :repo_url, 'git@github.com:columbasms/columba.git'
-set :user,      'deploy'
+set :user,      'ubuntu'
 set :puma_threads, [4, 16]
 set :puma_workers, 0
 
@@ -35,6 +35,11 @@ set :branch,        :site
 ## Linked Files & Directories (Default None):
 # set :linked_files, %w{config/database.yml}
 # set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+
+default_run_options[:pty] = true
+ssh_options[:forward_agent] = true
+ssh_options[:auth_methods] = ["publickey"]
+ssh_options[:keys] = ["~/.ssh/columba.pem"]
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
