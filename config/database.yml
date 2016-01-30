@@ -32,4 +32,4 @@ production:
   pool: 5
   username: root
   password: columbapsw
-  socket: /tmp/mysql.sock
+  socket: /var/run/mysqld/mysqld.sock
