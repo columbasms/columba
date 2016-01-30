@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  phone_number: MyString
+  enabled: false
+  gcm_token: MyText
+  digits_token: MyText
+
+two:
+  phone_number: MyString
+  enabled: false
+  gcm_token: MyText
+  digits_token: MyText

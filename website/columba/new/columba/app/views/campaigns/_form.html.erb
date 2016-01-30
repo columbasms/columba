@@ -1,0 +1,20 @@
+<%= form_for(@campaign, html: { role: 'form' }) do |f| %>
+  <% if @campaign.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(@campaign.errors.count, "error") %> prohibited this campaign from being saved:</h2>
+
+      <ul>
+      <% @campaign.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group form-group-default required">
+    <%= f.label :message %>
+    <%= f.text_field :message, class: 'form-control', required: 'required' %>
+  </div>
+
+  <%= f.submit 'Send', class: 'btn btn-primary btn-cons m-t-10' %>
+<% end %>
