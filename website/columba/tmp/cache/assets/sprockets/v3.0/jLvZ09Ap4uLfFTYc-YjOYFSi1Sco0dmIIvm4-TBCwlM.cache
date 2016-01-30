@@ -1,40 +1,0 @@
-{:uriI"¥file://app/assets/javascripts/plugins/bootstrap-select2/select2.jquery.json?type=application/json&id=64b7b8ac184bc7be98ea8cccce4e32f3d02112f96366f92b7b1132017dd1f9fa:ET:load_pathI"app/assets/javascripts;T:filenameI"Iapp/assets/javascripts/plugins/bootstrap-select2/select2.jquery.json;T:	nameI"-plugins/bootstrap-select2/select2.jquery;T:logical_pathI"2plugins/bootstrap-select2/select2.jquery.json;T:content_typeI"application/json;T:sourceI"{
-    "name": "select2",
-    "title": "Select2",
-    "description": "Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.",
-    "keywords": [
-        "select",
-        "autocomplete",
-        "typeahead",
-        "dropdown",
-        "multiselect",
-        "tag",
-        "tagging"
-    ],
-    "version": "3.5.1",
-    "author": {
-        "name": "Igor Vaynberg",
-        "url": "https://github.com/ivaynberg"
-    },
-    "licenses": [
-        {
-            "type": "Apache",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0"
-        },
-        {
-            "type": "GPL v2",
-            "url": "http://www.gnu.org/licenses/gpl-2.0.html"
-        }
-    ],
-    "bugs": "https://github.com/ivaynberg/select2/issues",
-    "homepage": "http://ivaynberg.github.com/select2",
-    "docs": "http://ivaynberg.github.com/select2/",
-    "download": "https://github.com/ivaynberg/select2/tags",
-    "dependencies": {
-        "jquery": ">=1.7.1"
-    }
-}
-;T:metadata{	:dependencieso:Set:
-@hash{	I"environment-version;TTI"environment-paths;TTI"@processors:type=application/json&file_type=application/json;TTI"Wfile-digest://app/assets/javascripts/plugins/bootstrap-select2/select2.jquery.json;TT:charsetI"
-utf-8;F:digest"%8kŒëYZÑ‘š–$òß{¶—~N7¦†ƒL;G™©”:lengthi:dependencies_digest"%ôíNæøÕ:Ía8Äìª0¶Ö2£F¨ÂâÎ:idI"E64b7b8ac184bc7be98ea8cccce4e32f3d02112f96366f92b7b1132017dd1f9fa;F:
-mtimel+¬Ş~V

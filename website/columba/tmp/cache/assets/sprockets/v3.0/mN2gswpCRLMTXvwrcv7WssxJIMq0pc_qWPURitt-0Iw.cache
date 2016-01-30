@@ -1,43 +1,0 @@
-{:uriI"©file://app/assets/javascripts/plugins/jquery-datatable/extensions/AutoFill/Readme.txt?type=text/plain&id=af8a81c29127ce8a9ae3b6a9df1e60ca684c9251d17b0ed313a336e245282e92:ET:load_pathI"app/assets/javascripts;T:filenameI"Sapp/assets/javascripts/plugins/jquery-datatable/extensions/AutoFill/Readme.txt;T:	nameI"8plugins/jquery-datatable/extensions/AutoFill/Readme;T:logical_pathI"<plugins/jquery-datatable/extensions/AutoFill/Readme.txt;T:content_typeI"text/plain;T:sourceI"4# AutoFill
-
-AutoFill gives an Excel like option to a DataTable to click and drag over multiple cells, filling in information over the selected cells and incrementing numbers as needed. Key features include:
-
-* Click and drag cell content insertion
-* Automatic incrementing of numeric information
-* Enable and disable on any column
-* Detailed callback functions for customisation
-* Support for both DataTables and browser window scrolling
-
-
-# Installation
-
-To use AutoFill, first download DataTables ( http://datatables.net/download ) and place the unzipped AutoFill package into a `extensions` directory in the DataTables package. This will allow the pages in the examples to operate correctly. To see the examples running, open the `examples` directory in your web-browser.
-
-
-# Basic usage
-
-AutoFill is initialised using the `$.fn.dataTable.AutoFill` constructor. For example:
-
-```js
-$(document).ready( function () {
-    var table = $('#example').dataTable();
-    new $.fn.dataTable.AutoFill( table );
-} );
-```
-
-
-# Documentation / support
-
-* Documentation: http://datatables.net/extensions/autofill/
-* DataTables support forums: http://datatables.net/forums
-
-
-# GitHub
-
-If you fancy getting involved with the development of AutoFill and help make it better, please refer to its GitHub repo: https://github.com/DataTables/AutoFill
-
-;T:metadata{	:dependencieso:Set:
-@hash{	I"environment-version;TTI"environment-paths;TTI"4processors:type=text/plain&file_type=text/plain;TTI"afile-digest://app/assets/javascripts/plugins/jquery-datatable/extensions/AutoFill/Readme.txt;TT:charsetI"
-utf-8;F:digest"%w!m˜Aí»ûxˆÁš­Ø­5òm·Ü#±ß•>b°:lengthi4:dependencies_digest"%g‡˜_ÂÀ¥©İ“\7ıØé}Ü´Íl9Z
-hîab×2:idI"Eaf8a81c29127ce8a9ae3b6a9df1e60ca684c9251d17b0ed313a336e245282e92;F:
-mtimel+îİ~V

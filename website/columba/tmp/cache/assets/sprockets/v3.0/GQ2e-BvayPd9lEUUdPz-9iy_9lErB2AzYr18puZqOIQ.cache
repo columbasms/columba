@@ -1,22 +1,0 @@
-{:uriI"œfile://app/assets/javascripts/plugins/jquery-slider/component.json?type=application/json&id=427e78431d519e6837808d199e693d3f0043b661aa2d7411780b6e6e7b4a55a1:ET:load_pathI"app/assets/javascripts;T:filenameI"@app/assets/javascripts/plugins/jquery-slider/component.json;T:	nameI"$plugins/jquery-slider/component;T:logical_pathI")plugins/jquery-slider/component.json;T:content_typeI"application/json;T:sourceI"G{
-  "name": "sidr",
-  "description": "jQuery plugin for creating side menus and the easiest way for doing your menu responsive",
-  "version": "1.2.1",
-  "homepage": "http://www.berriart.com/sidr/",
-  "author": {
-    "name": "Alberto Varela",
-    "site": "http://albertovarelasanchez.com/"
-  },
-  "main": ["./jquery.sidr.min.js", "./stylesheets/jquery.sidr.dark.css"],
-  "keywords": [ "jquery", "plugin", "responsive" ],
-  "dependencies": {
-    "jquery": ">=1.4.3"
-  },
-  "licenses": [ {
-    "type": "MIT",
-    "url": "https://github.com/artberri/sidr/blob/master/LICENSE-MIT"
-  } ]
-};T:metadata{	:dependencieso:Set:
-@hash{	I"environment-version;TTI"environment-paths;TTI"@processors:type=application/json&file_type=application/json;TTI"Nfile-digest://app/assets/javascripts/plugins/jquery-slider/component.json;TT:charsetI"
-utf-8;F:digest"%F{KUOðÁ¸ô¾êÄ»Óv+X½ø~ì³Ct+@ÀÂ:lengthiG:dependencies_digest"%%8”Ü-¢2Nsýdá!]ggž¿/Ul0qSœñl\:idI"E427e78431d519e6837808d199e693d3f0043b661aa2d7411780b6e6e7b4a55a1;F:
-mtimel+TÝ~V

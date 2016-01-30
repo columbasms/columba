@@ -1,24 +1,0 @@
-{:uriI"file://app/assets/javascripts/plugins/bootstrap-select2/package.json?type=application/json&id=a3518506be1e08136c0cd4b736766d4b75e22daf4fa0b7eda9fdd6f8c5a443e3:ET:load_pathI"app/assets/javascripts;T:filenameI"Bapp/assets/javascripts/plugins/bootstrap-select2/package.json;T:	nameI"&plugins/bootstrap-select2/package;T:logical_pathI"+plugins/bootstrap-select2/package.json;T:content_typeI"application/json;T:sourceI"¦{
-  "name" : "Select2",
-  "description": "Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.",
-  "homepage": "http://ivaynberg.github.io/select2",
-  "author": "Igor Vaynberg",
-  "repository": {"type": "git", "url": "git://github.com/ivaynberg/select2.git"},
-  "main": "select2.js",
-  "version": "3.5.1",
-  "jspm": {
-    "main": "select2",
-    "files": ["select2.js", "select2.png", "select2.css", "select2-spinner.gif"],
-    "shim": {
-        "select2": {
-            "imports": ["jquery", "./select2.css!"],
-            "exports": "$"
-        }
-    },
-    "buildConfig": { "uglify": true }
-  }
-}
-;T:metadata{	:dependencieso:Set:
-@hash{	I"environment-version;TTI"environment-paths;TTI"@processors:type=application/json&file_type=application/json;TTI"Pfile-digest://app/assets/javascripts/plugins/bootstrap-select2/package.json;TT:charsetI"
-utf-8;F:digest"%Äµ¥-ËôX·Ô¶@ò$’—0r'_|Ÿ²ÀÑı:lengthi¦:dependencies_digest"%tÄğA‹kPæcæéø©wäQkĞo—RW×Öm×¦Zú:idI"Ea3518506be1e08136c0cd4b736766d4b75e22daf4fa0b7eda9fdd6f8c5a443e3;F:
-mtimel+¬Ş~V
