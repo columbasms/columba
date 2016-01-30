@@ -62,6 +62,7 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 
+/config/secrets.yml
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 
 ## Environment normalisation:
