@@ -52,8 +52,8 @@ namespace :deploy do
   desc "Make sure local git is in sync with remote."
   task :check_revision do
     on roles(:app) do
-      unless `git rev-parse HEAD` == `git rev-parse origin/master`
-        puts "WARNING: HEAD is not the same as origin/master"
+      unless `git rev-parse HEAD` == `git rev-parse origin/site`
+        puts "WARNING: HEAD is not the same as origin/site"
         puts "Run `git push` to sync changes."
         exit
       end
