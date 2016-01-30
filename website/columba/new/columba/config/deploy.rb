@@ -36,10 +36,13 @@ set :branch,        :site
 # set :linked_files, %w{config/database.yml}
 # set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
-default_run_options[:pty] = true
-ssh_options[:forward_agent] = true
-ssh_options[:auth_methods] = ["publickey"]
-ssh_options[:keys] = ["~/.ssh/columba.pem"]
+set :pty, true
+
+set :ssh_options, {
+    forward_agent: true,
+    auth_methods: ["publickey"],
+    keys: ["~/.ssh/columba.pem"]
+}
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
