@@ -11,6 +11,12 @@ ActiveAdmin.setup do |config|
   #
   # config.site_title_link = "/"
 
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      menu.add label: 'Frontend', url: '/', priority: 0
+    end
+  end
+
   # Set an optional image to be displayed for the header
   # instead of a string (overrides :site_title)
   #

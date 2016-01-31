@@ -33,6 +33,9 @@ gem 'activeadmin', github: 'activeadmin'
 gem 'curb'
 gem 'puma'
 gem 'dotenv-rails'
+gem 'responsive_active_admin'
+gem 'select2-rails'
+gem 'activeadmin-select2', github: 'mfairburn/activeadmin-select2'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
