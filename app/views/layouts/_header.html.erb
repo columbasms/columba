@@ -24,10 +24,26 @@
     <!-- RIGHT SIDE -->
     <div class="pull-right full-height visible-sm visible-xs">
       <!-- START ACTION BAR -->
-      <div class="header-inner">
-        <a href="#" class="btn-link visible-sm-inline-block visible-xs-inline-block" data-toggle="quickview" data-toggle-element="#quickview">
-          <span class="icon-set menu-hambuger-plus"></span>
-        </a>
+      <div class="header-inner dropdown">
+        <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="thumbnail-wrapper d32 circular inline m-t-5">
+                <img src="<%= current_organization.avatar.url(:thumb) %>" alt="" data-src="<%= current_organization.avatar.url(:thumb) %>" width="32" height="32">
+          </span>
+        </button>
+        <ul class="dropdown-menu profile-dropdown" role="menu">
+          <li><a href="#"><i class="pg-settings_small"></i> Settings</a>
+          </li>
+          <li><a href="#"><i class="pg-outdent"></i> Feedback</a>
+          </li>
+          <li><a href="#"><i class="pg-signals"></i> Help</a>
+          </li>
+          <li class="bg-master-lighter">
+            <%= link_to(destroy_organization_session_path, method: :delete, class: 'clearfix') do %>
+                <span class="pull-left">Logout</span>
+                <span class="pull-right"><i class="pg-power"></i></span>
+            <% end %>
+          </li>
+        </ul>
       </div>
       <!-- END ACTION BAR -->
     </div>

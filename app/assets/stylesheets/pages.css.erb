@@ -12980,6 +12980,10 @@ Main components
   .horizontal-menu .bar .bar-inner > ul > li > .horizontal li {
     display: block;
   }
+  .dropdown-menu.profile-dropdown {
+    right: 0 !important;
+    left: auto !important;
+  }
 }
 /* Landscape view of all tablet devices */
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
@@ -13609,11 +13613,15 @@ Main components
   .error-container-innner {
     width: auto;
   }
+  .dropdown-menu.profile-dropdown {
+    right: 0 !important;
+    left: auto !important;
+  }
 }
 /*** Retina Display Images **/
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 200/100), only screen and (min-device-pixel-ratio: 2) {
   .icon-set {
-    background: url('<%= image_path 'top_tray_2x.png' %>');
+    background: url('<%= image_path 'icons/top_tray_2x.png' %>');
     position: relative;
     background-size: 95px 19px;
   }
@@ -13629,5 +13637,9 @@ Main components
     position: relative;
     opacity: 0.8;
     background-size: 114px 29px;
+  }
+  .dropdown-menu.profile-dropdown {
+    right: 0 !important;
+    left: auto !important;
   }
 }
