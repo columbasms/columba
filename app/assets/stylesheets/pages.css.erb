@@ -129,7 +129,7 @@ body.rtl [class*="col-"] {
   -webkit-animation: none;
   animation: none;
   top: 73px;
-  background: url('/assets/progress/progress-circle-success.svg') no-repeat top left;
+  background: url('<%= image_path 'progress-circle-success.svg' %>') no-repeat top left;
   background-size: 100% auto;
   margin: 0 auto;
   border-width: 0;
@@ -968,7 +968,7 @@ body.rtl [class*="col-"] {
 }
 .quickview-wrapper .nav-tabs ~ .tab-content .quickview-notes .note {
   /* Quickview Note */
-  background-image: url('/assets/img/notes_lines.png');
+  background-image: url('<%= image_path 'notes_lines.png' %>');
   background-repeat: repeat-y;
   background-position: 27px top;
 }
@@ -1239,7 +1239,7 @@ body.rtl [class*="col-"] {
 ------------------------------------
 */
 .icon-set {
-  background: url('/assets/icons/top_tray.png') no-repeat;
+  background: url('<%= image_path 'icons/top_tray.png' %>') no-repeat;
   position: relative;
   display: block;
 }
@@ -2106,10 +2106,10 @@ body.rtl [class*="col-"] {
   opacity: 0.1;
 }
 .portlet-icon-refresh-lg-master {
-  background-image: url('/assets/img/progress/progress-circle-lg-master-static.svg');
+  background-image: url('<%= image_path 'progress/progress-circle-lg-master-static.svg' %>');
 }
 .portlet-icon-refresh-lg-white {
-  background-image: url('/assets/img/progress/progress-circle-lg-white-static.svg');
+  background-image: url('<%= image_path 'progress/progress-circle-lg-white-static.svg' %>');
 }
 .portlet-icon-refresh-lg-master-animated,
 .portlet-icon-refresh-lg-white-animated {
@@ -2126,10 +2126,10 @@ body.rtl [class*="col-"] {
   opacity: 1;
 }
 .portlet-icon-refresh-lg-master-animated {
-  background-image: url('/assets/img/progress/progress-circle-lg-master.svg');
+  background-image: url('<%= image_path 'progress/progress-circle-lg-master.svg' %>');
 }
 .portlet-icon-refresh-lg-white-animated {
-  background-image: url('/assets/img/progress/progress-circle-lg-white.svg');
+  background-image: url('<%= image_path 'progress/progress-circle-lg-white.svg' %>');
 }
 /* For demo purpose only */
 .panel-scroll {
@@ -2186,13 +2186,13 @@ body.rtl [class*="col-"] {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 400;
-  src: local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v5/zhcz-_WihjSQC0oHJ9TCYAzyDMXhdD8sAj6OAJTFsBI.woff2) format('woff2'), url(https://fonts.gstatic.com/s/montserrat/v5/zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff) format('woff'), url('/assets/montserrat/Montserrat-Regular.ttf') format('truetype');
+  src: local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v5/zhcz-_WihjSQC0oHJ9TCYAzyDMXhdD8sAj6OAJTFsBI.woff2) format('woff2'), url(https://fonts.gstatic.com/s/montserrat/v5/zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff) format('woff'), url('<%= asset_path 'montserrat/Montserrat-Regular.ttf' %>') format('truetype');
 }
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 700;
-  src: local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v5/IQHow_FEYlDC4Gzy_m8fcmaVI6zN22yiurzcBKxPjFE.woff2) format('woff2'), url(https://fonts.gstatic.com/s/montserrat/v5/IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff) format('woff'), url('/assets/montserrat/Montserrat-Bold.ttf') format('truetype');
+  src: local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v5/IQHow_FEYlDC4Gzy_m8fcmaVI6zN22yiurzcBKxPjFE.woff2) format('woff2'), url(https://fonts.gstatic.com/s/montserrat/v5/IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff) format('woff'), url('<%= asset_path 'montserrat/Montserrat-Bold.ttf' %>') format('truetype');
 }
 html {
   font-size: 100%;
@@ -3736,7 +3736,7 @@ Misc buttons
   top: 8px;
 }
 .alert .close {
-  background: url("/assets/img/icons/noti-cross.png") no-repeat scroll 0 0 transparent;
+  background: url("<%= image_path 'icons/noti-cross.png' %>") no-repeat scroll 0 0 transparent;
   background-position: -9px -10px;
   width: 10px;
   height: 9px;
@@ -4452,37 +4452,37 @@ body > .pgn-wrapper {
 ------------------------------------
 */
 .progress-bar-indeterminate {
-  background: url('/assets/img/progress/progress-bar-master.svg') no-repeat top left;
+  background: url('<%= image_path 'progress/progress-bar-master.svg' %>') no-repeat top left;
   width: 100%;
   height: 100%;
   background-size: cover;
 }
 .progress-bar-indeterminate.progress-bar-primary {
-  background-image: url('/assets/img/progress/progress-bar-primary.svg');
+  background-image: url('<%= image_path 'progress/progress-bar-primary.svg' %>');
   background-color: transparent;
 }
 .progress-bar-indeterminate.progress-bar-complete {
-  background-image: url('/assets/img/progress/progress-bar-complete.svg');
+  background-image: url('<%= image_path 'progress/progress-bar-complete.svg' %>');
   background-color: transparent;
 }
 .progress-bar-indeterminate.progress-bar-success {
-  background-image: url('/assets/img/progress/progress-bar-success.svg');
+  background-image: url('<%= image_path 'progress/progress-bar-success.svg' %>');
   background-color: transparent;
 }
 .progress-bar-indeterminate.progress-bar-info {
-  background-image: url('/assets/img/progress/progress-bar-info.svg');
+  background-image: url('<%= image_path 'progress/progress-bar-info.svg' %>');
   background-color: transparent;
 }
 .progress-bar-indeterminate.progress-bar-warning {
-  background-image: url('/assets/img/progress/progress-bar-warning.svg');
+  background-image: url('<%= image_path 'progress/progress-bar-warning.svg' %>');
   background-color: transparent;
 }
 .progress-bar-indeterminate.progress-bar-danger {
-  background-image: url('/assets/img/progress/progress-bar-danger.svg');
+  background-image: url('<%= image_path 'progress/progress-bar-danger.svg' %>');
   background-color: transparent;
 }
 .progress-bar-indeterminate.progress-bar-master {
-  background-image: url('/assets/img/progress/progress-bar-master.svg');
+  background-image: url('<%= image_path 'progress/progress-bar-master.svg' %>');
   background-color: transparent;
 }
 /* Progress Bar
@@ -4568,29 +4568,29 @@ body > .pgn-wrapper {
 ------------------------------------
 */
 .progress-circle-indeterminate {
-  background: url('/assets/img/progress/progress-circle-master.svg') no-repeat top left;
+  background: url('<%= image_path 'progress/progress-circle-master.svg' %>') no-repeat top left;
   width: 50px;
   height: 50px;
   background-size: 100% auto;
   margin: 0 auto;
 }
 .progress-circle-indeterminate.progress-circle-warning {
-  background-image: url('/assets/img/progress/progress-circle-warning.svg');
+  background-image: url('<%= image_path 'progress/progress-circle-warning.svg' %>');
 }
 .progress-circle-indeterminate.progress-circle-danger {
-  background-image: url('/assets/img/progress/progress-circle-danger.svg');
+  background-image: url('<%= image_path 'progress/progress-circle-danger.svg' %>');
 }
 .progress-circle-indeterminate.progress-circle-info {
-  background-image: url('/assets/img/progress/progress-circle-info.svg');
+  background-image: url('<%= image_path 'progress/progress-circle-info.svg' %>');
 }
 .progress-circle-indeterminate.progress-circle-primary {
-  background-image: url('/assets/img/progress/progress-circle-primary.svg');
+  background-image: url('<%= image_path 'progress/progress-circle-primary.svg' %>');
 }
 .progress-circle-indeterminate.progress-circle-success {
-  background-image: url('/assets/img/progress/progress-circle-success.svg');
+  background-image: url('<%= image_path 'progress/progress-circle-success.svg' %>');
 }
 .progress-circle-indeterminate.progress-circle-complete {
-  background-image: url('/assets/img/progress/progress-circle-complete.svg');
+  background-image: url('<%= image_path 'progress/progress-circle-complete.svg' %>');
 }
 /* Circular Progress 
 ------------------------------------
@@ -7204,7 +7204,7 @@ https://github.com/Waxolunist/bootstrap3-wysihtml5-bower
   font-weight: 600;
 }
 .editor-icon {
-  background-image: url("/assets/img/editor_tray.png");
+  background-image: url("<%= image_path 'progress/editor_tray.png' %>");
   display: inline-block;
   height: 40px;
   margin-top: 5px;
@@ -7876,19 +7876,19 @@ div.cs-skin-slide .cs-options ul li.cs-selected span {
   display: block !important;
 }
 table.dataTable thead .sorting_asc:after {
-  background-image: url("/assets/img/icons/sort_asc.png");
+  background-image: url("<%= image_path 'icons/sort_asc.png' %>");
 }
 table.dataTable thead .sorting_desc:after {
-  background-image: url("/assets/img/icons/sort_desc.png");
+  background-image: url("<%= image_path 'icons/sort_desc.png' %>");
 }
 table.dataTable thead .sorting:after {
-  background-image: url("/assets/img/icons/sort_both.png");
+  background-image: url("<%= image_path 'icons/sort_both.png' %>");
 }
 table.dataTable thead .sorting_asc_disabled:after {
-  background-image: url("/assets/img/icons/sort_asc_disabled.png");
+  background-image: url("<%= image_path 'icons/sort_asc_disabled.png' %>");
 }
 table.dataTable thead .sorting_desc_disabled:after {
-  background-image: url("/assets/img/icons/sort_desc_disabled.png");
+  background-image: url("<%= image_path 'icons/sort_desc_disabled.png' %>");
 }
 table.dataTable thead .sorting:after,
 table.dataTable thead .sorting_asc:after,
@@ -8448,7 +8448,7 @@ input.list-view-search {
   overflow-x: hidden;
 }
 .social-wrapper .social .cover-photo:before {
-  background-image: url("/assets/img/linear_gradient.png");
+  background-image: url("<%= image_path 'linear_gradient.png' %>");
   background-repeat: repeat-x;
   bottom: 0;
   content: " ";
@@ -10531,80 +10531,80 @@ Main components
   z-index: 1;
 }
 .mapplic-pin {
-  background-image: url('/assets//assets/assets/img/maps/marker-master.svg');
+  background-image: url('<%= image_path 'maps/marker-master.svg' %>');
   background-size: contain;
 }
 .mapplic-pin.pulse {
-  background-image: url('/assets//assets/assets/img/maps/pulse-master.svg');
+  background-image: url('<%= image_path 'maps/pulse-master.svg' %>');
 }
 .mapplic-pin.pulse.green {
-  background-image: url('/assets//assets/assets/img/maps/pulse-success.svg');
+  background-image: url('<%= image_path 'maps/pulse-success.svg' %>');
 }
 .mapplic-pin.pulse.blue {
-  background-image: url('/assets//assets/assets/img/maps/pulse-complete.svg');
+  background-image: url('<%= image_path 'maps/pulse-complete.svg' %>');
 }
 .mapplic-pin.pulse.purple {
-  background-image: url('/assets//assets/assets/img/maps/pulse-primary.svg');
+  background-image: url('<%= image_path 'maps/pulse-primary.svg' %>');
 }
 .mapplic-pin.pulse.yellow {
-  background-image: url('/assets//assets/assets/img/maps/pulse-warning.svg');
+  background-image: url('<%= image_path 'maps/pulse-warning.svg' %>');
 }
 .mapplic-pin.pulse.red {
-  background-image: url('/assets//assets/assets/img/maps/pulse-danger.svg');
+  background-image: url('<%= image_path 'maps/pulse-danger.svg' %>');
 }
 .mapplic-pin.pulse-alt {
-  background-image: url('/assets//assets/assets/img/maps/pulse-alt-master.svg');
+  background-image: url('<%= image_path 'maps/pulse-alt-master.svg' %>');
 }
 .mapplic-pin.pulse-alt.green {
-  background-image: url('/assets//assets/assets/img/maps/pulse-alt-success.svg');
+  background-image: url('<%= image_path 'maps/pulse-alt-success.svg' %>');
 }
 .mapplic-pin.pulse-alt.blue {
-  background-image: url('/assets//assets/assets/img/maps/pulse-alt-complete.svg');
+  background-image: url('<%= image_path 'maps/pulse-alt-complete.svg' %>');
 }
 .mapplic-pin.pulse-alt.purple {
-  background-image: url('/assets//assets/assets/img/maps/pulse-alt-primary.svg');
+  background-image: url('<%= image_path 'maps/pulse-alt-primary.svg' %>');
 }
 .mapplic-pin.pulse-alt.yellow {
-  background-image: url('/assets//assets/assets/img/maps/pulse-alt-warning.svg');
+  background-image: url('<%= image_path 'maps/pulse-alt-warning.svg' %>');
 }
 .mapplic-pin.pulse-alt.red {
-  background-image: url('/assets//assets/assets/img/maps/pulse-alt-danger.svg');
+  background-image: url('<%= image_path 'maps/pulse-alt-danger.svg' %>');
 }
 .mapplic-pin.marker {
-  background-image: url('/assets//assets/assets/img/maps/marker-master.svg');
+  background-image: url('<%= image_path 'maps/marker-master.svg' %>');
 }
 .mapplic-pin.marker.green {
-  background-image: url('/assets//assets/assets/img/maps/marker-success.svg');
+  background-image: url('<%= image_path 'maps/marker-success.svg' %>');
 }
 .mapplic-pin.marker.blue {
-  background-image: url('/assets//assets/assets/img/maps/marker-complete.svg');
+  background-image: url('<%= image_path 'maps/marker-complete.svg' %>');
 }
 .mapplic-pin.marker.purple {
-  background-image: url('/assets//assets/assets/img/maps/marker-primary.svg');
+  background-image: url('<%= image_path 'maps/marker-primary.svg' %>');
 }
 .mapplic-pin.marker.yellow {
-  background-image: url('/assets//assets/assets/img/maps/marker-warning.svg');
+  background-image: url('<%= image_path 'maps/marker-warning.svg' %>');
 }
 .mapplic-pin.marker.red {
-  background-image: url('/assets//assets/assets/img/maps/marker-danger.svg');
+  background-image: url('<%= image_path 'maps/marker-danger.svg' %>');
 }
 .mapplic-pin.marker-alt {
-  background-image: url('/assets//assets/assets/img/maps/marker-alt-master.svg');
+  background-image: url('<%= image_path 'maps/marker-alt-master.svg' %>');
 }
 .mapplic-pin.marker-alt.green {
-  background-image: url('/assets//assets/assets/img/maps/marker-alt-success.svg');
+  background-image: url('<%= image_path 'maps/marker-alt-success.svg' %>');
 }
 .mapplic-pin.marker-alt.blue {
-  background-image: url('/assets//assets/assets/img/maps/marker-alt-complete.svg');
+  background-image: url('<%= image_path 'maps/marker-alt-complete.svg' %>');
 }
 .mapplic-pin.marker-alt.purple {
-  background-image: url('/assets//assets/assets/img/maps/marker-alt-primary.svg');
+  background-image: url('<%= image_path 'maps/marker-alt-primary.svg' %>');
 }
 .mapplic-pin.marker-alt.yellow {
-  background-image: url('/assets//assets/assets/img/maps/marker-alt-warning.svg');
+  background-image: url('<%= image_path 'maps/marker-alt-warning.svg' %>');
 }
 .mapplic-pin.marker-alt.red {
-  background-image: url('/assets//assets/assets/img/maps/marker-alt-danger.svg');
+  background-image: url('<%= image_path 'maps/marker-alt-danger.svg' %>');
 }
 /*------------------------------------------------------------------
 [27. Widgets]
@@ -10628,7 +10628,7 @@ Main components
   opacity: .69;
 }
 .widget-1:after {
-  background-image: url("/assets//assets/assets/img/dashboard/pages_hero.jpg");
+  background-image: url("<%= image_path 'dashboard/pages_hero.jpg' %>");
   background-size: cover;
   content: " ";
   left: 0;
@@ -10640,7 +10640,7 @@ Main components
   opacity: .69;
 }
 .widget-1:before {
-  background-image: url('/assets/img/linear_gradient.png');
+  background-image: url('<%= image_path 'maps/linear_gradient.png' %>');
   background-repeat: repeat-x;
   content: " ";
   left: 0;
@@ -10669,7 +10669,7 @@ Main components
   background: rgba(255, 255, 255, 0.3);
 }
 .widget-2:after {
-  background-image: url("/assets//assets/assets/img/social/person-cropped.jpg");
+  background-image: url("<%= image_path 'social/person-cropped.jpg' %>");
 }
 .widget-3 a {
   text-decoration: none;
@@ -10878,7 +10878,7 @@ Main components
 }
 .widget-18-post {
   height: 342px;
-  background: url('/assets//assets/assets/img/social/quote.jpg');
+  background: url('<%= image_path 'social/quote.jpg' %>');
   background-position: center center;
   background-size: cover;
 }
@@ -12280,7 +12280,7 @@ Main components
   opacity: 0.87;
 }
 .builder a.active:before {
-  background-image: url('/assets//assets/assets/img//demo/tick.svg');
+  background-image: url('<%= image_path 'demo/tick.svg' %>');
   width: 23px;
   height: 23px;
   content: '';
@@ -13613,16 +13613,16 @@ Main components
 /*** Retina Display Images **/
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 200/100), only screen and (min-device-pixel-ratio: 2) {
   .icon-set {
-    background: url('/assets/icons/top_tray_2x.png');
+    background: url('<%= image_path 'top_tray_2x.png' %>');
     position: relative;
     background-size: 95px 19px;
   }
   .editor-icon {
-    background-image: url("/assets/editor_tray_2x.png");
+    background-image: url("<%= image_path 'editor_tray_2x.png' %>");
     background-size: 480px 40px;
   }
   .alert .close {
-    background: url("/assets/icons/noti-cross-2x.png") no-repeat scroll 0 0 transparent;
+    background: url("<%= image_path 'icons/noti-cross-2x.png' %>") no-repeat scroll 0 0 transparent;
     background-position: -9px -10px;
     width: 10px;
     height: 9px;

@@ -8,7 +8,7 @@ class Organization < ActiveRecord::Base
 
   has_attached_file :avatar, styles: {
       thumb: '32x32#'
-  }, default_url: '/assets/avatar.png'
+  }, default_url: '/images/avatar.png'
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   has_many :campaigns
