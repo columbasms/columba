@@ -18,7 +18,7 @@
     <img src="<%= image_path 'logo_website_dark.png' %>" alt="logo" data-src="<%= image_path 'logo_website_dark.png' %>" data-src-retina="<%= image_path 'logo_website_dark.png' %>" width="78" height="22">
     <p class="p-t-35">Sign into your columba account</p>
     <!-- START Login Form -->
-    <%= form_for(:organization, :url => session_path(:organization), html: { id: 'form-login', class: 'p-t-15', role: 'form' }) do |f| %>
+    <%= form_for(:organization, :url => session_path(:organization), html: { id: 'form-login', class: 'p-t-15 m-b-15', role: 'form' }) do |f| %>
       <!-- START Form Control-->
       <div class="form-group form-group-default">
         <%= f.label :email %>
@@ -36,7 +36,7 @@
       </div>
       <!-- START Form Control-->
       <div class="row">
-        <div class="col-md-6 no-padding">
+        <div class="col-md-6">
           <div class="checkbox ">
             <%= f.check_box :remember_me %>
             <%= f.label :remember_me %>
@@ -47,8 +47,11 @@
         </div>-->
       </div>
       <!-- END Form Control-->
-      <%= f.submit 'Sign in', class: 'btn btn-primary btn-cons m-t-10' %>
+      <%= f.submit 'Sign in', class: 'btn btn-primary btn-cons m-t-10' %> <span class="m-r-10 m-l-5">or</span>
+        <%= link_to 'Register', new_organization_registration_path, class: 'btn btn-complete btn-cons m-t-10' %>
     <% end %>
+
+    <%= link_to 'Forgot your password?', new_password_path('organization') %><br />
     <!--END Login Form-->
     <!--<div class="pull-bottom sm-pull-bottom">
       <div class="m-b-30 p-r-80 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">

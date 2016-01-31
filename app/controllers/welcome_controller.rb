@@ -13,4 +13,8 @@ class WelcomeController < ApplicationController
     render 'welcome/dashboard', layout: 'application_dashboard'
   end
 
+  def account_locked
+    render 'welcome/account_locked', layout: 'application_login_no_content'
+  end
+
 end

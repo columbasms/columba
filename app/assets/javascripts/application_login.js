@@ -17,6 +17,13 @@
 //= require plugins/jquery-ui/jquery-ui.min
 //= require plugins/boostrapv3/js/bootstrap.min
 //= require plugins/jquery/jquery-easy
+//= require plugins/jquery-unveil/jquery.unveil.min
+//= require plugins/jquery-bez/jquery.bez.min
+//= require plugins/jquery-ios-list/jquery.ioslist.min
+//= require plugins/jquery-actual/jquery.actual.min
 //= require plugins/jquery-scrollbar/jquery.scrollbar.min
+//= require plugins/bootstrap-select2/select2.min
+//= require plugins/classie/classie
+//= require plugins/switchery/js/switchery.min
 //= require plugins/jquery-validation/js/jquery.validate.min
 //= require pages

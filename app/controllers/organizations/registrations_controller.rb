@@ -1,16 +1,21 @@
-class Organization::RegistrationsController < Devise::RegistrationsController
-# before_filter :configure_sign_up_params, only: [:create]
+# noinspection RubyInstanceMethodNamingConvention
+class Organizations::RegistrationsController < Devise::RegistrationsController
+  before_filter :configure_sign_up_params
 # before_filter :configure_account_update_params, only: [:update]
+  layout 'application_login_no_content'
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    build_resource({})
+    set_minimum_password_length
+    yield resource if block_given?
+    respond_with self.resource
+  end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+  end
 
   # GET /resource/edit
   # def edit
@@ -36,12 +41,12 @@ class Organization::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.for(:sign_up) << :attribute
-  # end
+  def configure_sign_up_params
+    devise_parameter_sanitizer.for(:sign_up).push(:organization_name)
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params
@@ -49,12 +54,12 @@ class Organization::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_sign_up_path_for(resource)
+    '/account-locked'
+  end
 
-  # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  # The path used a fter sign up for inactive accounts.
+  def after_inactive_sign_up_path_for(resource)
+    '/account-locked'
+  end
 end

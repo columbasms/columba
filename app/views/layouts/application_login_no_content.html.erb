@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title><%= yield(:title).presence || 'Columba' %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta content="" name="description" />
+  <meta content="" name="author" />
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <!--[if lte IE 9]>
+    <%= stylesheet_link_tag 'ie9', media: 'all', 'data-turbolinks-track' => true %>
+  <![endif]-->
+  <!--<link rel="icon" type="image/x-icon" href="<%= image_path 'favico' %>" />-->
+  <script type="text/javascript">
+    window.onload = function()
+    {
+      // fix for windows 8
+      if (navigator.appVersion.indexOf("Windows NT 6.2") != -1)
+        document.head.innerHTML += '<%= stylesheet_link_tag 'windows.chrome.fix', 'data-turbolinks-track' => true %>'
+    }
+  </script>
+</head>
+<body class="fixed-header">
+
+  <div class="register-container full-height sm-p-t-30">
+    <div class="container-sm-height full-height">
+      <div class="row row-sm-height">
+        <div class="col-sm-12 col-sm-height col-middle <% if action_name == 'account_locked' %>text-center<% end %>">
+          <!--<img src="<%= image_path 'logo' %>" alt="logo" data-src="{{ asset('img/logo.png') }}" data-src-retina="{{ asset('img/logo_2x.png') }}" width="78" height="22">-->
+          <% if action_name != 'account_locked' %>
+            <h3><%= yield(:h3).presence || 'Login' %></h3>
+          <% end %>
+
+          <% if flash[:error] %>
+            <div class="alert alert-danger">
+              <%= flash[:error] %>
+            </div>
+          <% end %>
+
+          <%= yield %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= javascript_include_tag 'login', 'data-turbolinks-track' => true %>
+  <%= yield :javascripts %>
+
+</body>
+</html>

@@ -16,4 +16,8 @@ class Organization < ActiveRecord::Base
   validates_associated :topics
   validates :organization_name, presence: true
   validates :email, presence: true
+
+  before_create do
+    self.locked_at = Time.now
+  end
 end

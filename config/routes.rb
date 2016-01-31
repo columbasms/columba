@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :organizations, controllers: {
-      sessions: 'organizations/sessions'
+      sessions: 'organizations/sessions',
+      registrations: 'organizations/registrations'
   }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -11,6 +12,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get '/dashboard' => 'welcome#dashboard', as: :dashboard
+  get '/account-locked' => 'welcome#account_locked', as: :account_locked
 
   namespace :api do
     namespace :v1 do
