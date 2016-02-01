@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Special text size -->
-    <dimen name="appname_text_size">60sp</dimen>
+    <dimen name="appname_text_size">50sp</dimen>
 
     <!-- General text size -->
     <dimen name="primary_text_size">16sp</dimen>

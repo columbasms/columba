@@ -13,7 +13,6 @@ import android.support.v4.app.NotificationCompat;
 import android.telephony.SmsManager;
 import android.util.Log;
 
-import com.columbasms.columbasms.MainActivity;
 import com.columbasms.columbasms.R;
 import com.google.android.gms.gcm.GcmListenerService;
 

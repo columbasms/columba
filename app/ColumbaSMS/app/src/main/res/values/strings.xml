@@ -7,6 +7,12 @@
     <string name="done">done</string>
     <string name="settings">settings</string>
 
+    <string name="home">Home</string>
+    <string name="topics">Topics</string>
+    <string name="not">Notifications</string>
+    <string name="mex">Messages</string>
+    <string name="follow">FOLLOW</string>
+
     <string name="welcome">Welcome to Columba!</string>
     <string name="welcome_app_description">Free and no-profit service that allow you to donate a branch of your wasted SMS for charity purpose</string>
     <string name="welcome_terms_and_conditions"><u>terms and conditions</u></string>

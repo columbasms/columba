@@ -26,4 +26,6 @@
         <item name="android:textColorPrimary">@color/colorText</item>
         <item name="android:textColorSecondary">@color/colorText</item>
     </style>
+
+
 </resources>
