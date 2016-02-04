@@ -1,4 +1,4 @@
-package com.columbasms.columbasms;
+package com.columbasms.columbasms.utils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;

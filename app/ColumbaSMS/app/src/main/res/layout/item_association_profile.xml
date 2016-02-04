@@ -50,7 +50,7 @@
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:paddingBottom="16dp"
-                    android:text="Amici di Cabbia"/>
+                    android:text="Lipu"/>
                 <TextView
                     android:id="@+id/profile_ass_description"
                     android:layout_width="match_parent"
@@ -68,14 +68,14 @@
                     android:gravity="center"
                     android:textColor="@color/colorText"
                     android:textSize="14sp"
-                    android:text="10,000 followes - 18 campaigns"/>
+                    android:text="10,000 followers - 18 campagne"/>
             </LinearLayout>
 
             <Button
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="follow"
+                android:text="SEGUI"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:layout_marginBottom="16dp"
@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:textStyle="bold"
-        android:text="Amici di Cabbia's campaigns"
+        android:text="Campagne della Lipu"
         android:gravity="center_vertical"/>
     
 </LinearLayout>

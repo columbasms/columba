@@ -13,4 +13,9 @@
     <color name="colorHint">#a0a0a0</color>
     <color name="colorBackground">#FFFFFF</color>
 
+    <color name="refresh_progress_1">#4CAF50</color>
+    <color name="refresh_progress_2">#F44336</color>
+    <color name="refresh_progress_3">#3F51B5</color>
+    <color name="refresh_progress_4">#FF5722</color>
+
 </resources>

@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.fragment.HomeFragment;
+import com.columbasms.columbasms.fragment.MessagesFragment;
+import com.columbasms.columbasms.fragment.NotificationsFragment;
 import com.columbasms.columbasms.fragment.SplashScreenFragment;
 import com.columbasms.columbasms.fragment.TopicsFragment;
 import java.util.Timer;
@@ -33,15 +35,23 @@ public class MainActivity extends AppCompatActivity{
     @Bind(R.id.toolbar_bottom)Toolbar toolbar_bottom;
     @Bind(R.id.home)LinearLayout home;
     @Bind(R.id.topics)LinearLayout topics;
-    @OnClick({ R.id.home, R.id.topics})
+    @Bind(R.id.messages)LinearLayout messages;
+    @Bind(R.id.notifications)LinearLayout notifications;
+    @OnClick({ R.id.home, R.id.topics,R.id.messages,R.id.notifications})
     public void onClick(View v) {
         Fragment fr;
         if(v == findViewById(R.id.home)) {
-            toolbar_top.setTitle("Home");
+            toolbar_top.setTitle(R.string.home);
             fr = new HomeFragment();
-        }else {
-            toolbar_top.setTitle("Topics");
+        }else if(v == findViewById(R.id.topics)){
+            toolbar_top.setTitle(R.string.topics);
             fr = new TopicsFragment();
+        }else if(v == findViewById(R.id.messages)){
+            toolbar_top.setTitle(R.string.mex);
+            fr = new MessagesFragment();
+        }else{
+            toolbar_top.setTitle(R.string.not);
+            fr = new NotificationsFragment();
         }
         FragmentManager fm = getFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -124,10 +134,12 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
+            case R.id.action_info:
                 return true;
-
+            case R.id.action_feedback:
+                return true;
+            case R.id.action_guide:
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

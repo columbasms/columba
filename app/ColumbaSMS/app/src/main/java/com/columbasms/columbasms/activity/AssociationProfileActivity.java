@@ -36,7 +36,6 @@ public class AssociationProfileActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-
         //TOP TOOLBAR SETUP
         toolbar.bringToFront();
         toolbar.setTitle("");
@@ -61,12 +60,10 @@ public class AssociationProfileActivity extends AppCompatActivity {
 
 
         //HERE GET CAMPAIGN FROM SERVER
-        campaigns_list.add(new CharityCampaign("ciao", "ciao", "ciao"));
-        campaigns_list.add(new CharityCampaign("ciao", "ciao", "ciao"));
-        campaigns_list.add(new CharityCampaign("ciao", "ciao", "ciao"));
-        campaigns_list.add(new CharityCampaign("ciao","ciao","ciao"));
-        campaigns_list.add(new CharityCampaign("ciao", "ciao", "ciao"));
-        campaigns_list.add(new CharityCampaign("ciao","ciao","ciao"));
+        campaigns_list.add(new CharityCampaign("", "", "", null));
+        campaigns_list.add(new CharityCampaign("", "", "", null));
+        campaigns_list.add(new CharityCampaign("", "", "", null));
+        campaigns_list.add(new CharityCampaign("", "", "", null));
 
         // Set layout manager to position the items
         final AssociationProfileAdapter associationProfileAdapter = new AssociationProfileAdapter(campaigns_list);
@@ -106,10 +103,12 @@ public class AssociationProfileActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
+            case R.id.action_info:
                 return true;
-
+            case R.id.action_feedback:
+                return true;
+            case R.id.action_guide:
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

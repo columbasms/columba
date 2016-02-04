@@ -32,8 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:orientation="vertical"
-                android:background="@color/colorPrimaryDark">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/association_name"
@@ -45,12 +44,11 @@
                     android:textColor="@color/colorText"
                     />
 
-                <!--Temporary layout values of ImageView-->
                 <TextView
                     android:id="@+id/follow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:padding="16dp"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorText"

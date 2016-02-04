@@ -35,7 +35,7 @@
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:text="CampaignName"/>
+                    android:text="Campagna"/>
 
             </LinearLayout>
 
@@ -66,7 +66,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:background="@drawable/ic_send_24dp"/>
+                android:background="@drawable/ic_send_black_24dp"/>
 
         </LinearLayout>
 
