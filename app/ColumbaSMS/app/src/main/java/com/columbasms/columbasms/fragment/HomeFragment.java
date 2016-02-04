@@ -8,20 +8,26 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
 
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
@@ -37,12 +43,6 @@ import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.listener.HidingScrollListener;
 import com.columbasms.columbasms.adapter.MainAdapter;
 import com.columbasms.columbasms.model.CharityCampaign;
-import com.google.gson.JsonArray;
-import com.makeramen.roundedimageview.RoundedTransformationBuilder;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
-import com.squareup.picasso.Transformation;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,8 +58,9 @@ public class HomeFragment extends Fragment {
     private static String URL_API= "http://www.architettura204.it/test.json";
     private static RecyclerView rvFeed;
     private static List<CharityCampaign> campaigns_list;
-    private Toolbar tb;
+    private static Toolbar tb;
     private static SwipeRefreshLayout mySwipeRefreshLayout;
+    private static CoordinatorLayout coordinatorLayout;
     private static MainAdapter adapter;
     private static FragmentManager fragmentManager;
     private static Resources res;
@@ -69,6 +70,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
 
         campaigns_list = new ArrayList<>();
 
@@ -99,17 +101,13 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         rvFeed= (RecyclerView)v.findViewById(R.id.rv_feed);
         tb = (Toolbar)getActivity().findViewById(R.id.toolbar_bottom);
+        coordinatorLayout = (CoordinatorLayout)v.findViewById(R.id.coordinatorLayout);
         mySwipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swiperefresh);
         mySwipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_1, R.color.refresh_progress_2, R.color.refresh_progress_3, R.color.refresh_progress_4);
         mySwipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
-                    public void onRefresh() {
-                        mySwipeRefreshLayout.setRefreshing(true);
-                        CacheRequest cacheRequest = getData();
-                        MyApplication.getInstance().addToRequestQueue(cacheRequest);
-                        mySwipeRefreshLayout.setRefreshing(false);
-                    }
+                    public void onRefresh() {   getData();  }
                 }
         );
         /**
@@ -118,18 +116,24 @@ public class HomeFragment extends Fragment {
          */
         mySwipeRefreshLayout.post(new Runnable() {
                  @Override
-                 public void run() {
-                        mySwipeRefreshLayout.setRefreshing(true);
-                         CacheRequest cacheRequest = getData();
-                         MyApplication.getInstance().addToRequestQueue(cacheRequest);
-                         mySwipeRefreshLayout.setRefreshing(false);
-                 }
+                 public void run() {   getData();  }
         });
 
         return v;
     }
 
-    private static CacheRequest getData(){
+
+
+    private static void getData(){
+            mySwipeRefreshLayout.setRefreshing(true);
+            CacheRequest cacheRequest = get();
+            MyApplication.getInstance().addToRequestQueue(cacheRequest);
+            mySwipeRefreshLayout.setRefreshing(false);
+            if(!isNetworkConnected())showSnackbar();
+    }
+
+
+    private static CacheRequest get(){
         return new CacheRequest(0, URL_API, new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
@@ -227,4 +231,28 @@ public class HomeFragment extends Fragment {
             mErrorListener.onErrorResponse(error);
         }
     }
+
+
+
+    private static void showSnackbar(){
+        Snackbar snackbar = Snackbar
+                .make(coordinatorLayout, "No Internet Connection!", Snackbar.LENGTH_LONG)
+                .setAction("RETRY", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getData();
+                    }
+                });
+        View view = snackbar.getView();
+        CoordinatorLayout.LayoutParams params =(CoordinatorLayout.LayoutParams)view.getLayoutParams();
+        params.bottomMargin = tb.getHeight();
+        view.setLayoutParams(params);
+        snackbar.show();
+    }
+
+    private static boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager)mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
+    }
+
 }
