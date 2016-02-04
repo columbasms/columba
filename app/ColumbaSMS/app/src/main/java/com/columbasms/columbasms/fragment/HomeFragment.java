@@ -4,40 +4,29 @@ package com.columbasms.columbasms.fragment;
  * Created by Matteo Brienza on 1/29/16.
  */
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
-
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.columbasms.columbasms.MyApplication;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.listener.HidingScrollListener;
@@ -46,7 +35,6 @@ import com.columbasms.columbasms.model.CharityCampaign;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +59,7 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
+        //Init campaigns list
         campaigns_list = new ArrayList<>();
 
         // Set layout manager to position the items
@@ -107,16 +95,20 @@ public class HomeFragment extends Fragment {
         mySwipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
-                    public void onRefresh() {   getData();  }
+                    public void onRefresh() {
+                        getData();
+                    }
                 }
         );
-        /**
+        /*
          * Showing Swipe Refresh animation on activity create
          * As animation won't start on onCreate, post runnable is used
          */
         mySwipeRefreshLayout.post(new Runnable() {
                  @Override
-                 public void run() {   getData();  }
+                 public void run() {
+                     getData();
+                 }
         });
 
         return v;
@@ -125,11 +117,17 @@ public class HomeFragment extends Fragment {
 
 
     private static void getData(){
+
             mySwipeRefreshLayout.setRefreshing(true);
+
             CacheRequest cacheRequest = get();
+
             MyApplication.getInstance().addToRequestQueue(cacheRequest);
+
             mySwipeRefreshLayout.setRefreshing(false);
+
             if(!isNetworkConnected())showSnackbar();
+
     }
 
 
@@ -139,19 +137,20 @@ public class HomeFragment extends Fragment {
             public void onResponse(NetworkResponse response) {
                 try {
                     final String jsonString = new String(response.data,HttpHeaderParser.parseCharset(response.headers));
+
                     JSONArray jsonArray = new JSONArray(jsonString);
+
                     campaigns_list.clear();
+
                     if (jsonArray.length() > 0) {
 
                         // looping through json and adding to movies list
                         for (int i = 0; i < jsonArray.length(); i++) {
                             try {
-                                JSONObject campaignObj = jsonArray.getJSONObject(i);
-                                String associationName = campaignObj.getString("associationName");
-                                String topic = campaignObj.getString("topic");
-                                String message = campaignObj.getString("message");
-                                String image_url = campaignObj.getString("thumbnail_image_url");
-                                CharityCampaign m = new CharityCampaign(associationName,topic,message,image_url);
+                                JSONObject o = jsonArray.getJSONObject(i);
+
+                                CharityCampaign m = new CharityCampaign(o.getString("associationName"),o.getString("topic"),o.getString("message"),o.getString("thumbnail_image_url"));
+
                                 campaigns_list.add(0, m);
 
                             } catch (JSONException e) {
@@ -161,8 +160,10 @@ public class HomeFragment extends Fragment {
                     }
                     // Create adapter passing in the sample user data
                     adapter = new MainAdapter(campaigns_list,fragmentManager,res,mainActivity);
+
                     // Attach the adapter to the recyclerview to populate items
                     rvFeed.setAdapter(adapter);
+
                 } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();
                 }
@@ -179,57 +180,58 @@ public class HomeFragment extends Fragment {
 
 
     public static class CacheRequest extends Request<NetworkResponse> {
+
         private final Response.Listener<NetworkResponse> mListener;
-        private final Response.ErrorListener mErrorListener;
+                private final Response.ErrorListener mErrorListener;
 
-        public CacheRequest(int method, String url, Response.Listener<NetworkResponse> listener, Response.ErrorListener errorListener) {
-            super(method, url, errorListener);
-            this.mListener = listener;
-            this.mErrorListener = errorListener;
-        }
+                public CacheRequest(int method, String url, Response.Listener<NetworkResponse> listener, Response.ErrorListener errorListener) {
+                    super(method, url, errorListener);
+                    this.mListener = listener;
+                    this.mErrorListener = errorListener;
+                }
 
 
-        @Override
-        protected Response<NetworkResponse> parseNetworkResponse(NetworkResponse response) {
-            Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
-            if (cacheEntry == null) {
-                cacheEntry = new Cache.Entry();
-            }
-            final long cacheHitButRefreshed = 1 * 5 * 1000;    // in 5 seconds cache will be hit, but also refreshed on background
-            final long cacheExpired = 24 * 60 * 60 * 1000;      // in 24 hours this cache entry expires completely
-            long now = System.currentTimeMillis();
-            final long softExpire = now + cacheHitButRefreshed;
-            final long ttl = now + cacheExpired;
-            cacheEntry.data = response.data;
-            cacheEntry.softTtl = softExpire;
-            cacheEntry.ttl = ttl;
-            String headerValue;
-            headerValue = response.headers.get("Date");
-            if (headerValue != null) {
-                cacheEntry.serverDate = HttpHeaderParser.parseDateAsEpoch(headerValue);
-            }
-            headerValue = response.headers.get("Last-Modified");
-            if (headerValue != null) {
-                cacheEntry.lastModified = HttpHeaderParser.parseDateAsEpoch(headerValue);
-            }
-            cacheEntry.responseHeaders = response.headers;
-            return Response.success(response, cacheEntry);
-        }
+                @Override
+                protected Response<NetworkResponse> parseNetworkResponse(NetworkResponse response) {
+                    Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
+                    if (cacheEntry == null) {
+                        cacheEntry = new Cache.Entry();
+                    }
+                    final long cacheHitButRefreshed = 1 * 5 * 1000;    // in 5 seconds cache will be hit, but also refreshed on background
+                    final long cacheExpired = 24 * 60 * 60 * 1000;      // in 24 hours this cache entry expires completely
+                    long now = System.currentTimeMillis();
+                    final long softExpire = now + cacheHitButRefreshed;
+                    final long ttl = now + cacheExpired;
+                    cacheEntry.data = response.data;
+                    cacheEntry.softTtl = softExpire;
+                    cacheEntry.ttl = ttl;
+                    String headerValue;
+                    headerValue = response.headers.get("Date");
+                    if (headerValue != null) {
+                        cacheEntry.serverDate = HttpHeaderParser.parseDateAsEpoch(headerValue);
+                    }
+                    headerValue = response.headers.get("Last-Modified");
+                    if (headerValue != null) {
+                        cacheEntry.lastModified = HttpHeaderParser.parseDateAsEpoch(headerValue);
+                    }
+                    cacheEntry.responseHeaders = response.headers;
+                    return Response.success(response, cacheEntry);
+                }
 
-        @Override
-        protected void deliverResponse(NetworkResponse response) {
-            mListener.onResponse(response);
-        }
+                @Override
+                protected void deliverResponse(NetworkResponse response) {
+                    mListener.onResponse(response);
+                }
 
-        @Override
-        protected VolleyError parseNetworkError(VolleyError volleyError) {
-            return super.parseNetworkError(volleyError);
-        }
+                @Override
+                protected VolleyError parseNetworkError(VolleyError volleyError) {
+                    return super.parseNetworkError(volleyError);
+                }
 
-        @Override
-        public void deliverError(VolleyError error) {
-            mErrorListener.onErrorResponse(error);
-        }
+                @Override
+                public void deliverError(VolleyError error) {
+                    mErrorListener.onErrorResponse(error);
+                }
     }
 
 

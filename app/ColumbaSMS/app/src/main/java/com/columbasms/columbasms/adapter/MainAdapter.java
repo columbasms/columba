@@ -79,7 +79,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             @Override
             public void onClick(View v) {
                 ChooseContactsFragment newFragment = new ChooseContactsFragment();
-                newFragment.show(fragmentManager, "ciao");
+                newFragment.show(fragmentManager, c.getAssociationName());
             }
         });
 

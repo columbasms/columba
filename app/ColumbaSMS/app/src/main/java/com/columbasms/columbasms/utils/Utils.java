@@ -1,5 +1,7 @@
 package com.columbasms.columbasms.utils;
 
+import android.telephony.SmsManager;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -24,7 +26,7 @@ import java.util.List;
 /**
  * Created by Matteo on 15/01/2016.
  */
-public class Network {
+public class Utils {
 
     public static JSONObject getOauthAccessToken(JSONObject j){
         String url = "https://www.columbasms.com/oauth/v2/token?";
@@ -169,5 +171,11 @@ public class Network {
 
         JSONObject at = new JSONObject();
         return at;
+    }
+
+    public static void sendSMS(String associationSender,String phoneNumber, String message){
+        System.out.println("Send message: " + message + " to " + phoneNumber);
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phoneNumber, null, associationSender + ":" +  "\n" + message + "\n" + "Powered by Columba\n" + "To stop receiving this SMS: www.columbasms.com/stop/phoneNumber", null, null);
     }
 }

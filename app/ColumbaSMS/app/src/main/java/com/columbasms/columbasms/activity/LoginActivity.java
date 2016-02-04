@@ -103,9 +103,9 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject finalResult = new JSONObject(json.substring(json.indexOf("{"), json.lastIndexOf("}") + 1).replaceAll("\\\\", ""));
 
                         //GET OAUTH TOKEN
-                        JSONObject forTest = Network.getOauthAccessToken(finalResult);
+                        JSONObject forTest = Utils.getOauthAccessToken(finalResult);
                         //API TEST
-                        Network.apiTest(forTest);
+                        Utils.apiTest(forTest);
 
                     } catch (ClientProtocolException e) {
                         // Log exception

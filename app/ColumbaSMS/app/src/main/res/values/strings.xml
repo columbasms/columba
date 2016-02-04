@@ -12,6 +12,10 @@
     <string name="follow">FOLLOW</string>
     <string name="following">FOLLOWING</string>
 
+    <string name="more">MORE</string>
+    <string name="associations">Associations</string>
+    <string name="campaigns">Campaigns</string>
+
     <string name="dialog_contacts_title">Select contacts</string>
 
     <string name="dgts__login_digits_text">Sign in</string>

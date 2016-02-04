@@ -39,7 +39,7 @@
                     android:textSize="16sp"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-                    android:text="Associazioni"/>
+                    android:text="@string/associations"/>
 
             </LinearLayout>
 
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:text="ALTRO"
+                    android:text="@string/more"
                     android:padding="16dp"
                     android:textColor="@color/colorPrimary"/>
 
@@ -94,7 +94,7 @@
                     android:textStyle="bold"
                     android:layout_marginLeft="16dp"
                     android:textSize="16sp"
-                    android:text="Campagne"/>
+                    android:text="@string/campaigns"/>
 
             </LinearLayout>
 
@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:text="ALTRO"
+                    android:text="@string/more"
                     android:padding="16dp"
                     android:textColor="@color/colorPrimary"/>
 
