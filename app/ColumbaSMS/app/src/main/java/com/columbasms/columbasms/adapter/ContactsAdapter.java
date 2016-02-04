@@ -14,6 +14,7 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.model.Contact;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,10 +23,13 @@ import java.util.List;
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
 
     private static List<Contact> contacts;
+    private int[] colors;
+    private boolean colorAlreadySelected;
 
     // Pass in the contact array into the constructor
-    public ContactsAdapter(List<Contact> contacts) {
+    public ContactsAdapter(List<Contact> contacts, int[]colors) {
         this.contacts = contacts;
+        this.colors = colors;
     }
 
     // Provide a direct reference to each of the views within a data item
@@ -41,6 +45,10 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             cl.setOnClickListener(this);
             nameTextView = (TextView) itemView.findViewById(R.id.contacts_name);
             contacts_image = (ImageView)itemView.findViewById(R.id.contacts_image);
+            ColorGenerator generator = ColorGenerator.MATERIAL;
+            int color1 = generator.getRandomColor();
+            TextDrawable drawable = TextDrawable.builder().buildRound("", color1);
+            contacts_image.setImageDrawable(drawable);
             favourite = (ImageView) itemView.findViewById(R.id.favourite);
             favourite.setOnClickListener(this);
 
@@ -69,6 +77,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
+        colorAlreadySelected = false;
+
         // Inflate the custom layout
         View contactView = inflater.inflate(R.layout.item_contact, parent, false);
 
@@ -89,11 +99,9 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         textView.setText(type_name);
 
         ImageView contacts_image = viewHolder.contacts_image;
-        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-        int color1 = generator.getRandomColor();
-        TextDrawable drawable = TextDrawable.builder().buildRound(type_name.substring(0, 1), color1);
-        contacts_image.setImageDrawable(drawable);
 
+        TextDrawable drawable = TextDrawable.builder().buildRound(type_name.substring(0, 1), colors[position]);
+        contacts_image.setImageDrawable(drawable);
 
         ImageView button = viewHolder.favourite;
         if (isSelected==false){

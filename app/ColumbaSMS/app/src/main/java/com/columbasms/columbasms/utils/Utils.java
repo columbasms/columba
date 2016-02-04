@@ -176,6 +176,12 @@ public class Utils {
     public static void sendSMS(String associationSender,String phoneNumber, String message){
         System.out.println("Send message: " + message + " to " + phoneNumber);
         SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, associationSender + ":" +  "\n" + message + "\n" + "Powered by Columba\n" + "To stop receiving this SMS: www.columbasms.com/stop/phoneNumber", null, null);
+        /*
+        sms.sendTextMessage(phoneNumber, null,
+                                associationSender + ":\n"+
+                                message + "\n" +
+                                "Powered by Columba\n" +
+                                "To stop receiving this SMS: www.columbasms.com/stop/phoneNumber", null, null);
+        */
     }
 }
