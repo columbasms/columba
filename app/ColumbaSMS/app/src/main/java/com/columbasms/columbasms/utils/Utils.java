@@ -1,6 +1,10 @@
 package com.columbasms.columbasms.utils;
 
+import android.app.PendingIntent;
+import android.content.res.Resources;
 import android.telephony.SmsManager;
+
+import com.columbasms.columbasms.R;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -20,8 +24,10 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by Matteo on 15/01/2016.
@@ -173,15 +179,19 @@ public class Utils {
         return at;
     }
 
-    public static void sendSMS(String associationSender,String phoneNumber, String message){
+    public static void sendSMS(String associationSender,String phoneNumber, String message,Resources res){
         System.out.println("Send message: " + message + " to " + phoneNumber);
         SmsManager sms = SmsManager.getDefault();
-        /*
-        sms.sendTextMessage(phoneNumber, null,
-                                associationSender + ":\n"+
-                                message + "\n" +
-                                "Powered by Columba\n" +
-                                "To stop receiving this SMS: www.columbasms.com/stop/phoneNumber", null, null);
-        */
+
+        String format_message =
+                associationSender + ":\n"+
+                message + "\n" +
+                res.getString(R.string.sms_footer) + "\n" +
+                res.getString(R.string.sms_stop) +
+                phoneNumber.replace(" ", "");
+
+        //<<MISSED>> CONTROL OF MESSAGE SIZE
+        ArrayList<String> parts = sms.divideMessage(format_message);
+        sms.sendMultipartTextMessage(phoneNumber, null, parts, null, null);
     }
 }

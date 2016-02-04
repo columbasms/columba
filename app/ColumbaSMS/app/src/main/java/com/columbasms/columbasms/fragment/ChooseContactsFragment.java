@@ -46,7 +46,7 @@ public class ChooseContactsFragment extends DialogFragment implements View.OnCli
         //GET ASSOCIATION NAME FOR THIS CAMPAIGN AND CREATE KEY
         assName = getTag();
         key =  assName + "_contacts";
-        message = "";
+        message = getArguments().getString("message");
 
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -75,7 +75,7 @@ public class ChooseContactsFragment extends DialogFragment implements View.OnCli
                         System.out.println("SELECTED CONTACTS: " + jsonArray.toString());
                         for(int i = 0; i<jsonArray.length(); i++){
                             try {
-                                Utils.sendSMS(assName,jsonArray.get(i).toString(),message);
+                                Utils.sendSMS(assName,jsonArray.get(i).toString(),message,getResources());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
