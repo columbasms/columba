@@ -1,4 +1,141 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<script>
+  var organization_id = <%= @organization.id %>;
+</script>
+
+<div class="jumbotron" data-pages="parallax" data-social="cover">
+  <div class="cover-photo" id="cover-preview">
+    <%= image_tag @organization.cover.url(:normal) %>
+    <input type="file" name="organization[cover]" class="avatar-form-control" id="cover-input" />
+  </div>
+  <div class="container-fluid container-fixed-lg sm-p-l-20 sm-p-r-20">
+    <div class="inner">
+      <div class="pull-bottom bottom-left m-b-40">
+        <a href="javascript:;" class="btn btn-success full-width" id="cover-upload">Upload cover</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row padding-25 sm-padding-10">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <div class="panel-title">
+          Edit your profile
+        </div>
+      </div>
+
+      <div class="panel-body">
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, role: 'form' }) do |f| %>
+
+            <% if devise_error_messages? %>
+                <div class="alert alert-danger">
+                  <%= devise_error_messages! %>
+                </div>
+            <% end %>
+
+            <div class="row">
+              <div class="col-sm-12 col-md-3 m-b-15">
+                <%= image_tag @organization.avatar.url(:normal), class: 'full-width m-b-10', id: 'avatar-preview', width: '250' %>
+                <%= f.file_field :avatar, class: 'avatar-form-control', id: 'avatar-input' %>
+                <a href="javascript:;" class="btn btn-success full-width" id="avatar-upload">Upload avatar</a>
+              </div>
+              <div class="col-sm-12 col-md-9 m-b-15">
+
+                <div class="form-group form-group-default required">
+                  <%= f.label :organization_name %>
+                  <%= f.text_field :organization_name, autofocus: true, class: 'form-control' %>
+                </div>
+
+                <div class="form-group form-group-default required">
+                  <%= f.label :email %>
+                  <%= f.email_field :email, class: 'form-control' %>
+                </div>
+
+                <div class="form-group form-group-default full-height">
+                  <%= f.label :description %>
+                  <%= f.text_area :description, class: 'form-control full-height', rows: '9', style: 'padding-bottom: 2px;' %>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row m-b-15">
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group form-group-default required">
+                  <%= f.label :current_password %>
+                  <%= f.password_field :current_password, autocomplete: 'off', class: 'form-control' %>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group form-group-default">
+                  <%= f.label :password, 'New password' %>
+                  <%= f.password_field :password, autocomplete: 'off', class: 'form-control' %>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group form-group-default">
+                  <%= f.label :password_confirmation, 'New password confirmation' %>
+                  <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control' %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-md-12">
+                <%= f.submit 'Update profile', class: 'btn btn-primary align-right' %>
+              </div>
+            </div>
+
+        <% end %>
+
+        <div class="modal fade fill-in" id="modal-crop" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog ">
+            <div class="modal-content">
+              <div class="modal-header">
+              </div>
+              <div class="modal-body">
+                <div class="panel-body">
+                  <div class="progress-panel">
+                    <p class="small hint-text" id="hint-text">Uploading... <span id="upload-percentage">0%</span> </p>
+                    <div class="progress" style="margin: 0;">
+                      <div class="progress-bar progress-bar-primary" id="upload-progress" style="width: 0;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<% content_for :stylesheets do %>
+
+    <%= stylesheet_link_tag 'file-upload', 'data-turbolinks-track' => true %>
+
+<% end %>
+
+<% content_for :javascripts do %>
+
+    <%= javascript_include_tag 'file-upload', 'data-turbolinks-track' => true %>
+
+<% end %>
+
+<!--<h2>Edit <%= resource_name.to_s.humanize %></h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
@@ -36,4 +173,4 @@
 
 <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
 
-<%= link_to "Back", :back %>
+<%= link_to "Back", :back %>-->

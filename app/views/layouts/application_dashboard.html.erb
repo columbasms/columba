@@ -9,6 +9,7 @@
   <meta content="" name="description" />
   <meta content="" name="author" />
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= yield :stylesheets %>
   <!--[if lte IE 9]>
     <%= stylesheet_link_tag 'ie9', media: 'all', 'data-turbolinks-track' => true %>
   <![endif]-->
@@ -30,15 +31,29 @@
 <div class="page-container">
   <%= render partial: 'layouts/header' %>
 
-  <div class="page-content-wrapper ">
-    <div class="content sm-gutter">
-      <div class="container-fluid padding-25 sm-padding-10">
+  <% unless controller_name == 'registrations' and action_name == 'edit' %>
+    <div class="page-content-wrapper ">
+      <div class="content sm-gutter">
+        <div class="container-fluid padding-25 sm-padding-10">
 
-        <%= yield %>
+          <%= yield %>
 
+        </div>
       </div>
     </div>
-  </div>
+  <% else %>
+    <div class="page-content-wrapper ">
+      <div class="content ">
+        <div class="social-wrapper">
+          <div class="social " data-pages="social">
+
+            <%= yield %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>

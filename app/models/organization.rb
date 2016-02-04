@@ -7,9 +7,17 @@ class Organization < ActiveRecord::Base
   scope :locked, -> { where(:locked_at => nil) }
 
   has_attached_file :avatar, styles: {
+      normal: '250x250#',
       thumb: '32x32#'
   }, default_url: '/images/avatar.png'
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
+  crop_attached_file :avatar
+
+  has_attached_file :cover, styles: {
+      normal: '1500x500#'
+  }, default_url: '/images/cover.png'
+  validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
+  crop_attached_file :cover, aspect: '3:1'
 
   has_many :campaigns
 

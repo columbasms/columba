@@ -23,6 +23,9 @@ Rails.application.routes.draw do
 
   resources :campaigns, except: [ :index, :update, :destroy ]
 
+  post '/organizations/:id/upload' => 'organizations#upload', as: :organizations_upload
+  match '/organizations/:id/crop' => 'organizations#crop', as: :organizations_crop, via: [:post, :patch]
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

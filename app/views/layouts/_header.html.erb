@@ -31,11 +31,7 @@
           </span>
         </button>
         <ul class="dropdown-menu profile-dropdown" role="menu">
-          <li><a href="#"><i class="pg-settings_small"></i> Settings</a>
-          </li>
-          <li><a href="#"><i class="pg-outdent"></i> Feedback</a>
-          </li>
-          <li><a href="#"><i class="pg-signals"></i> Help</a>
+          <li><a href="<%= url_for edit_organization_registration_path %>"><i class="fa fa-user"></i> Profile</a>
           </li>
           <li class="bg-master-lighter">
             <%= link_to(destroy_organization_session_path, method: :delete, class: 'clearfix') do %>
@@ -71,11 +67,7 @@
             </span>
         </button>
         <ul class="dropdown-menu profile-dropdown" role="menu">
-          <li><a href="#"><i class="pg-settings_small"></i> Settings</a>
-          </li>
-          <li><a href="#"><i class="pg-outdent"></i> Feedback</a>
-          </li>
-          <li><a href="#"><i class="pg-signals"></i> Help</a>
+          <li><a href="<%= url_for edit_organization_registration_path %>"><i class="fa fa-user"></i> Profile</a>
           </li>
           <li class="bg-master-lighter">
             <%= link_to(destroy_organization_session_path, method: :delete, class: 'clearfix') do %>
