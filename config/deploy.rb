@@ -77,15 +77,27 @@ namespace :deploy do
     end
   end
 
+  Rake::Task['deploy:assets:precompile'].clear_actions
+
   namespace :assets do
+    desc 'Precompile assets locally and upload to servers'
     task :precompile do
-      on roles(:web) do
-        from = source.next_revision(current_revision)
-        if capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
-          run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile}
-        else
-          logger.info "Skipping asset pre-compilation because there were no asset changes"
+      on roles(fetch(:assets_roles)) do
+        run_locally do
+          with rails_env: fetch(:rails_env) do
+            execute 'bin/rake assets:precompile'
+          end
         end
+
+        within release_path do
+          with rails_env: fetch(:rails_env) do
+            old_manifest_path = "#{shared_path}/public/assets/manifest*"
+            execute :rm, old_manifest_path if test "[ -f #{old_manifest_path} ]"
+            upload!('./public/assets/', "#{shared_path}/public/", recursive: true)
+          end
+        end
+
+        run_locally { execute 'rm -rf public/assets' }
       end
     end
   end
