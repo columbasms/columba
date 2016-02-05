@@ -1,3 +1,11 @@
+<% content_for :application_js do %>
+    <%= javascript_include_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
+<% content_for :application_css do %>
+    <%= stylesheet_link_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
 <script>
   var organization_id = <%= @organization.id %>;
 </script>
@@ -14,71 +22,187 @@
   </div>
 </div>
 
-<div class="row padding-25 sm-padding-10">
-  <div class="col-md-12">
-    <div class="panel panel-default">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, role: 'form', id: 'edit-profile' }) do |f| %>
 
-      <div class="panel-heading">
-        <div class="panel-title">
-          Edit your profile
+    <div class="row padding-25 sm-padding-10">
+      <div class="col-md-12">
+        <% if devise_error_messages? %>
+            <div class="alert alert-danger">
+              <%= devise_error_messages! %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row padding-25 sm-padding-10">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+            <div class="panel-title">
+              General information
+            </div>
+          </div>
+
+          <div class="panel-body">
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-3 m-b-15">
+                    <%= image_tag @organization.avatar.url(:normal), class: 'full-width m-b-10', id: 'avatar-preview', width: '250' %>
+                    <%= f.file_field :avatar, class: 'avatar-form-control', id: 'avatar-input' %>
+                    <a href="javascript:;" class="btn btn-success full-width" id="avatar-upload">Upload avatar</a>
+                  </div>
+                  <div class="col-sm-12 col-md-9 m-b-15">
+
+                    <div class="form-group form-group-default required">
+                      <%= f.label :organization_name %>
+                      <%= f.text_field :organization_name, autofocus: true, class: 'form-control' %>
+                    </div>
+
+                    <div class="form-group form-group-default required">
+                      <%= f.label :email %>
+                      <%= f.email_field :email, class: 'form-control' %>
+                    </div>
+
+                    <div class="form-group form-group-default full-height required">
+                      <%= f.label :website %>
+                      <%= f.text_field :website, class: 'form-control full-height', required: 'required' %>
+                    </div>
+
+                    <div class="form-group form-group-default full-height required">
+                      <%= f.label :description %>
+                      <%= f.text_area :description, class: 'form-control full-height', rows: '9', style: 'padding-bottom: 2px;', required: 'required' %>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row m-b-15">
+                  <div class="col-sm-12 col-md-12">
+                    <div class="form-group form-group-default required">
+                      <label for="topic_ids">Topics</label>
+                      <%= f.select :topic_ids, Topic.all.collect { |x| [x.name, x.id] }, { }, { multiple: true, 'data-init-plugin': 'select2', class: 'full-width' } %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row m-b-15">
+                  <div class="col-sm-12 col-md-4">
+                    <div class="form-group form-group-default required">
+                      <%= f.label :current_password %>
+                      <%= f.password_field :current_password, autocomplete: 'off', class: 'form-control' %>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-4">
+                    <div class="form-group form-group-default">
+                      <%= f.label :password, 'New password' %>
+                      <%= f.password_field :password, autocomplete: 'off', class: 'form-control' %>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-4">
+                    <div class="form-group form-group-default">
+                      <%= f.label :password_confirmation, 'New password confirmation' %>
+                      <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control' %>
+                    </div>
+                  </div>
+                </div>
+
+            <div class="modal fade fill-in" id="modal-crop" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="static" data-keyboard="false">
+              <div class="modal-dialog ">
+                <div class="modal-content">
+                  <div class="modal-header">
+                  </div>
+                  <div class="modal-body">
+                    <div class="panel-body">
+                      <div class="progress-panel">
+                        <p class="small hint-text" id="hint-text">Uploading... <span id="upload-percentage">0%</span> </p>
+                        <div class="progress" style="margin: 0;">
+                          <div class="progress-bar progress-bar-primary" id="upload-progress" style="width: 0;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+
+                  </div>
+                </div>
+                <!-- /.modal-content -->
+              </div>
+              <!-- /.modal-dialog -->
+            </div>
+
+          </div>
+
         </div>
       </div>
+    </div>
 
-      <div class="panel-body">
+    <div class="row padding-25 sm-padding-10">
+      <div class="col-md-12">
 
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, role: 'form' }) do |f| %>
+        <div class="panel panel-default">
 
-            <% if devise_error_messages? %>
-                <div class="alert alert-danger">
-                  <%= devise_error_messages! %>
-                </div>
-            <% end %>
+          <div class="panel-heading">
+            <div class="panel-title">
+              Personal information
+            </div>
+          </div>
+
+          <div class="panel-body">
 
             <div class="row">
-              <div class="col-sm-12 col-md-3 m-b-15">
-                <%= image_tag @organization.avatar.url(:normal), class: 'full-width m-b-10', id: 'avatar-preview', width: '250' %>
-                <%= f.file_field :avatar, class: 'avatar-form-control', id: 'avatar-input' %>
-                <a href="javascript:;" class="btn btn-success full-width" id="avatar-upload">Upload avatar</a>
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group form-group-default required">
+                  <%= f.label :phone_number %>
+                  <%= f.text_field :phone_number, class: 'form-control', required: 'required' %>
+                </div>
               </div>
-              <div class="col-sm-12 col-md-9 m-b-15">
 
+              <div class="col-sm-12 col-md-4">
                 <div class="form-group form-group-default required">
-                  <%= f.label :organization_name %>
-                  <%= f.text_field :organization_name, autofocus: true, class: 'form-control' %>
+                  <%= f.label :fiscal_code %>
+                  <%= f.text_field :fiscal_code, class: 'form-control', required: 'required' %>
                 </div>
+              </div>
 
-                <div class="form-group form-group-default required">
-                  <%= f.label :email %>
-                  <%= f.email_field :email, class: 'form-control' %>
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group form-group-default">
+                  <%= f.label :VAT_number %>
+                  <%= f.text_field :VAT_number, class: 'form-control' %>
                 </div>
-
-                <div class="form-group form-group-default full-height">
-                  <%= f.label :description %>
-                  <%= f.text_area :description, class: 'form-control full-height', rows: '9', style: 'padding-bottom: 2px;' %>
-                </div>
-
               </div>
             </div>
 
-            <div class="row m-b-15">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group form-group-default required">
+                  <%= f.label :province %>
+                  <%= f.text_field :province, class: 'form-control', required: 'required' %>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group form-group-default required">
+                  <%= f.label :town %>
+                  <%= f.text_field :town, class: 'form-control', required: 'required' %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-md-8">
+                <div class="form-group form-group-default required">
+                  <%= f.label :address %>
+                  <%= f.text_field :address, class: 'form-control', required: 'required' %>
+                </div>
+              </div>
+
               <div class="col-sm-12 col-md-4">
                 <div class="form-group form-group-default required">
-                  <%= f.label :current_password %>
-                  <%= f.password_field :current_password, autocomplete: 'off', class: 'form-control' %>
-                </div>
-              </div>
-
-              <div class="col-sm-12 col-md-4">
-                <div class="form-group form-group-default">
-                  <%= f.label :password, 'New password' %>
-                  <%= f.password_field :password, autocomplete: 'off', class: 'form-control' %>
-                </div>
-              </div>
-
-              <div class="col-sm-12 col-md-4">
-                <div class="form-group form-group-default">
-                  <%= f.label :password_confirmation, 'New password confirmation' %>
-                  <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control' %>
+                  <%= f.label :postal_code %>
+                  <%= f.text_field :postal_code, class: 'form-control', required: 'required' %>
                 </div>
               </div>
             </div>
@@ -89,37 +213,14 @@
               </div>
             </div>
 
-        <% end %>
-
-        <div class="modal fade fill-in" id="modal-crop" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="static" data-keyboard="false">
-          <div class="modal-dialog ">
-            <div class="modal-content">
-              <div class="modal-header">
-              </div>
-              <div class="modal-body">
-                <div class="panel-body">
-                  <div class="progress-panel">
-                    <p class="small hint-text" id="hint-text">Uploading... <span id="upload-percentage">0%</span> </p>
-                    <div class="progress" style="margin: 0;">
-                      <div class="progress-bar progress-bar-primary" id="upload-progress" style="width: 0;"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-
-              </div>
-            </div>
-            <!-- /.modal-content -->
           </div>
-          <!-- /.modal-dialog -->
+
         </div>
 
       </div>
-
     </div>
-  </div>
-</div>
+
+<% end %>
 
 <% content_for :stylesheets do %>
 
@@ -131,44 +232,8 @@
 
     <%= javascript_include_tag 'file-upload', 'data-turbolinks-track' => true %>
 
+    <script>
+      $('#edit-profile').validate();
+    </script>
+
 <% end %>
-
-<!--<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>-->

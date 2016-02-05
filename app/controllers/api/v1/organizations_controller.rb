@@ -1,5 +1,5 @@
 class Api::V1::OrganizationsController < ApplicationController
-  http_basic_authenticate_with name: '47ccf9098174f48be281f86103b9', password: 'c5906274ba1a14711a816db53f0d'
+  http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
 
   # GET /api/v1/organizations
   def index

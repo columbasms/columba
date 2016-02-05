@@ -1,5 +1,13 @@
 <% content_for :title do %>Columba - New campaign<% end %>
 
+<% content_for :application_js do %>
+    <%= javascript_include_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
+<% content_for :application_css do %>
+    <%= stylesheet_link_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
 <div class="col-md-6 col-center">
   <div class="panel panel-default">
 

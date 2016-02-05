@@ -56,8 +56,13 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            when the item should be highlighted, you can set a regexp which is matched
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
+    primary.dom_class = 'menu-items'
     primary.item :dashboard, 'Dashboard', dashboard_path, html: { li_class: 'm-t-30', icon_class: 'pg-home' }
-    primary.item :new_campaign, 'New campaign', new_campaign_path, html: { icon_class: 'pg-plus' }
+    primary.item :campaigns, 'Campaigns', '#', html: { icon_class: 'pg-note' } do |campaigns|
+      campaigns.dom_class = 'sub-menu'
+      campaigns.item :my_campaigns, 'My campaigns', '#', html: { icon_class: '' }
+      campaigns.item :new_campaign, 'New campaign', new_campaign_path, html: { icon_class: 'pg-plus' }
+    end
 
     # you can also specify html attributes to attach to this particular level
     # works for all levels of the menu

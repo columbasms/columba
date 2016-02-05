@@ -26,7 +26,9 @@ class CampaignsController < ApplicationController
   # POST /campaigns
   # POST /campaigns.json
   def create
+    Rails.logger.info campaign_params.inspect
     @campaign = Campaign.new(campaign_params)
+    @campaign.organization = current_organization
 
     respond_to do |format|
       if @campaign.save
@@ -86,6 +88,6 @@ class CampaignsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def campaign_params
-      params[:campaign].permit(:message)
+      params[:campaign].permit(:message, :topic_ids => [])
     end
 end

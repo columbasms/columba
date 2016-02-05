@@ -3,7 +3,7 @@ ActiveAdmin.register Organization do
   menu parent: 'Users'
 
   permit_params :id, :organization_name, :locked_at, :email, :VAT_number, :password, :password_confirmation, :avatar,
-                :locked, :salt, :encrypted_password,
+                :locked, :salt, :encrypted_password, :fiscal_code, :province, :town, :address, :postal_code, :phone_number,
                 :topics_attributes => [:id, :name, :description], :topic_ids => []
 
   filter :topics
@@ -23,13 +23,15 @@ ActiveAdmin.register Organization do
 
   member_action :lock, method: :get do
     resource.locked = true
-    resource.save
+    resource.save(validate: false)
     redirect_to admin_organizations_path, notice: 'Organization locked'
   end
 
   member_action :unlock, method: :get do
     resource.locked = false
-    resource.save
+    resource.locked_at = nil
+    resource.visible = true
+    resource.save(validate: false)
     redirect_to admin_organizations_path, notice: 'Organization unlocked'
   end
 
@@ -90,7 +92,7 @@ ActiveAdmin.register Organization do
     f.inputs 'Organization' do
       f.input :organization_name
       f.input :VAT_number
-      f.input :topics, as: :select2_multiple, :wrapper_html => {:style => 'width: auto;'}
+      f.input :topics, as: :select2_multiple, :wrapper_html => { :style => 'width: auto;' }
       f.input :avatar, image_preview: true
     end
     f.actions
@@ -100,6 +102,15 @@ ActiveAdmin.register Organization do
     attributes_table do
       row :id
       row :VAT_number
+      row :fiscal_code
+      row :province
+      row :town
+      row :address
+      row :postal_code
+      row :phone_number
+      row :avatar do |a|
+        image_tag a.cover.url(:normal)
+      end
       row :avatar do |a|
         image_tag a.avatar.url(:thumb)
       end
@@ -114,6 +125,7 @@ ActiveAdmin.register Organization do
         organization.organization_name
       end
       row('Locked?') { |o| status_tag o.locked }
+      row :visible
     end
   end
 

@@ -1,7 +1,7 @@
 module Api
   module V1
     class UserController < ApplicationController
-      http_basic_authenticate_with name: '47ccf9098174f48be281f86103b9', password: 'c5906274ba1a14711a816db53f0d'
+      http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
       respond_to :json
       protect_from_forgery except: :register
 
@@ -30,7 +30,7 @@ module Api
         if digits.header_str.include? 'HTTP/1.1 200 OK'
           credentials = JSON.parse digits.body_str
           client = Api::V1::UserHelper.register_user credentials, gcm_token
-          render json: [ client.phone_number, client.digits_token ]
+          render json: client
         else
           render json: JSON.parse(digits.body_str)
         end

@@ -26,9 +26,15 @@ class Organization < ActiveRecord::Base
   accepts_nested_attributes_for :campaigns, allow_destroy: true
   accepts_nested_attributes_for :topics
 
-  validates_associated :topics
   validates :organization_name, presence: true
   validates :email, presence: true
+  validates_presence_of :fiscal_code, :province, :town, :address, :postal_code, :phone_number
+
+  with_options if: :visible? do |o|
+    o.validates :topics, presence: true
+    o.validates :description, presence: true
+    o.validates :website, presence: true
+  end
 
   before_create do
     self.locked_at = Time.now
@@ -48,6 +54,12 @@ class Organization < ActiveRecord::Base
 
   def cover_normal
     URI.join(ActionController::Base.asset_host, self.cover.url(:normal)).to_s
+  end
+
+  private
+
+  def visible?
+    self.visible
   end
 
 end

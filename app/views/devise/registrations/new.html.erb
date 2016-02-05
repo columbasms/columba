@@ -12,6 +12,14 @@
 
 <% end %>
 
+<% content_for :application_js do %>
+    <%= javascript_include_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
+<% content_for :application_css do %>
+    <%= stylesheet_link_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'p-t-15', role: 'form', id: 'form-register' }) do |f| %>
 
     <% if devise_error_messages? %>
@@ -22,14 +30,14 @@
 
     <div class="row">
       <div class="col-sm-6">
-        <div class="form-group form-group-default">
+        <div class="form-group form-group-default required">
           <%= f.label :email %>
           <%= f.email_field :email, autofocus: true, class: 'form-control', required: 'required' %>
         </div>
       </div>
 
       <div class="col-sm-6">
-        <div class="form-group form-group-default">
+        <div class="form-group form-group-default required">
           <%= f.label :organization_name %>
           <%= f.text_field :organization_name, class: 'form-control', required: 'required' %>
         </div>
@@ -37,8 +45,65 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-6">
+        <div class="form-group form-group-default required">
+          <%= f.label :fiscal_code %>
+          <%= f.text_field :fiscal_code, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
         <div class="form-group form-group-default">
+          <%= f.label :VAT_number %>
+          <%= f.text_field :VAT_number, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group form-group-default required">
+          <%= f.label :province %>
+          <%= f.text_field :province, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group form-group-default required">
+          <%= f.label :town %>
+          <%= f.text_field :town, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-8">
+        <div class="form-group form-group-default required">
+          <%= f.label :address %>
+          <%= f.text_field :address, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-4">
+        <div class="form-group form-group-default required">
+          <%= f.label :postal_code %>
+          <%= f.text_field :postal_code, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group form-group-default required">
+          <%= f.label :phone_number %>
+          <%= f.text_field :phone_number, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group form-group-default required">
           <%= f.label :password %>
           <% if @minimum_password_length %>
               <em>(<%= @minimum_password_length %> characters minimum)</em>
@@ -50,7 +115,7 @@
 
     <div class="row">
       <div class="col-sm-12">
-        <div class="form-group form-group-default">
+        <div class="form-group form-group-default required">
           <%= f.label :password_confirmation %>
           <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control', required: 'required' %>
         </div>

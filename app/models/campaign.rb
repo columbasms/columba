@@ -6,8 +6,12 @@ class Campaign < ActiveRecord::Base
   has_many :receivers, through: :campaign_client_receivers
 
   has_and_belongs_to_many :digits_clients
+  has_and_belongs_to_many :topics
 
   validates :message, presence: true
-  validates_associated :organization
+  validates :organization, presence: true
+  validates :topics, presence: true
+
+  accepts_nested_attributes_for :topics
 
 end

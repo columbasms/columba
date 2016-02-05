@@ -18,7 +18,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       post '/register' => 'user#register'
       get '/test' => 'user#test'
-      get '/organizations' => 'organizations#index'
+      resources :organizations
+      resources :campaigns
     end
   end
 

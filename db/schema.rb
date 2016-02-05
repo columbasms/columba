@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204123651) do
+ActiveRecord::Schema.define(version: 20160205151908) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -74,6 +74,14 @@ ActiveRecord::Schema.define(version: 20160204123651) do
 
   add_index "campaigns_digits_clients", ["campaign_id"], name: "index_campaigns_digits_clients_on_campaign_id", using: :btree
   add_index "campaigns_digits_clients", ["digits_client_id"], name: "index_campaigns_digits_clients_on_digits_client_id", using: :btree
+
+  create_table "campaigns_topics", id: false, force: :cascade do |t|
+    t.integer "campaign_id", limit: 4, null: false
+    t.integer "topic_id",    limit: 4, null: false
+  end
+
+  add_index "campaigns_topics", ["campaign_id"], name: "index_campaigns_topics_on_campaign_id", using: :btree
+  add_index "campaigns_topics", ["topic_id"], name: "index_campaigns_topics_on_topic_id", using: :btree
 
   create_table "digits_clients", force: :cascade do |t|
     t.string   "phone_number",             limit: 255
@@ -142,6 +150,14 @@ ActiveRecord::Schema.define(version: 20160204123651) do
     t.string   "cover_content_type",     limit: 255
     t.integer  "cover_file_size",        limit: 4
     t.datetime "cover_updated_at"
+    t.string   "fiscal_code",            limit: 255
+    t.string   "province",               limit: 255
+    t.string   "town",                   limit: 255
+    t.string   "address",                limit: 255
+    t.integer  "postal_code",            limit: 4
+    t.string   "phone_number",           limit: 255
+    t.boolean  "visible"
+    t.string   "website",                limit: 255
   end
 
   add_index "organizations", ["email"], name: "index_organizations_on_email", unique: true, using: :btree
