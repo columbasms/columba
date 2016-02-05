@@ -42,4 +42,12 @@ class Organization < ActiveRecord::Base
     self.locked_at = locked ? Time.now : nil
   end
 
+  def avatar_normal
+    URI.join(ActionController::Base.asset_host, self.avatar.url(:normal)).to_s
+  end
+
+  def cover_normal
+    URI.join(ActionController::Base.asset_host, self.cover.url(:normal)).to_s
+  end
+
 end

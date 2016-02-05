@@ -1,7 +1,7 @@
 module Api
   module V1
     class UserController < ApplicationController
-      http_basic_authenticate_with name: 'b2beb49014d2de5db85cadf2832c2d3c', password: '2b31e8e321709d8c22ba2845579b33cd'
+      http_basic_authenticate_with name: '47ccf9098174f48be281f86103b9', password: 'c5906274ba1a14711a816db53f0d'
       respond_to :json
       protect_from_forgery except: :register
 

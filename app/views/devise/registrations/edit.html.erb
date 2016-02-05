@@ -2,11 +2,9 @@
   var organization_id = <%= @organization.id %>;
 </script>
 
-<div class="jumbotron" data-pages="parallax" data-social="cover">
-  <div class="cover-photo" id="cover-preview">
-    <%= image_tag @organization.cover.url(:normal) %>
-    <input type="file" name="organization[cover]" class="avatar-form-control" id="cover-input" />
-  </div>
+<div class="jumbotron">
+  <%= image_tag @organization.cover.url(:normal), id: 'cover-preview' %>
+  <input type="file" name="organization[cover]" class="avatar-form-control" id="cover-input" />
   <div class="container-fluid container-fixed-lg sm-p-l-20 sm-p-r-20">
     <div class="inner">
       <div class="pull-bottom bottom-left m-b-40">

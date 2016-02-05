@@ -21,6 +21,8 @@ Rails.application.configure do
       domain: 'columbasms.com'
   }
 
+  config.action_controller.asset_host = 'http://localhost:3000'
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

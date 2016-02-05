@@ -31,7 +31,7 @@
 <div class="page-container">
   <%= render partial: 'layouts/header' %>
 
-  <% unless controller_name == 'registrations' and action_name == 'edit' %>
+  <% unless controller_name == 'registrations' and (action_name == 'edit' or action_name == 'update') %>
     <div class="page-content-wrapper ">
       <div class="content sm-gutter">
         <div class="container-fluid padding-25 sm-padding-10">

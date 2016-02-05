@@ -41,7 +41,7 @@ function readURL(input, type) {
                         if (type == 'avatar') {
                             $('#avatar-preview').attr('src', e.avatar);
                         } else {
-                            $('#cover-preview').css('background-image', 'url("' + e.cover + '")');
+                            $('#cover-preview').attr('src', e.cover);
                         }
                         updateProgress(0);
                         $('.progress-panel').hide();

@@ -1,7 +1,7 @@
 class OrganizationsController < ApplicationController
   protect_from_forgery except: :upload_avatar
 
-  before_action :set_organization
+  before_action :set_organization, except: [:all]
 
   # POST /organizations/:id/upload
   def upload
