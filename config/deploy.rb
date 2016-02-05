@@ -50,7 +50,7 @@ namespace :puma do
 end
 
 namespace :deploy do
-
+  
   desc "Make sure local git is in sync with remote."
   task :check_revision do
     on roles(:app) do
@@ -78,7 +78,7 @@ namespace :deploy do
   end
 
   before :starting,     :check_revision
-  after  :finishing,    :precompile
+  after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
   after  :finishing,    :restart
 end
