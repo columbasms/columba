@@ -3,7 +3,7 @@ ActiveAdmin.register Organization do
   menu parent: 'Users'
 
   permit_params :id, :organization_name, :locked_at, :email, :VAT_number, :password, :password_confirmation, :avatar,
-                :locked, :salt, :encrypted_password, :fiscal_code, :province, :town, :address, :postal_code, :phone_number,
+                :locked, :salt, :encrypted_password, :fiscal_code, :province, :town, :address, :postal_code, :phone_number, :visible,
                 :topics_attributes => [:id, :name, :description], :topic_ids => []
 
   filter :topics
@@ -30,7 +30,6 @@ ActiveAdmin.register Organization do
   member_action :unlock, method: :get do
     resource.locked = false
     resource.locked_at = nil
-    resource.visible = true
     resource.save(validate: false)
     redirect_to admin_organizations_path, notice: 'Organization unlocked'
   end
@@ -39,6 +38,7 @@ ActiveAdmin.register Organization do
 
     def update
       @organization = Organization.find(permitted_params[:id])
+      permitted_params[:organization][:visible] = permitted_params[:organization][:visible] == 'true' ? 1 : 0
       if params[:organization][:password].blank?
         @organization.update_without_password(permitted_params[:organization])
       else
@@ -87,7 +87,7 @@ ActiveAdmin.register Organization do
       f.input :email
       f.input :password, type: :password
       f.input :password_confirmation, type: :password
-      f.input :locked, as: :boolean
+      f.input :visible, as: :select
     end
     f.inputs 'Organization' do
       f.input :organization_name

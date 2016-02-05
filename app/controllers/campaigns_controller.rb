@@ -1,6 +1,7 @@
 class CampaignsController < ApplicationController
   before_filter :authenticate_organization!
   before_action :set_campaign, only: [:show, :edit, :update, :destroy]
+  before_action :validate_visibility
   layout 'application_dashboard'
 
   # GET /campaigns
@@ -34,7 +35,7 @@ class CampaignsController < ApplicationController
       if @campaign.save
 
         if DigitsClient.count > 0
-          gcm = GCM.new('AIzaSyBGHPEr4yAWYFyvfEOdyEz3MtPOmLajggw')
+          gcm = GCM.new(::Settings.gcm_token)
 
           registration_ids = DigitsClient.pluck :gcm_token
           options = {
@@ -89,5 +90,11 @@ class CampaignsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def campaign_params
       params[:campaign].permit(:message, :topic_ids => [])
+    end
+
+    def validate_visibility
+      unless current_organization.visible
+        redirect_to dashboard_path, notice: 'You have to update your account in order to access all the functionalities'
+      end
     end
 end
