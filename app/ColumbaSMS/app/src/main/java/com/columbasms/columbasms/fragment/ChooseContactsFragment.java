@@ -11,30 +11,29 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.adapter.ContactsAdapter;
-import com.columbasms.columbasms.model.CharityCampaign;
 import com.columbasms.columbasms.model.Contact;
 import com.columbasms.columbasms.utils.Utils;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Matteo Brienza on 2/2/16.
  */
-public class ChooseContactsFragment extends DialogFragment {
+public class ChooseContactsFragment extends DialogFragment implements View.OnClickListener {
 
     private ContactsAdapter adapter;
     private List<Contact> contactList;
+    private ImageView sab;
     private String assName;
     private String key;
     private String message;
@@ -47,7 +46,7 @@ public class ChooseContactsFragment extends DialogFragment {
         //GET ASSOCIATION NAME FOR THIS CAMPAIGN AND CREATE KEY
         assName = getTag();
         key =  assName + "_contacts";
-        message = "";
+        message = getArguments().getString("message");
 
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -76,7 +75,7 @@ public class ChooseContactsFragment extends DialogFragment {
                         System.out.println("SELECTED CONTACTS: " + jsonArray.toString());
                         for(int i = 0; i<jsonArray.length(); i++){
                             try {
-                                Utils.sendSMS(assName,jsonArray.get(i).toString(),message);
+                                Utils.sendSMS(assName,jsonArray.get(i).toString(),message,getResources());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -94,6 +93,14 @@ public class ChooseContactsFragment extends DialogFragment {
         //ADD CONTACTS TO DIALOG (WITH CONTACTS FILTERING BASED ON USERS PREFERENCES FOR THE CURRENT ASSOCIATION)
         addContacts();
 
+        //SETUP SELECT/DESELECT ALL FUNCTION
+        sab = (ImageView)v.findViewById(R.id.select_all);
+        if(allContactsSelected()){
+            sab.setBackgroundResource(R.drawable.ic_check_box_black_24dp);
+            sab.setTag(1);
+        }
+
+        sab.setOnClickListener(this);
 
         // Lookup the recyclerview in activity layout
         RecyclerView rvContacts = (RecyclerView)v.findViewById(R.id.rv_contactList);
@@ -101,8 +108,14 @@ public class ChooseContactsFragment extends DialogFragment {
         // Set layout manager to position the items
         rvContacts.setLayoutManager(new GridLayoutManager(getActivity(),1));
 
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        int[] colors = new int[contactList.size()];
+        for(int i = 0; i<colors.length; i++){
+            colors[i] = generator.getRandomColor();
+        }
+
         // Create adapter passing in the sample user data
-        adapter = new ContactsAdapter(contactList);
+        adapter = new ContactsAdapter(contactList,colors);
 
         // Attach the adapter to the recyclerview to populate items
         rvContacts.setAdapter(adapter);
@@ -156,4 +169,35 @@ public class ChooseContactsFragment extends DialogFragment {
         return false;
     }
 
+    private boolean allContactsSelected(){
+        int size = contactList.size();
+        for (int i = 0; i < size ; i++) {
+            if(contactList.get(i).isSelected()==false)return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        ImageView b = (ImageView)v;
+        int size = contactList.size();
+        Contact temp;
+        if(b.getTag().equals("1")){
+            b.setBackgroundResource(R.drawable.ic_check_box_outline_blank_black_24dp);
+            b.setTag("0");
+            for (int i = 0; i < size ; i++) {
+                temp = contactList.get(i);
+                contactList.set(i,new Contact(temp.getContact_name(),temp.getContact_number(),false));
+            }
+        }else{
+            b.setBackgroundResource(R.drawable.ic_check_box_black_24dp);
+            b.setTag("1");
+            for (int i = 0; i < size ; i++) {
+                temp = contactList.get(i);
+                contactList.set(i,new Contact(temp.getContact_name(),temp.getContact_number(),true));
+            }
+        }
+        adapter.notifyDataSetChanged();
+
+    }
 }

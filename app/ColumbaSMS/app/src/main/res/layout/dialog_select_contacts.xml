@@ -33,9 +33,10 @@
 
             <ImageView
                 android:id="@+id/select_all"
+                android:tag="0"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_check_box_black_24dp"/>
+                android:src="@drawable/ic_check_box_outline_blank_black_24dp"/>
 
         </LinearLayout>
 
