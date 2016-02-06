@@ -1,4 +1,4 @@
-<%= form_for(@campaign, html: { role: 'form' }) do |f| %>
+<%= form_for(@campaign, html: { role: 'form', id: 'new-campaign' }) do |f| %>
   <% if @campaign.errors.any? %>
     <div class="alert alert-danger">
       <h2><%= pluralize(@campaign.errors.count, "error") %> prohibited this campaign from being saved:</h2>
@@ -21,11 +21,93 @@
     <%= f.select :topic_ids, current_organization.topics.collect { |x| [x.name, x.id] }, { }, { multiple: true, 'data-init-plugin': 'select2', class: 'full-width' } %>
   </div>
 
-  <div class="row">
-    <div class="col-sm-12 col-md-6">
-      
+  <div class="row" style="margin-left: 0; margin-right: 0;">
+    <div class="col-sm-12 col-md-12">
+        <em>Ciao testo di prova</em>
     </div>
   </div>
 
+    <div class="row m-t-10" style="margin-left: 0; margin-right: 0;">
+      <div class="col-sm-12 col-md-4">
+        <div class="form-group form-group-default form-group-default-select2">
+          <label for="region_id">Region</label>
+          <%= f.select :region_id, Region.order(name: :asc).all.collect { |r| [r.name, r.id] }.push(['', '']), { selected: '' },
+                       { 'data-init-plugin': 'select2', class: 'full-width', id: 'region-select' } %>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-4">
+        <div class="form-group form-group-default form-group-default-select2">
+          <label for="province_id">Province</label>
+          <%= f.hidden_field :province_id, class: 'full-width', id: 'province-select'  %>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-4">
+        <div class="form-group form-group-default form-group-default-select2 full-width">
+          <label for="town_id">Town</label>
+          <%= f.hidden_field :town_id, class: 'full-width', id: 'town-select'  %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-10" style="margin-left: 0; margin-right: 0;">
+      <div class="col-sm-12 col-md-12">
+        <div class="form-group form-group-default">
+          <%= f.label :address %>
+          <%= f.text_field :address, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+
   <%= f.submit 'Send', class: 'btn btn-primary btn-cons m-t-10' %>
+<% end %>
+
+<% content_for :javascripts do %>
+
+    <script>
+      $('#new-campaign').validate();
+      $('#province-select').select2({
+        data: [{ id: '', text: '' }]
+      });
+      $('#town-select').select2({
+        data: [{ id: '', text: '' }]
+      });
+
+      $('#region-select').on('change', function() {
+        sendLocation('region', $(this).val(), $('#province-select'));
+      });
+
+      $('#province-select').on('change', function() {
+        sendLocation('province', $(this).val(), $('#town-select'));
+      });
+
+      function sendLocation(type, value, $elem) {
+        var url = '';
+        switch (type) {
+          case 'region':
+                url = '/provinces-by-region';
+                break;
+          case 'province':
+                url = '/town-by-province';
+                break;
+          default:
+                url = '/town-by-province';
+                break;
+        }
+        var data = {};
+        data[type + '_id'] = value;
+        data['first'] = false;
+        $.ajax({
+          url: url,
+          data: data,
+          success: function(data) {
+            $elem.select2({
+              data: data.data
+            }).select2('val', data.selected);
+          }
+        })
+      }
+    </script>
+
 <% end %>

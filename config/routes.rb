@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get '/town-by-province' => 'location#town_by_province', as: :town_by_province
+  get '/provinces-by-region' => 'location#provinces_by_region', as: :provinces_by_region
 
   get '/dashboard' => 'welcome#dashboard', as: :dashboard
   get '/dashboard/campaigns' => 'campaigns#index', as: :index_campaigns

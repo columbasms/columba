@@ -16,3 +16,10 @@
 .jcrop-keymgr {
     visibility: hidden !important;
 }
+
+@media screen and (max-width: 993px) {
+    .jumbotron {
+        visibility: hidden;
+        display: none;
+    }
+}

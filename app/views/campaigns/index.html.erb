@@ -10,7 +10,7 @@
 
   <div class="panel panel-transparent">
     <div class="panel-heading">
-      <div class="panel-title">Pages Default Tables Style
+      <div class="panel-title">My campaigns
       </div>
       <div class="pull-right">
         <div class="col-xs-12">
@@ -35,7 +35,7 @@
         <% @campaigns.each do |campaign| %>
             <tr>
               <td class="v-align-middle"><%= campaign.message %></td>
-              <td class="v-align-middle"><%= campaign.created_at.strftime("%B %-d, %Y") %></td>
+              <td class="v-align-middle"><%= campaign.created_at.strftime("%B %-d, %Y %H:%M") %></td>
               <td class="v-align-middle">
                 <% campaign.topics.each do |topic| %>
                     <a href="javascript:;" class="btn btn-tag"><%= topic.name %></a>

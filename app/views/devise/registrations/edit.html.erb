@@ -255,7 +255,7 @@
             },
             success: function(data) {
               $('#town-select').select2({
-                data: data.towns
+                data: data.data
               }).select2('val', data.selected);
             }
           })
