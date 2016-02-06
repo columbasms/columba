@@ -71,16 +71,22 @@
                     android:text="10,000 followers - 18 campagne"/>
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/fav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
             <Button
+                android:id="@+id/fol"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SEGUI"
+                android:text=""
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:textColor="@color/colorPrimaryDark"
-                android:backgroundTint="@color/colorText"/>
+                android:backgroundTint="@android:color/transparent"/>
 
         </LinearLayout>
 

@@ -1,18 +1,22 @@
 package com.columbasms.columbasms.adapter;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.AssociationProfileActivity;
+import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
 
 import java.util.List;
@@ -28,6 +32,7 @@ import butterknife.ButterKnife;
 public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationProfileAdapter.ViewHolder> {
 
     private List<CharityCampaign> mItemList;
+    private Association association;
     private int card_size;
 
     private static final int TYPE_PROFILE = 0;
@@ -55,6 +60,8 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
         @Bind(R.id.profile_ass_name)TextView assName;
         @Bind(R.id.profile_ass_description)TextView assDescription;
         @Bind(R.id.profile_ass_other_info)TextView assOtherInfo;
+        @Bind(R.id.fol) Button follow;
+        @Bind(R.id.fav) ImageView favourite;
 
         public ProfileViewHolder(View itemView) {
             super (itemView);
@@ -65,8 +72,9 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
 
 
 
-    public AssociationProfileAdapter(List<CharityCampaign> itemList) {
+    public AssociationProfileAdapter(List<CharityCampaign> itemList,Association a) {
         mItemList = itemList;
+        this.association = a;
     }
 
 
@@ -91,7 +99,10 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
         switch (viewHolder.getItemViewType()) {
 
             case TYPE_PROFILE:
-                ProfileViewHolder holder1 = (ProfileViewHolder) viewHolder;
+                final ProfileViewHolder holder1 = (ProfileViewHolder) viewHolder;
+                holder1.assName.setText(association.getName());
+                holder1.assOtherInfo.setText(association.getFollower() + " followers");
+                holder1.assDescription.setText(association.getDescription());
                 final CardView v = holder1.cardView;
                 v.post(new Runnable() {
                     @Override
@@ -99,6 +110,17 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                         card_size = v.getHeight();
                     }
 
+                });
+                holder1.favourite.setBackgroundResource(R.drawable.ic_favorite_white_24dp);
+                holder1.favourite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        holder1.follow.setText("TRUST");
+                        holder1.follow.setTextColor(Color.parseColor("#009688"));
+                        holder1.follow.setBackgroundResource(
+                                R.color.colorText);
+                        holder1.favourite.setBackgroundResource(R.drawable.ic_favorite_white_24dp);
+                    }
                 });
                 break;
 

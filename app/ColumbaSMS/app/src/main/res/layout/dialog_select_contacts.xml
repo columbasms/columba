@@ -17,6 +17,7 @@
             android:layout_weight="4">
 
             <TextView
+                android:fontFamily="sans-serif-medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dialog_contacts_title"

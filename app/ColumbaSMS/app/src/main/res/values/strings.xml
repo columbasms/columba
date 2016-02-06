@@ -20,7 +20,10 @@
     <string name="sms_stop">To stop receiving this SMS:\nwww.columbasms.com/stop/</string>
 
 
+
     <string name="dialog_contacts_title">Select contacts</string>
+    <string name="dialog_number_verification_title">Verification</string>
+    <string name="dialog_number_verification_verify">VERIFY</string>
 
     <string name="dgts__login_digits_text">Sign in</string>
 

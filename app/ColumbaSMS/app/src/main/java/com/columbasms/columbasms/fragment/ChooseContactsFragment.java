@@ -59,6 +59,8 @@ public class ChooseContactsFragment extends DialogFragment implements View.OnCli
                 .setPositiveButton("SEND", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+
+
                         //SEND MESSAGES TO SELECTED CONTACTS (AND SAVE SELECTION FOR ASSOCIATION)
                         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
                         JSONArray jsonArray = new JSONArray();
@@ -72,6 +74,7 @@ public class ChooseContactsFragment extends DialogFragment implements View.OnCli
                         editor.putString(key, jsonArray.toString());
                         editor.commit();
 
+
                         System.out.println("SELECTED CONTACTS: " + jsonArray.toString());
                         for(int i = 0; i<jsonArray.length(); i++){
                             try {
@@ -80,6 +83,7 @@ public class ChooseContactsFragment extends DialogFragment implements View.OnCli
                                 e.printStackTrace();
                             }
                         }
+
 
 
                     }
