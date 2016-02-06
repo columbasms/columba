@@ -10,10 +10,12 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require plugins/boostrapv3/css/bootstrap
+ *= require plugins/boostrapv3/css/bootstrap.min
  *= require font-awesome
  *= require plugins/jquery-scrollbar/jquery.scrollbar
- *= require plugins/bootstrap-select2/select2
+ *= require plugins/jquery-datatable/media/css/dataTables.bootstrap.min
+ *= require plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min
+ *= require plugins/datatables-responsive/css/datatables.responsive
  *= require pages-icons
  *= require pages.css.erb
  *= require style

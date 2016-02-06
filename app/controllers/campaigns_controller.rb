@@ -7,7 +7,21 @@ class CampaignsController < ApplicationController
   # GET /campaigns
   # GET /campaigns.json
   def index
-    @campaigns = Campaign.all
+    @campaigns = current_organization.campaigns
+    render :index, layout: 'application_dashboard'
+  end
+
+  def filter
+    @campaigns = current_organization.campaigns
+    count = @campaigns.length
+    @campaigns = @campaigns.limit 5
+
+    render json: {
+        draw: params[:draw].to_i,
+        recordsTotal: count,
+        recordsFiltered: @campaigns.count,
+        data: @campaigns
+    }, root: false
   end
 
   # GET /campaigns/1

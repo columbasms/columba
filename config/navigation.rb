@@ -60,7 +60,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :dashboard, 'Dashboard', dashboard_path, html: { li_class: 'm-t-30', icon_class: 'pg-home' }
     primary.item :campaigns, 'Campaigns', '#', html: { icon_class: 'pg-note' } do |campaigns|
       campaigns.dom_class = 'sub-menu'
-      campaigns.item :my_campaigns, 'My campaigns', '#', html: { icon_class: '' }
+      campaigns.item :my_campaigns, 'My campaigns', index_campaigns_path, html: { icon_class: 'pg-note' }
       campaigns.item :new_campaign, 'New campaign', new_campaign_path, html: { icon_class: 'pg-plus' }
     end
 

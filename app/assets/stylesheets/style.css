@@ -9,3 +9,12 @@
     height: 0;
 }
 
+#campaigns-table thead th:nth-child(1) {
+    width: 34%;
+}
+#campaigns-table thead th:nth-child(2) {
+    width: 33%;
+}
+#campaigns-table thead th:nth-child(3) {
+    width: 33%;
+}

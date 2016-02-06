@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+  get '/town-by-province' => 'location#town_by_province', as: :town_by_province
+
   get '/dashboard' => 'welcome#dashboard', as: :dashboard
+  get '/dashboard/campaigns' => 'campaigns#index', as: :index_campaigns
+  get '/dashboard/campaigns/filter' => 'campaigns#filter'
   get '/account-locked' => 'welcome#account_locked', as: :account_locked
 
   namespace :api do

@@ -34,6 +34,8 @@
       </div>
     </div>
 
+    <%= f.hidden_field :visible, value: true %>
+
     <div class="row padding-25 sm-padding-10">
       <div class="col-md-12">
         <div class="panel panel-default">
@@ -79,7 +81,7 @@
 
                 <div class="row m-b-15">
                   <div class="col-sm-12 col-md-12">
-                    <div class="form-group form-group-default required">
+                    <div class="form-group form-group-default form-group-default-select2 required">
                       <label for="topic_ids">Topics</label>
                       <%= f.select :topic_ids, Topic.all.collect { |x| [x.name, x.id] }, { }, { multiple: true, 'data-init-plugin': 'select2', class: 'full-width' } %>
                     </div>
@@ -177,16 +179,18 @@
 
             <div class="row">
               <div class="col-sm-12 col-md-6">
-                <div class="form-group form-group-default required">
-                  <%= f.label :province %>
-                  <%= f.text_field :province, class: 'form-control', required: 'required' %>
+                <div class="form-group form-group-default form-group-default-select2 required full-width">
+                  <%= label_tag 'province' %>
+                  <%= select_tag 'province',
+                                 options_for_select(Province.all.order(name: :asc).collect { |x| [x.name, x.id] }, selected: @province_id),
+                                 { 'data-init-plugin': 'select2', class: 'full-width', id: 'province-select' }  %>
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-6">
-                <div class="form-group form-group-default required">
-                  <%= f.label :town %>
-                  <%= f.text_field :town, class: 'form-control', required: 'required' %>
+                <div class="form-group form-group-default form-group-default-select2 required full-width">
+                  <%= f.label :town_id %>
+                  <%= f.hidden_field :town_id, class: 'full-width', required: 'required', id: 'town-select'  %>
                 </div>
               </div>
             </div>
@@ -233,7 +237,29 @@
     <%= javascript_include_tag 'file-upload', 'data-turbolinks-track' => true %>
 
     <script>
-      $('#edit-profile').validate();
+        $('#edit-profile').validate();
+        $('#town-select').select2({
+          data: []
+        });
+        sendProvince(true);
+        $('#province-select').on('change', function() {
+          sendProvince(false);
+        });
+
+        function sendProvince(first) {
+          $.ajax({
+            url: '/town-by-province',
+            data: {
+              province_id: $('#province-select').val(),
+              first: first
+            },
+            success: function(data) {
+              $('#town-select').select2({
+                data: data.towns
+              }).select2('val', data.selected);
+            }
+          })
+        }
     </script>
 
 <% end %>

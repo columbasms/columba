@@ -20,6 +20,7 @@ class Organizations::RegistrationsController < Devise::RegistrationsController
   # GET /resource/edit
   def edit
     @organization = current_organization
+    set_location
     render :edit, layout: 'application_dashboard'
   end
 
@@ -40,6 +41,7 @@ class Organizations::RegistrationsController < Devise::RegistrationsController
       respond_with resource, location: after_update_path_for(resource)
     else
       clean_up_passwords resource
+      set_location
       render :edit, layout: 'application_dashboard'
     end
   end
@@ -68,8 +70,8 @@ class Organizations::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.for(:account_update).push(:organization_name, :description, :fiscal_code, :VAT_number, :province, :town,
-                                                         :address, :postal_code, :phone_number, :website, :topic_ids => [])
+    devise_parameter_sanitizer.for(:account_update).push(:organization_name, :description, :fiscal_code, :VAT_number, :town_id,
+                                                         :address, :postal_code, :phone_number, :website, :visible, :topic_ids => [])
   end
 
   # The path used after sign up.
@@ -80,5 +82,14 @@ class Organizations::RegistrationsController < Devise::RegistrationsController
   # The path used a fter sign up for inactive accounts.
   def after_inactive_sign_up_path_for(resource)
     '/account-locked'
+  end
+
+  def set_location
+    if current_organization.town.present?
+      province = current_organization.town.province
+      @province_id = province.id
+    else
+      @province_id = nil
+    end
   end
 end

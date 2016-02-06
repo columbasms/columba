@@ -1,25 +1,89 @@
-<p id="notice"><%= notice %></p>
+<% content_for :application_js do %>
+    <%= javascript_include_tag('application_data', 'data-turbolinks-track' => true) %>
+<% end %>
 
-<h1>Listing Campaigns</h1>
+<% content_for :application_css do %>
+    <%= stylesheet_link_tag('application_data', 'data-turbolinks-track' => true) %>
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="container-fluid container-fixed-lg bg-white">
 
-  <tbody>
-    <% @campaigns.each do |campaign| %>
-      <tr>
-        <td><%= link_to 'Show', campaign %></td>
-        <td><%= link_to 'Edit', edit_campaign_path(campaign) %></td>
-        <td><%= link_to 'Destroy', campaign, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="panel panel-transparent">
+    <div class="panel-heading">
+      <div class="panel-title">Pages Default Tables Style
+      </div>
+      <div class="pull-right">
+        <div class="col-xs-12">
+          <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
 
-<br>
+      <table id="campaigns-table" class="table table-hover" cellspacing="0" width="100%">
 
-<%= link_to 'New Campaign', new_campaign_path %>
+        <thead>
+        <tr>
+          <th>Message</th>
+          <th>Date created</th>
+          <th>Topics</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @campaigns.each do |campaign| %>
+            <tr>
+              <td class="v-align-middle"><%= campaign.message %></td>
+              <td class="v-align-middle"><%= campaign.created_at.strftime("%B %-d, %Y") %></td>
+              <td class="v-align-middle">
+                <% campaign.topics.each do |topic| %>
+                    <a href="javascript:;" class="btn btn-tag"><%= topic.name %></a>
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+
+</div>
+
+<% content_for :javascripts do %>
+
+  <script>
+    $(function() {
+
+      var responsiveHelper = undefined;
+      var breakpointDefinition = {
+        tablet: 1024,
+        phone: 480
+      };
+
+      var table = $('#campaigns-table');
+
+      var settings = {
+        "sDom": "<'table-responsive't><'row'<p i>>",
+        "destroy": true,
+        "scrollCollapse": true,
+        "oLanguage": {
+          "sLengthMenu": "_MENU_ ",
+          "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+        },
+        "iDisplayLength": 5
+      };
+
+      table.dataTable(settings);
+
+      // search box for table
+      $('#search-table').keyup(function() {
+        table.fnFilter($(this).val());
+      });
+
+    });
+  </script>
+
+<% end %>
