@@ -1,7 +1,6 @@
 package com.columbasms.columbasms.service;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -30,6 +29,7 @@ public class RegistrationService extends IntentService {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor_account_information = sp.edit();
             editor_account_information.putString("gcm-token", token);
+            System.out.println(token);
             editor_account_information.commit();
         } catch (IOException e) {
             e.printStackTrace();
