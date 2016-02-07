@@ -20,6 +20,8 @@ import com.columbasms.columbasms.fragment.MessagesFragment;
 import com.columbasms.columbasms.fragment.NotificationsFragment;
 import com.columbasms.columbasms.fragment.SplashScreenFragment;
 import com.columbasms.columbasms.fragment.TopicsFragment;
+import com.columbasms.columbasms.utils.API_URL;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import butterknife.Bind;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity{
     @Bind(R.id.toolbar_bottom)Toolbar toolbar_bottom;
     @Bind(R.id.home)LinearLayout home;
     @Bind(R.id.topics)LinearLayout topics;
-    @Bind(R.id.messages)LinearLayout messages;
+    @Bind(R.id.messages)LinearLayout map;
     @Bind(R.id.notifications)LinearLayout notifications;
     @OnClick({ R.id.home, R.id.topics,R.id.messages,R.id.notifications})
     public void onClick(View v) {
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity{
             toolbar_top.setTitle(R.string.topics);
             fr = new TopicsFragment();
         }else if(v == findViewById(R.id.messages)){
-            toolbar_top.setTitle(R.string.mex);
+            toolbar_top.setTitle(R.string.map);
             fr = new MessagesFragment();
         }else{
             toolbar_top.setTitle(R.string.not);
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity{
         Intent intentGCMListen = new Intent(this,GcmReceiver.class);
         startService(intentGCMListen);
         */
+
     }
 
 

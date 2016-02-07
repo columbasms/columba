@@ -1,7 +1,9 @@
 package com.columbasms.columbasms.adapter;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,12 +14,19 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.AssociationProfileActivity;
 import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
+import com.columbasms.columbasms.utils.Utils;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
@@ -34,6 +43,8 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
     private List<CharityCampaign> mItemList;
     private Association association;
     private int card_size;
+    private Drawable profile_image;
+    private Resources res;
 
     private static final int TYPE_PROFILE = 0;
     private static final int TYPE_GROUP = 1;
@@ -44,8 +55,12 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
         }
     }
     public class GroupViewHolder extends ViewHolder {
+
+        @Bind(R.id.topic)TextView topic;
         @Bind(R.id.message)TextView message;
-        @Bind(R.id.campaign_name)TextView campaignName;
+        @Bind(R.id.ass_name)TextView associationName;
+        @Bind(R.id.send)ImageView send;
+        @Bind(R.id.profile_image)ImageView profile_image;
 
         public GroupViewHolder(View parent) {
             super(parent);
@@ -60,11 +75,15 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
         @Bind(R.id.profile_ass_name)TextView assName;
         @Bind(R.id.profile_ass_description)TextView assDescription;
         @Bind(R.id.profile_ass_other_info)TextView assOtherInfo;
-        @Bind(R.id.fol) Button follow;
+        @Bind(R.id.association_campaigns)TextView assCampaignsTitle;
+        @Bind(R.id.fol) Button trust;
         @Bind(R.id.fav) ImageView favourite;
+        @Bind(R.id.cover_image) ImageView coverImage;
+        @Bind(R.id.thumbnail_image) ImageView thumbnailImage;
+
 
         public ProfileViewHolder(View itemView) {
-            super (itemView);
+            super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
@@ -72,9 +91,10 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
 
 
 
-    public AssociationProfileAdapter(List<CharityCampaign> itemList,Association a) {
+    public AssociationProfileAdapter(List<CharityCampaign> itemList,Association a,Resources res) {
         mItemList = itemList;
         this.association = a;
+        this.res = res;
     }
 
 
@@ -84,7 +104,7 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
             return new ProfileViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_association_profile, parent, false));
         }
 
-        return new GroupViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feed_association_profile, parent, false));
+        return new GroupViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feed, parent, false));
     }
 
     @Override
@@ -100,10 +120,36 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
 
             case TYPE_PROFILE:
                 final ProfileViewHolder holder1 = (ProfileViewHolder) viewHolder;
+
                 holder1.assName.setText(association.getName());
-                holder1.assOtherInfo.setText(association.getFollower() + " followers");
+
+                String info = association.getFollower() + " followers" + " - " + mItemList.size() + " campaigns";
+                holder1.assOtherInfo.setText(info);
+
                 holder1.assDescription.setText(association.getDescription());
+
+                String title = association.getName() + "'s campaign";
+                holder1.assCampaignsTitle.setText(title);
+
                 final CardView v = holder1.cardView;
+                holder1.trust.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Button trust = holder1.trust;
+                        if(trust.getTag().equals("0")){
+                            trust.setBackgroundResource(R.drawable.button_trusted);
+                            trust.setText("TRUSTED");
+                            trust.setTextColor(Color.parseColor("#ffffff"));
+                            trust.setTag("1");
+                        }else{
+                            trust.setBackgroundResource(android.R.color.white);
+                            trust.setText("TRUST");
+                            trust.setTextColor(res.getColor(R.color.colorPrimaryDark));
+                            trust.setTag("0");
+                        }
+
+                    }
+                });
                 v.post(new Runnable() {
                     @Override
                     public void run() {
@@ -111,30 +157,54 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                     }
 
                 });
-                holder1.favourite.setBackgroundResource(R.drawable.ic_favorite_white_24dp);
                 holder1.favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        holder1.follow.setText("TRUST");
-                        holder1.follow.setTextColor(Color.parseColor("#009688"));
-                        holder1.follow.setBackgroundResource(
-                                R.color.colorText);
-                        holder1.favourite.setBackgroundResource(R.drawable.ic_favorite_white_24dp);
+                        ImageView fav = holder1.favourite;
+                        Button trust = holder1.trust;
+                        if(fav.getTag().equals("0")){
+                            fav.setBackgroundResource(R.drawable.ic_favorite_white_36dp);
+                            trust.setVisibility(View.VISIBLE);
+                            trust.setBackgroundResource(android.R.color.white);
+                            trust.setText("TRUST");
+                            trust.setTextColor(res.getColor(R.color.colorPrimaryDark));
+                            trust.setTag("0");
+                            fav.setTag("1");
+                        }else{
+                            fav.setBackgroundResource(R.drawable.ic_favorite_border_white_36dp);
+                            trust.setVisibility(View.GONE);
+                            fav.setTag("0");
+                        }
+
                     }
                 });
+
+                final ImageView cover = holder1.coverImage;
+                Utils.downloadImage(association.getCover_image_url(),cover,false,false);
+
+                final ImageView p = holder1.thumbnailImage;
+                Utils.downloadImage(association.getThumbnail_image_url(),p,true,true);
+
                 break;
 
             case TYPE_GROUP:
                 GroupViewHolder holder2 = (GroupViewHolder) viewHolder;
                 CharityCampaign c = mItemList.get(position);
 
-                /*
+
                 TextView an = holder2.associationName;
                 an.setText(c.getAssociationName());
-                */
+
+                TextView topic = holder2.topic;
+                topic.setText(c.getTopic());
+                selectColor(topic, c.getTopic());
 
                 TextView message = holder2.message;
                 message.setText(c.getMessage());
+
+                final ImageView pi = holder2.profile_image;
+                Utils.downloadImage(association.getThumbnail_image_url(),pi,true,false);
+
                 break;
         }
     }
@@ -147,6 +217,17 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
 
     public int getCardSize(){
         return card_size;
+    }
+
+    private void selectColor(TextView t, String topicName){
+        String[] colorArray = res.getStringArray(R.array.topics_color);
+        String[] topics_name = res.getStringArray(R.array.topics_name);
+        for (int i = 0; i<topics_name.length; i++){
+            if(topicName.equals(topics_name[i])){
+                t.setTextColor(Color.parseColor(colorArray[i]));
+                break;
+            }
+        }
     }
 
 }

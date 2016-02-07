@@ -1,11 +1,9 @@
 package com.columbasms.columbasms.adapter;
 
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.AssociationProfileActivity;
+import com.columbasms.columbasms.activity.TopicProfileActivity;
 import com.columbasms.columbasms.fragment.ChooseContactsFragment;
 import com.columbasms.columbasms.model.CharityCampaign;
+import com.columbasms.columbasms.utils.Utils;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
 
 import java.util.List;
@@ -31,7 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Federico on 10/01/16, edited by Matteo Brienza.
+ * Created by Matteo Brienza on 10/01/16.
  */
 public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -58,6 +57,15 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         final RecyclerItemViewHolder holder = (RecyclerItemViewHolder) viewHolder;
         final CharityCampaign c = mItemList.get(position);
 
+        ImageView profile_image = holder.profile_image;
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), AssociationProfileActivity.class);
+                v.getContext().startActivity(i);
+            }
+        });
+
         TextView an = holder.associationName;
         an.setText(c.getAssociationName());
         an.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +78,16 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         TextView topic = holder.topic;
         topic.setText(c.getTopic());
+        topic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), TopicProfileActivity.class);
+                i.putExtra("topic_name", c.getTopic());
+                v.getContext().startActivity(i);
+            }
+        });
         selectColor(topic, c.getTopic());
+
 
         TextView message = holder.message;
         message.setText(c.getMessage());
@@ -88,47 +105,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         });
 
         final ImageView p = holder.profile_image;
-        final Transformation transformation = new RoundedTransformationBuilder()
-                .cornerRadiusDp(50)
-                .oval(false)
-                .build();
-
-        Picasso.with(p.getContext())
-                .load(c.getImage_url())
-                .networkPolicy(NetworkPolicy.OFFLINE)
-                .fit()
-                .placeholder(R.drawable.thumbmail_image_error)
-                .transform(transformation)
-                .into(p, new Callback() {
-
-                    /*
-                    Picasso will keep looking for it offline in cache and fail,
-                    the following code looks at the local cache, if not found offline,
-                    it goes online and replenishes the cache
-                    */
-
-                    @Override
-                    public void onSuccess() {}
-
-                    @Override
-                    public void onError() {
-                        //Try again online if cache failed
-                        Picasso.with(p.getContext())
-                                .load(c.getImage_url())
-                                .fit()
-                                .error(R.drawable.thumbmail_image_error)
-                                .transform(transformation)
-                                .into(p, new Callback() {
-                                    @Override
-                                    public void onSuccess() {
-                                    }
-
-                                    @Override
-                                    public void onError() {
-                                    }
-                                });
-                    }
-                });
+        Utils.downloadImage(c.getImage_url(), p, true,false);
 
     }
 

@@ -102,14 +102,14 @@
                                                         android:layout_width="24dp"
                                                         android:layout_height="24dp"
                                                         android:layout_marginBottom="2dp"
-                                                        android:background="@drawable/ic_chat_bubble_white_24dp"/>
+                                                        android:background="@drawable/ic_map_white_24dp"/>
 
                                                     <TextView
                                                         android:layout_width="wrap_content"
                                                         android:layout_height="wrap_content"
                                                         android:textColor="@color/colorText"
                                                         android:textSize="12sp"
-                                                        android:text="@string/mex"/>
+                                                        android:text="@string/map"/>
 
                                         </LinearLayout>
 

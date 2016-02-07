@@ -2,7 +2,9 @@ package com.columbasms.columbasms.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -51,7 +53,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Matteo Brienza on 2/1/16.
  */
-public class AssociationProfileActivity extends AppCompatActivity implements View.OnClickListener {
+public class AssociationProfileActivity extends AppCompatActivity{
 
     @Bind(R.id.toolbar_profile)Toolbar toolbar;
     private static RecyclerView  rvAssociationProfile;
@@ -61,8 +63,12 @@ public class AssociationProfileActivity extends AppCompatActivity implements Vie
     private static ImageView fav;
     private static List<CharityCampaign> campaigns_list;
     private static AssociationProfileAdapter associationProfileAdapter;
-    private static String URL_API= "https://www.columbasms.com/api/v1/organizations";
+    private static String URL_API= "http://www.architettura204.it/association.json";
+    private static String assName;
     int toolbar_size;
+    ColorDrawable cd;
+    static Resources res;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,14 +77,29 @@ public class AssociationProfileActivity extends AppCompatActivity implements Vie
 
         ButterKnife.bind(this);
 
+        res = getResources();
 
         mySwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh_association_profile);
+        mySwipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_1, R.color.refresh_progress_2, R.color.refresh_progress_3, R.color.refresh_progress_4);
+        mySwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        getData();
+                    }
+                }
+        );
+
         rvAssociationProfile = (RecyclerView)findViewById(R.id.rv_association_profile);
+
+        cd = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
+
         //TOP TOOLBAR SETUP
         toolbar.bringToFront();
         toolbar.setTitle("");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setVisibility(View.VISIBLE);
+        toolbar.setBackgroundDrawable(cd);
         //GET HEIGHT OF TOOLBAR TO FADE ANIMATION
         toolbar.post(new Runnable() {
             @Override
@@ -97,20 +118,12 @@ public class AssociationProfileActivity extends AppCompatActivity implements Vie
         });
 
         campaigns_list = new ArrayList<>();
-        campaigns_list.add(new CharityCampaign("prova", "", "", ""));
-        campaigns_list.add(new CharityCampaign("prova", "", "", ""));
-        campaigns_list.add(new CharityCampaign("prova", "", "", ""));
-        campaigns_list.add(new CharityCampaign("prova","","",""));
-        campaigns_list.add(new CharityCampaign("prova","","",""));
-        campaigns_list.add(new CharityCampaign("prova","","",""));
-        campaigns_list.add(new CharityCampaign("prova","","",""));
-        campaigns_list.add(new CharityCampaign("prova","","",""));
-
 
 
         // Set layout manager to position the items
         rvAssociationProfile.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
         rvAssociationProfile.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
             int scrollDy = 0;
 
             @Override
@@ -118,21 +131,26 @@ public class AssociationProfileActivity extends AppCompatActivity implements Vie
                 super.onScrollStateChanged(recyclerView, newState);
             }
 
-            @Override //TEMPORARY METHOD FOR TOOLBAR FADE-IN ANIMATION
+            @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int card_size = associationProfileAdapter.getCardSize();
                 scrollDy += dy;
-                if (scrollDy > (card_size - toolbar_size)) {
-                    toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+                if (scrollDy > card_size) {
+                    cd.setAlpha(255);
+                    toolbar.setTitle(assName);
+                } else if (scrollDy <= 0) {
+                    cd.setAlpha(0);
                     toolbar.setTitle("");
                 } else {
-                    toolbar.setBackgroundColor(Color.TRANSPARENT);
+                    cd.setAlpha((int) ((255.0 / card_size) * scrollDy));
                     toolbar.setTitle("");
                 }
             }
         });
 
         getData();
+
     }
 
 
@@ -159,26 +177,33 @@ public class AssociationProfileActivity extends AppCompatActivity implements Vie
                 try {
                     final String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
 
-                    JSONArray jsonArray = new JSONArray(jsonString);
+                    JSONObject o = new JSONObject(jsonString);
 
-                    Association a = null;
+                    Association a = new Association(o.getString("organization_name"),o.getString("description"),o.getString("avatar_normal"),o.getString("cover_normal"),1000,false);;
+
+                    JSONArray jsonArray = new JSONArray(o.getString("campaigns"));
+
+                    campaigns_list.clear();
+
                     if (jsonArray.length() > 0) {
 
                         // looping through json and adding to movies list
-                        //for (int i = 0; i < jsonArray.length(); i++) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
                             try {
-                                JSONObject o = jsonArray.getJSONObject(0);
 
-                                a = new Association(o.getString("organization_name"),o.getString("description"),o.getString("avatar_normal"),o.getString("cover_normal"),1000,false);
+                                JSONObject temp = jsonArray.getJSONObject(i);
 
+                                assName = a.getName();
+
+                                campaigns_list.add(new CharityCampaign(assName,temp.getString("topic"),temp.getString("message"),a.getThumbnail_image_url()));
 
                             } catch (JSONException e) {
                                 System.out.println("JSON Parsing error: " + e.getMessage());
                             }
-                        //}
+                        }
                     }
                     // Create adapter passing in the sample user data
-                    associationProfileAdapter = new AssociationProfileAdapter(campaigns_list,a);
+                    associationProfileAdapter = new AssociationProfileAdapter(campaigns_list,a,res);
 
                     // Attach the adapter to the recyclerview to populate items
                     rvAssociationProfile.setAdapter(associationProfileAdapter);
@@ -247,14 +272,6 @@ public class AssociationProfileActivity extends AppCompatActivity implements Vie
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        Button b = (Button)v;
-        b.setText("STAI SEGUENDO");
-        b.setTextColor(Color.parseColor("#FFFFFF"));
-        fav.setBackgroundResource(R.drawable.ic_favorite_white_24dp);
-
-    }
 }
 
 

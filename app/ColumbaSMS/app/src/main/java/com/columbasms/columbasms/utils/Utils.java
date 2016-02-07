@@ -1,10 +1,17 @@
 package com.columbasms.columbasms.utils;
 
-import android.app.PendingIntent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.telephony.SmsManager;
+import android.widget.ImageView;
 
 import com.columbasms.columbasms.R;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
+import com.squareup.picasso.Transformation;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -27,26 +34,17 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Created by Matteo on 15/01/2016.
  */
 public class Utils {
 
+    private static Transformation t;
+
     public static JSONObject getOauthAccessToken(JSONObject j){
         String url = "https://www.columbasms.com/oauth/v2/token?";
         JSONArray ja = j.names();
-        /*
-        for(int i = 0; i< ja.length();i++){
-            try {
-                String name = ja.getString(i);
-                System.out.println( name + " " + j.get(ja.getString(i)));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        */
         List<NameValuePair> params = new LinkedList<NameValuePair>();
         try {
             params.add(new BasicNameValuePair("client_id", j.getString("client_id").toString()));
@@ -59,23 +57,15 @@ public class Utils {
         }
         String paramString = URLEncodedUtils.format(params, "utf-8");
         url += paramString;
-        //System.out.println("COMPLETE URL: " + url);
+        //System.out.println("COMPLETE: " + url);
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(url);
         HttpResponse response = null;
-        try {
-            response = httpClient.execute(httpGet);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         StringBuilder builder = new StringBuilder();
         try {
+            response = httpClient.execute(httpGet);
+            reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
             for (String line = null; (line = reader.readLine()) != null;) {
                 builder.append(line).append("\n");
             }
@@ -190,8 +180,75 @@ public class Utils {
                 res.getString(R.string.sms_stop) +
                 phoneNumber.replace(" ", "");
 
-        //<<MISSED>> CONTROL OF MESSAGE SIZE
         ArrayList<String> parts = sms.divideMessage(format_message);
         sms.sendMultipartTextMessage(phoneNumber, null, parts, null, null);
+    }
+
+
+    public static void downloadImage(final String URL, final ImageView im, final boolean applyTrasformation, boolean applyBorder){
+
+        t = null;
+
+        if(applyBorder==true) {
+            t = new RoundedTransformationBuilder()
+                    .cornerRadiusDp(50)
+                    .oval(false)
+                    .borderWidthDp(1)
+                    .borderColor(Color.parseColor("#ffffff"))
+                    .build();
+        }else{
+            t = new RoundedTransformationBuilder()
+                    .cornerRadiusDp(50)
+                    .oval(false)
+                    .build();
+        }
+
+
+        RequestCreator request = Picasso.with(im.getContext()).load(URL);
+
+        if(applyTrasformation==true){
+             request.transform(t)
+                    .placeholder(R.drawable.error_thumbnail_image);
+        }else {
+            request.placeholder(R.drawable.error_cover_image);
+        }
+
+        request.networkPolicy(NetworkPolicy.OFFLINE)
+                .fit()
+                .into(im, new Callback() {
+
+                    /*
+                    Picasso will keep looking for it offline in cache and fail,
+                    the following code looks at the local cache, if not found offline,
+                    it goes online and replenishes the cache
+                    */
+
+                    @Override
+                    public void onSuccess() {
+                    }
+
+                    @Override
+                    public void onError() {
+                        RequestCreator request2 = Picasso.with(im.getContext()).load(URL);
+                        if(applyTrasformation==true){
+                            request2.transform(t)
+                                    .placeholder(R.drawable.error_thumbnail_image);
+                        }else {
+                            request2.placeholder(R.drawable.error_cover_image);
+                        }
+
+                        request2.fit().into(im, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                            }
+
+                            @Override
+                            public void onError() {
+                            }
+                        });
+
+                    }
+                });
+
     }
 }

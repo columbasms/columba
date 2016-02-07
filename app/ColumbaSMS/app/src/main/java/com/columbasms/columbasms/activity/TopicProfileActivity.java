@@ -86,7 +86,6 @@ public class TopicProfileActivity extends AppCompatActivity {
 
         //SETUP CAMPAIGNS LIST ADAPTER
         List<CharityCampaign> campaigns_list = new ArrayList<>();
-        campaigns_list.add(new CharityCampaign("Amici di Insquareeeeeeeeeeeee",topic + "\nAnimal Rights" + "\nMedical Assistance" + "\nHuman Rights","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",null));
         campaigns_list.add(new CharityCampaign("WWF",topic,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",null));
         campaigns_list.add(new CharityCampaign("ADDA",topic,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",null));
         LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

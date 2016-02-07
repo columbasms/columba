@@ -19,19 +19,25 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.percent.PercentRelativeLayout
+                android:id="@+id/percentRelativeLayout"
+                android:background="@color/colorHint"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="#bbbbbb"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal"/>
+                android:layout_height="wrap_content"
+                >
+                <ImageView
+                    android:id="@+id/cover_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_widthPercent="100%"
+                    app:layout_aspectRatio="178%"
+                    android:scaleType="centerCrop"/>
+            </android.support.percent.PercentRelativeLayout>
 
             <LinearLayout
                 android:id="@+id/background_card"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
@@ -39,7 +45,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
                     android:textSize="@dimen/primary_text_size"
                     android:textColor="@color/colorText"
                     />
