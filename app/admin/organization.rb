@@ -4,6 +4,7 @@ ActiveAdmin.register Organization do
 
   permit_params :id, :organization_name, :locked_at, :email, :VAT_number, :password, :password_confirmation, :avatar,
                 :locked, :salt, :encrypted_password, :fiscal_code, :province, :town, :address, :postal_code, :phone_number, :visible,
+                :fiscal_code, :description, :website, :town_id,
                 :topics_attributes => [:id, :name, :description], :topic_ids => []
 
   filter :topics
@@ -85,15 +86,22 @@ ActiveAdmin.register Organization do
     f.semantic_errors
     f.inputs 'General' do
       f.input :email
+      f.input :phone_number
       f.input :password, type: :password
       f.input :password_confirmation, type: :password
       f.input :visible, as: :select
     end
     f.inputs 'Organization' do
       f.input :organization_name
+      f.input :website
+      f.input :description
       f.input :VAT_number
+      f.input :fiscal_code
+      f.input :town, as: :select2, :wrapper_html => { style: 'width: auto;' }
+      f.input :address
       f.input :topics, as: :select2_multiple, :wrapper_html => { :style => 'width: auto;' }
       f.input :avatar, image_preview: true
+      f.input :cover, image_preview: true
     end
     f.actions
   end

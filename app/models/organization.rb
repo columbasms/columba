@@ -30,7 +30,7 @@ class Organization < ActiveRecord::Base
 
   validates :organization_name, presence: true
   validates :email, presence: true
-  validates_presence_of :fiscal_code, :town_id, :address, :postal_code, :phone_number
+  validates_presence_of :fiscal_code, :town_id, :address, :phone_number
 
   with_options if: :visible? do |o|
     o.validates :topics, presence: true
@@ -56,6 +56,10 @@ class Organization < ActiveRecord::Base
 
   def cover_normal
     URI.join(ActionController::Base.asset_host, self.cover.url(:normal)).to_s
+  end
+
+  def to_s
+    self.organization_name
   end
 
   private

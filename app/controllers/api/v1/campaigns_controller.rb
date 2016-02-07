@@ -1,6 +1,7 @@
 class Api::V1::CampaignsController < ApplicationController
   http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
   before_filter :set_campaign, only: [:show]
+  force_ssl
 
   respond_to :json
 
