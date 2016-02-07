@@ -1,7 +1,10 @@
 class Api::V1::CampaignsController < ApplicationController
   http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
+  before_filter :set_campaign, only: [:show]
 
-  # GET /api/v1/campaigns
+  respond_to :json
+
+  # GET /campaigns
   def index
     @campaigns = Campaign.all
 
@@ -14,6 +17,21 @@ class Api::V1::CampaignsController < ApplicationController
     @campaigns = @campaigns.offset(params[:offset]) if params[:offset].present?
 
     render json: @campaigns, root: nil
+  end
+
+  # GET /campaigns/:id
+  def show
+    render json: @campaign, root: false
+  end
+
+  private
+
+  def set_campaign
+    begin
+      @campaign = Campaign.find params[:id]
+    rescue ActiveRecord::RecordNotFound
+      render json: { errors: 'Campaign not found' }
+    end
   end
 
 end

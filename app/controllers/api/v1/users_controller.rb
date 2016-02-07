@@ -1,11 +1,21 @@
 module Api
   module V1
-    class UserController < ApplicationController
+    class UsersController < ApplicationController
       http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
       respond_to :json
-      protect_from_forgery except: :register
+      protect_from_forgery except: :create
+      before_filter :set_user, only: [:show, :campaigns]
 
-      def register
+      def show
+        render json: @user, root: false, serializer: ::DigitsClientSerializer
+      end
+
+      def campaigns
+        render json: @user.campaigns, root: false
+      end
+
+      # POST /users/
+      def create
 
         provider = request.headers[:'X-Auth-Service-Provider']
         if provider.nil? or provider.empty?
@@ -25,11 +35,11 @@ module Api
           return
         end
 
-        digits = Api::V1::UserHelper.twitter_verify_auth_curl(provider, auth)
+        digits = Api::V1::UsersHelper.twitter_verify_auth_curl(provider, auth)
 
         if digits.header_str.include? 'HTTP/1.1 200 OK'
           credentials = JSON.parse digits.body_str
-          client = Api::V1::UserHelper.register_user credentials, gcm_token
+          client = Api::V1::UsersHelper.register_user credentials, gcm_token
           render json: client
         else
           render json: JSON.parse(digits.body_str)
@@ -37,8 +47,15 @@ module Api
 
       end
 
-      def test
-        render json: { success: true  }
+      private
+
+      def set_user
+        begin
+          @user = DigitsClient.find params[:id]
+        rescue ActiveRecord::RecordNotFound
+          render json: { errors: 'User not found' }
+          return
+        end
       end
 
     end

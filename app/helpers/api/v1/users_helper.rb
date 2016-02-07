@@ -1,4 +1,4 @@
-module Api::V1::UserHelper
+module Api::V1::UsersHelper
 
   def self.twitter_verify_auth_curl(provider, auth)
     Curl.get(provider) do |curl|

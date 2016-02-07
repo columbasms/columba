@@ -21,10 +21,23 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      post '/register' => 'user#register'
-      get '/test' => 'user#test'
-      resources :organizations
+      resources :users do
+        member do
+          get :campaigns
+        end
+      end
+      resources :organizations do
+        member do
+          get :campaigns
+        end
+      end
       resources :campaigns
+      resources :topics do
+        member do
+          get :campaigns
+          get :organizations
+        end
+      end
     end
   end
 

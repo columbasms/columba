@@ -15,6 +15,10 @@ function readURL(input, type) {
         var file = input.files[0];
 
         if ((/\.(png|jpeg|jpg|gif)$/i).test(file.name)) {
+            $('#hint-text').html('Uploading... <span id="upload-percentage">0%</span>');
+            $('#modal-crop').modal();
+            $('.progress-panel').show();
+
             var formData = new FormData();
             formData.append('organization[' + type + ']', file);
             formData.append('organization[type]', type);
@@ -68,6 +72,10 @@ function readURL(input, type) {
 
                 error: function(e) {
                     console.log(e);
+                    updateProgress(0);
+                    $('.progress-panel').hide();
+                    $('#modal-crop').modal('toggle');
+
                 },
                 // Form data
                 data: formData,
@@ -76,22 +84,18 @@ function readURL(input, type) {
                 contentType: false,
                 processData: false
             });
+        } else {
+            alert('File format not valid.');
         }
     }
 }
 
 $("#avatar-input").change(function(){
     readURL(this, 'avatar');
-    $('#hint-text').html('Uploading... <span id="upload-percentage">0%</span>');
-    $('#modal-crop').modal();
-    $('.progress-panel').show();
 });
 
 $('#cover-input').change(function() {
     readURL(this, 'cover');
-    $('#hint-text').html('Uploading... <span id="upload-percentage">0%</span>');
-    $('#modal-crop').modal();
-    $('.progress-panel').show();
 });
 
 function updateProgress(progress) {
