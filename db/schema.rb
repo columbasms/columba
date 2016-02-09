@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160206141544) do
+ActiveRecord::Schema.define(version: 20160209192026) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -191,9 +191,10 @@ ActiveRecord::Schema.define(version: 20160206141544) do
   add_index "provinces", ["region_id"], name: "fk_rails_5aca3eede1", using: :btree
 
   create_table "receivers", force: :cascade do |t|
-    t.string   "number",     limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "number",      limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.boolean  "blacklisted"
   end
 
   create_table "regions", force: :cascade do |t|
