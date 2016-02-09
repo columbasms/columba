@@ -12,9 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.columbasms.columbasms.R;
-import com.columbasms.columbasms.activity.AssociationProfileActivity;
 import com.columbasms.columbasms.activity.TopicProfileActivity;
-import com.columbasms.columbasms.model.TopicsType;
+import com.columbasms.columbasms.model.Topic;
 
 import java.util.List;
 
@@ -28,14 +27,14 @@ import butterknife.OnClick;
 
 public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder> {
 
-    private static List<TopicsType> topicsTypes;
+    private static List<Topic> topics;
     private static String[] topicsColor;
     private float scale;
+
     // Pass in the contact array into the constructor
-    public TopicsAdapter(List<TopicsType> ass,String[] tc,float s) {
-            topicsTypes = ass;
+    public TopicsAdapter(List<Topic> ass, float s) {
+            topics = ass;
             scale = s;
-            topicsColor = tc;
     }
 
     @Override
@@ -55,8 +54,9 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
     @Override
     public void onBindViewHolder(TopicsAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
-        final TopicsType topic = topicsTypes.get(position);
-        String type_name = topic.getType_name();
+
+        final Topic topic = topics.get(position);
+        String type_name = topic.getName();
         boolean isSelected = topic.isSelected();
 
         CardView cv = viewHolder.cl;
@@ -64,7 +64,8 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), TopicProfileActivity.class);
-                i.putExtra("topic_name",topic.getType_name());
+                i.putExtra("topic_name",topic.getName());
+                i.putExtra("topic_id",topic.getId());
                 v.getContext().startActivity(i);
             }
         });
@@ -82,7 +83,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         textView.setText(type_name);
 
         LinearLayout bc =viewHolder.bc;
-        bc.setBackgroundColor(Color.parseColor(topicsColor[position]));
+        //bc.setBackgroundColor(topic.getMainColor());
 
 
 
@@ -98,11 +99,11 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
     // Return the total count of items
     @Override
     public int getItemCount() {
-        return topicsTypes.size();
+        return topics.size();
     }
 
-    public List<TopicsType> getAssociationTypes(){
-        return topicsTypes;
+    public List<Topic> getAssociationTypes(){
+        return topics;
     }
 
 
@@ -116,7 +117,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         @OnClick(R.id.follow)
         public void onClick(View v) {
             int pos = getAdapterPosition();
-            TopicsType n = topicsTypes.get(pos);
+            Topic n = topics.get(pos);
             if(n.isSelected()) {
                 follow.setText("FOLLOW");
                 n.setSelected(false);
@@ -124,7 +125,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
                 follow.setText("FOLLOWING");
                 n.setSelected(true);
             }
-            topicsTypes.set(pos, n);
+            topics.set(pos, n);
         }
 
         public ViewHolder(final View parent) {

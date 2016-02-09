@@ -38,15 +38,18 @@ public class AssociationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         AssociationViewHolder holder = (AssociationViewHolder) viewHolder;
+
         Association a = mItemList.get(position);
 
         TextView an = holder.name;
-        an.setText(a.getName());
+        an.setText(a.getOrganization_name());
 
-        TextView f = holder.follower;
-        f.setText(Integer.toString(a.getFollower()));
+
+        //TextView f = holder.follower;
+        //f.setText(Integer.toString(a.getFollower()));
 
        // ImageView favourite = holder.favourite;
+
 
     }
 

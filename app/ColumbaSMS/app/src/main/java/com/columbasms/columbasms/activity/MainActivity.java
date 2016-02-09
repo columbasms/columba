@@ -3,6 +3,7 @@ package com.columbasms.columbasms.activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
@@ -85,31 +86,54 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
-        SharedPreferences state = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        final SharedPreferences state = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
         if (state.getString("firstLaunch",null)==null) {
             // Show the splash screen at the beginning
-            SharedPreferences.Editor editor_state = state.edit();
-            editor_state.putString("firstLaunch", "false");
-            editor_state.commit();
             getFragmentManager().beginTransaction().add(R.id.fragment_place, new SplashScreenFragment()).commit();
         }else SPLASH_SCREEN_DELAY = 0;
 
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                getFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                        .replace(R.id.fragment_place, new HomeFragment()).commit();
+                //  If the activity has never started before...
+                if (state.getString("firstLaunch",null)==null) {
 
-                // Show action bar when the main fragment is visible
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        toolbar_top.setVisibility(View.VISIBLE);
-                        toolbar_bottom.setVisibility(View.VISIBLE);
-                    }
-                });
+                    //  Launch app intro
+                    SharedPreferences.Editor editor_state = state.edit();
+                    editor_state.putString("firstLaunch", "false");
+                    editor_state.commit();
 
+                    Intent i = new Intent(getApplicationContext(), IntroActivity.class);
+                    startActivity(i);
+
+                    getFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                            .replace(R.id.fragment_place, new HomeFragment()).commit();
+
+                    // Show action bar when the main fragment is visible
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            toolbar_top.setVisibility(View.VISIBLE);
+                            toolbar_bottom.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }else{
+                    getFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                            .replace(R.id.fragment_place, new HomeFragment()).commit();
+
+                    // Show action bar when the main fragment is visible
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            toolbar_top.setVisibility(View.VISIBLE);
+                            toolbar_bottom.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
             }
 
         };
@@ -117,6 +141,7 @@ public class MainActivity extends AppCompatActivity{
         // Simulate a long loading process on application startup.
         Timer timer = new Timer();
         timer.schedule(task, SPLASH_SCREEN_DELAY);
+
         /*
         Intent intentGCMListen = new Intent(this,GcmReceiver.class);
         startService(intentGCMListen);

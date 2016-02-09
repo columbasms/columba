@@ -1,6 +1,13 @@
 package com.columbasms.columbasms.activity;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,9 +30,12 @@ import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.adapter.AssociationListAdapter;
 import com.columbasms.columbasms.adapter.AssociationProfileAdapter;
 import com.columbasms.columbasms.adapter.MainAdapter;
+import com.columbasms.columbasms.adapter.TopicsProfileAdapter;
 import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
+import com.columbasms.columbasms.utils.API_URL;
 import com.columbasms.columbasms.utils.CacheRequest;
+import com.columbasms.columbasms.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,13 +55,21 @@ import butterknife.ButterKnife;
  */
 public class TopicProfileActivity extends AppCompatActivity {
 
-    private static String URL_API= "https://www.columbasms.com/api/v1/organizations";
-    private static AssociationListAdapter associationListAdapter;
-    @Bind(R.id.toolbar_topic)Toolbar toolbar;
-    private static RecyclerView rv_associations_list;
-    @Bind(R.id.rv_campaigns_list)RecyclerView rv_campaigns_list;
+    private static String TOPIC_ID;
 
+    private static TopicsProfileAdapter topicsProfileAdapter;
+    @Bind(R.id.toolbar_topic)Toolbar toolbar;
+    private static RecyclerView rv_main_list;
+    private static Context mContext;
+    private static List<CharityCampaign> campaigns_list;
     private static List<Association> associations_list;
+    private static FragmentManager fragmentManager;
+    private static SwipeRefreshLayout mySwipeRefreshLayout;
+    private static CoordinatorLayout coordinatorLayout;
+    private static Activity mainActivity;
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +78,7 @@ public class TopicProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         String topic = getIntent().getStringExtra("topic_name");
+        TOPIC_ID = getIntent().getStringExtra("topic_id");
 
         //TOOLBARSETUP
         toolbar.setTitle(topic);
@@ -78,41 +97,51 @@ public class TopicProfileActivity extends AppCompatActivity {
         //SETUP ASSOCIATIONS LIST ADAPTER
         associations_list = new ArrayList<>();
 
-        rv_associations_list = (RecyclerView)findViewById(R.id.rv_associations_list);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        rv_associations_list.setLayoutManager(mLayoutManager);
-        AssociationListAdapter mAdapter = new AssociationListAdapter(associations_list);
-        rv_associations_list.setAdapter(mAdapter);
+        mContext = this;
+        fragmentManager = getFragmentManager();
+        mainActivity = this;
+
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.topic_coordinatorLayout);
+        mySwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.topic_swiperefresh);
+        mySwipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_1, R.color.refresh_progress_2, R.color.refresh_progress_3, R.color.refresh_progress_4);
+        mySwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        mySwipeRefreshLayout.setRefreshing(true);
+                        getData();
+                        mySwipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
 
         //SETUP CAMPAIGNS LIST ADAPTER
-        List<CharityCampaign> campaigns_list = new ArrayList<>();
-        campaigns_list.add(new CharityCampaign("WWF",topic,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",null));
-        campaigns_list.add(new CharityCampaign("ADDA",topic,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",null));
-        LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rv_campaigns_list.setLayoutManager(lm);
-        MainAdapter ma = new MainAdapter(campaigns_list,getFragmentManager(),getResources(),getParent());
-        rv_campaigns_list.setAdapter(ma);
+        campaigns_list = new ArrayList<>();
+
+        rv_main_list = (RecyclerView)findViewById(R.id.rv_main_list);
+        rv_main_list.setLayoutManager(new GridLayoutManager(this, 1));
 
         getData();
     }
 
     private static void getData(){
 
-        //mySwipeRefreshLayout.setRefreshing(true);
+        if(!isNetworkConnected())showSnackbar();
 
-        CacheRequest cacheRequest = get();
+        CacheRequest associationsRequest = getAssociationsList();
 
-        MyApplication.getInstance().addToRequestQueue(cacheRequest);
-
-        //mySwipeRefreshLayout.setRefreshing(false);
-
-        //if(!isNetworkConnected())showSnackbar();
+        MyApplication.getInstance().addToRequestQueue(associationsRequest);
 
     }
 
 
-    private static CacheRequest get(){
-        return new CacheRequest(0, URL_API, new Response.Listener<NetworkResponse>() {
+    private static CacheRequest getAssociationsList(){
+
+        String URL = API_URL.TOPICS_URL + "/" + TOPIC_ID + API_URL.ASSOCIATIONS;
+
+        System.out.println(URL);
+
+        return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
                 try {
@@ -120,30 +149,78 @@ public class TopicProfileActivity extends AppCompatActivity {
 
                     JSONArray jsonArray = new JSONArray(jsonString);
 
+                    System.out.println(jsonString);
+
                     associations_list.clear();
 
-
-                    Association a = null;
                     if (jsonArray.length() > 0) {
 
                         // looping through json and adding to movies list
                         for (int i = 0; i < jsonArray.length(); i++) {
-                        try {
-                            JSONObject o = jsonArray.getJSONObject(i);
+                                try {
 
-                            a = new Association(o.getString("organization_name"),o.getString("description"),o.getString("avatar_normal"),o.getString("cover_normal"),1000,false);
-                            associations_list.add(a);
+                                    JSONObject o = jsonArray.getJSONObject(i);
 
-                        } catch (JSONException e) {
-                            System.out.println("JSON Parsing error: " + e.getMessage());
+                                    Association a = new Association(o.getString("id"),o.getString("organization_name"),o.getString("avatar_normal"),o.getString("cover_normal"), o.getString("description"));
+
+                                    associations_list.add(a);
+
+                                } catch (JSONException e) {
+                                    System.out.println("JSON Parsing error: " + e.getMessage());
+                                }
                         }
+                    }
+
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
+                CacheRequest campaignsRequest = getCampaignsList();
+
+                MyApplication.getInstance().addToRequestQueue(campaignsRequest);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.toString());
+            }
+        });
+
+    }
+
+    private static CacheRequest getCampaignsList(){
+
+        String URL = API_URL.ASSOCIATIONS_URL;
+
+        return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                try {
+                    final String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+
+                    JSONArray jsonArray = new JSONArray(jsonString);
+
+                    campaigns_list.clear();
+
+                    if (jsonArray.length() > 0) {
+
+                        // looping through json and adding to movies list
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            try {
+                                JSONObject o = jsonArray.getJSONObject(i);
+
+                                //CharityCampaign c = new CharityCampaign();
+                                //campaigns_list.add(c);
+
+                            } catch (JSONException e) {
+                                System.out.println("JSON Parsing error: " + e.getMessage());
+                            }
                         }
                     }
                     // Create adapter passing in the sample user data
-                    associationListAdapter = new AssociationListAdapter(associations_list);
+                    topicsProfileAdapter = new TopicsProfileAdapter(campaigns_list,associations_list,mContext,fragmentManager);
 
                     // Attach the adapter to the recyclerview to populate items
-                    rv_associations_list.setAdapter(associationListAdapter);
+                    rv_main_list.setAdapter(topicsProfileAdapter);
 
                 } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();
@@ -155,8 +232,11 @@ public class TopicProfileActivity extends AppCompatActivity {
                 System.out.println(error.toString());
             }
         });
-
     }
+
+
+
+
 
 
     @Override
@@ -183,5 +263,23 @@ public class TopicProfileActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    private static void showSnackbar(){
+        Snackbar snackbar = Snackbar
+                .make(coordinatorLayout, "No Internet Connection!", Snackbar.LENGTH_LONG)
+                .setAction("RETRY", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getData();
+                    }
+                });
+        View view = snackbar.getView();
+        snackbar.show();
+    }
+
+    private static boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager)mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 }

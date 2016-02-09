@@ -1,5 +1,6 @@
 package com.columbasms.columbasms.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -65,9 +66,11 @@ public class AssociationProfileActivity extends AppCompatActivity{
     private static AssociationProfileAdapter associationProfileAdapter;
     private static String URL_API= "http://www.architettura204.it/association.json";
     private static String assName;
+    private static Activity activity;
     int toolbar_size;
     ColorDrawable cd;
     static Resources res;
+
 
 
     @Override
@@ -78,6 +81,7 @@ public class AssociationProfileActivity extends AppCompatActivity{
         ButterKnife.bind(this);
 
         res = getResources();
+        activity = this;
 
         mySwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh_association_profile);
         mySwipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_1, R.color.refresh_progress_2, R.color.refresh_progress_3, R.color.refresh_progress_4);
@@ -179,7 +183,8 @@ public class AssociationProfileActivity extends AppCompatActivity{
 
                     JSONObject o = new JSONObject(jsonString);
 
-                    Association a = new Association(o.getString("organization_name"),o.getString("description"),o.getString("avatar_normal"),o.getString("cover_normal"),1000,false);;
+                    Association a = new Association("","","","","");
+                    //Association a = new Association(o.getString("organization_name"),o.getString("description"),o.getString("topic"),o.getString("avatar_normal"),o.getString("cover_normal"),1000,false);;
 
                     JSONArray jsonArray = new JSONArray(o.getString("campaigns"));
 
@@ -193,9 +198,10 @@ public class AssociationProfileActivity extends AppCompatActivity{
 
                                 JSONObject temp = jsonArray.getJSONObject(i);
 
-                                assName = a.getName();
+                                assName = a.getOrganization_name();
 
-                                campaigns_list.add(new CharityCampaign(assName,temp.getString("topic"),temp.getString("message"),a.getThumbnail_image_url()));
+
+                                campaigns_list.add(null);
 
                             } catch (JSONException e) {
                                 System.out.println("JSON Parsing error: " + e.getMessage());
@@ -203,7 +209,7 @@ public class AssociationProfileActivity extends AppCompatActivity{
                         }
                     }
                     // Create adapter passing in the sample user data
-                    associationProfileAdapter = new AssociationProfileAdapter(campaigns_list,a,res);
+                    associationProfileAdapter = new AssociationProfileAdapter(campaigns_list,a,res,activity);
 
                     // Attach the adapter to the recyclerview to populate items
                     rvAssociationProfile.setAdapter(associationProfileAdapter);

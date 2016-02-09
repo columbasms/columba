@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
+
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -29,10 +32,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.columbasms.columbasms.MyApplication;
 import com.columbasms.columbasms.R;
+import com.columbasms.columbasms.activity.IntroActivity;
+import com.columbasms.columbasms.activity.LoginActivity;
 import com.columbasms.columbasms.listener.HidingScrollListener;
 import com.columbasms.columbasms.adapter.MainAdapter;
+import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
+import com.columbasms.columbasms.model.Topic;
+import com.columbasms.columbasms.utils.API_URL;
 import com.columbasms.columbasms.utils.CacheRequest;
+import com.columbasms.columbasms.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,11 +50,13 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 
 public class HomeFragment extends Fragment {
 
-    private static String URL_API= "http://www.architettura204.it/test.json";
     private static RecyclerView rvFeed;
     private static List<CharityCampaign> campaigns_list;
     private static Toolbar tb;
@@ -90,6 +101,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         rvFeed= (RecyclerView)v.findViewById(R.id.rv_feed);
+
         tb = (Toolbar)getActivity().findViewById(R.id.toolbar_bottom);
         coordinatorLayout = (CoordinatorLayout)v.findViewById(R.id.coordinatorLayout);
         mySwipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swiperefresh);
@@ -134,13 +146,21 @@ public class HomeFragment extends Fragment {
 
 
     private static CacheRequest get(){
-        return new CacheRequest(0, URL_API, new Response.Listener<NetworkResponse>() {
+
+        //DOPO DIGITS L'URL SARA' QUESTO ---> https://www.columbasms.com/api/v1/users/{id}/campaigns
+        //String URL = API_URL.USERS_URL + USER_ID + API_URL.CAMPAIGNS;
+
+        String URL = API_URL.CAMPAIGNS_URL;
+
+        return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
                 try {
                     final String jsonString = new String(response.data,HttpHeaderParser.parseCharset(response.headers));
 
                     JSONArray jsonArray = new JSONArray(jsonString);
+
+                    System.out.println(jsonString);
 
                     campaigns_list.clear();
 
@@ -151,7 +171,19 @@ public class HomeFragment extends Fragment {
                             try {
                                 JSONObject o = jsonArray.getJSONObject(i);
 
-                                CharityCampaign m = new CharityCampaign(o.getString("associationName"),o.getString("topic"),o.getString("message"),o.getString("thumbnail_image_url"));
+                                List<Topic> topicList = new ArrayList<>();
+
+                                JSONArray topics = new JSONArray(o.getString("topics"));
+                                for(int j = 0; j< topics.length(); j++){
+                                    JSONObject t = topics.getJSONObject(j);
+                                    topicList.add(new Topic(t.getString("id"),t.getString("name"),false));
+                                }
+
+
+                                JSONObject a = new JSONObject(o.getString("organization"));
+                                Association ass = new Association(a.getString("id"),a.getString("organization_name"),a.getString("avatar_normal"),null,null);
+
+                                CharityCampaign m = new CharityCampaign(o.getString("id"),o.getString("message"),ass,topicList);
 
                                 campaigns_list.add(0, m);
 
@@ -163,8 +195,10 @@ public class HomeFragment extends Fragment {
                     // Create adapter passing in the sample user data
                     adapter = new MainAdapter(campaigns_list,fragmentManager,res,mainActivity);
 
+                    AlphaInAnimationAdapter adapter_anim = new AlphaInAnimationAdapter(adapter);
+
                     // Attach the adapter to the recyclerview to populate items
-                    rvFeed.setAdapter(adapter);
+                    rvFeed.setAdapter(adapter_anim);
 
                 } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();

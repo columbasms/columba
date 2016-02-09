@@ -1,5 +1,6 @@
 package com.columbasms.columbasms.adapter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -45,6 +47,7 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
     private int card_size;
     private Drawable profile_image;
     private Resources res;
+    Activity activity;
 
     private static final int TYPE_PROFILE = 0;
     private static final int TYPE_GROUP = 1;
@@ -56,9 +59,9 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
     }
     public class GroupViewHolder extends ViewHolder {
 
-        @Bind(R.id.topic)TextView topic;
+        //@Bind(R.id.topic)TextView topic;
         @Bind(R.id.message)TextView message;
-        @Bind(R.id.ass_name)TextView associationName;
+        //@Bind(R.id.ass_name)TextView associationName;
         @Bind(R.id.send)ImageView send;
         @Bind(R.id.profile_image)ImageView profile_image;
 
@@ -71,6 +74,7 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
     public class ProfileViewHolder extends ViewHolder {
 
         @Bind(R.id.card_layout)LinearLayout lc;
+        @Bind(R.id.lc_background)LinearLayout lc_background;
         @Bind(R.id.profile_card)CardView cardView;
         @Bind(R.id.profile_ass_name)TextView assName;
         @Bind(R.id.profile_ass_description)TextView assDescription;
@@ -91,10 +95,11 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
 
 
 
-    public AssociationProfileAdapter(List<CharityCampaign> itemList,Association a,Resources res) {
+    public AssociationProfileAdapter(List<CharityCampaign> itemList,Association a,Resources res, Activity activity) {
         mItemList = itemList;
         this.association = a;
         this.res = res;
+        this.activity = activity;
     }
 
 
@@ -121,14 +126,22 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
             case TYPE_PROFILE:
                 final ProfileViewHolder holder1 = (ProfileViewHolder) viewHolder;
 
+                /*
+                int color = selectColor(association.getTopic());
+                activity.getWindow().setStatusBarColor(color);
+
+                holder1.lc_background.setBackgroundColor(color);
+
                 holder1.assName.setText(association.getName());
 
                 String info = association.getFollower() + " followers" + " - " + mItemList.size() + " campaigns";
+
                 holder1.assOtherInfo.setText(info);
 
                 holder1.assDescription.setText(association.getDescription());
 
                 String title = association.getName() + "'s campaign";
+
                 holder1.assCampaignsTitle.setText(title);
 
                 final CardView v = holder1.cardView;
@@ -185,9 +198,13 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                 final ImageView p = holder1.thumbnailImage;
                 Utils.downloadImage(association.getThumbnail_image_url(),p,true,true);
 
+                */
+
                 break;
 
             case TYPE_GROUP:
+
+                /*
                 GroupViewHolder holder2 = (GroupViewHolder) viewHolder;
                 CharityCampaign c = mItemList.get(position);
 
@@ -197,14 +214,14 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
 
                 TextView topic = holder2.topic;
                 topic.setText(c.getTopic());
-                selectColor(topic, c.getTopic());
+                topic.setTextColor(selectColor(c.getTopic()));
 
                 TextView message = holder2.message;
                 message.setText(c.getMessage());
 
                 final ImageView pi = holder2.profile_image;
                 Utils.downloadImage(association.getThumbnail_image_url(),pi,true,false);
-
+                */
                 break;
         }
     }
@@ -219,15 +236,17 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
         return card_size;
     }
 
-    private void selectColor(TextView t, String topicName){
+    private int selectColor(String topicName){
+        int color = 0;
         String[] colorArray = res.getStringArray(R.array.topics_color);
         String[] topics_name = res.getStringArray(R.array.topics_name);
         for (int i = 0; i<topics_name.length; i++){
             if(topicName.equals(topics_name[i])){
-                t.setTextColor(Color.parseColor(colorArray[i]));
+                color = Color.parseColor(colorArray[i]);
                 break;
             }
         }
+        return color;
     }
 
 }

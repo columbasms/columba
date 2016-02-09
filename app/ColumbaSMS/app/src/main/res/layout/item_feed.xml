@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/tools"
@@ -37,9 +38,7 @@
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp"
-                    android:paddingLeft="8dp"/>
+                    android:layout_marginLeft="8dp"/>
 
                 <ImageView
                     android:layout_width="24dp"
@@ -48,11 +47,10 @@
 
                 <TextView
                     android:id="@+id/topic"
+                    android:singleLine="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp"
                     android:textSize="14sp"/>
             </LinearLayout>
 
@@ -69,8 +67,7 @@
                 android:id="@+id/message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryText"
-                android:text=""/>
+                android:textColor="@color/colorPrimaryText"/>
 
         </LinearLayout>
 

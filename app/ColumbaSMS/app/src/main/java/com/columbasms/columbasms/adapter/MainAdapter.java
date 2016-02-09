@@ -16,7 +16,9 @@ import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.AssociationProfileActivity;
 import com.columbasms.columbasms.activity.TopicProfileActivity;
 import com.columbasms.columbasms.fragment.ChooseContactsFragment;
+import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
+import com.columbasms.columbasms.model.Topic;
 import com.columbasms.columbasms.utils.Utils;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Callback;
@@ -39,11 +41,14 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Resources res;
     private Activity mainActivity;
 
+    private int lastPosition;
+
     public MainAdapter(List<CharityCampaign> itemList,FragmentManager ft,Resources r,Activity a) {
         mItemList = itemList;
         fragmentManager = ft;
         res = r;
         mainActivity = a;
+        lastPosition = -1;
     }
 
     @Override
@@ -52,60 +57,70 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return RecyclerItemViewHolder.newInstance(view);
     }
 
+
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
-        final RecyclerItemViewHolder holder = (RecyclerItemViewHolder) viewHolder;
-        final CharityCampaign c = mItemList.get(position);
+            final RecyclerItemViewHolder holder = (RecyclerItemViewHolder) viewHolder;
+            final CharityCampaign c = mItemList.get(position);
+            final Association a = c.getOrganization();
 
-        ImageView profile_image = holder.profile_image;
-        profile_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), AssociationProfileActivity.class);
-                v.getContext().startActivity(i);
+            ImageView profile_image = holder.profile_image;
+            profile_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(v.getContext(), AssociationProfileActivity.class);
+                    v.getContext().startActivity(i);
+                }
+            });
+
+            TextView an = holder.associationName;
+            an.setText(a.getOrganization_name());
+            an.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(v.getContext(), AssociationProfileActivity.class);
+                    v.getContext().startActivity(i);
+                }
+            });
+
+
+            List<Topic> topicList = c.getTopics();
+            String topics = "";
+            for (int i = 0; i<topicList.size(); i++){
+                topics += topicList.get(i).getName(); //IF MULTITOPIC ADD "\N"
             }
-        });
-
-        TextView an = holder.associationName;
-        an.setText(c.getAssociationName());
-        an.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), AssociationProfileActivity.class);
-                v.getContext().startActivity(i);
-            }
-        });
-
-        TextView topic = holder.topic;
-        topic.setText(c.getTopic());
-        topic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), TopicProfileActivity.class);
-                i.putExtra("topic_name", c.getTopic());
-                v.getContext().startActivity(i);
-            }
-        });
-        selectColor(topic, c.getTopic());
+            TextView topic = holder.topic;
+            topic.setText(topics);
+            topic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(v.getContext(), TopicProfileActivity.class);
+                    //i.putExtra("topic_name", c.getTopic());
+                    //i.putExtra("topic_id"  , c.getAssociation().getId());
+                    v.getContext().startActivity(i);
+                }
+            });
+            //selectColor(topic, c.getTopic());
 
 
-        TextView message = holder.message;
-        message.setText(c.getMessage());
+            TextView message = holder.message;
+            message.setText(c.getMessage());
 
-        ImageView s = holder.send;
-        s.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("message",c.getMessage());
-                ChooseContactsFragment newFragment = new ChooseContactsFragment();
-                newFragment.setArguments(bundle);
-                newFragment.show(fragmentManager, c.getAssociationName());
-            }
-        });
+            ImageView s = holder.send;
+            s.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("message", c.getMessage());
+                    ChooseContactsFragment newFragment = new ChooseContactsFragment();
+                    newFragment.setArguments(bundle);
+                    newFragment.show(fragmentManager, a.getOrganization_name());
+                }
+            });
 
-        final ImageView p = holder.profile_image;
-        Utils.downloadImage(c.getImage_url(), p, true,false);
+            final ImageView p = holder.profile_image;
+            Utils.downloadImage(a.getAvatar_normal(), p, true, false);
+
 
     }
 

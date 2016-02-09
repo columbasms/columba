@@ -5,6 +5,7 @@ package com.columbasms.columbasms.activity;
  */
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -13,6 +14,44 @@ import com.columbasms.columbasms.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import android.os.StrictMode;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
+import com.columbasms.columbasms.R;
+import com.columbasms.columbasms.fragment.SplashScreenFragment;
+import com.columbasms.columbasms.utils.Utils;
+import com.digits.sdk.android.AuthCallback;
+import com.digits.sdk.android.Digits;
+import com.digits.sdk.android.DigitsAuthButton;
+import com.digits.sdk.android.DigitsException;
+import com.digits.sdk.android.DigitsOAuthSigning;
+import com.digits.sdk.android.DigitsSession;
+import com.github.paolorotolo.appintro.AppIntro;
+import com.github.paolorotolo.appintro.AppIntroFragment;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterCore;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+
+import io.fabric.sdk.android.Fabric;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,32 +66,25 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_splash_screen);
         /*
         Intent i = new Intent(this, RegistrationService.class);
         startService(i);
+        */
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
 
-        if (checkPlayServices()) {
+        //if (checkPlayServices()) {
             //App name <-> font matching
-            TextView appName = (TextView) findViewById(R.id.appName);
-            Typeface font_roboto = Typeface.createFromAsset(this.getAssets(), "fonts/Roboto-Medium.ttf");
-            Typeface font_roundedElegance = Typeface.createFromAsset(this.getAssets(), "fonts/Rounded_Elegance.ttf");
-            appName.setTypeface(font_roundedElegance);
 
             //Digits by Twitter Authentication with phone number
             TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
             Fabric.with(this, new TwitterCore(authConfig), new Digits());
 
             //Customize SIGN IN button
-            DigitsAuthButton digitsButton = (DigitsAuthButton) findViewById(R.id.auth_button);
-            digitsButton.setText(getResources().getString(R.string.signin));
-            digitsButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            digitsButton.setTypeface(font_roboto);
+            DigitsAuthButton digitsButton = new DigitsAuthButton(this);
             digitsButton.setAuthTheme(R.style.AppTheme_Digits);
             digitsButton.setCallback(new AuthCallback() {
 
@@ -119,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     //Change activity after successful authentication, and save the state
                     LoginActivity.this.finish();
-                    Intent intent = new Intent(getApplicationContext(), CreateAccountActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }
 
@@ -128,8 +160,8 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("Digits", "Sign in with Digits failure", exception);
                 }
             });
-        }
-        */
+        //}
+
 
     }
 

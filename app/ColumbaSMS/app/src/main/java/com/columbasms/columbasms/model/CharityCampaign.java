@@ -1,40 +1,55 @@
 package com.columbasms.columbasms.model;
 
-import android.graphics.Bitmap;
-
-import com.squareup.picasso.RequestCreator;
+import java.util.List;
 
 /**
  * Created by matteobrienza on 1/30/16.
  */
 public class CharityCampaign {
+    /*
+    {
+        "id": 1,
+        "message": "Prova campagna localizzata",
+        "organization": {
+                "id": 1,
+                "organization_name": "Lorenzo Rapetti Onlus",
+                "avatar_normal": "https://www.columbasms.com/system/organizations/avatars/000/000/001/normal/IMG_20160206_165924.jpg?1454778444"
+    },
+        "topics": [
+            {
+                "id": 1,
+                "name": "Feeding the Hungry"
+            }
+        ]
+    }
+    */
 
-    private String associationName;
-    private String topic;
+    private String id;
     private String message;
-    private String image_url;
+    private Association organization;
+    private List<Topic> topics;
 
-    public CharityCampaign(String associationName,String topic, String message, String image_url){
-        this.associationName = associationName;
-        this.topic = topic;
+
+    public CharityCampaign(String id, String message, Association organization, List<Topic> topics){
+        this.id = id;
         this.message = message;
-        this.image_url = image_url;
+        this.organization = organization;
+        this.topics = topics;
     }
 
-    public String getAssociationName() {
-        return associationName;
-    }
-
-    public String getTopic() {
-        return topic;
+    public String getId() {
+        return id;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public Association getOrganization() {
+        return organization;
     }
 
+    public List<Topic> getTopics() {
+        return topics;
+    }
 }

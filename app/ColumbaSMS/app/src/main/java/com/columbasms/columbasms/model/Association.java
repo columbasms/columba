@@ -7,43 +7,60 @@ import java.util.List;
  */
 public class Association {
 
-        private String name;
+        private String id;
+        private String organization_name;
+        private String avatar_normal;
+        private String cover_normal;
         private String description;
-        private String thumbnail_image_url;
-        private String cover_image_url;
-        private int follower;
-        private boolean isFavourite;
+        //private String topic;
+        //private int follower;
+        //private boolean isFavourite;
 
-        public Association (String name, String description, String thumbnail_image_url, String cover_image_url,int follower, boolean isFavourite){
-            this.name = name;
+        public Association (String id, String organization_name, String avatar_normal, String cover_normal, String description){
+            this.id = id;
+            this.organization_name = organization_name;
+            this.avatar_normal = avatar_normal;
+            this.cover_normal = cover_normal;
             this.description = description;
-            this.thumbnail_image_url = thumbnail_image_url;
-            this.cover_image_url = cover_image_url;
-            this.follower = follower;
-            this.isFavourite = isFavourite;
+
+            //this.topic = topic;
+            //this.follower = follower;
+            //this.isFavourite = isFavourite;
         }
 
-        public String getName() {
-            return name;
+
+        public String getId() {
+            return id;
         }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getThumbnail_image_url() {
-        return thumbnail_image_url;
-    }
-
-    public String getCover_image_url() {
-        return cover_image_url;
-    }
-
-    public int getFollower() {
-            return follower;
+        public String getOrganization_name() {
+            return organization_name;
         }
+
+        public String getAvatar_normal() {
+            return avatar_normal;
+        }
+
+        public String getCover_normal() {
+            return cover_normal;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+
+        /*
+        public String getTopic() {
+            return topic;
+        }
+
+        public int getFollower() {
+                return follower;
+            }
 
         public boolean isFavourite() {
-                return isFavourite;
-            }
+                    return isFavourite;
+                }
+         */
 }
