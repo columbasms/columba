@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       resources :users do
         member do
           get :campaigns
+          post '/campaigns/:campaign_id', to: 'users#send_campaign'
         end
       end
       resources :organizations do
