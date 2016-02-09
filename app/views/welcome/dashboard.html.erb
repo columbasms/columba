@@ -1,2 +1,40 @@
 <% content_for :title do %>Columba - Dashboard<% end %>
 
+<div class="row">
+  <div class="col-sm-12 col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title">Recent campaigns
+        </div>
+      </div>
+      <div class="panel-body scrollable">
+        <!-- REMOVE THIS WRAPPER IF .scrollable IS NOT USED -->
+        <div style="max-height: 350px">
+
+          <table class="table table-hover">
+
+            <thead>
+              <tr>
+                <th>Message</th>
+                <th>Date</th>
+                <th>Topics</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @campaigns.each do |c| %>
+                <tr>
+                  <td><%= c.message %></td>
+                  <td><%= c.created_at_format %></td>
+                  <td><%= c.topics.map { |t| t.name }.join(', ') %></td>
+                </tr>
+              <% end %>
+            </tbody>
+
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
