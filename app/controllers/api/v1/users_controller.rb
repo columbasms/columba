@@ -2,6 +2,7 @@ module Api
   module V1
     class UsersController < ApplicationController
       http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
+      force_ssl
       protect_from_forgery except: :create
       before_filter :set_user, only: [:show, :campaigns, :send_campaign]
       before_filter :set_campaign, only: [:send_campaign]
