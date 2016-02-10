@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210154906) do
+ActiveRecord::Schema.define(version: 20160210162029) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20160210154906) do
     t.integer  "region_id",       limit: 4
     t.string   "address",         limit: 255
     t.decimal  "latitude",                    precision: 10
-    t.decimal  "longitute",                   precision: 10
+    t.decimal  "longitude",                   precision: 10
   end
 
   add_index "campaigns", ["organization_id"], name: "fk_rails_a74bb03c49", using: :btree

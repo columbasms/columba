@@ -5,7 +5,7 @@ class Api::V1::TopicsController < ApplicationController
 
   # GET /api/v1/topics
   def index
-    @topics = Topic.all
+    @topics = Topic.active
 
     if params[:order_field].present? and params[:order_type].present?
       @topics = @topics.order("#{params[:order_field]}": :"#{params[:order_type]}")

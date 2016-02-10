@@ -40,8 +40,7 @@ class CampaignsController < ApplicationController
 
   # POST /campaigns
   # POST /campaigns.json
-  def create
-    Rails.logger.info campaign_params.inspect
+  def creates
     @campaign = Campaign.new(campaign_params)
     @campaign.organization = current_organization
 

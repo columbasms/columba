@@ -13,6 +13,21 @@ ActiveAdmin.register Campaign do
 #   permitted
 # end
 
-  permit_params  :organization_id, :message, :town_id, :province_id, :region_id, :address, :latitude, :longitude
+  permit_params :organization_id, :message, :town_id, :province_id,
+                :region_id, :address, :latitude, :longitude, :topic_ids => []
+
+  form do |f|
+    f.semantic_errors
+    f.inputs 'Campaign' do
+      f.input :message
+      f.input :topics, as: :select2, input_html: { multiple: 'multiple' }
+      f.input :organization, as: :select2
+      f.input :region, as: :select2
+      f.input :province, as: :select2
+      f.input :town, as: :select2
+      f.input :address
+    end
+    f.actions
+  end
 
 end
