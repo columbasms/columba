@@ -2,19 +2,16 @@ module Api
   module V1
     class UsersController < ApplicationController
       http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
-      force_ssl
+      force_ssl if !Rails.env.development?
       protect_from_forgery except: :create
-      before_filter :set_user, only: [:show, :campaigns, :send_campaign]
+      before_filter :set_user, except: [:create]
       before_filter :set_campaign, only: [:send_campaign]
+      before_filter :set_organization, only: []
+      before_filter :set_topic, only: []
 
       # GET /users/:id
       def show
         render json: @user, root: false, serializer: ::DigitsClientSerializer
-      end
-
-      # GET /users/:id/campaigns
-      def campaigns
-        render json: @user.campaigns, root: false
       end
 
       # POST /users/
@@ -22,19 +19,19 @@ module Api
 
         provider = request.headers[:'X-Auth-Service-Provider']
         if provider.nil? or provider.empty?
-          render json: { errors: 'Provider must be set' }
+          render json: {errors: 'Provider must be set'}
           return
         end
 
         auth = request.headers[:'X-Verify-Credentials-Authorization']
         if auth.nil? or auth.empty?
-          render json: { errors: 'Credentials authorization must be set' }
+          render json: {errors: 'Credentials authorization must be set'}
           return
         end
 
         gcm_token = request.headers[:'gcm-token']
         if gcm_token.nil? or gcm_token.empty?
-          render json: { errors: 'gcm-token must be set' }
+          render json: {errors: 'gcm-token must be set'}
           return
         end
 
@@ -52,7 +49,17 @@ module Api
 
       # PUT /user/:id
       def update
-      #   TO-DO
+        result=[]
+        params.each do |param|
+          result+=[param]
+        end
+        render json: result, root: false
+      end
+
+
+      # GET /users/:id/campaigns
+      def campaigns
+        render json: @user.campaigns, root: false
       end
 
       # POST /users/:id/campaigns/:campaign_id
@@ -68,7 +75,7 @@ module Api
           hashed_leaf_list+=[hash]
         end
 
-        hashed_leaf_list.each_with_index do |hashed_leaf,index|
+        hashed_leaf_list.each_with_index do |hashed_leaf, index|
           # aggiungo nel DB il ricevente (se non già presente)
           current_receiver_id=Api::V1::UsersHelper.add_receiver(hashed_leaf)
 
@@ -95,6 +102,15 @@ module Api
         render json: result_index_list
       end
 
+      # GET users/:id/topics
+      def topics
+        render json: @user.topics, root: false
+      end
+
+      # GET /users/:id/organizations
+      def organizations
+        render json: @user.organizations, root: false
+      end
 
       private
 
@@ -102,7 +118,7 @@ module Api
         begin
           @user = DigitsClient.find params[:id]
         rescue ActiveRecord::RecordNotFound
-          render json: { errors: 'User not found'}
+          render json: {errors: 'User not found'}
           return
         end
       end
@@ -111,7 +127,25 @@ module Api
         begin
           @campaign = Campaign.find params[:campaign_id]
         rescue ActiveRecord::RecordNotFound
-          render json: { errors: 'User not found' }
+          render json: {errors: 'Campaign not found'}
+          return
+        end
+      end
+
+      def set_organization
+        begin
+          @organization = Organization.find params[:organization_id]
+        rescue ActiveRecord::RecordNotFound
+          render json: {errors: 'Organization not found'}
+          return
+        end
+      end
+
+      def set_topic
+        begin
+          @topic = Topic.find params[:topic_id]
+        rescue ActiveRecord::RecordNotFound
+          render json: {errors: 'Topic not found'}
           return
         end
       end
