@@ -73,15 +73,16 @@ module Api
           current_receiver_id=Api::V1::UsersHelper.add_receiver(hashed_leaf)
 
           # verifico se il ricevente non ha richiesto il blocco del servizio
-          if Api__V1::UsersHelper.blacklisted_receiver?(current_receiver_id)
+          if Api::V1::UsersHelper.blacklisted_receiver?(current_receiver_id)
             next
           end
           # verifico se il ricevente è stato già raggiunto da una campagna.
           if Api::V1::UsersHelper.already_reached_receiver?(current_receiver_id, @campaign)
             next
           end
-          # aggiungo nel DB la relazione tra campagna-utente-ricevente
-          Api::V1::UsersHelper.add_campaign_client_receiver_relation(@campaign, @user, current_receiver_id)
+          # aggiungo nel DB la relazione tra campagna-utente-ricevente e campagna-utente
+          Api::V1::UsersHelper.add_campaign_client_receiver_relation(@campaign, @user, Receiver.find_by_id(current_receiver_id))
+
 
           # aggiungo l'indice del ricevente al risultato
           result_index_list+=[index]

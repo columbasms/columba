@@ -52,6 +52,7 @@ module Api::V1::UsersHelper
 
     receiver = Receiver.new
     receiver.number = hashed_number
+    receiver.blacklisted = false
 
     receiver.save
 
@@ -71,7 +72,7 @@ module Api::V1::UsersHelper
 
   # controlla se un utente folglia ha richiesto il blocco del servizio
   def self.blacklisted_receiver?(receiver_id)
-    if Receiver.find_by_id(id: receiver_id).blacklisted
+    if Receiver.find_by_id(receiver_id).blacklisted
       return true
     else
       return false
@@ -79,10 +80,15 @@ module Api::V1::UsersHelper
   end
 
   # crea una nuova relazione tra una campagna, un utente ed un utente foglia
-  def self.add_campaign_client_receiver_relation(campaign_id, client_id, receiver_id)
-    new_relation= CampaignClientReceiver.new
-    new_relation.campaign = campaign_id
-    new_relation.digits_client = client_id
-    new_relation.receiver = receiver_id
+  def self.add_campaign_client_receiver_relation(campaign, client, receiver)
+
+    #inserire relazione tra campagna e digit client
+
+    new_ternary_relation = CampaignClientReceiver.new
+    new_ternary_relation.campaign = campaign
+    new_ternary_relation.digits_client = client
+    new_ternary_relation.receiver = receiver
+
+    new_ternary_relation.save
   end
 end
