@@ -13,5 +13,6 @@ ActiveAdmin.register Campaign do
 #   permitted
 # end
 
+  permit_params  :organization_id, :message, :town_id, :province_id, :region_id, :address, :latitude, :longitude
 
 end
