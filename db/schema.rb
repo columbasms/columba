@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210093349) do
+ActiveRecord::Schema.define(version: 20160210104934) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -112,6 +112,14 @@ ActiveRecord::Schema.define(version: 20160210093349) do
     t.integer  "cover_file_size",          limit: 4
     t.datetime "cover_updated_at"
   end
+
+  create_table "digits_clients_organizations", id: false, force: :cascade do |t|
+    t.integer "organization_id",  limit: 4, null: false
+    t.integer "digits_client_id", limit: 4, null: false
+  end
+
+  add_index "digits_clients_organizations", ["digits_client_id"], name: "index_digits_clients_organizations_on_digits_client_id", using: :btree
+  add_index "digits_clients_organizations", ["organization_id"], name: "index_digits_clients_organizations_on_organization_id", using: :btree
 
   create_table "digits_clients_topics", id: false, force: :cascade do |t|
     t.integer "digits_client_id", limit: 4, null: false

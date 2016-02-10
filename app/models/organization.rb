@@ -24,6 +24,7 @@ class Organization < ActiveRecord::Base
   has_many :campaigns
 
   has_and_belongs_to_many :topics
+  has_and_belongs_to_many :digits_clients
 
   accepts_nested_attributes_for :campaigns, allow_destroy: true
   accepts_nested_attributes_for :topics

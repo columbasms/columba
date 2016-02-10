@@ -5,6 +5,7 @@ class DigitsClient < ActiveRecord::Base
 
   has_and_belongs_to_many :campaigns
   has_and_belongs_to_many :topics
+  has_and_belongs_to_many :organizations
 
   validates :phone_number, presence: true, uniqueness: true
   validates :gcm_token, presence: true
