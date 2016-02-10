@@ -15,7 +15,7 @@ development:
   database: columba_development
   pool: 5
   username: root
-  password: 6U8in49eZdRpkHe3N8YgdjQm
+  password: fioredicampo
 #  socket: /tmp/mysql.sock
 
 # Warning: The database defined as "test" will be erased and
