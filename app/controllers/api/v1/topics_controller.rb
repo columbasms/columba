@@ -18,14 +18,17 @@ class Api::V1::TopicsController < ApplicationController
     render json: @topics, root: false
   end
 
+  # GET /topics/{id}
   def show
     render json: @topic, root: false
   end
 
+  # GET /topics/{id}/campaigns
   def campaigns
     render json: @topic.campaigns, root: false
   end
 
+  # GET /topics/{id}/organizations
   def organizations
     render json: @topic.organizations, root: false
   end

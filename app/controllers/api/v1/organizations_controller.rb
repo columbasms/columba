@@ -3,7 +3,7 @@ class Api::V1::OrganizationsController < ApplicationController
   before_filter :set_organization, only: [:show, :campaigns]
   force_ssl if !Rails.env.development?
 
-  # GET /api/v1/organizations
+  # GET /organizations
   def index
     @organizations = Organization.all
 
@@ -23,6 +23,7 @@ class Api::V1::OrganizationsController < ApplicationController
     render json: @organization, root: false
   end
 
+  # GET /organizations/:id/campaigns
   def campaigns
     render json: @organization.campaigns, root: false
   end
