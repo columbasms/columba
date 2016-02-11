@@ -33,6 +33,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.UserProfileActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
         <activity android:name=".activity.IntroActivity"
             android:screenOrientation="portrait">
         </activity>

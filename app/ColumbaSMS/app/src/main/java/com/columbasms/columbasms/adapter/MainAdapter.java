@@ -2,6 +2,7 @@ package com.columbasms.columbasms.adapter;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -20,12 +21,6 @@ import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
 import com.columbasms.columbasms.model.Topic;
 import com.columbasms.columbasms.utils.Utils;
-import com.makeramen.roundedimageview.RoundedTransformationBuilder;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
-
 import java.util.List;
 
 import butterknife.Bind;
@@ -40,6 +35,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private FragmentManager fragmentManager;
     private Resources res;
     private Activity mainActivity;
+    private Context context;
 
     private int lastPosition;
 

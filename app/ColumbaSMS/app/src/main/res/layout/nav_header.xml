@@ -1,34 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="192dp"
-    android:background="?attr/colorPrimaryDark"
-
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:layout_height="178dp"
+    android:background="@drawable/img"
     android:orientation="vertical"
-    android:gravity="bottom">
+    android:weightSum="1">
 
-    <ImageView
-        android:id="@+id/image_view"
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/img" />
+        android:layout_height="56dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-    <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:textColor="#ffffff"
+            android:text="Columba Admin"
+            android:textSize="14sp"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="5dp"
+            android:text="columbasms@gmail.com"
+            android:textSize="14sp"
+            android:textStyle="normal"
+
+            />
+    </LinearLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:src="@drawable/colomba_icns"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="John Red"
-        android:textSize="@dimen/primary_text_size"
-        android:textColor="@android:color/white"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:layout_marginLeft="16dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="38dp"
+        android:id="@+id/circleView"
         />
 
 </RelativeLayout>

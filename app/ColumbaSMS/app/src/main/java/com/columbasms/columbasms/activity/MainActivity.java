@@ -5,35 +5,47 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.preference.PreferenceManager;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.fragment.HomeFragment;
 import com.columbasms.columbasms.fragment.MessagesFragment;
 import com.columbasms.columbasms.fragment.NotificationsFragment;
 import com.columbasms.columbasms.fragment.SplashScreenFragment;
 import com.columbasms.columbasms.fragment.TopicsFragment;
+import com.columbasms.columbasms.listener.DrawerItemClickListener;
 import com.columbasms.columbasms.utils.API_URL;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private static long SPLASH_SCREEN_DELAY = 1500;
+    private ActionBarDrawerToggle mToggle;
 
     @Bind(R.id.drawer_layout)DrawerLayout drawer;
+    @Bind(R.id.list_view_drawer)NavigationView navView;
     @Bind(R.id.toolbar_top)Toolbar toolbar_top;
     @Bind(R.id.toolbar_bottom)Toolbar toolbar_bottom;
     @Bind(R.id.home)LinearLayout home;
@@ -62,8 +74,6 @@ public class MainActivity extends AppCompatActivity{
         fragmentTransaction.commit();
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,15 +87,27 @@ public class MainActivity extends AppCompatActivity{
         toolbar_top.setVisibility(View.INVISIBLE);
         toolbar_bottom.setVisibility(View.INVISIBLE);
         setSupportActionBar(toolbar_top);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar_top.setNavigationOnClickListener(new View.OnClickListener() {
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+     /*   toolbar_top.setNavigationOnClickListener(new View.OnClickListener() { //
             @Override
             public void onClick(View v) {
                 drawer.openDrawer(GravityCompat.START);  // OPEN DRAWER
             }
         });
 
+        */
 
+        // ###########################################################################
+
+        navView.setNavigationItemSelectedListener(this);
+
+        mToggle = new ActionBarDrawerToggle(this, drawer, toolbar_top, R.string.app_name, R.string.app_name);
+
+        drawer.setDrawerListener(mToggle);
+
+        mToggle.syncState();
+
+        // ##########################################################################
 
         final SharedPreferences state = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
@@ -149,7 +171,23 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item){
 
+        switch(item.getItemId()){
+            case R.id.user_profile:
+                startActivity(new Intent(this, UserProfileActivity.class));
+                break;
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mToggle.onConfigurationChanged(newConfig);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
