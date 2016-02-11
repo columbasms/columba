@@ -6,6 +6,7 @@ import android.telephony.SmsManager;
 import android.widget.ImageView;
 
 import com.columbasms.columbasms.R;
+import com.columbasms.columbasms.activity.MainActivity;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
@@ -41,7 +42,9 @@ import java.util.List;
 public class Utils {
 
     //SEND SMS
-    public static void sendSMS(String associationSender,String phoneNumber, String message,Resources res){
+    public static void sendSMS(String associationSender,String phoneNumber, String message,Resources res ){
+
+
         System.out.println("Send message: " + message + " to " + phoneNumber);
         SmsManager sms = SmsManager.getDefault();
 

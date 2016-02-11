@@ -18,21 +18,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.fragment.HomeFragment;
 import com.columbasms.columbasms.fragment.MapFragment;
 import com.columbasms.columbasms.fragment.NotificationsFragment;
 import com.columbasms.columbasms.fragment.SplashScreenFragment;
 import com.columbasms.columbasms.fragment.TopicsFragment;
-import com.columbasms.columbasms.listener.DrawerItemClickListener;
-import com.columbasms.columbasms.utils.API_URL;
-
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import butterknife.Bind;
@@ -87,15 +79,6 @@ public class MainActivity extends AppCompatActivity
         toolbar_top.setVisibility(View.INVISIBLE);
         toolbar_bottom.setVisibility(View.INVISIBLE);
         setSupportActionBar(toolbar_top);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-     /*   toolbar_top.setNavigationOnClickListener(new View.OnClickListener() { //
-            @Override
-            public void onClick(View v) {
-                drawer.openDrawer(GravityCompat.START);  // OPEN DRAWER
-            }
-        });
-
-        */
 
         // ###########################################################################
 
@@ -173,8 +156,10 @@ public class MainActivity extends AppCompatActivity
 
         switch(item.getItemId()){
             case R.id.user_profile:
+                /*
                 startActivity(new Intent(this, UserProfileActivity.class));
                 break;
+                */
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.columbasms.columbasms.activity.UserProfileActivity;
 
 /**
  * Created by Federico on 09/02/16.
@@ -32,9 +31,11 @@ public class DrawerItemClickListener extends AppCompatActivity implements ListVi
 
         switch (position) {
             case 0: {
+                /*
                 Intent intent = new Intent(activity, UserProfileActivity.class);
                 startActivity(intent);
                 break;
+                */
             }
 
             /*

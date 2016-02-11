@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.adapter.ContactsAdapter;
 import com.columbasms.columbasms.model.Contact;
+import com.columbasms.columbasms.utils.Utils;
 import com.columbasms.columbasms.utils.network.API_URL;
 
 import org.json.JSONArray;
@@ -52,10 +54,11 @@ public class ChooseContactsFragment extends DialogFragment implements View.OnCli
     private String CAMPAIGN_ID;
     private String USER_ID;
 
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        final Resources res = getActivity().getResources();
 
         //GET ASSOCIATION NAME FOR THIS CAMPAIGN AND CREATE KEY
         assName = getTag();
@@ -95,7 +98,7 @@ public class ChooseContactsFragment extends DialogFragment implements View.OnCli
                                 jsonArray.put(phoneNumber);
                                 try {
                                     JSONObject single_contact = new JSONObject();
-                                    single_contact.put("number",phoneNumber);
+                                    single_contact.put("number", phoneNumber);
                                     j.put(single_contact);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -134,7 +137,7 @@ public class ChooseContactsFragment extends DialogFragment implements View.OnCli
                                             try {
                                                 String number = contacts_withSelection.get((int) contacts.get(i)).getContact_number();
                                                 System.out.println("NUMERO: " + number);
-                                                //Utils.sendSMS(assName,number,message,getResources());
+                                                Utils.sendSMS(assName, number, message,res);
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
