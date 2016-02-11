@@ -1,54 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="178dp"
-    android:background="@drawable/img"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:weightSum="1">
 
-
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/percentRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/cover_image"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_widthPercent="100%"
+            app:layout_aspectRatio="178%"
+            android:src="@drawable/img_cover"
+            android:scaleType="centerCrop"/>
+    </android.support.percent.PercentRelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/percentRelativeLayout"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:textColor="#ffffff"
-            android:text="Columba Admin"
-            android:textSize="14sp"
-            android:textStyle="bold"
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/error_thumbnail_image"
+            android:id="@+id/circleView"
+            android:layout_marginBottom="8dp"/>
 
-            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            >
 
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="5dp"
-            android:text="columbasms@gmail.com"
-            android:textSize="14sp"
-            android:textStyle="normal"
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="Columba Admin"
+                android:paddingBottom="8dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
 
-            />
+                />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="3336651288"
+                android:textSize="14sp"
+                android:textStyle="normal"
+
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@drawable/colomba_icns"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="38dp"
-        android:id="@+id/circleView"
-        />
+
 
 </RelativeLayout>

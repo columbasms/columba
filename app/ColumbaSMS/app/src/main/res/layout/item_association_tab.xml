@@ -23,8 +23,7 @@
             <ImageView
                 android:id="@+id/taba_profile_image"
                 android:layout_width="79dp"
-                android:layout_height="79dp"
-                android:background="@drawable/img"/>
+                android:layout_height="79dp"/>
 
         </LinearLayout>
 
