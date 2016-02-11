@@ -40,7 +40,7 @@ class CampaignsController < ApplicationController
 
   # POST /campaigns
   # POST /campaigns.json
-  def creates
+  def create
     @campaign = Campaign.new(campaign_params)
     @campaign.organization = current_organization
 
@@ -58,7 +58,7 @@ class CampaignsController < ApplicationController
               }
           }
           response = gcm.send registration_ids, options
-          Rails.logger.info response.pretty_print_inspect
+          Rails.logger.info response
         end
 
         format.html { redirect_to dashboard_path, notice: 'Campaign was successfully created.' }
