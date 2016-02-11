@@ -49,11 +49,23 @@ module Api
 
       # PUT /user/:id
       def update
-        result=[]
-        params.each do |param|
-          result+=[param]
+        params['user'].keys.each do |param|
+          case param
+            when 'digits_id'
+              @user.digits_id=params['user']['digits_id']
+            when 'digits_token'
+              @user.digits_token=params['user']['digits_token']
+            when 'digits_secret'
+              @user.digits_secret=params['user']['digits_secret']
+            when 'phone_number'
+              @user.phone_number=params['user']['phone_number']
+            when 'gcm_token'
+              @user.gcm_token=params['user']['gcm_token']
+            else
+              next
+          end
         end
-        render json: result, root: false
+        render json: @user, root: false, serializer: ::DigitsClientSerializer
       end
 
 
