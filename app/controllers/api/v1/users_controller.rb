@@ -6,7 +6,7 @@ module Api
       protect_from_forgery except: :create
       before_filter :set_user, except: [:create]
       before_filter :set_campaign, only: [:send_campaign]
-      before_filter :set_organization, only: []
+      before_filter :set_organization, only: [:follow_organization]
       before_filter :set_topic, only: [:follow_topic]
 
       # GET /users/:id
@@ -139,6 +139,23 @@ module Api
 
       # GET /users/:id/organizations
       def organizations
+        render json: @user.organizations, root: false
+      end
+
+      # PUT /users/:id/organizations/:organization_id
+      def follow_organization
+        # if a connection between user and topic already exists...
+        if DigitsClientsOrganization.exists?(digits_client_id: @user, organization_id: @organization)
+          # ...we destroy it
+          connection=DigitsClientsOrganization.where(digits_client_id: @user, organization_id: @organization)
+          connection.delete_all
+        else
+          # ... else we create it
+          new_connection=DigitsClientsOrganization.new
+          new_connection.organization=@organization
+          new_connection.digits_client=@user
+          new_connection.save
+        end
         render json: @user.organizations, root: false
       end
 

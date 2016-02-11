@@ -28,6 +28,7 @@ Rails.application.routes.draw do
         end
         member do
           get :organizations
+          put '/organizations/:organization_id', to: 'users#follow_organization'
         end
         member do
           get :topics
