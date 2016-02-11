@@ -1,4 +1,4 @@
-package com.columbasms.columbasms.utils;
+package com.columbasms.columbasms.utils.network;
 
 /**
  * Created by Matteo on 05/02/2016.

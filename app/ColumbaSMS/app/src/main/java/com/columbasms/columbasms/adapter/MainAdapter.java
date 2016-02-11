@@ -1,11 +1,11 @@
 package com.columbasms.columbasms.adapter;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +20,6 @@ import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
 import com.columbasms.columbasms.model.Topic;
 import com.columbasms.columbasms.utils.Utils;
-import com.makeramen.roundedimageview.RoundedTransformationBuilder;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
@@ -69,6 +64,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(v.getContext(), AssociationProfileActivity.class);
+                    i.putExtra("ass_id",a.getId());
+                    i.putExtra("ass_name",a.getOrganization_name());
                     v.getContext().startActivity(i);
                 }
             });
@@ -79,28 +76,31 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(v.getContext(), AssociationProfileActivity.class);
+                    i.putExtra("ass_id",a.getId());
+                    i.putExtra("ass_name",a.getOrganization_name());
                     v.getContext().startActivity(i);
                 }
             });
 
 
-            List<Topic> topicList = c.getTopics();
+            final List<Topic> topicList = c.getTopics();
             String topics = "";
             for (int i = 0; i<topicList.size(); i++){
                 topics += topicList.get(i).getName(); //IF MULTITOPIC ADD "\N"
             }
             TextView topic = holder.topic;
             topic.setText(topics);
+            topic.setTextColor(Color.parseColor(c.getTopics().get(0).getMainColor()));
             topic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //TEMPORARY SUPPORT FOR ONLY ONE TOPIC FOR CAMPAIGN
                     Intent i = new Intent(v.getContext(), TopicProfileActivity.class);
-                    //i.putExtra("topic_name", c.getTopic());
-                    //i.putExtra("topic_id"  , c.getAssociation().getId());
+                    i.putExtra("topic_name", topicList.get(0).getName());
+                    i.putExtra("topic_id"  , topicList.get(0).getId());
                     v.getContext().startActivity(i);
                 }
             });
-            //selectColor(topic, c.getTopic());
 
 
             TextView message = holder.message;
@@ -112,6 +112,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     bundle.putString("message", c.getMessage());
+                    bundle.putString("campaign_id", c.getId());
                     ChooseContactsFragment newFragment = new ChooseContactsFragment();
                     newFragment.setArguments(bundle);
                     newFragment.show(fragmentManager, a.getOrganization_name());
@@ -149,15 +150,5 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    private void selectColor(TextView t, String topicName){
-        String[] colorArray = res.getStringArray(R.array.topics_color);
-        String[] topics_name = res.getStringArray(R.array.topics_name);
-        for (int i = 0; i<topics_name.length; i++){
-            if(topicName.equals(topics_name[i])){
-                t.setTextColor(Color.parseColor(colorArray[i]));
-                break;
-            }
-        }
-    }
 
 }

@@ -13,12 +13,13 @@
     <string name="following">FOLLOWING</string>
 
     <string name="more">MORE</string>
+    <string name="hide">HIDE</string>
+
     <string name="associations">Associations</string>
     <string name="campaigns">Campaigns</string>
 
     <string name="sms_footer">Powered By Columba</string>
     <string name="sms_stop">To stop receiving this SMS:\nwww.columbasms.com/stop/</string>
-
 
 
     <string name="dialog_contacts_title">Select contacts</string>
@@ -29,4 +30,6 @@
 
     <string name="gcm_sender_ID">879251508715</string>
     <string name="setImage">set_image</string>
+    <string name="title_activity_map_fragments">Map</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

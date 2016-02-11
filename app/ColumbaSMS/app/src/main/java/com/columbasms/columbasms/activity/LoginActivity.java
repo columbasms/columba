@@ -53,6 +53,8 @@ import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
 
+
+//CLASS NOT USED--SEE INTROACTIVITY
 public class LoginActivity extends AppCompatActivity {
 
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
@@ -134,10 +136,6 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println("###############HTTP POST RESPONSE TEXT: " + builder.toString());
                         JSONObject finalResult = new JSONObject(json.substring(json.indexOf("{"), json.lastIndexOf("}") + 1).replaceAll("\\\\", ""));
 
-                        //GET OAUTH TOKEN
-                        JSONObject forTest = Utils.getOauthAccessToken(finalResult);
-                        //API TEST
-                        Utils.apiTest(forTest);
 
                     } catch (ClientProtocolException e) {
                         // Log exception

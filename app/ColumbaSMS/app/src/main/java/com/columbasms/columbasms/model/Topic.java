@@ -8,13 +8,15 @@ public class Topic {
         private String id;
         private String name;
         private boolean isSelected;
-        //private String mainColor;
-        //private String statusColor;
+        private String mainColor;
+        private String statusColor;
 
-        public Topic(String id, String name, boolean isSelected){
+        public Topic(String id, String name, boolean isSelected,String mainColor,String statusColor){
             this.id = id;
             this.name = name;
             this.isSelected = isSelected;
+            this.mainColor = mainColor;
+            this.statusColor = statusColor;
         }
 
         public String getName() {
@@ -30,7 +32,7 @@ public class Topic {
             return isSelected;
         }
 
-        /*
+
         public String getMainColor() {
             return mainColor;
         }
@@ -38,7 +40,7 @@ public class Topic {
         public String getStatusColor() {
             return statusColor;
         }
-        */
+
 
         public void setSelected(boolean b){
             isSelected = b;

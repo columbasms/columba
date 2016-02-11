@@ -2,29 +2,39 @@ package com.columbasms.columbasms.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.adapter.ContactsAdapter;
 import com.columbasms.columbasms.model.Contact;
-import com.columbasms.columbasms.utils.Utils;
+import com.columbasms.columbasms.utils.network.API_URL;
+
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Matteo Brienza on 2/2/16.
@@ -39,6 +49,10 @@ public class ChooseContactsFragment extends DialogFragment implements View.OnCli
     private String message;
 
 
+    private String CAMPAIGN_ID;
+    private String USER_ID;
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -47,6 +61,10 @@ public class ChooseContactsFragment extends DialogFragment implements View.OnCli
         assName = getTag();
         key =  assName + "_contacts";
         message = getArguments().getString("message");
+
+        SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        CAMPAIGN_ID = getArguments().getString("campaign_id");
+        USER_ID = p.getString("user_id","NOID");
 
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -61,28 +79,92 @@ public class ChooseContactsFragment extends DialogFragment implements View.OnCli
                     public void onClick(DialogInterface dialog, int id) {
 
 
+
                         //SEND MESSAGES TO SELECTED CONTACTS (AND SAVE SELECTION FOR ASSOCIATION)
                         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                        JSONArray jsonArray = new JSONArray();
-                        List<Contact> contacts_withSelection = adapter.getContacts();
+                        final JSONArray jsonArray = new JSONArray();
+                        final List<Contact> contacts_list = adapter.getContacts();
+                        final List<Contact> contacts_withSelection = new ArrayList<>();
                         Contact temp;
+                        final JSONArray j = new JSONArray();
                         for (int i = 0; i < adapter.getItemCount(); i++) {
-                            temp = contacts_withSelection.get(i);
-                            if(temp.isSelected())jsonArray.put(temp.getContact_number());
+                            temp = contacts_list.get(i);
+                            if(temp.isSelected()){
+                                contacts_withSelection.add(temp);
+                                String phoneNumber = temp.getContact_number();
+                                jsonArray.put(phoneNumber);
+                                try {
+                                    JSONObject single_contact = new JSONObject();
+                                    single_contact.put("number",phoneNumber);
+                                    j.put(single_contact);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putString(key, jsonArray.toString());
                         editor.commit();
 
+                        if(contacts_withSelection.size()!=0) {
 
-                        System.out.println("SELECTED CONTACTS: " + jsonArray.toString());
-                        for(int i = 0; i<jsonArray.length(); i++){
+                            final String URL = API_URL.USERS_URL + "/" + USER_ID + API_URL.CAMPAIGNS + "/" + CAMPAIGN_ID;
+
+                            System.out.println(URL);
+
+                            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+                            JSONObject body = new JSONObject();
+
                             try {
-                                Utils.sendSMS(assName,jsonArray.get(i).toString(),message,getResources());
+                                body.put("users", j);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
+                            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, body, new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+
+                                    System.out.println("Invio a: ");
+                                    try {
+                                        JSONArray contacts = new JSONArray(response.getString("users"));
+                                        System.out.println(contacts.toString());
+                                        for (int i = 0; i < contacts.length(); i++) {
+                                            try {
+                                                String number = contacts_withSelection.get((int) contacts.get(i)).getContact_number();
+                                                System.out.println("NUMERO: " + number);
+                                                //Utils.sendSMS(assName,number,message,getResources());
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    System.out.println(error.toString());
+                                }
+                            }) {
+                                @Override
+                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                    HashMap<String, String> headers = new HashMap<String, String>();
+                                    String credentials = "47ccf9098174f48be281f86103b9" + ":" + "c5906274ba1a14711a816db53f0d";
+                                    String credBase64 = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT).replace("\n", "");
+                                    headers.put("Authorization", "Basic " + credBase64);
+                                    return headers;
+                                }
+
+                            };
+
+                            requestQueue.add(jsonObjectRequest);
                         }
+
+
 
 
 
@@ -126,6 +208,10 @@ public class ChooseContactsFragment extends DialogFragment implements View.OnCli
 
         return builder.create();
     }
+
+
+
+
 
 
     public void addContacts(){

@@ -1,11 +1,12 @@
 package com.columbasms.columbasms.activity;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -17,12 +18,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.fragment.HomeFragment;
-import com.columbasms.columbasms.fragment.MessagesFragment;
+import com.columbasms.columbasms.fragment.MapFragment;
 import com.columbasms.columbasms.fragment.NotificationsFragment;
 import com.columbasms.columbasms.fragment.SplashScreenFragment;
 import com.columbasms.columbasms.fragment.TopicsFragment;
-import com.columbasms.columbasms.utils.API_URL;
-
 import java.util.Timer;
 import java.util.TimerTask;
 import butterknife.Bind;
@@ -51,12 +50,12 @@ public class MainActivity extends AppCompatActivity{
             fr = new TopicsFragment();
         }else if(v == findViewById(R.id.messages)){
             toolbar_top.setTitle(R.string.map);
-            fr = new MessagesFragment();
+            fr = new MapFragment();
         }else{
             toolbar_top.setTitle(R.string.not);
             fr = new NotificationsFragment();
         }
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_place, fr);
         fragmentTransaction.commit();
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity{
         ButterKnife.bind(this);
 
         //TOP TOOLBAR SETUP
-
         toolbar_top.setTitle("Home");
         toolbar_top.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         toolbar_top.setVisibility(View.INVISIBLE);
@@ -101,16 +99,13 @@ public class MainActivity extends AppCompatActivity{
                 if (state.getString("firstLaunch",null)==null) {
 
                     //  Launch app intro
-                    SharedPreferences.Editor editor_state = state.edit();
-                    editor_state.putString("firstLaunch", "false");
-                    editor_state.commit();
 
                     Intent i = new Intent(getApplicationContext(), IntroActivity.class);
                     startActivity(i);
 
-                    getFragmentManager()
+
+                    getSupportFragmentManager()
                             .beginTransaction()
-                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                             .replace(R.id.fragment_place, new HomeFragment()).commit();
 
                     // Show action bar when the main fragment is visible
@@ -120,10 +115,10 @@ public class MainActivity extends AppCompatActivity{
                             toolbar_bottom.setVisibility(View.VISIBLE);
                         }
                     });
+
                 }else{
-                    getFragmentManager()
+                    getSupportFragmentManager()
                             .beginTransaction()
-                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                             .replace(R.id.fragment_place, new HomeFragment()).commit();
 
                     // Show action bar when the main fragment is visible
@@ -175,5 +170,7 @@ public class MainActivity extends AppCompatActivity{
 
         }
     }
+
+
 
 }

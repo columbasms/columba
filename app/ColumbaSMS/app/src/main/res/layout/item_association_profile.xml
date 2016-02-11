@@ -134,6 +134,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:textStyle="bold"
+        android:text="Campaigns"
         android:gravity="center_vertical"/>
     
 </LinearLayout>

@@ -2,41 +2,35 @@ package com.columbasms.columbasms.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.columbasms.columbasms.MyApplication;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.adapter.AssociationProfileAdapter;
-import com.columbasms.columbasms.adapter.MainAdapter;
 import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
-import com.columbasms.columbasms.utils.CacheRequest;
+import com.columbasms.columbasms.model.Topic;
+import com.columbasms.columbasms.utils.network.API_URL;
+import com.columbasms.columbasms.utils.network.CacheRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,9 +38,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,21 +49,22 @@ import butterknife.ButterKnife;
 public class AssociationProfileActivity extends AppCompatActivity{
 
     @Bind(R.id.toolbar_profile)Toolbar toolbar;
-    private static RecyclerView  rvAssociationProfile;
 
+
+    private static RecyclerView  rvAssociationProfile;
     private static SwipeRefreshLayout mySwipeRefreshLayout;
     private static CoordinatorLayout coordinatorLayout;
     private static ImageView fav;
-    private static List<CharityCampaign> campaigns_list;
     private static AssociationProfileAdapter associationProfileAdapter;
-    private static String URL_API= "http://www.architettura204.it/association.json";
-    private static String assName;
-    private static Activity activity;
-    int toolbar_size;
-    ColorDrawable cd;
-    static Resources res;
-
-
+    private static  int toolbar_size;
+    private static  ColorDrawable cd;
+    private static Resources res;
+    private static Activity mainActivity;
+    private static FragmentManager fragmentManager;
+    private static List<CharityCampaign> campaigns_list;
+    private static Association a;
+    private static String ASSOCIATION_ID;
+    private static String ASSOCIATION_NAME;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,8 +74,11 @@ public class AssociationProfileActivity extends AppCompatActivity{
         ButterKnife.bind(this);
 
         res = getResources();
-        activity = this;
 
+        ASSOCIATION_ID = getIntent().getStringExtra("ass_id");
+        ASSOCIATION_NAME = getIntent().getStringExtra("ass_name");
+
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinatorLayout);
         mySwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh_association_profile);
         mySwipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_1, R.color.refresh_progress_2, R.color.refresh_progress_3, R.color.refresh_progress_4);
         mySwipeRefreshLayout.setOnRefreshListener(
@@ -97,6 +93,7 @@ public class AssociationProfileActivity extends AppCompatActivity{
         rvAssociationProfile = (RecyclerView)findViewById(R.id.rv_association_profile);
 
         cd = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
+        cd.setAlpha(0);
 
         //TOP TOOLBAR SETUP
         toolbar.bringToFront();
@@ -122,7 +119,8 @@ public class AssociationProfileActivity extends AppCompatActivity{
         });
 
         campaigns_list = new ArrayList<>();
-
+        fragmentManager = getSupportFragmentManager();
+        mainActivity = this;
 
         // Set layout manager to position the items
         rvAssociationProfile.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
@@ -142,7 +140,7 @@ public class AssociationProfileActivity extends AppCompatActivity{
 
                 if (scrollDy > card_size) {
                     cd.setAlpha(255);
-                    toolbar.setTitle(assName);
+                    toolbar.setTitle(ASSOCIATION_NAME);
                 } else if (scrollDy <= 0) {
                     cd.setAlpha(0);
                     toolbar.setTitle("");
@@ -163,19 +161,23 @@ public class AssociationProfileActivity extends AppCompatActivity{
 
         mySwipeRefreshLayout.setRefreshing(true);
 
-        CacheRequest cacheRequest = get();
+        CacheRequest cacheRequest = getAssociationProfile();
 
         MyApplication.getInstance().addToRequestQueue(cacheRequest);
 
         mySwipeRefreshLayout.setRefreshing(false);
 
-        //if(!isNetworkConnected())showSnackbar();
+        if(!isNetworkConnected())showSnackbar();
 
     }
 
 
-    private static CacheRequest get(){
-        return new CacheRequest(0, URL_API, new Response.Listener<NetworkResponse>() {
+
+    private static CacheRequest getAssociationProfile(){
+
+        String URL = API_URL.ASSOCIATIONS_URL + "/" + ASSOCIATION_ID;
+
+        return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
                 try {
@@ -183,10 +185,37 @@ public class AssociationProfileActivity extends AppCompatActivity{
 
                     JSONObject o = new JSONObject(jsonString);
 
-                    Association a = new Association("","","","","");
-                    //Association a = new Association(o.getString("organization_name"),o.getString("description"),o.getString("topic"),o.getString("avatar_normal"),o.getString("cover_normal"),1000,false);;
+                    a = new Association(o.getString("id"),o.getString("organization_name"),o.getString("avatar_normal"),o.getString("cover_normal"),o.getString("description"));;
 
-                    JSONArray jsonArray = new JSONArray(o.getString("campaigns"));
+                    CacheRequest cacheRequest = getCampaigns();
+
+                    MyApplication.getInstance().addToRequestQueue(cacheRequest);
+
+
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.toString());
+            }
+        });
+    }
+
+
+    private static CacheRequest getCampaigns(){
+
+        String URL = API_URL.ASSOCIATIONS_URL + "/" + ASSOCIATION_ID + API_URL.CAMPAIGNS;
+
+        return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                try {
+                    final String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+
+                    JSONArray jsonArray = new JSONArray(jsonString);
 
                     campaigns_list.clear();
 
@@ -196,12 +225,23 @@ public class AssociationProfileActivity extends AppCompatActivity{
                         for (int i = 0; i < jsonArray.length(); i++) {
                             try {
 
-                                JSONObject temp = jsonArray.getJSONObject(i);
+                                JSONObject o = jsonArray.getJSONObject(i);
 
-                                assName = a.getOrganization_name();
+                                List<Topic> topicList = new ArrayList<>();
 
+                                JSONArray topics = new JSONArray(o.getString("topics"));
+                                for(int j = 0; j< topics.length(); j++){
+                                    JSONObject t = topics.getJSONObject(j);
+                                    topicList.add(new Topic(t.getString("id"),t.getString("name"),false,t.getString("main_color"), t.getString("status_color")));
+                                }
 
-                                campaigns_list.add(null);
+                                JSONObject a = new JSONObject(o.getString("organization"));
+
+                                Association ass = new Association(a.getString("id"),a.getString("organization_name"),a.getString("avatar_normal"),null,null);
+
+                                CharityCampaign m = new CharityCampaign(o.getString("id"),o.getString("message"),ass,topicList);
+
+                                campaigns_list.add(0, m);
 
                             } catch (JSONException e) {
                                 System.out.println("JSON Parsing error: " + e.getMessage());
@@ -209,7 +249,7 @@ public class AssociationProfileActivity extends AppCompatActivity{
                         }
                     }
                     // Create adapter passing in the sample user data
-                    associationProfileAdapter = new AssociationProfileAdapter(campaigns_list,a,res,activity);
+                    associationProfileAdapter = new AssociationProfileAdapter(campaigns_list,a,res,mainActivity,fragmentManager);
 
                     // Attach the adapter to the recyclerview to populate items
                     rvAssociationProfile.setAdapter(associationProfileAdapter);
@@ -229,7 +269,7 @@ public class AssociationProfileActivity extends AppCompatActivity{
 
 
 
-    /*
+
     private static void showSnackbar(){
         Snackbar snackbar = Snackbar
                 .make(coordinatorLayout, "No Internet Connection!", Snackbar.LENGTH_LONG)
@@ -241,7 +281,6 @@ public class AssociationProfileActivity extends AppCompatActivity{
                 });
         View view = snackbar.getView();
         CoordinatorLayout.LayoutParams params =(CoordinatorLayout.LayoutParams)view.getLayoutParams();
-        params.bottomMargin = tb.getHeight();
         view.setLayoutParams(params);
         snackbar.show();
     }
@@ -250,7 +289,7 @@ public class AssociationProfileActivity extends AppCompatActivity{
         ConnectivityManager cm = (ConnectivityManager)mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
-    */
+
 
 
     @Override

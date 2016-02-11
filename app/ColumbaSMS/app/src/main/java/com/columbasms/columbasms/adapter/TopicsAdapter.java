@@ -83,7 +83,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         textView.setText(type_name);
 
         LinearLayout bc =viewHolder.bc;
-        //bc.setBackgroundColor(topic.getMainColor());
+        bc.setBackgroundColor(Color.parseColor(topic.getMainColor()));
 
 
 

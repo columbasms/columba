@@ -40,135 +40,7 @@ import java.util.List;
  */
 public class Utils {
 
-    private static Transformation t;
-
-    public static JSONObject getOauthAccessToken(JSONObject j){
-        String url = "https://www.columbasms.com/oauth/v2/token?";
-        JSONArray ja = j.names();
-        List<NameValuePair> params = new LinkedList<NameValuePair>();
-        try {
-            params.add(new BasicNameValuePair("client_id", j.getString("client_id").toString()));
-            params.add(new BasicNameValuePair("client_secret", j.getString("client_secret").toString()));
-            params.add(new BasicNameValuePair("username", j.getString("username").toString()));
-            params.add(new BasicNameValuePair("password", j.getString("password").toString()));
-            params.add(new BasicNameValuePair("grant_type","password"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        String paramString = URLEncodedUtils.format(params, "utf-8");
-        url += paramString;
-        //System.out.println("COMPLETE: " + url);
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(url);
-        HttpResponse response = null;
-        BufferedReader reader = null;
-        StringBuilder builder = new StringBuilder();
-        try {
-            response = httpClient.execute(httpGet);
-            reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-            for (String line = null; (line = reader.readLine()) != null;) {
-                builder.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String json = builder.toString();
-        JSONObject at = null;
-        try {
-            at = new JSONObject(json.substring(json.indexOf("{"), json.lastIndexOf("}") + 1).replaceAll("\\\\",""));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        System.out.println("##########HTTP GET RESPONSE from " + url + " :" + json.replaceAll("\\\\",""));
-        return at;
-    }
-
-    public static JSONObject apiTest(JSONObject j) throws MalformedURLException {
-
-
-        String url = "https://www.columbasms.com/api/random?";
-        JSONArray ja = j.names();
-
-        List<NameValuePair> params = new LinkedList<NameValuePair>();
-        try {
-            params.add(new BasicNameValuePair("access_token", j.getString("access_token").toString()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        String paramString = URLEncodedUtils.format(params, "utf-8");
-        url += paramString;
-
-        URL url_req = new URL(url);
-        URLConnection urlConnection = null;
-        try {
-            urlConnection = url_req.openConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        InputStream is = null;
-        try {
-            is = urlConnection.getInputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        System.out.println("RESPONSE HTTPS from: " + url + " " + sb.toString());
-
-        /*
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(url);
-        HttpResponse response = null;
-        try {
-            response = httpClient.execute(httpGet);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        StringBuilder builder = new StringBuilder();
-        try {
-            for (String line = null; (line = reader.readLine()) != null;) {
-                builder.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String json = builder.toString();
-        System.out.println("##########HTTP GET RESPONSE FOR ACCESS_TOKEN from " + url + " :" + json.replaceAll("\\\\",""));
-        */
-
-        JSONObject at = new JSONObject();
-        return at;
-    }
-
+    //SEND SMS
     public static void sendSMS(String associationSender,String phoneNumber, String message,Resources res){
         System.out.println("Send message: " + message + " to " + phoneNumber);
         SmsManager sms = SmsManager.getDefault();
@@ -185,6 +57,8 @@ public class Utils {
     }
 
 
+    //DOWNLOAD IMAGE AND APPLY A TRASFORMATION
+    private static Transformation t;
     public static void downloadImage(final String URL, final ImageView im, final boolean applyTrasformation, boolean applyBorder){
 
         t = null;

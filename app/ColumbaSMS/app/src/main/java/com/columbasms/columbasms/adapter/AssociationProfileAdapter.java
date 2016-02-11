@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,8 +23,11 @@ import android.widget.TextView;
 
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.AssociationProfileActivity;
+import com.columbasms.columbasms.activity.TopicProfileActivity;
+import com.columbasms.columbasms.fragment.ChooseContactsFragment;
 import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
+import com.columbasms.columbasms.model.Topic;
 import com.columbasms.columbasms.utils.Utils;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Callback;
@@ -47,7 +52,8 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
     private int card_size;
     private Drawable profile_image;
     private Resources res;
-    Activity activity;
+    private Activity activity;
+    private FragmentManager fragmentManager;
 
     private static final int TYPE_PROFILE = 0;
     private static final int TYPE_GROUP = 1;
@@ -59,9 +65,9 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
     }
     public class GroupViewHolder extends ViewHolder {
 
-        //@Bind(R.id.topic)TextView topic;
+        @Bind(R.id.topic)TextView topic;
         @Bind(R.id.message)TextView message;
-        //@Bind(R.id.ass_name)TextView associationName;
+        @Bind(R.id.ass_name)TextView associationName;
         @Bind(R.id.send)ImageView send;
         @Bind(R.id.profile_image)ImageView profile_image;
 
@@ -95,11 +101,12 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
 
 
 
-    public AssociationProfileAdapter(List<CharityCampaign> itemList,Association a,Resources res, Activity activity) {
+    public AssociationProfileAdapter(List<CharityCampaign> itemList,Association a,Resources res, Activity activity, FragmentManager fragmentManager) {
         mItemList = itemList;
         this.association = a;
         this.res = res;
         this.activity = activity;
+        this.fragmentManager = fragmentManager;
     }
 
 
@@ -126,23 +133,16 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
             case TYPE_PROFILE:
                 final ProfileViewHolder holder1 = (ProfileViewHolder) viewHolder;
 
-                /*
-                int color = selectColor(association.getTopic());
-                activity.getWindow().setStatusBarColor(color);
+                //activity.getWindow().setStatusBarColor(Color.parseColor(color_status));
+                //holder1.lc_background.setBackgroundColor(Color.parseColor(color_main));
 
-                holder1.lc_background.setBackgroundColor(color);
+                holder1.assName.setText(association.getOrganization_name());
 
-                holder1.assName.setText(association.getName());
-
-                String info = association.getFollower() + " followers" + " - " + mItemList.size() + " campaigns";
+                String info = "100" + " followers" + " - " + mItemList.size() + " campaigns";
 
                 holder1.assOtherInfo.setText(info);
 
                 holder1.assDescription.setText(association.getDescription());
-
-                String title = association.getName() + "'s campaign";
-
-                holder1.assCampaignsTitle.setText(title);
 
                 final CardView v = holder1.cardView;
                 holder1.trust.setOnClickListener(new View.OnClickListener() {
@@ -193,42 +193,69 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                 });
 
                 final ImageView cover = holder1.coverImage;
-                Utils.downloadImage(association.getCover_image_url(),cover,false,false);
+                Utils.downloadImage(association.getCover_normal(),cover,false,false);
 
                 final ImageView p = holder1.thumbnailImage;
-                Utils.downloadImage(association.getThumbnail_image_url(),p,true,true);
+                Utils.downloadImage(association.getAvatar_normal(),p,true,true);
 
-                */
 
                 break;
 
             case TYPE_GROUP:
 
-                /*
+
                 GroupViewHolder holder2 = (GroupViewHolder) viewHolder;
-                CharityCampaign c = mItemList.get(position);
+                final CharityCampaign c = mItemList.get(position-1);
 
 
                 TextView an = holder2.associationName;
-                an.setText(c.getAssociationName());
+                an.setText(c.getOrganization().getOrganization_name());
 
+                final List<Topic> topicList = c.getTopics();
+                String topics = "";
+                for (int i = 0; i<topicList.size(); i++){
+                    topics += topicList.get(i).getName(); //IF MULTITOPIC ADD "\N"
+                }
                 TextView topic = holder2.topic;
-                topic.setText(c.getTopic());
-                topic.setTextColor(selectColor(c.getTopic()));
+                topic.setText(topicList.get(0).getName());
+                topic.setTextColor(Color.parseColor(topicList.get(0).getMainColor()));
+                topic.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TEMPORARY SUPPORT FOR ONLY ONE TOPIC FOR CAMPAIGN
+                        Intent i = new Intent(v.getContext(), TopicProfileActivity.class);
+                        i.putExtra("topic_name", topicList.get(0).getName());
+                        i.putExtra("topic_id", topicList.get(0).getId());
+                        v.getContext().startActivity(i);
+                    }
+                });
 
                 TextView message = holder2.message;
                 message.setText(c.getMessage());
 
+                ImageView s = holder2.send;
+                s.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("message", c.getMessage());
+                        bundle.putString("campaign_id", c.getId());
+                        ChooseContactsFragment newFragment = new ChooseContactsFragment();
+                        newFragment.setArguments(bundle);
+                        newFragment.show(fragmentManager, association.getOrganization_name());
+                    }
+                });
+
                 final ImageView pi = holder2.profile_image;
-                Utils.downloadImage(association.getThumbnail_image_url(),pi,true,false);
-                */
+                Utils.downloadImage(association.getAvatar_normal(),pi,true,false);
+
                 break;
         }
     }
 
     @Override
     public int getItemCount() {
-        return mItemList == null ? 0 : mItemList.size();
+        return mItemList == null ? 0 : mItemList.size()+1;
     }
 
 
@@ -236,17 +263,5 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
         return card_size;
     }
 
-    private int selectColor(String topicName){
-        int color = 0;
-        String[] colorArray = res.getStringArray(R.array.topics_color);
-        String[] topics_name = res.getStringArray(R.array.topics_name);
-        for (int i = 0; i<topics_name.length; i++){
-            if(topicName.equals(topics_name[i])){
-                color = Color.parseColor(colorArray[i]);
-                break;
-            }
-        }
-        return color;
-    }
 
 }

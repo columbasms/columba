@@ -1,4 +1,4 @@
-package com.columbasms.columbasms.utils;
+package com.columbasms.columbasms.utils.network;
 
 import android.util.Base64;
 

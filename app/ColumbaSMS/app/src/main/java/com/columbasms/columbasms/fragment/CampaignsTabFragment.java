@@ -1,8 +1,5 @@
 package com.columbasms.columbasms.fragment;
 
-/**
- * Created by Matteo Brienza on 1/29/16.
- */
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -10,18 +7,16 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
@@ -29,8 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.columbasms.columbasms.MyApplication;
 import com.columbasms.columbasms.R;
-import com.columbasms.columbasms.listener.HidingScrollListener;
-import com.columbasms.columbasms.adapter.MainAdapter;
+import com.columbasms.columbasms.adapter.CampaignsTabAdapter;
 import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
 import com.columbasms.columbasms.model.Topic;
@@ -40,115 +34,110 @@ import com.columbasms.columbasms.utils.network.CacheRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 
-public class HomeFragment extends Fragment {
+/**
+ * Created by Matteo Brienza on 2/9/16.
+ */
+public class CampaignsTabFragment extends Fragment {
 
-    private static RecyclerView rvFeed;
+    private static String TOPIC_ID;
+
+    private static CampaignsTabAdapter campaignsTabAdapter;
+    private static Toolbar toolbar;
+    private static RecyclerView rv_main_list;
+    private static Context mContext;
     private static List<CharityCampaign> campaigns_list;
-    private static Toolbar tb;
+    private static List<Association> associations_list;
+    private static FragmentManager fragmentManager;
     private static SwipeRefreshLayout mySwipeRefreshLayout;
     private static CoordinatorLayout coordinatorLayout;
-    private static MainAdapter adapter;
-    private static FragmentManager fragmentManager;
-    private static Resources res;
     private static Activity mainActivity;
-
+    private static Resources res;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //Init campaigns list
-        campaigns_list = new ArrayList<>();
-
-        // Set layout manager to position the items
-        rvFeed.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        rvFeed.setOnScrollListener(new HidingScrollListener() {
-            @Override
-            public void onHide() {
-                tb.animate().translationY(tb.getHeight()).setInterpolator(new AccelerateInterpolator(2));
-            }
-
-            @Override
-            public void onShow() {
-                tb.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
-            }
-        });
-
+        //SETUP ASSOCIATIONS LIST ADAPTER
+        associations_list = new ArrayList<>();
+        mContext = getActivity().getApplicationContext();
         fragmentManager = getFragmentManager();
-        res = getResources();
-        mainActivity = getActivity();
 
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        if (container != null) {
-            container.removeAllViews();
-        }
-
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
-        rvFeed= (RecyclerView) v.findViewById(R.id.rv_feed);
+        View v = inflater.inflate(R.layout.fragment_tab_campaigns, container, false);
 
-        tb = (Toolbar)getActivity().findViewById(R.id.toolbar_bottom);
-        coordinatorLayout = (CoordinatorLayout)v.findViewById(R.id.coordinatorLayout);
-        mySwipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.swiperefresh);
+        coordinatorLayout = (CoordinatorLayout)v.findViewById(R.id.topic_coordinatorLayout);
+        toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar_topic);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+        mySwipeRefreshLayout = (SwipeRefreshLayout)v.findViewById(R.id.topic_swiperefresh);
         mySwipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_1, R.color.refresh_progress_2, R.color.refresh_progress_3, R.color.refresh_progress_4);
         mySwipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
+                        mySwipeRefreshLayout.setRefreshing(true);
                         getData();
+                        mySwipeRefreshLayout.setRefreshing(false);
                     }
                 }
         );
-        /*
-         * Showing Swipe Refresh animation on activity create
-         * As animation won't start on onCreate, post runnable is used
-         */
+
+        //SETUP CAMPAIGNS LIST ADAPTER
+        campaigns_list = new ArrayList<>();
+
+        rv_main_list = (RecyclerView)v.findViewById(R.id.rv_main_list);
+        rv_main_list.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+
+        TOPIC_ID = getArguments().getString("topic_id");
+        mainActivity = getActivity();
+        res = getResources();
+
         mySwipeRefreshLayout.post(new Runnable() {
-                 @Override
-                 public void run() {
-                     getData();
-                 }
+            @Override
+            public void run() {
+                mySwipeRefreshLayout.setRefreshing(true);
+                getData();
+                mySwipeRefreshLayout.setRefreshing(false);
+            }
         });
 
         return v;
     }
-
-
-
     private static void getData(){
 
-            if(!isNetworkConnected())showSnackbar();
+        if(!isNetworkConnected())showSnackbar();
 
-            mySwipeRefreshLayout.setRefreshing(true);
+        CacheRequest associationsRequest = getCampaignsList();
 
-            CacheRequest cacheRequest = get();
-
-            MyApplication.getInstance().addToRequestQueue(cacheRequest);
-
-            mySwipeRefreshLayout.setRefreshing(false);
-
-
+        MyApplication.getInstance().addToRequestQueue(associationsRequest);
 
     }
 
 
-    private static CacheRequest get(){
 
-        //DOPO DIGITS L'URL SARA' QUESTO ---> https://www.columbasms.com/api/v1/users/{id}/campaigns
-        //String URL = API_URL.USERS_URL + USER_ID + API_URL.CAMPAIGNS;
 
-        String URL = API_URL.CAMPAIGNS_URL;
+    private static CacheRequest getCampaignsList(){
+
+        //https://www.columbasms.com/api/v1/topics/{id}/campaigns
+
+        String URL = API_URL.TOPICS_URL + "/" + TOPIC_ID + API_URL.CAMPAIGNS;
+
+        System.out.println(URL);
 
         return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
             @Override
@@ -191,12 +180,10 @@ public class HomeFragment extends Fragment {
                         }
                     }
                     // Create adapter passing in the sample user data
-                    adapter = new MainAdapter(campaigns_list,fragmentManager,res,mainActivity);
-
-                    AlphaInAnimationAdapter adapter_anim = new AlphaInAnimationAdapter(adapter);
+                    campaignsTabAdapter = new CampaignsTabAdapter(campaigns_list,fragmentManager,res,mainActivity);
 
                     // Attach the adapter to the recyclerview to populate items
-                    rvFeed.setAdapter(adapter_anim);
+                    rv_main_list.setAdapter(campaignsTabAdapter);
 
                 } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();
@@ -209,13 +196,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-
-
-
-
-
-
     private static void showSnackbar(){
         Snackbar snackbar = Snackbar
                 .make(coordinatorLayout, "No Internet Connection!", Snackbar.LENGTH_LONG)
@@ -226,9 +206,6 @@ public class HomeFragment extends Fragment {
                     }
                 });
         View view = snackbar.getView();
-        CoordinatorLayout.LayoutParams params =(CoordinatorLayout.LayoutParams)view.getLayoutParams();
-        params.bottomMargin = tb.getHeight();
-        view.setLayoutParams(params);
         snackbar.show();
     }
 
@@ -237,17 +214,4 @@ public class HomeFragment extends Fragment {
         return cm.getActiveNetworkInfo() != null;
     }
 
-    @Override
-    public void onResume() {
-        Log.e("DEBUG", "onResume of HomeFragment");
-        super.onResume();
-
-        //QUI DOVRA PARTIRE LA PRIMA RICHIESTA (SE E' IL PRIMO ACCESSO)..NELL ON CREATE PARTONO RICHIESTE SOLO SE NON è IL PRIMO ACCESSO (QUINDI DEVI INSERIRE UN CONTROLLO)
-    }
-
-    @Override
-    public void onPause() {
-        Log.e("DEBUG", "OnPause of HomeFragment");
-        super.onPause();
-    }
 }
