@@ -31,6 +31,7 @@ Rails.application.routes.draw do
         end
         member do
           get :topics
+          put '/topics/:topic_id', to: 'users#follow_topic'
         end
       end
       resources :organizations do

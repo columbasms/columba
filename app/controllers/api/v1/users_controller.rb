@@ -7,7 +7,7 @@ module Api
       before_filter :set_user, except: [:create]
       before_filter :set_campaign, only: [:send_campaign]
       before_filter :set_organization, only: []
-      before_filter :set_topic, only: []
+      before_filter :set_topic, only: [:follow_topic]
 
       # GET /users/:id
       def show
@@ -117,6 +117,23 @@ module Api
 
       # GET users/:id/topics
       def topics
+        render json: @user.topics, root: false
+      end
+
+      # PUT users/:id/topics/:topic_id
+      def follow_topic
+        # if a connection between user and topic already exists...
+        if DigitsClientsTopic.exists?(digits_client_id: @user, topic_id: @topic)
+          # ...we destroy it
+          connection=DigitsClientsTopic.where(digits_client_id: @user, topic_id: @topic)
+          connection.delete_all
+        else
+          # ... else we create it
+          new_connection=DigitsClientsTopic.new
+          new_connection.topic=@topic
+          new_connection.digits_client=@user
+          new_connection.save
+        end
         render json: @user.topics, root: false
       end
 
