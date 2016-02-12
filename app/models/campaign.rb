@@ -8,8 +8,8 @@ class Campaign < ActiveRecord::Base
 
   has_many :campaign_client_receivers
   has_many :receivers, through: :campaign_client_receivers
+  has_many :digits_clients, through: :campaign_client_receivers
 
-  has_and_belongs_to_many :digits_clients
   has_and_belongs_to_many :topics
 
   validates :message, presence: true

@@ -71,7 +71,7 @@ module Api
 
       # GET /users/:id/campaigns
       def campaigns
-        render json: @user.campaigns, root: false
+        render json: @user.campaigns.uniq, root: false
       end
 
       # POST /users/:id/campaigns/:campaign_id
