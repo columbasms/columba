@@ -62,32 +62,28 @@
 
     <div class="row">
       <div class="col-sm-6">
-        <div class="form-group form-group-default required">
-          <%= f.label :province %>
-          <%= f.text_field :province, class: 'form-control', required: 'required' %>
-        </div>
+        <div class="form-group form-group-default form-group-default-select2 required full-width">
+            <%= f.label 'town_id' %>
+            <%= f.select :town_id,
+               options_for_select(Town.all.order(name: :asc).collect { |x| [x.name, x.id] }, selected: :town_id),
+               { 'data-init-plugin': 'select2', class: 'full-width', id: 'town-select' }  %>
+          </div>
+
       </div>
 
       <div class="col-sm-6">
         <div class="form-group form-group-default required">
-          <%= f.label :town %>
-          <%= f.text_field :town, class: 'form-control', required: 'required' %>
+          <%= f.label :postal_code %>
+          <%= f.text_field :postal_code, class: 'form-control', required: 'required' %>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-sm-12 col-md-8">
+      <div class="col-sm-12">
         <div class="form-group form-group-default required">
           <%= f.label :address %>
           <%= f.text_field :address, class: 'form-control', required: 'required' %>
-        </div>
-      </div>
-
-      <div class="col-sm-12 col-md-4">
-        <div class="form-group form-group-default required">
-          <%= f.label :postal_code %>
-          <%= f.text_field :postal_code, class: 'form-control', required: 'required' %>
         </div>
       </div>
     </div>
