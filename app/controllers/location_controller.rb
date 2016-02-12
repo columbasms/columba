@@ -6,7 +6,7 @@ class LocationController < ApplicationController
       data = [{ id: '', text: '' }] + @towns.map { |t| { id: t.id, text: t.name } }
       render json: {
           data: data,
-          selected: if params[:first] == 'true'
+          selected: if params[:first] == 'true' and organization_signed_in?
                       current_organization.town_id.present? ? current_organization.town_id : 0
                     else
                       data[0][:id]

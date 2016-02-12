@@ -10,4 +10,5 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile +=
     %w( ie9.css windows.chrome.fix.css login.js favicon.ico file-upload.js file-upload.css
-        application_form.js application_form.css application_data.css application_data.js )
+        application_form.js application_form.css application_data.css application_data.js
+        location-select.js )
