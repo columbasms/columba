@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210162029) do
+ActiveRecord::Schema.define(version: 20160212113719) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -69,12 +69,21 @@ ActiveRecord::Schema.define(version: 20160210162029) do
     t.string   "address",         limit: 255
     t.decimal  "latitude",                    precision: 10
     t.decimal  "longitude",                   precision: 10
+    t.date     "expires_at"
   end
 
   add_index "campaigns", ["organization_id"], name: "fk_rails_a74bb03c49", using: :btree
   add_index "campaigns", ["province_id"], name: "fk_rails_9ec4fd6b89", using: :btree
   add_index "campaigns", ["region_id"], name: "fk_rails_4493416bcf", using: :btree
   add_index "campaigns", ["town_id"], name: "fk_rails_a23d672565", using: :btree
+
+  create_table "campaigns_digits_clients", id: false, force: :cascade do |t|
+    t.integer "campaign_id",      limit: 4, null: false
+    t.integer "digits_client_id", limit: 4, null: false
+  end
+
+  add_index "campaigns_digits_clients", ["campaign_id"], name: "index_campaigns_digits_clients_on_campaign_id", using: :btree
+  add_index "campaigns_digits_clients", ["digits_client_id"], name: "index_campaigns_digits_clients_on_digits_client_id", using: :btree
 
   create_table "campaigns_topics", id: false, force: :cascade do |t|
     t.integer "campaign_id", limit: 4, null: false

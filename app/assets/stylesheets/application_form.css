@@ -14,6 +14,7 @@
  *= require font-awesome
  *= require plugins/jquery-scrollbar/jquery.scrollbar
  *= require plugins/bootstrap-select2/select2
+ *= require plugins/bootstrap-datepicker/css/datepicker3
  *= require pages-icons
  *= require pages.css.erb
  *= require style

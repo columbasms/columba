@@ -43,6 +43,8 @@ class CampaignsController < ApplicationController
   def create
     @campaign = Campaign.new(campaign_params)
     @campaign.organization = current_organization
+    date = Date.strptime campaign_params[:expires_at], '%d/%m/%Y'
+    @campaign.expires_at = date if date.present?
 
     respond_to do |format|
       if @campaign.save
@@ -102,7 +104,8 @@ class CampaignsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def campaign_params
-      params[:campaign].permit(:message, :region_id, :province_id, :town_id, :address, :topic_ids => [])
+      params[:campaign].permit(:message, :region_id, :province_id, :town_id, :expires_at,
+                               :address, :topic_ids => [])
     end
 
     def validate_visibility

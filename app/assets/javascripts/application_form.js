@@ -19,4 +19,11 @@
 //= require plugins/bootstrap-select2/select2.min
 //= require plugins/jquery-validation/js/jquery.validate.min
 //= require plugins/jquery-scrollbar/jquery.scrollbar.min
+//= require plugins/bootstrap-datepicker/js/bootstrap-datepicker
 //= require pages
+
+$(function() {
+    $('#datepicker').datepicker({
+        format: 'dd/mm/yyyy'
+    });
+});

@@ -28,6 +28,7 @@
           <th>Message</th>
           <th>Date created</th>
           <th>Topics</th>
+          <th>Expiration date</th>
         </tr>
         </thead>
 
@@ -41,6 +42,7 @@
                     <a href="javascript:;" class="btn btn-tag"><%= topic.name %></a>
                 <% end %>
               </td>
+              <td class="v-align-middle"><%= campaign.expires_at_format %></td>
             </tr>
         <% end %>
         </tbody>
