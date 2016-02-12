@@ -117,7 +117,17 @@ module Api
 
       # GET users/:id/topics
       def topics
-        render json: @user.topics, root: false
+        result=[]
+        # result= Topic.active
+        user_topics=@user.topics
+        Topic.active.each do |current_topic|
+          if current_topic.in?(user_topics)
+            result+=[current_topic.slice(:id,:name,:main_color,:status_color).as_json.merge(:following => true)]
+          else
+            result+=[current_topic.slice(:id,:name,:main_color,:status_color).as_json.merge(:following => false)]
+          end
+        end
+        render json: result, root: false
       end
 
       # PUT users/:id/topics/:topic_id
