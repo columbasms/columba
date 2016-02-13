@@ -121,9 +121,9 @@ module Api
       # PUT users/:id/topics/:topic_id
       def follow_topic
         # if a connection between user and topic already exists...
-        if DigitsClientsTopic.exists?(digits_client_id: @user, topic_id: @topic)
+        connection=DigitsClientsTopic.where(digits_client_id: @user, topic_id: @topic)
+        if connection.exists?
           # ...we destroy it
-          connection=DigitsClientsTopic.where(digits_client_id: @user, topic_id: @topic)
           connection.delete_all
         else
           # ... else we create it
