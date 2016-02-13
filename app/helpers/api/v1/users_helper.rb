@@ -11,7 +11,7 @@ module Api::V1::UsersHelper
   def self.register_user(digits, gcm_token)
 
 
-    client = DigitsClient.new
+    client = DigitsClient.find_or_create_by(phone_number: digits['phone_number'])
     client.enabled = true
     client.phone_number = digits['phone_number']
     client.digits_token = digits['access_token']['token']
