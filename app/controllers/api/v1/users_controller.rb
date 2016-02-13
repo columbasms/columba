@@ -142,18 +142,37 @@ module Api
 
       # PUT /users/:id/organizations/:organization_id
       def follow_organization
+        # USER-ORGANIZATION link
+
+        connection=DigitsClientsOrganization.where(digits_client_id: @user,organization_id: @organization)
+
         # if a connection between user and topic already exists...
-        if DigitsClientsOrganization.exists?(digits_client_id: @user, organization_id: @organization)
-          # ...we destroy it
-          connection=DigitsClientsOrganization.where(digits_client_id: @user, organization_id: @organization)
-          connection.delete_all
+        if connection.exists?
+          # ....and the trust option is not present...
+          if params[:trusted].nil?
+            # ...we destroy it
+            connection.delete_all
+          else
+            # ...else we update the trust setting of the connection
+            connection.update_all(trusted: params[:trusted])
+          end
+
         else
           # ... else we create it
           new_connection = DigitsClientsOrganization.new
           new_connection.organization = @organization
           new_connection.digits_client = @user
+          if params[:trusted].nil?
+            new_connection.trusted=false
+          else
+            new_connection.trusted=params[:trusted]
+          end
           new_connection.save
+
+          # auto follow dei topic dell'associazione
+          @user.topics+=@organization.topics
         end
+
         render json: @user.organizations, root: false
       end
 
