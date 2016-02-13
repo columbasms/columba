@@ -1,6 +1,6 @@
 class Topic < ActiveRecord::Base
 
-  scope :active, -> { joins(:organizations).uniq}
+  scope :active, -> { joins(:organizations).uniq }
 
   has_and_belongs_to_many :campaigns
   has_and_belongs_to_many :organizations
