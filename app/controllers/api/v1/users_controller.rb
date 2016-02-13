@@ -49,23 +49,11 @@ module Api
 
       # PUT /user/:id
       def update
-        params['user'].keys.each do |param|
-          case param
-            when 'digits_id'
-              @user.digits_id=params['user']['digits_id']
-            when 'digits_token'
-              @user.digits_token=params['user']['digits_token']
-            when 'digits_secret'
-              @user.digits_secret=params['user']['digits_secret']
-            when 'phone_number'
-              @user.phone_number=params['user']['phone_number']
-            when 'gcm_token'
-              @user.gcm_token=params['user']['gcm_token']
-            else
-              next
-          end
+        if @user.update user_params
+          render json: @user, root: false, serializer: ::DigitsClientSerializer
+        else
+          render json: @user.errors, root: false
         end
-        render json: @user, root: false, serializer: ::DigitsClientSerializer
       end
 
 
@@ -205,6 +193,10 @@ module Api
           render json: {errors: 'Topic not found'}
           return
         end
+      end
+
+      def user_params
+        params[:user].permit(:digits_id, :digits_token, :digits_secret, :phone_number, :gcm_token)
       end
 
     end

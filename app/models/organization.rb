@@ -22,9 +22,10 @@ class Organization < ActiveRecord::Base
   belongs_to :town
 
   has_many :campaigns
+  has_many :digits_clients_organizations
+  has_many :digits_clients, through: :digits_clients_organizations
 
   has_and_belongs_to_many :topics
-  has_and_belongs_to_many :digits_clients
 
   accepts_nested_attributes_for :campaigns, allow_destroy: true
   accepts_nested_attributes_for :topics

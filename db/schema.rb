@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160212113719) do
+ActiveRecord::Schema.define(version: 20160213100049) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20160212113719) do
   create_table "digits_clients_organizations", id: false, force: :cascade do |t|
     t.integer "organization_id",  limit: 4, null: false
     t.integer "digits_client_id", limit: 4, null: false
+    t.boolean "trusted"
   end
 
   add_index "digits_clients_organizations", ["digits_client_id"], name: "index_digits_clients_organizations_on_digits_client_id", using: :btree
