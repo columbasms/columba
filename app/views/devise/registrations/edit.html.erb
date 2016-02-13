@@ -10,29 +10,17 @@
   var organization_id = <%= @organization.id %>;
 </script>
 
-<div class="jumbotron">
-  <%= image_tag @organization.cover.url(:normal), id: 'cover-preview' %>
-  <input type="file" name="organization[cover]" class="avatar-form-control" id="cover-input" />
-  <div class="container-fluid container-fixed-lg sm-p-l-20 sm-p-r-20">
-    <div class="inner">
-      <div class="pull-bottom bottom-left m-b-40">
-        <a href="javascript:;" class="btn btn-success full-width" id="cover-upload">Upload cover</a>
-      </div>
-    </div>
-  </div>
-</div>
-
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, role: 'form', id: 'edit-profile' }) do |f| %>
 
-    <div class="row padding-25 sm-padding-10">
-      <div class="col-md-12">
-        <% if devise_error_messages? %>
-            <div class="alert alert-danger">
-              <%= devise_error_messages! %>
-            </div>
-        <% end %>
+    <% if devise_error_messages? %>
+      <div class="row padding-25 sm-padding-10">
+        <div class="col-md-12">
+              <div class="alert alert-danger">
+                <%= devise_error_messages! %>
+              </div>
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <%= f.hidden_field :visible, value: true %>
 
@@ -47,6 +35,14 @@
           </div>
 
           <div class="panel-body">
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-12">
+                    <%= image_tag @organization.cover.url(:normal), id: 'cover-preview', class: 'full-width m-b-15' %>
+                    <%= f.file_field :cover, class: 'avatar-form-control', id: 'cover-input' %>
+                    <a href="javascript:;" class="btn btn-success full-width m-b-15" id="cover-upload">Upload cover</a>
+                  </div>
+                </div>
 
                 <div class="row">
                   <div class="col-sm-12 col-md-3 m-b-15">
