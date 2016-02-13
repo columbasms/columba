@@ -14,10 +14,10 @@ class Organization < ActiveRecord::Base
   crop_attached_file :avatar
 
   has_attached_file :cover, styles: {
-      normal: '1500x500#'
+      normal: '1500x844#'
   }, default_url: '/images/cover.png'
   validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
-  crop_attached_file :cover, aspect: '3:1'
+  crop_attached_file :cover, aspect: '16:9'
 
   belongs_to :town
 
