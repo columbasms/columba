@@ -105,14 +105,14 @@ module Api
 
       # GET users/:id/topics
       def topics
-        result=[]
+        result = []
         # result= Topic.active
-        user_topics=@user.topics
+        user_topics = @user.topics
         Topic.active.each do |current_topic|
           if current_topic.in?(user_topics)
-            result+=[current_topic.slice(:id,:name,:main_color,:status_color).as_json.merge(:following => true)]
+            result += [current_topic.slice(:id,:name,:main_color,:status_color).as_json.merge(:following => true)]
           else
-            result+=[current_topic.slice(:id,:name,:main_color,:status_color).as_json.merge(:following => false)]
+            result += [current_topic.slice(:id,:name,:main_color,:status_color).as_json.merge(:following => false)]
           end
         end
         render json: result, root: false

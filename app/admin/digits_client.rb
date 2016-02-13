@@ -13,5 +13,14 @@ ActiveAdmin.register DigitsClient do
 #   permitted
 # end
 
+  filter :phone_number
+
+  index do
+    selectable_column
+    id_column
+    column :phone_number
+    actions
+  end
+
 
 end
