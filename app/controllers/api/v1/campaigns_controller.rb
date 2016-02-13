@@ -1,13 +1,13 @@
 class Api::V1::CampaignsController < ApplicationController
   http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
   before_filter :set_campaign, only: [:show]
-  force_ssl if !Rails.env.development?
+  force_ssl unless Rails.env.development?
 
   respond_to :json
 
   # GET /campaigns
   def index
-    @campaigns = Campaign.all
+    @campaigns = Campaign.not_expired
 
     if params[:order_field].present? and params[:order_type].present?
       @campaigns = @campaigns.order("#{params[:order_field]}": :"#{params[:order_type]}")
