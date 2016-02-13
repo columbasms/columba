@@ -110,8 +110,8 @@ public class MainActivity extends AppCompatActivity
 
                     //  Launch app intro
 
-                    Intent i = new Intent(getApplicationContext(), IntroActivity.class);
-                    startActivity(i);
+                    //Intent i = new Intent(getApplicationContext(), IntroActivity.class);
+                    //startActivity(i);
 
 
                     getSupportFragmentManager()
@@ -159,10 +159,9 @@ public class MainActivity extends AppCompatActivity
 
         switch(item.getItemId()){
             case R.id.user_profile:
-                /*
                 startActivity(new Intent(this, UserProfileActivity.class));
                 break;
-                */
+                
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
