@@ -161,9 +161,9 @@ module Api
           connection.delete_all
         else
           # ... else we create it
-          new_connection=DigitsClientsOrganization.new
-          new_connection.organization=@organization
-          new_connection.digits_client=@user
+          new_connection = DigitsClientsOrganization.new
+          new_connection.organization = @organization
+          new_connection.digits_client = @user
           new_connection.save
         end
         render json: @user.organizations, root: false

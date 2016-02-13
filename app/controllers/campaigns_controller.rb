@@ -50,16 +50,16 @@ class CampaignsController < ApplicationController
       if @campaign.save
 
         if DigitsClient.count > 0
-          gcm = GCM.new(::Settings.gcm_token)
+          gcm = GCM.new('AIzaSyBGHPEr4yAWYFyvfEOdyEz3MtPOmLajggw')
 
-          registration_ids = DigitsClient.pluck :gcm_token
           options = {
               data: {
-                  title: 'Message title',
-                  message: @campaign.message
+                  organization_name: current_organization.organization_name,
+                  message: @campaign.message,
+                  campaign_id: @campaign.object_id
               }
           }
-          response = gcm.send registration_ids, options
+          response = gcm.send_with_notification_key "/topics/organization_#{current_organization.id}_follow", options
           Rails.logger.info response
         end
 
