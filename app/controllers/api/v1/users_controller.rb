@@ -6,8 +6,8 @@ module Api
       protect_from_forgery except: :create
       before_filter :set_user, except: [:create]
       before_filter :set_campaign, only: [:send_campaign]
-      before_filter :set_organization, only: [:follow_organization]
-      before_filter :set_topic, only: [:follow_topic]
+      before_filter :set_organization, only: [:follow_organization, :show_organization]
+      before_filter :set_topic, only: [:follow_topic, :show_topic]
 
       # GET /users/:id
       def show
@@ -110,12 +110,17 @@ module Api
         user_topics = @user.topics
         Topic.active.each do |current_topic|
           if current_topic.in?(user_topics)
-            result += [current_topic.slice(:id,:name,:main_color,:status_color).as_json.merge(:following => true)]
+            result += [current_topic.slice(:id, :name, :main_color, :status_color).as_json.merge(:following => true)]
           else
-            result += [current_topic.slice(:id,:name,:main_color,:status_color).as_json.merge(:following => false)]
+            result += [current_topic.slice(:id, :name, :main_color, :status_color).as_json.merge(:following => false)]
           end
         end
         render json: result, root: false
+      end
+
+      # GET users/:id/topics/:topic_id
+      def show_topic
+        render json: {'following'=>@topic.in?(@user.topics)}, root: false
       end
 
       # PUT users/:id/topics/:topic_id
@@ -140,11 +145,21 @@ module Api
         render json: @user.organizations, root: false
       end
 
+      # GET /users/:id/organizations/:organization_id
+      def show_organization
+        user_follow=DigitsClientsOrganization.find_by( organization_id:@organization, digits_client_id:@user)
+        if user_follow.nil?
+          render json: @organization.slice(:organization_name, :avatar_normal, :cover_normal, :description).as_json.merge(:followers => @organization.digits_clients.count, :following => false, :trusting => false), root: false
+        else
+          render json: @organization.slice(:organization_name, :avatar_normal, :cover_normal, :description).as_json.merge(:followers => @organization.digits_clients.count, :following => true, :trusting => user_follow.trusted), root: false
+        end
+      end
+
       # PUT /users/:id/organizations/:organization_id
       def follow_organization
         # USER-ORGANIZATION link
 
-        connection=DigitsClientsOrganization.where(digits_client_id: @user,organization_id: @organization)
+        connection=DigitsClientsOrganization.where(digits_client_id: @user, organization_id: @organization)
 
         # if a connection between user and topic already exists...
         if connection.exists?
