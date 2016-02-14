@@ -169,7 +169,12 @@ module Api
             connection.delete_all
           else
             # ...else we update the trust setting of the connection
-            connection.update_all(trusted: params[:trusted])
+            if params[:trusted]=='true'
+              connection.update_all(trusted: true)
+            else
+              connection.update_all(trusted: false)
+            end
+
           end
 
         else
@@ -180,7 +185,11 @@ module Api
           if params[:trusted].nil?
             new_connection.trusted=false
           else
-            new_connection.trusted=params[:trusted]
+            if params[:trusted]=='true'
+              new_connection.trusted=true
+            else
+              new_connection.trusted=false
+            end
           end
           new_connection.save
 
