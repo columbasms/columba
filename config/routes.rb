@@ -28,10 +28,12 @@ Rails.application.routes.draw do
         end
         member do
           get :organizations
+          get '/organizations/:organization_id', to: 'users#show_organization'
           put '/organizations/:organization_id', to: 'users#follow_organization'
         end
         member do
           get :topics
+          get '/topics/:topic_id', to: 'users#show_topic'
           put '/topics/:topic_id', to: 'users#follow_topic'
         end
       end
