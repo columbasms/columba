@@ -57,6 +57,8 @@ Rails.application.routes.draw do
   post '/organizations/:id/upload' => 'organizations#upload', as: :organizations_upload
   match '/organizations/:id/crop' => 'organizations#crop', as: :organizations_crop, via: [:post, :patch]
 
+  resources :receiver
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
