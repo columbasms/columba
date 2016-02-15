@@ -36,8 +36,8 @@ module Api::V1::UsersHelper
     require 'digest'
     require 'openssl'
     digest=OpenSSL::Digest.new('sha512')
-    fixed_salt = "6C=rCo#i,$f6j`cC6^o(bb{]}RpErX4kYiG:MEy!3EHxKZK?&@fsB7>GQXqEfu8:w2&z~5{z2M$eb%Y:)u?£^vwG&DN]2+JTM*mNB&Ub5!8xQXVK(>b~6x8?a6b8'3/["
-    fixed_key = "utq54oD~<Ha<XB~fzkJU,7EndXV4u]4@AijoBiUcPaf%Gf}w5?`HE^X*LX~($LypGu(Ni^GPi;=:jf}3TqZ97giV~5<t5A}^ue=[qAe]`wLY3M&8@c73*duBp5S*~J4b"
+    fixed_salt = ::Settings.crypto_keyed_hashing.fixed_salt
+    fixed_key = ::Settings.crypto_keyed_hashing.fixed_key
     #put the key in a file in the server not accessible place
     #sha2 crypto hash clear_number + salt
     #hmac key encrypt with key
