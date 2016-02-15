@@ -76,6 +76,7 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
         @Bind(R.id.message)TextView message;
         @Bind(R.id.ass_name)TextView associationName;
         @Bind(R.id.send)ImageView send;
+        @Bind(R.id.timestamp)TextView timestamp;
         @Bind(R.id.profile_image)ImageView profile_image;
 
         public GroupViewHolder(View parent) {
@@ -262,16 +263,14 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                         System.out.println(URL);
 
                         StringRequest putRequest = new StringRequest(Request.Method.PUT, URL,
-                                new Response.Listener<String>()
-                                {
+                                new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
                                         dialog.dismiss();
                                         adapterCallback.onMethodCallback();
                                     }
                                 },
-                                new Response.ErrorListener()
-                                {
+                                new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
                                         System.out.println(error.toString());
@@ -293,6 +292,8 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                         requestQueue.add(putRequest);
                     }
                 });
+
+
 
                 final ImageView cover = holder1.coverImage;
                 Utils.downloadImage(association.getCover_normal(),cover,false,false);
@@ -339,7 +340,10 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                 });
 
                 final ImageView pi = holder2.profile_image;
-                Utils.downloadImage(association.getAvatar_normal(),pi,true,false);
+                Utils.downloadImage(association.getAvatar_normal(), pi, true, false);
+
+                TextView time = holder2.timestamp;
+                time.setText(c.getTimestamp());
 
                 break;
         }

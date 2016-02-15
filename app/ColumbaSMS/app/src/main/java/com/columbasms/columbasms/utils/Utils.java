@@ -13,12 +13,49 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Matteo on 15/01/2016.
  */
 public class Utils {
+
+    //TIMESTAMP CAMPAIGN
+
+    public static String getTimestamp(String time){
+        Calendar cal = Calendar.getInstance();
+        Date currentLocalTime = cal.getTime();
+        String dtArrival = time;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        String dtDeparture = format.format(currentLocalTime);
+        try {
+            Date dateDeparture = format.parse(dtDeparture);
+            Date dateArrival = format.parse(dtArrival);
+            dateDeparture.compareTo(dateArrival);
+            long diff = dateDeparture.getTime() - dateArrival.getTime();
+            long hours = TimeUnit.MILLISECONDS.toHours(diff);
+            long minutes = TimeUnit.MILLISECONDS.toMinutes(diff) - hours*60;
+
+            if(hours>168) {
+                return Integer.toString((int)(hours/168)) + "w";
+            }else if(hours>=24 && hours<168){
+                return Integer.toString((int)(hours/24)) + "d";
+            }else if(hours<24 && hours>1){
+                return Integer.toString((int)(hours)) + "h";
+            }else {
+                return Integer.toString((int)(minutes)) + "m";
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 
     //SEND SMS
     public static void sendSMS(String associationSender,String phoneNumber, String message,Resources res ){

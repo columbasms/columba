@@ -142,8 +142,10 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
 
+        TextView time = holder.timestamp;
+        time.setText(c.getTimestamp());
         final ImageView p = holder.profile_image;
-            Utils.downloadImage(a.getAvatar_normal(), p, true, false);
+        Utils.downloadImage(a.getAvatar_normal(), p, true, false);
 
 
     }
@@ -162,6 +164,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @Bind(R.id.ass_name)TextView associationName;
         @Bind(R.id.send)ImageView send;
         @Bind(R.id.share)ImageView share;
+        @Bind(R.id.timestamp)TextView timestamp;
         @Bind(R.id.profile_image)ImageView profile_image;
 
         public RecyclerItemViewHolder(final View parent) {

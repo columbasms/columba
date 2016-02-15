@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/versione"
-            android:text="v.0.1.0a"
+            android:text="@string/version"
             android:layout_marginTop="15dp"
             android:textSize="18sp"
             android:textColor="@color/colorText"/>

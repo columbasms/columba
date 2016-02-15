@@ -72,9 +72,6 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
         @Bind(R.id.profile_card_usr)CardView cardView;
         @Bind(R.id.profile_usr_name)TextView usrName;
         @Bind(R.id.supported_campaigns)TextView usrCampaignsTitle;
-        //@Bind(R.id.fol)
-        Button trust;
-        //@Bind(R.id.fav) ImageView favourite;
         @Bind(R.id.cover_image_usr) ImageView coverImage;
         @Bind(R.id.thumbnail_image) ImageView thumbnailImage;
 
@@ -136,10 +133,10 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
                 });
 
                 final ImageView cover = holder1.coverImage;
-                Utils.downloadImage(user.getCover_image(), cover, false, false);
+                //Utils.downloadImage(user.getCover_image(), cover, false, false);
 
                 final ImageView p = holder1.thumbnailImage;
-                Utils.downloadImage(user.getProfile_image(),p,true,true);
+                //Utils.downloadImage(user.getProfile_image(),p,true,true);
 
 
                 break;

@@ -37,6 +37,7 @@ import com.columbasms.columbasms.adapter.MainAdapter;
 import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
 import com.columbasms.columbasms.model.Topic;
+import com.columbasms.columbasms.utils.Utils;
 import com.columbasms.columbasms.utils.network.API_URL;
 import com.columbasms.columbasms.utils.network.CacheRequest;
 
@@ -149,7 +150,7 @@ public class HomeFragment extends Fragment {
 
     private static CacheRequest get(){
 
-        String URL = API_URL.CAMPAIGNS_URL + "?user_id=" + USER_ID;
+        String URL = API_URL.CAMPAIGNS_URL + "?order_field=created_at" + "&" + "?user_id=" + USER_ID;
 
         System.out.println(URL);
 
@@ -184,7 +185,7 @@ public class HomeFragment extends Fragment {
                                 JSONObject a = new JSONObject(o.getString("organization"));
                                 Association ass = new Association(a.getString("id"),a.getString("organization_name"),a.getString("avatar_normal"),null,null);
 
-                                CharityCampaign m = new CharityCampaign(o.getString("id"),o.getString("message"),ass,topicList);
+                                CharityCampaign m = new CharityCampaign(o.getString("id"),o.getString("message"),ass,topicList,Utils.getTimestamp(o.getString("created_at").substring(0,19)));
 
                                 campaigns_list.add(0, m);
 

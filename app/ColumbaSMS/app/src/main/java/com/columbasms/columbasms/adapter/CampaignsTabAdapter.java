@@ -74,8 +74,8 @@ public class CampaignsTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), AssociationProfileActivity.class);
-                i.putExtra("ass_id",a.getId());
-                i.putExtra("ass_name",a.getOrganization_name());
+                i.putExtra("ass_id", a.getId());
+                i.putExtra("ass_name", a.getOrganization_name());
                 v.getContext().startActivity(i);
             }
         });
@@ -96,8 +96,24 @@ public class CampaignsTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         });
 
+        ImageView share = holder.share;
+        share.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, c.getMessage());
+                intent.setPackage("com.google.android.apps.plus");
+                mainActivity.startActivity(intent);
+            }
+        });
+
         final ImageView p = holder.profile_image;
         Utils.downloadImage(a.getAvatar_normal(), p, true, false);
+
+        TextView time = holder.timestamp;
+        time.setText(c.getTimestamp());
 
 
     }
@@ -113,7 +129,9 @@ public class CampaignsTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @Bind(R.id.message)TextView message;
         @Bind(R.id.ass_name)TextView associationName;
         @Bind(R.id.send)ImageView send;
+        @Bind(R.id.timestamp)TextView timestamp;
         @Bind(R.id.profile_image)ImageView profile_image;
+        @Bind(R.id.share)ImageView share;
 
         public RecyclerItemViewHolder(final View parent) {
             super(parent);
