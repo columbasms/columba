@@ -1,5 +1,6 @@
 package com.columbasms.columbasms.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.fragment.AssociationsTabFragment;
@@ -112,19 +114,30 @@ public class TopicProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
         switch (item.getItemId()) {
             case R.id.action_info:
+                i = new Intent(this,InfoActivity.class);
+                startActivity(i);
                 return true;
             case R.id.action_feedback:
+                Intent j = new Intent(Intent.ACTION_SEND);
+                j.setType("message/rfc822");
+                j.putExtra(Intent.EXTRA_EMAIL  , new String[]{"columbasms@gmail.com"});
+                j.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
+                j.putExtra(Intent.EXTRA_TEXT, "");
+                try {
+                    startActivity(Intent.createChooser(j, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(TopicProfileActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case R.id.action_guide:
+                //i = new Intent(this,GuideActivity.class);
+                //startActivity(i);
                 return true;
-
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 

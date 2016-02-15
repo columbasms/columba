@@ -56,16 +56,13 @@ public class MapFragment extends Fragment {
             e.printStackTrace();
         }
 
-        if(Build.VERSION.SDK_INT >= 23) {
-            // Here, thisActivity is the current activity
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
-            }
-        }
-
         googleMap = mMapView.getMap();
+
+        if(Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }else googleMap.setMyLocationEnabled(true);
+        }else googleMap.setMyLocationEnabled(true);
 
 
 
@@ -96,7 +93,7 @@ public class MapFragment extends Fragment {
                 .target(new LatLng(latitude, longitude))      // Sets the center of the map to Mountain View
                 .zoom(11)
                 .build();                   // Creates a CameraPosition from the builder
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         return v;
     }
@@ -132,6 +129,7 @@ public class MapFragment extends Fragment {
             case 1: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED ) {
+
                     googleMap.setMyLocationEnabled(true);
                 } else {
 

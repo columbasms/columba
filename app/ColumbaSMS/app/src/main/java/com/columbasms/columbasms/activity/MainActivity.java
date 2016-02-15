@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.v4.app.Fragment;
@@ -22,12 +23,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.fragment.HomeFragment;
 import com.columbasms.columbasms.fragment.MapFragment;
 import com.columbasms.columbasms.fragment.NotificationsFragment;
 import com.columbasms.columbasms.fragment.SplashScreenFragment;
 import com.columbasms.columbasms.fragment.TopicsFragment;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import butterknife.Bind;
@@ -84,18 +88,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar_top.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         toolbar_top.setVisibility(View.INVISIBLE);
         toolbar_bottom.setVisibility(View.INVISIBLE);
+        //toolbar_top.setPadding(0, getStatusBarHeight(), 0, 0);
+
         setSupportActionBar(toolbar_top);
 
-        // ###########################################################################
-        //UPDATE by Matteo
         View header= navView.getHeaderView(0);
         TextView navHeader_phoneNumber = (TextView)header.findViewById(R.id.phone_number);
-        String phone_number = state.getString("phone_number", "");
+        String phone_number = state.getString("phone_number", null);
+        TextView navHeader_userName = (TextView)header.findViewById(R.id.name);
+        String userName = state.getString("user_name", null);
 
         if(phone_number==null) {
-            System.out.println("FIRST LAUNCH");
             navHeader_phoneNumber.setText(getIntent().getStringExtra("phone_number"));
         }navHeader_phoneNumber.setText(phone_number);
+
+        if(userName==null) {
+            navHeader_userName.setText(getIntent().getStringExtra("user_name"));
+        }navHeader_userName.setText(userName);
 
         navView.setNavigationItemSelectedListener(this);
 
@@ -105,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mToggle.syncState();
 
-        // ##########################################################################
 
 
 
@@ -145,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Simulate a long loading process on application startup.
         Timer timer = new Timer();
-        timer.schedule(task, SPLASH_SCREEN_DELAY);
+    timer.schedule(task, SPLASH_SCREEN_DELAY);
 
         /*
         Intent intentGCMListen = new Intent(this,GcmReceiver.class);
@@ -162,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(this, UserProfileActivity.class));
                 break;
             case R.id.settings:
-                startActivity(new Intent(this, SettingsActivity.class));
+                //startActivity(new Intent(this, SettingsActivity.class));
                 break;
                 
         }
@@ -186,20 +194,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
         switch (item.getItemId()) {
             case R.id.action_info:
+                i = new Intent(this,InfoActivity.class);
+                startActivity(i);
                 return true;
             case R.id.action_feedback:
+                Intent j = new Intent(Intent.ACTION_SEND);
+                j.setType("message/rfc822");
+                j.putExtra(Intent.EXTRA_EMAIL  , new String[]{"columbasms@gmail.com"});
+                j.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
+                j.putExtra(Intent.EXTRA_TEXT, "");
+                try {
+                    startActivity(Intent.createChooser(j, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(MainActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case R.id.action_guide:
+                //i = new Intent(this,GuideActivity.class);
+                //startActivity(i);
                 return true;
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
+
+
+
 
 
 

@@ -1,12 +1,21 @@
 package com.columbasms.columbasms.adapter;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.LabeledIntent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +30,7 @@ import com.columbasms.columbasms.model.CharityCampaign;
 import com.columbasms.columbasms.model.Topic;
 import com.columbasms.columbasms.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -97,17 +107,17 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     //TEMPORARY SUPPORT FOR ONLY ONE TOPIC FOR CAMPAIGN
                     Intent i = new Intent(v.getContext(), TopicProfileActivity.class);
                     i.putExtra("topic_name", topicList.get(0).getName());
-                    i.putExtra("topic_id"  , topicList.get(0).getId());
+                    i.putExtra("topic_id", topicList.get(0).getId());
                     v.getContext().startActivity(i);
                 }
             });
 
 
-            TextView message = holder.message;
+            final TextView message = holder.message;
             message.setText(c.getMessage());
 
-            ImageView s = holder.send;
-            s.setOnClickListener(new View.OnClickListener() {
+            ImageView send = holder.send;
+            send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
@@ -119,7 +129,20 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
 
-            final ImageView p = holder.profile_image;
+            ImageView share = holder.share;
+            share.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_TEXT, c.getMessage());
+                    intent.setPackage("com.google.android.apps.plus");
+                    mainActivity.startActivity(intent);
+                }
+            });
+
+        final ImageView p = holder.profile_image;
             Utils.downloadImage(a.getAvatar_normal(), p, true, false);
 
 
@@ -138,6 +161,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @Bind(R.id.message)TextView message;
         @Bind(R.id.ass_name)TextView associationName;
         @Bind(R.id.send)ImageView send;
+        @Bind(R.id.share)ImageView share;
         @Bind(R.id.profile_image)ImageView profile_image;
 
         public RecyclerItemViewHolder(final View parent) {
@@ -149,6 +173,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return new RecyclerItemViewHolder(parent);
         }
     }
+
 
 
 }

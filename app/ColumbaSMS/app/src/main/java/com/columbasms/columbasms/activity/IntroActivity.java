@@ -55,6 +55,11 @@ import io.fabric.sdk.android.Fabric;
  */
 public class IntroActivity extends AppIntro {
 
+    private static final float BACKOFF_MULT = 1.0f;
+    private static final int TIMEOUT_MS = 4000;
+    private static final int MAX_RETRIES = 4;
+
+
 
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "aia3X5hWUyqgTZBdWNy2DVjfR";
@@ -71,6 +76,7 @@ public class IntroActivity extends AppIntro {
     // Please DO NOT override onCreate. Use init.
     @Override
     public void init(Bundle savedInstanceState) {
+
 
             if(Build.VERSION.SDK_INT >= 21) {
                 dialog = new ProgressDialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen);
@@ -165,14 +171,15 @@ public class IntroActivity extends AppIntro {
                                     SharedPreferences.Editor editor_account_information = sp.edit();
 
                                     editor_account_information.putString("user_id", digitsClient.getString("id"));
+                                    editor_account_information.putString("user_name", digitsClient.getString("user_name"));
                                     editor_account_information.putString("phone_number", phoneNumber);
+                                    editor_account_information.putString("firstLaunch", "false");
                                     editor_account_information.apply();
 
-                                    editor_account_information.putString("firstLaunch", "false");
-                                    editor_account_information.commit();
 
                                     Intent i = new Intent(getApplicationContext(),MainActivity.class);
                                     i.putExtra("phone_number", phoneNumber);
+                                    i.putExtra("user_name", digitsClient.getString("user_name"));
                                     startActivity(i);
                                     finish();
 
@@ -188,13 +195,12 @@ public class IntroActivity extends AppIntro {
                                 System.out.println(error.toString());
                                 System.out.println("AUTHFALLITA");
                                 finish();
-
-
+                                System.exit(0);
                             }
                         });
 
                         //PERFORM REQUEST
-                        authRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                        authRequest.setRetryPolicy(new DefaultRetryPolicy(TIMEOUT_MS, MAX_RETRIES, BACKOFF_MULT));
                         MyApplication.getInstance().addToRequestQueue(authRequest);
                     }
 
@@ -249,7 +255,7 @@ public class IntroActivity extends AppIntro {
     protected void onResume() {
         super.onResume();
         if(sp.getString("firstLaunch","").equals(""))
-        //dialog.dismiss();
+        dialog.dismiss();
         checkPlayServices();
     }
 
