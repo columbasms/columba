@@ -1,0 +1,20 @@
+<h1>Stop columba service</h1>
+<p>
+  <h5>
+    Why did you receive this SMS?
+  </h5>
+
+  -- Columba Project --
+</p>
+
+<!--<p>-->
+  <!--Do you prefer to limit the number or kind of messages?-->
+<!--</p>-->
+
+<p>
+  Do you really want to stop the reception of any kind of message sent through columba?
+
+  <%= form_tag @stop, method: :delete do %>
+      <%= submit_tag 'Confirm' %>
+  <% end %>
+</p>

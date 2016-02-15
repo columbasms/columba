@@ -1,21 +1,21 @@
-class ReceiverController < ApplicationController
+class StopController < ApplicationController
   force_ssl unless Rails.env.development?
   protect_from_forgery
   before_filter :set_receiver
 
 
-  # GET /receiver/:id
-  # def show
-  #   render json: @receiver
-  # end
+  # GET /stop/:id
+  def show
+    render 'stop/ask'
+  end
 
-  # PUT /receiver/:id
+  # PUT /stop/:id
   # def update
   #   # TO-DO:  add a "max n° sms" to receivers table,
   #             (?) add blacklisted topics/organizations
   # end
 
-  # DELETE /receiver/:id
+  # DELETE /stop/:id
   def destroy
     # BLACKLIST
     @receiver.blacklisted=true
@@ -26,11 +26,9 @@ class ReceiverController < ApplicationController
   private
 
   def set_receiver
-    # receiver if found by (hashed) number, not id
     begin
-      @receiver = Receiver.find_by number:params[:id]
-      # @receiver = Receiver.find params[:id]
-    # rescue ActiveRecord::RecordNotFound
+      hash = Api::V1::UsersHelper.hash_receiver(params[:id])
+      @receiver = Receiver.find_by number:hash
       if @receiver.nil?
         render json: {errors: 'Receiver not found'}
         return
