@@ -1,21 +1,45 @@
 package com.columbasms.columbasms.adapter;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.columbasms.columbasms.AdapterCallback;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.TopicProfileActivity;
 import com.columbasms.columbasms.model.Topic;
+import com.columbasms.columbasms.utils.Utils;
+import com.columbasms.columbasms.utils.network.API_URL;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,18 +52,28 @@ import butterknife.OnClick;
 public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder> {
 
     private static List<Topic> topics;
-    private static String[] topicsColor;
+    private static Activity activity;
+    private static AdapterCallback adapterCallback;
     private float scale;
+    private static String URL;
 
     // Pass in the contact array into the constructor
-    public TopicsAdapter(List<Topic> ass, float s) {
+    public TopicsAdapter(List<Topic> ass, Activity a, float s,AdapterCallback ac) {
             topics = ass;
             scale = s;
+            activity = a;
+            adapterCallback = ac;
+    }
+
+    public List<Topic> getTopics(){
+        return topics;
     }
 
     @Override
     public TopicsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         Context context = parent.getContext();
+
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
@@ -47,6 +81,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
 
         // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(contactView);
+
         return viewHolder;
     }
 
@@ -55,9 +90,18 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
     public void onBindViewHolder(TopicsAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
 
+
         final Topic topic = topics.get(position);
         String type_name = topic.getName();
-        boolean isSelected = topic.isSelected();
+        boolean isSelected = topic.isFollowed();
+
+        TextView follow = viewHolder.follow;
+        if (isSelected==false){
+            follow.setText("FOLLOW");
+        }else {
+            follow.setText("FOLLOWING");
+        }
+
 
         CardView cv = viewHolder.cl;
         cv.setOnClickListener(new View.OnClickListener() {
@@ -87,10 +131,6 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
 
 
 
-        TextView follow = viewHolder.follow;
-        if (isSelected==false){
-            follow.setText("FOLLOW");
-        }else follow.setText("FOLLOWING");
 
 
     }
@@ -99,7 +139,8 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
     // Return the total count of items
     @Override
     public int getItemCount() {
-        return topics.size();
+        if(topics==null)return 0;
+        else return topics.size();
     }
 
     public List<Topic> getAssociationTypes(){
@@ -116,16 +157,63 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         @Bind(R.id.follow)TextView follow;
         @OnClick(R.id.follow)
         public void onClick(View v) {
-            int pos = getAdapterPosition();
-            Topic n = topics.get(pos);
-            if(n.isSelected()) {
-                follow.setText("FOLLOW");
-                n.setSelected(false);
-            }else{
-                follow.setText("FOLLOWING");
-                n.setSelected(true);
-            }
-            topics.set(pos, n);
+
+            final int pos = getAdapterPosition();
+            final Topic n = topics.get(pos);
+            //SETUP URL
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
+            URL = API_URL.USERS_URL + "/" + sp.getString("user_id","") +  API_URL.TOPICS + "/" + n.getId();
+            System.out.println(URL);
+
+
+            final ProgressDialog dialog = new ProgressDialog(activity);
+            dialog.show();
+            dialog.setCancelable(false);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            dialog.setContentView(R.layout.dialog_progress);
+
+            RequestQueue requestQueue = Volley.newRequestQueue(activity);
+
+            StringRequest putRequest = new StringRequest(Request.Method.PUT, URL,
+                    new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response) {
+                            if(n.isFollowed()) {
+                                n.setFollowed(false);
+                            }else{
+                                n.setFollowed(true);
+                            }
+                            topics.set(pos, n);
+
+                            dialog.dismiss();
+                            adapterCallback.onMethodCallback();
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println(error.toString());
+                            dialog.dismiss();
+                        }
+                    }
+            ) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    String credentials = "47ccf9098174f48be281f86103b9" + ":" + "c5906274ba1a14711a816db53f0d";
+                    String credBase64 = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT).replace("\n", "");
+                    headers.put("Authorization", "Basic " + credBase64);
+                    return headers;
+                }
+
+            };
+
+
+
+            requestQueue.add(putRequest);
         }
 
         public ViewHolder(final View parent) {
@@ -136,3 +224,5 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
     }
 
 }
+
+

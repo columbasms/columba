@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Columba</string>
 
+
     <string name="info">Info</string>
     <string name="feedback">Feedback</string>
     <string name="guide">Guide</string>

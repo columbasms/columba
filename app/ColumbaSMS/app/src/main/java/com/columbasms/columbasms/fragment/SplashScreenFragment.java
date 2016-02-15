@@ -5,8 +5,10 @@ package com.columbasms.columbasms.fragment;
  */
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ public class SplashScreenFragment extends Fragment {
         TextView app_name = (TextView)v.findViewById(R.id.appName);
         Typeface font_roundedElegance = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Rounded_Elegance.ttf");
         app_name.setTypeface(font_roundedElegance);
+
         return v;
     }
 

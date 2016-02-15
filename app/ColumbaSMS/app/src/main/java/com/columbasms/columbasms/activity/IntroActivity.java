@@ -1,13 +1,22 @@
 package com.columbasms.columbasms.activity;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -56,11 +65,22 @@ public class IntroActivity extends AppIntro {
     static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
     public static final String PROPERTY_REG_ID = "registration_id";
     GoogleCloudMessaging gcm;
-
+    public static ProgressDialog dialog;
+    public static SharedPreferences sp;
 
     // Please DO NOT override onCreate. Use init.
     @Override
     public void init(Bundle savedInstanceState) {
+
+            if(Build.VERSION.SDK_INT >= 21) {
+                dialog = new ProgressDialog(this,android.R.style.Theme_Material_Light_NoActionBar_Fullscreen);
+            }else  dialog = new ProgressDialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+
+
+            sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor_account_information = sp.edit();
+            editor_account_information.putString("splashed", "true");
+            editor_account_information.commit();
 
             //TUTORIAL SCREEN SETTINGS
             addSlide(AppIntroFragment.newInstance("Scegli", "Seleziona le campagne che vuoi supportare e"
@@ -87,6 +107,7 @@ public class IntroActivity extends AppIntro {
             startService(i);
 
             if (checkPlayServices()) {
+
                 //DIGITS AUTHENTICATION (MISSED GCM/PLAY SERVICES)
                 if (android.os.Build.VERSION.SDK_INT > 9) {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -103,8 +124,13 @@ public class IntroActivity extends AppIntro {
                 digitsButton.setCallback(new AuthCallback() {
 
                     @Override
-                    public void success(DigitsSession session, String phoneNumber) {
+                    public void success(DigitsSession session, final String phoneNumber) {
 
+                        System.out.println("AUTHSUCCESSO");
+
+                        SharedPreferences.Editor editor_account_information = sp.edit();
+                        editor_account_information.putString("firstLaunch", "true");
+                        editor_account_information.apply();
 
                         //BACKEND COMMUNICATION
                         TwitterAuthConfig authConfig = TwitterCore.getInstance().getAuthConfig();
@@ -113,16 +139,16 @@ public class IntroActivity extends AppIntro {
                         Map<String, String> authHeaders = oauthSigning.getOAuthEchoHeadersForVerifyCredentials();
 
                         //ADD GCM TOKEN (STORED)
-                        final SharedPreferences sp;
                         String token_name = "gcm-token";
                         String token = null;
-                        sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         token = sp.getString(token_name, null);
                         authHeaders.put(token_name, token);
 
                         CustomRequest authRequest = new CustomRequest(Request.Method.POST, API_URL.USERS_URL, authHeaders, new Response.Listener<NetworkResponse>() {
                             @Override
                             public void onResponse(NetworkResponse response) {
+
+                                System.out.println("RISPOSTAAUTHRICEVUTA");
 
                                 try {
 
@@ -139,11 +165,14 @@ public class IntroActivity extends AppIntro {
                                     SharedPreferences.Editor editor_account_information = sp.edit();
 
                                     editor_account_information.putString("user_id", digitsClient.getString("id"));
-                                    //editor_account_information.putString("phone_number", u.getString("phone_number"));
+                                    editor_account_information.putString("phone_number", phoneNumber);
+                                    editor_account_information.apply();
 
-                                    editor_account_information.putString("firstLaunch", "false");
-                                    editor_account_information.commit();
 
+                                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                                    i.putExtra("phone_number", phoneNumber);
+                                    startActivity(i);
+                                    finish();
 
                                 } catch (UnsupportedEncodingException | JSONException e) {
                                     e.printStackTrace();
@@ -155,12 +184,16 @@ public class IntroActivity extends AppIntro {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 System.out.println(error.toString());
+                                System.out.println("AUTHFALLITA");
+                                finish();
+
+
                             }
                         });
 
                         //PERFORM REQUEST
+                        authRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                         MyApplication.getInstance().addToRequestQueue(authRequest);
-
                     }
 
                     @Override
@@ -168,7 +201,7 @@ public class IntroActivity extends AppIntro {
                         Log.d("Digits", "Sign in with Digits failure", exception);
                     }
                 });
-
+                    //MANCA IL SERVICE DI GCM
             }
 
 
@@ -177,20 +210,26 @@ public class IntroActivity extends AppIntro {
 
     @Override
     public void onBackPressed() {
-        //NO-OPERATION
+        finish();
     }
 
     @Override
     public void onSkipPressed() {
         digitsButton.performClick();
-        finish();
+        dialog.show();
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        dialog.setContentView(R.layout.dialog_progress);
     }
 
     @Override
     public void onDonePressed() {
-        //PERFORM A CLICK TO CALL AUTH CALLBACK
+        //PERFORM A CLICK TO CALL AUTH CALLBACK;
         digitsButton.performClick();
-        finish();
+        dialog.show();
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        dialog.setContentView(R.layout.dialog_progress);
     }
 
     @Override
@@ -207,6 +246,8 @@ public class IntroActivity extends AppIntro {
     @Override
     protected void onResume() {
         super.onResume();
+        if(sp.getString("firstLaunch","").equals(""))
+        //dialog.dismiss();
         checkPlayServices();
     }
 

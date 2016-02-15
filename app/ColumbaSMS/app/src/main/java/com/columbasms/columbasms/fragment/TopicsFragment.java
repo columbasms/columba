@@ -5,9 +5,11 @@ package com.columbasms.columbasms.fragment;
  */
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -25,6 +27,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.columbasms.columbasms.AdapterCallback;
 import com.columbasms.columbasms.MyApplication;
 import com.columbasms.columbasms.listener.HidingScrollListener;
 import com.columbasms.columbasms.R;
@@ -42,25 +45,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TopicsFragment extends Fragment {
+public class TopicsFragment extends Fragment implements AdapterCallback {
 
     private static TopicsAdapter adapter;
-    private static List<Topic> topics_list;
     private static float s;
     private static RecyclerView rvTopics;
+    private static List<Topic> topics_list;
     private static SwipeRefreshLayout mySwipeRefreshLayout;
     private static CoordinatorLayout coordinatorLayout;
     private static Activity mainActivity;
     private static Toolbar tb;
+    private static String USER_ID;
+    private static AdapterCallback adapterCallback;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         Resources res = getResources();
-
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        USER_ID =  sp.getString("user_id","");
         topics_list = new ArrayList<>();
-
         mainActivity = getActivity();
+        adapterCallback = this;
 
         // Set layout manager to position the items
         rvTopics.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -79,9 +86,9 @@ public class TopicsFragment extends Fragment {
         // Create adapter passing in the sample user data
         s = getResources().getDisplayMetrics().density;
 
-        getData();
-
     }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -101,6 +108,19 @@ public class TopicsFragment extends Fragment {
                     }
                 }
         );
+        mySwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+
+                adapter = new TopicsAdapter(topics_list,mainActivity,s,adapterCallback);
+
+                // Attach the adapter to the recyclerview to populate items
+
+                rvTopics.setAdapter(adapter);
+
+                getData();
+            }
+        });
         return v;
     }
 
@@ -115,21 +135,20 @@ public class TopicsFragment extends Fragment {
 
     private static void getData(){
 
-        CacheRequest cacheRequest = get();
+        if(!isNetworkConnected())showSnackbar();
+
+        CacheRequest cacheRequest = getTopics();
 
         MyApplication.getInstance().addToRequestQueue(cacheRequest);
-
-        if(!isNetworkConnected())showSnackbar();
 
     }
 
 
-    private static CacheRequest get(){
+    private static CacheRequest getTopics(){
 
         //DOPO DIGITS L'URL SARA' QUESTO ---> https://www.columbasms.com/api/v1/users/{id}/topics
-        //String URL = API_URL.USERS_URL + USER_ID + API_URL.TOPICS;
-
-        String URL = API_URL.TOPICS_URL;
+        String URL = API_URL.USERS_URL + "/" + USER_ID + API_URL.TOPICS;
+        System.out.println(URL);
 
         return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
             @Override
@@ -140,18 +159,18 @@ public class TopicsFragment extends Fragment {
 
                     JSONArray jsonArray = new JSONArray(jsonString);
 
-                    System.out.println(jsonString);
-
                     topics_list.clear();
+
+                    System.out.println(jsonString);
 
                     if (jsonArray.length() > 0) {
 
-                        // looping through json and adding to movies list
+                        // looping through json and adding to topics list
                         for (int i = jsonArray.length()-1; i >=0; i--) {
                             try {
                                 JSONObject o = jsonArray.getJSONObject(i);
 
-                                Topic t = new Topic(o.getString("id"),o.getString("name"),false,o.getString("main_color"), o.getString("status_color"));
+                                Topic t = new Topic(o.getString("id"),o.getString("name"),o.getBoolean("following"),o.getString("main_color"), o.getString("status_color"));
 
                                 topics_list.add(t);
 
@@ -160,11 +179,8 @@ public class TopicsFragment extends Fragment {
                             }
                         }
                     }
-                    // Create adapter passing in the sample user data
-                    adapter = new TopicsAdapter(topics_list,s);
 
-                    // Attach the adapter to the recyclerview to populate items
-                    rvTopics.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
                 } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();
@@ -199,4 +215,28 @@ public class TopicsFragment extends Fragment {
         return cm.getActiveNetworkInfo() != null;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    public void onMethodCallback() {
+        getData();
+    }
 }

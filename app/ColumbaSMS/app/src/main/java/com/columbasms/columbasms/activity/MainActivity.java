@@ -1,6 +1,7 @@
 package com.columbasms.columbasms.activity;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -15,11 +16,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.fragment.HomeFragment;
 import com.columbasms.columbasms.fragment.MapFragment;
@@ -32,8 +33,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private static long SPLASH_SCREEN_DELAY = 1500;
     private ActionBarDrawerToggle mToggle;
@@ -74,6 +74,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        System.out.println("APERTA");
+
+        final SharedPreferences state = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
         //TOP TOOLBAR SETUP
         toolbar_top.setTitle("Home");
         toolbar_top.setNavigationIcon(R.drawable.ic_menu_white_24dp);
@@ -82,7 +86,15 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar_top);
 
         // ###########################################################################
+        //UPDATE by Matteo
+        View header= navView.getHeaderView(0);
+        TextView navHeader_phoneNumber = (TextView)header.findViewById(R.id.phone_number);
+        String phone_number = state.getString("phone_number", "");
 
+        if(phone_number==null) {
+            System.out.println("FIRST LAUNCH");
+            navHeader_phoneNumber.setText(getIntent().getStringExtra("phone_number"));
+        }navHeader_phoneNumber.setText(phone_number);
 
         navView.setNavigationItemSelectedListener(this);
 
@@ -95,11 +107,12 @@ public class MainActivity extends AppCompatActivity
 
         // ##########################################################################
 
-        final SharedPreferences state = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        if (state.getString("firstLaunch",null)==null) {
+
+        if (state.getString("firstLaunch",null)==null && state.getString("splashed",null)==null) {
             // Show the splash screen at the beginning
             getFragmentManager().beginTransaction().add(R.id.fragment_place, new SplashScreenFragment()).commit();
+
         }else SPLASH_SCREEN_DELAY = 0;
 
         TimerTask task = new TimerTask() {
@@ -109,22 +122,9 @@ public class MainActivity extends AppCompatActivity
                 if (state.getString("firstLaunch",null)==null) {
 
                     //  Launch app intro
-
                     Intent i = new Intent(getApplicationContext(), IntroActivity.class);
                     startActivity(i);
-
-
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_place, new HomeFragment()).commit();
-
-                    // Show action bar when the main fragment is visible
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            toolbar_top.setVisibility(View.VISIBLE);
-                            toolbar_bottom.setVisibility(View.VISIBLE);
-                        }
-                    });
+                    MainActivity.this.finish();
 
                 }else{
                     getSupportFragmentManager()
@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity
         */
 
     }
+
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item){

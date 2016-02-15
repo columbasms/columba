@@ -5,9 +5,11 @@ package com.columbasms.columbasms.fragment;
  */
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
@@ -57,11 +60,14 @@ public class HomeFragment extends Fragment {
     private static FragmentManager fragmentManager;
     private static Resources res;
     private static Activity mainActivity;
-
+    private static String USER_ID;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        USER_ID =  sp.getString("user_id","");
 
         //Init campaigns list
         campaigns_list = new ArrayList<>();
@@ -90,9 +96,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        if (container != null) {
-            container.removeAllViews();
-        }
+        System.out.println("HOMEFRAGMENT");
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
@@ -145,10 +149,9 @@ public class HomeFragment extends Fragment {
 
     private static CacheRequest get(){
 
-        //DOPO DIGITS L'URL SARA' QUESTO ---> https://www.columbasms.com/api/v1/users/{id}/campaigns
-        //String URL = API_URL.USERS_URL + USER_ID + API_URL.CAMPAIGNS;
+        String URL = API_URL.CAMPAIGNS_URL + "?user_id=" + USER_ID;
 
-        String URL = API_URL.CAMPAIGNS_URL;
+        System.out.println(URL);
 
         return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
             @Override
@@ -237,13 +240,7 @@ public class HomeFragment extends Fragment {
         return cm.getActiveNetworkInfo() != null;
     }
 
-    @Override
-    public void onResume() {
-        Log.e("DEBUG", "onResume of HomeFragment");
-        super.onResume();
 
-        //QUI DOVRA PARTIRE LA PRIMA RICHIESTA (SE E' IL PRIMO ACCESSO)..NELL ON CREATE PARTONO RICHIESTE SOLO SE NON è IL PRIMO ACCESSO (QUINDI DEVI INSERIRE UN CONTROLLO)
-    }
 
     @Override
     public void onPause() {

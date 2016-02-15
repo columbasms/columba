@@ -1,41 +1,47 @@
 package com.columbasms.columbasms.adapter;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.columbasms.columbasms.AdapterCallback;
 import com.columbasms.columbasms.R;
-import com.columbasms.columbasms.activity.AssociationProfileActivity;
 import com.columbasms.columbasms.activity.TopicProfileActivity;
 import com.columbasms.columbasms.fragment.ChooseContactsFragment;
 import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
 import com.columbasms.columbasms.model.Topic;
 import com.columbasms.columbasms.utils.Utils;
-import com.makeramen.roundedimageview.RoundedTransformationBuilder;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
+import com.columbasms.columbasms.utils.network.API_URL;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -52,8 +58,9 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
     private int card_size;
     private Drawable profile_image;
     private Resources res;
-    private Activity activity;
+    private static Activity activity;
     private FragmentManager fragmentManager;
+    private AdapterCallback adapterCallback;
 
     private static final int TYPE_PROFILE = 0;
     private static final int TYPE_GROUP = 1;
@@ -101,12 +108,13 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
 
 
 
-    public AssociationProfileAdapter(List<CharityCampaign> itemList,Association a,Resources res, Activity activity, FragmentManager fragmentManager) {
+    public AssociationProfileAdapter(List<CharityCampaign> itemList,Association a,Resources res, Activity activity, FragmentManager fragmentManager,AdapterCallback ac) {
         mItemList = itemList;
         this.association = a;
         this.res = res;
         this.activity = activity;
         this.fragmentManager = fragmentManager;
+        this.adapterCallback = ac;
     }
 
 
@@ -133,36 +141,92 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
             case TYPE_PROFILE:
                 final ProfileViewHolder holder1 = (ProfileViewHolder) viewHolder;
 
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
+
+
+
+                final String URL = API_URL.USERS_URL + "/" + sp.getString("user_id","") + API_URL.ASSOCIATIONS + "/" + association.getId();
+
                 //activity.getWindow().setStatusBarColor(Color.parseColor(color_status));
                 //holder1.lc_background.setBackgroundColor(Color.parseColor(color_main));
 
                 holder1.assName.setText(association.getOrganization_name());
 
-                String info = "100" + " followers" + " - " + mItemList.size() + " campaigns";
+                String info = association.getFollowers() + " followers" + " - " + mItemList.size() + " campaigns";
 
                 holder1.assOtherInfo.setText(info);
 
                 holder1.assDescription.setText(association.getDescription());
 
                 final CardView v = holder1.cardView;
-                holder1.trust.setOnClickListener(new View.OnClickListener() {
+                final String parameter;
+                Button t = holder1.trust;
+
+                if(association.isTrusting()){
+                    System.out.println(association.isTrusting() + "qui1");
+                    t.setBackgroundResource(R.drawable.button_trusted);
+                    t.setText("TRUSTED");
+                    t.setTextColor(Color.parseColor("#ffffff"));
+                    parameter = "false";
+                    t.setTag("1");
+                }else{
+                    System.out.println(association.isTrusting() + "qui2");
+                    t.setBackgroundResource(android.R.color.white);
+                    t.setText("TRUST");
+                    t.setTextColor(res.getColor(R.color.colorPrimaryDark));
+                    parameter = "true";
+                    t.setTag("0");
+                }
+                t.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Button trust = holder1.trust;
-                        if(trust.getTag().equals("0")){
-                            trust.setBackgroundResource(R.drawable.button_trusted);
-                            trust.setText("TRUSTED");
-                            trust.setTextColor(Color.parseColor("#ffffff"));
-                            trust.setTag("1");
-                        }else{
-                            trust.setBackgroundResource(android.R.color.white);
-                            trust.setText("TRUST");
-                            trust.setTextColor(res.getColor(R.color.colorPrimaryDark));
-                            trust.setTag("0");
-                        }
 
+                        final ProgressDialog dialog = new ProgressDialog(activity);
+                        dialog.show();
+                        dialog.setCancelable(false);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                        dialog.setContentView(R.layout.dialog_progress);
+
+                        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+
+                        final String URL_TRUSTING = URL + "?trusted=" + parameter;
+
+                        System.out.println(URL_TRUSTING);
+
+                        StringRequest putRequest = new StringRequest(Request.Method.PUT, URL_TRUSTING,
+                                new Response.Listener<String>()
+                                {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        dialog.dismiss();
+                                        adapterCallback.onMethodCallback();
+                                    }
+                                },
+                                new Response.ErrorListener()
+                                {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        System.out.println(error.toString());
+                                        dialog.dismiss();
+                                    }
+                                }
+                        ) {
+
+                            @Override
+                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                HashMap<String, String> headers = new HashMap<String, String>();
+                                String credentials = "47ccf9098174f48be281f86103b9" + ":" + "c5906274ba1a14711a816db53f0d";
+                                String credBase64 = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT).replace("\n", "");
+                                headers.put("Authorization", "Basic " + credBase64);
+                                return headers;
+                            }
+
+                        };
+                        requestQueue.add(putRequest);
                     }
                 });
+
+
                 v.post(new Runnable() {
                     @Override
                     public void run() {
@@ -170,25 +234,63 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                     }
 
                 });
+
+                ImageView f = holder1.favourite;
+                if (association.isFollowing()){
+                    f.setBackgroundResource(R.drawable.ic_favorite_white_36dp);
+                    t.setVisibility(View.VISIBLE);
+                    f.setTag("1");
+                }else{
+                    f.setBackgroundResource(R.drawable.ic_favorite_border_white_36dp);
+                    t.setVisibility(View.GONE);
+                    f.setTag("0");
+                }
+
+
                 holder1.favourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ImageView fav = holder1.favourite;
-                        Button trust = holder1.trust;
-                        if(fav.getTag().equals("0")){
-                            fav.setBackgroundResource(R.drawable.ic_favorite_white_36dp);
-                            trust.setVisibility(View.VISIBLE);
-                            trust.setBackgroundResource(android.R.color.white);
-                            trust.setText("TRUST");
-                            trust.setTextColor(res.getColor(R.color.colorPrimaryDark));
-                            trust.setTag("0");
-                            fav.setTag("1");
-                        }else{
-                            fav.setBackgroundResource(R.drawable.ic_favorite_border_white_36dp);
-                            trust.setVisibility(View.GONE);
-                            fav.setTag("0");
-                        }
 
+                        final ProgressDialog dialog = new ProgressDialog(activity);
+                        dialog.show();
+                        dialog.setCancelable(false);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                        dialog.setContentView(R.layout.dialog_progress);
+
+                        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+
+                        System.out.println(URL);
+
+                        StringRequest putRequest = new StringRequest(Request.Method.PUT, URL,
+                                new Response.Listener<String>()
+                                {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        dialog.dismiss();
+                                        adapterCallback.onMethodCallback();
+                                    }
+                                },
+                                new Response.ErrorListener()
+                                {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        System.out.println(error.toString());
+                                        dialog.dismiss();
+                                    }
+                                }
+                        ) {
+
+                            @Override
+                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                HashMap<String, String> headers = new HashMap<String, String>();
+                                String credentials = "47ccf9098174f48be281f86103b9" + ":" + "c5906274ba1a14711a816db53f0d";
+                                String credBase64 = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT).replace("\n", "");
+                                headers.put("Authorization", "Basic " + credBase64);
+                                return headers;
+                            }
+
+                        };
+                        requestQueue.add(putRequest);
                     }
                 });
 
@@ -219,16 +321,6 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                 TextView topic = holder2.topic;
                 topic.setText(topicList.get(0).getName());
                 topic.setTextColor(Color.parseColor(topicList.get(0).getMainColor()));
-                topic.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //TEMPORARY SUPPORT FOR ONLY ONE TOPIC FOR CAMPAIGN
-                        Intent i = new Intent(v.getContext(), TopicProfileActivity.class);
-                        i.putExtra("topic_name", topicList.get(0).getName());
-                        i.putExtra("topic_id", topicList.get(0).getId());
-                        v.getContext().startActivity(i);
-                    }
-                });
 
                 TextView message = holder2.message;
                 message.setText(c.getMessage());
@@ -252,6 +344,7 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                 break;
         }
     }
+
 
     @Override
     public int getItemCount() {

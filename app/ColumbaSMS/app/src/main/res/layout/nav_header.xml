@@ -50,18 +50,17 @@
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:text="Columba Admin"
-                android:paddingBottom="8dp"
+                android:paddingBottom="4dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
 
                 />
 
             <TextView
-                android:id="@+id/email"
+                android:id="@+id/phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
-                android:text="3336651288"
                 android:textSize="14sp"
                 android:textStyle="normal"
 

@@ -7,14 +7,15 @@ public class Topic {
 
         private String id;
         private String name;
-        private boolean isSelected;
+        private boolean followed;
         private String mainColor;
         private String statusColor;
 
-        public Topic(String id, String name, boolean isSelected,String mainColor,String statusColor){
+
+        public Topic(String id, String name, boolean followed,String mainColor,String statusColor){
             this.id = id;
             this.name = name;
-            this.isSelected = isSelected;
+            this.followed = followed;
             this.mainColor = mainColor;
             this.statusColor = statusColor;
         }
@@ -28,22 +29,21 @@ public class Topic {
         }
 
 
-        public boolean isSelected(){
-            return isSelected;
-        }
+    public boolean isFollowed() {
+        return followed;
+    }
 
-
-        public String getMainColor() {
+    public String getMainColor() {
             return mainColor;
         }
 
-        public String getStatusColor() {
+    public String getStatusColor() {
             return statusColor;
         }
 
 
-        public void setSelected(boolean b){
-            isSelected = b;
+    public void setFollowed(boolean b){
+            followed = b;
         }
 
 

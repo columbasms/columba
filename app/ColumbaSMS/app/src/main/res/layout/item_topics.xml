@@ -61,8 +61,7 @@
                     android:padding="16dp"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorText"
-                    android:text="@string/follow"/>
+                    android:textColor="@color/colorText"/>
 
             </LinearLayout>
 

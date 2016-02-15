@@ -2,10 +2,12 @@ package com.columbasms.columbasms.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -23,6 +25,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.columbasms.columbasms.AdapterCallback;
 import com.columbasms.columbasms.MyApplication;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.adapter.AssociationProfileAdapter;
@@ -46,7 +49,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Matteo Brienza on 2/1/16.
  */
-public class AssociationProfileActivity extends AppCompatActivity{
+public class AssociationProfileActivity extends AppCompatActivity implements AdapterCallback{
 
     @Bind(R.id.toolbar_profile)Toolbar toolbar;
 
@@ -56,15 +59,17 @@ public class AssociationProfileActivity extends AppCompatActivity{
     private static CoordinatorLayout coordinatorLayout;
     private static ImageView fav;
     private static AssociationProfileAdapter associationProfileAdapter;
-    private static  int toolbar_size;
-    private static  ColorDrawable cd;
+    private static int toolbar_size;
+    private static ColorDrawable cd;
     private static Resources res;
     private static Activity mainActivity;
     private static FragmentManager fragmentManager;
     private static List<CharityCampaign> campaigns_list;
     private static Association a;
+    private static AdapterCallback adapterCallback;
     private static String ASSOCIATION_ID;
     private static String ASSOCIATION_NAME;
+    private static String USER_ID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,8 @@ public class AssociationProfileActivity extends AppCompatActivity{
 
         res = getResources();
 
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        USER_ID =  sp.getString("user_id", "");
         ASSOCIATION_ID = getIntent().getStringExtra("ass_id");
         ASSOCIATION_NAME = getIntent().getStringExtra("ass_name");
 
@@ -121,6 +128,7 @@ public class AssociationProfileActivity extends AppCompatActivity{
         campaigns_list = new ArrayList<>();
         fragmentManager = getSupportFragmentManager();
         mainActivity = this;
+        adapterCallback = this;
 
         // Set layout manager to position the items
         rvAssociationProfile.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
@@ -175,7 +183,7 @@ public class AssociationProfileActivity extends AppCompatActivity{
 
     private static CacheRequest getAssociationProfile(){
 
-        String URL = API_URL.ASSOCIATIONS_URL + "/" + ASSOCIATION_ID;
+        String URL = API_URL.USERS_URL + "/" + USER_ID + API_URL.ASSOCIATIONS + "/" + ASSOCIATION_ID;
 
         return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
             @Override
@@ -185,7 +193,9 @@ public class AssociationProfileActivity extends AppCompatActivity{
 
                     JSONObject o = new JSONObject(jsonString);
 
-                    a = new Association(o.getString("id"),o.getString("organization_name"),o.getString("avatar_normal"),o.getString("cover_normal"),o.getString("description"));;
+                    a = new Association(ASSOCIATION_ID,o.getString("organization_name"),o.getString("avatar_normal"),o.getString("cover_normal"),o.getString("description"),o.getInt("followers"),o.getBoolean("following"),o.getBoolean("trusting"));
+
+                    System.out.println(o.toString());
 
                     CacheRequest cacheRequest = getCampaigns();
 
@@ -249,7 +259,7 @@ public class AssociationProfileActivity extends AppCompatActivity{
                         }
                     }
                     // Create adapter passing in the sample user data
-                    associationProfileAdapter = new AssociationProfileAdapter(campaigns_list,a,res,mainActivity,fragmentManager);
+                    associationProfileAdapter = new AssociationProfileAdapter(campaigns_list,a,res,mainActivity,fragmentManager,adapterCallback);
 
                     // Attach the adapter to the recyclerview to populate items
                     rvAssociationProfile.setAdapter(associationProfileAdapter);
@@ -315,6 +325,10 @@ public class AssociationProfileActivity extends AppCompatActivity{
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+    @Override
+    public void onMethodCallback() {
+        getData();
     }
 
 }

@@ -44,7 +44,9 @@ public class TopicProfileActivity extends AppCompatActivity {
 
         //TOOLBARSETUP
         toolbar.setTitle(topic);
+
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+
         toolbar.setVisibility(View.VISIBLE);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

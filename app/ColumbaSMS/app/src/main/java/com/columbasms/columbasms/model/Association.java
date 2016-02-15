@@ -12,9 +12,9 @@ public class Association {
         private String avatar_normal;
         private String cover_normal;
         private String description;
-        //private String topic;
-        //private int follower;
-        //private boolean isFavourite;
+        private int followers;
+        private boolean following;
+        private boolean trusting;
 
         public Association (String id, String organization_name, String avatar_normal, String cover_normal, String description){
             this.id = id;
@@ -22,10 +22,17 @@ public class Association {
             this.avatar_normal = avatar_normal;
             this.cover_normal = cover_normal;
             this.description = description;
+        }
 
-            //this.topic = topic;
-            //this.follower = follower;
-            //this.isFavourite = isFavourite;
+        public Association (String id,String organization_name, String avatar_normal, String cover_normal, String description, int followers, boolean following, boolean trusting){
+            this.id = id;
+            this.organization_name = organization_name;
+            this.avatar_normal = avatar_normal;
+            this.cover_normal = cover_normal;
+            this.description = description;
+            this.followers = followers;
+            this.following = following;
+            this.trusting = trusting;
         }
 
 
@@ -49,18 +56,15 @@ public class Association {
             return description;
         }
 
-
-        /*
-        public String getTopic() {
-            return topic;
+        public boolean isFollowing() {
+            return following;
         }
 
-        public int getFollower() {
-                return follower;
-            }
+        public int getFollowers() {
+            return followers;
+        }
 
-        public boolean isFavourite() {
-                    return isFavourite;
-                }
-         */
+        public boolean isTrusting() {
+            return trusting;
+        }
 }
