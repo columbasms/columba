@@ -50,7 +50,7 @@ module Api
       # PUT /user/:id
       def update
         if @user.update user_params
-          render json: @user, root: false, serializer: ::DigitsClientSerializer
+          render json: @user, root: false, serializer: Api::V1::DigitsClientSerializer
         else
           render json: @user.errors, root: false
         end
@@ -239,7 +239,7 @@ module Api
       end
 
       def user_params
-        params[:user].permit(:digits_id, :digits_token, :digits_secret, :phone_number, :gcm_token)
+        params[:user].permit(:user_name, :avatar_normal, :cover_normal,:digits_id, :digits_token, :digits_secret, :phone_number, :gcm_token)
       end
 
     end
