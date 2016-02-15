@@ -26,4 +26,11 @@ class DigitsClient < ActiveRecord::Base
   validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
   crop_attached_file :cover, aspect: '16:9'
 
+  def avatar_normal
+    URI.join(ActionController::Base.asset_host, self.avatar.url(:normal)).to_s
+  end
+
+  def cover_normal
+    URI.join(ActionController::Base.asset_host, self.cover.url(:normal)).to_s
+  end
 end

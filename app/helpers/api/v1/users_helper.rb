@@ -20,7 +20,9 @@ module Api::V1::UsersHelper
     client.digits_verification_type = digits['verification_type']
     client.digits_id = digits['id']
     client.gcm_token = gcm_token
+    client.save
 
+    client.user_name = "user_#{client.id}"
     client.save
 
     client
@@ -46,8 +48,9 @@ module Api::V1::UsersHelper
 
   # aggiunge un nuovo utente foglia al DB
   def self.add_receiver(hashed_number)
-    if Receiver.exists?(number: hashed_number)
-      return Receiver.find_by_number(hashed_number).id
+    existing_receiver=Receiver.find_by_number(hashed_number)
+    if !existing_receiver.nil?
+      return existing_receiver.id
     end
 
     receiver = Receiver.new

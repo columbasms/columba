@@ -11,7 +11,7 @@ module Api
 
       # GET /users/:id
       def show
-        render json: @user, root: false, serializer: ::DigitsClientSerializer
+        render json: @user, root: false, serializer: Api::V1::DigitsClientSerializer
       end
 
       # POST /users/
