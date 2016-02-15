@@ -168,6 +168,8 @@ public class IntroActivity extends AppIntro {
                                     editor_account_information.putString("phone_number", phoneNumber);
                                     editor_account_information.apply();
 
+                                    editor_account_information.putString("firstLaunch", "false");
+                                    editor_account_information.commit();
 
                                     Intent i = new Intent(getApplicationContext(),MainActivity.class);
                                     i.putExtra("phone_number", phoneNumber);

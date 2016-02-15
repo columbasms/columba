@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -98,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navView.setNavigationItemSelectedListener(this);
 
-
         mToggle = new ActionBarDrawerToggle(this, drawer, toolbar_top, R.string.app_name, R.string.app_name);
 
         drawer.setDrawerListener(mToggle);
@@ -159,10 +159,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch(item.getItemId()){
             case R.id.user_profile:
-                /*
                 startActivity(new Intent(this, UserProfileActivity.class));
                 break;
-                */
+            case R.id.settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+                
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

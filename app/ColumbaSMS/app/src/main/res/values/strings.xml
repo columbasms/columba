@@ -33,4 +33,10 @@
     <string name="setImage">set_image</string>
     <string name="title_activity_map_fragments">Map</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="Profile">Profile</string>
+    <string name="Settings">Settings</string>
+    <string name="Leaderboard">Leaderboard</string>
+
+    <string name="edit_profile">EDIT PROFILE</string>
 </resources>

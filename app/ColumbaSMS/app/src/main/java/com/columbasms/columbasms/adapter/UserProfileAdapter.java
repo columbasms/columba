@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Visibility;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.columbasms.columbasms.R;
+import com.columbasms.columbasms.activity.AssociationProfileActivity;
 import com.columbasms.columbasms.activity.TopicProfileActivity;
 import com.columbasms.columbasms.fragment.ChooseContactsFragment;
+import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
 import com.columbasms.columbasms.model.Topic;
 import com.columbasms.columbasms.model.User;
@@ -52,7 +55,7 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
 
         @Bind(R.id.topic)TextView topic;
         @Bind(R.id.message)TextView message;
-        @Bind(R.id.ass_name)TextView userName;
+        @Bind(R.id.ass_name)TextView assName;
         @Bind(R.id.send)ImageView send;
         @Bind(R.id.profile_image)ImageView profile_image;
 
@@ -68,8 +71,6 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
         @Bind(R.id.lc_background_usr)LinearLayout lc_background;
         @Bind(R.id.profile_card_usr)CardView cardView;
         @Bind(R.id.profile_usr_name)TextView usrName;
-        @Bind(R.id.profile_usr_description)TextView usrDescription;
-        @Bind(R.id.profile_usr_other_info)TextView usrOtherInfo;
         @Bind(R.id.supported_campaigns)TextView usrCampaignsTitle;
         //@Bind(R.id.fol)
         Button trust;
@@ -124,10 +125,6 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
 
                 String info = "100" + " followers" + " - " + mItemList.size() + " campaigns";
 
-                holder1.usrOtherInfo.setText(info);
-
-                holder1.usrDescription.setText(user.getPhone_number());
-
                 final CardView v = holder1.cardView;
 
                 v.post(new Runnable() {
@@ -151,11 +148,21 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
 
 
                 GroupViewHolder holder2 = (GroupViewHolder) viewHolder;
-                final CharityCampaign c = mItemList.get(position-1);
+                final CharityCampaign c = mItemList.get(position - 1);
+                final Association a = c.getOrganization();
 
 
-                TextView an = holder2.userName;
-/*                an.setText(c.getOrganization().getOrganization_name());
+                TextView an = holder2.assName;
+                an.setText(a.getOrganization_name());
+                an.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(v.getContext(), AssociationProfileActivity.class);
+                        i.putExtra("ass_id", a.getId());
+                        i.putExtra("ass_name", a.getOrganization_name());
+                        v.getContext().startActivity(i);
+                    }
+                });
 
                 final List<Topic> topicList = c.getTopics();
                 String topics = "";
@@ -180,8 +187,20 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
                 message.setText(c.getMessage());
 
                 final ImageView pi = holder2.profile_image;
-                Utils.downloadImage(user.getProfile_image(),pi,true,false);
-*/
+                pi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(v.getContext(), AssociationProfileActivity.class);
+                        i.putExtra("ass_id", a.getId());
+                        i.putExtra("ass_name", a.getOrganization_name());
+                        v.getContext().startActivity(i);
+                    }
+                });
+                Utils.downloadImage(a.getAvatar_normal(), pi, true, false);
+
+                ImageView send_hided = holder2.send;
+                send_hided.setVisibility(View.GONE);
+
                 break;
         }
     }
