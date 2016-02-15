@@ -68,6 +68,7 @@
 
                 <TextView
                     android:id="@+id/profile_usr_name"
+                    android:text="Federico Fanara"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -75,22 +76,7 @@
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:paddingBottom="16dp"/>
-                <TextView
-                    android:id="@+id/profile_usr_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/colorText"
-                    android:textSize="14sp"
-                    android:paddingBottom="16dp"/>
 
-                <TextView
-                    android:id="@+id/profile_usr_other_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/colorText"
-                    android:textSize="14sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -106,11 +92,12 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MODIFICA PROFILO"
-                    android:visibility="gone"
+                    android:text="@string/edit_profile"
                     android:layout_marginBottom="16dp"
                     android:textColor="@color/colorPrimary"
-                    android:background="@android:color/white"/>
+                    android:background="@android:color/white"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp" />
 
             </LinearLayout>
 

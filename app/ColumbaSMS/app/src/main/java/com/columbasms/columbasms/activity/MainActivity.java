@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +21,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.fragment.HomeFragment;
 import com.columbasms.columbasms.fragment.MapFragment;
@@ -86,7 +89,6 @@ public class MainActivity extends AppCompatActivity
 
         navView.setNavigationItemSelectedListener(this);
 
-
         mToggle = new ActionBarDrawerToggle(this, drawer, toolbar_top, R.string.app_name, R.string.app_name);
 
         drawer.setDrawerListener(mToggle);
@@ -110,8 +112,8 @@ public class MainActivity extends AppCompatActivity
 
                     //  Launch app intro
 
-                    //Intent i = new Intent(getApplicationContext(), IntroActivity.class);
-                    //startActivity(i);
+                    Intent i = new Intent(getApplicationContext(), IntroActivity.class);
+                    startActivity(i);
 
 
                     getSupportFragmentManager()
@@ -160,6 +162,9 @@ public class MainActivity extends AppCompatActivity
         switch(item.getItemId()){
             case R.id.user_profile:
                 startActivity(new Intent(this, UserProfileActivity.class));
+                break;
+            case R.id.settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
                 
         }

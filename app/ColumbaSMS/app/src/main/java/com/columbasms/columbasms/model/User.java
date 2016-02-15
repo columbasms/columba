@@ -23,6 +23,12 @@ public class User {
         this.phone_number = phone_number;
     }
 
+    public User(String fullName, String profile_image, String cover_image){
+        this.fullName = fullName;
+        this.profile_image = profile_image;
+        this.cover_image = cover_image;
+    }
+
     public String getId() {
         return id;
     }

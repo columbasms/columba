@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Columba</string>
+
+    <string name="info">Info</string>
+    <string name="feedback">Feedback</string>
+    <string name="guide">Guida</string>
+
+    <string name="home">Home</string>
+    <string name="topics">Tematiche</string>
+    <string name="not">Notifiche</string>
+    <string name="map">Mappa</string>
+    <string name="follow">SEGUI</string>
+    <string name="following">SEGUI GIÀ</string>
+
+    <string name="more">MORE</string>
+    <string name="hide">NASCONDI</string>
+
+    <string name="associations">Associazioni</string>
+    <string name="campaigns">Campagne</string>
+
+    <string name="sms_footer">Inviato con Columba</string>
+    <string name="sms_stop">Per interrompere la ricezione di questi messaggi:\nwww.columbasms.com/stop/</string>
+
+
+    <string name="dialog_contacts_title">Seleziona contatti</string>
+    <string name="dialog_number_verification_title">Verifica in corso</string>
+    <string name="dialog_number_verification_verify">VERIFICA</string>
+
+    <string name="gcm_sender_ID">879251508715</string>
+    <string name="setImage">set_image</string>
+    <string name="title_activity_map_fragments">Mappa</string>
+    <string name="title_activity_maps">Mappa</string>
+
+    <string name="Profile">Profilo</string>
+    <string name="Settings">Impostazioni</string>
+    <string name="Leaderboard">Classifica</string>
+
+    <string name="edit_profile">MODIFICA PROFILO</string>
+
+</resources>

@@ -103,7 +103,7 @@ public class IntroActivity extends AppIntro {
                 digitsButton.setCallback(new AuthCallback() {
 
                     @Override
-                    public void success(DigitsSession session, String phoneNumber) {
+                    public void success(DigitsSession session, final String phoneNumber) {
 
 
                         //BACKEND COMMUNICATION
@@ -119,6 +119,7 @@ public class IntroActivity extends AppIntro {
                         sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         token = sp.getString(token_name, null);
                         authHeaders.put(token_name, token);
+                        System.out.println(authHeaders.toString());
 
                         CustomRequest authRequest = new CustomRequest(Request.Method.POST, API_URL.USERS_URL, authHeaders, new Response.Listener<NetworkResponse>() {
                             @Override
@@ -139,10 +140,17 @@ public class IntroActivity extends AppIntro {
                                     SharedPreferences.Editor editor_account_information = sp.edit();
 
                                     editor_account_information.putString("user_id", digitsClient.getString("id"));
-                                    //editor_account_information.putString("phone_number", u.getString("phone_number"));
+
+                                    editor_account_information.putString("user_name", digitsClient.getString("user_name"));
+
+                                    editor_account_information.putString("phone_number", phoneNumber);
 
                                     editor_account_information.putString("firstLaunch", "false");
+
                                     editor_account_information.commit();
+
+
+                                    finish();
 
 
                                 } catch (UnsupportedEncodingException | JSONException e) {
@@ -183,14 +191,12 @@ public class IntroActivity extends AppIntro {
     @Override
     public void onSkipPressed() {
         digitsButton.performClick();
-        finish();
     }
 
     @Override
     public void onDonePressed() {
         //PERFORM A CLICK TO CALL AUTH CALLBACK
         digitsButton.performClick();
-        finish();
     }
 
     @Override
