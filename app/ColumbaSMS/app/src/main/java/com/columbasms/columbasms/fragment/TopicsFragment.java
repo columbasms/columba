@@ -108,19 +108,7 @@ public class TopicsFragment extends Fragment implements AdapterCallback {
                     }
                 }
         );
-        mySwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
 
-                adapter = new TopicsAdapter(topics_list,mainActivity,s,adapterCallback);
-
-                // Attach the adapter to the recyclerview to populate items
-
-                rvTopics.setAdapter(adapter);
-
-                getData();
-            }
-        });
         return v;
     }
 
@@ -223,6 +211,19 @@ public class TopicsFragment extends Fragment implements AdapterCallback {
     @Override
     public void onResume() {
         super.onResume();
+        mySwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+
+                adapter = new TopicsAdapter(topics_list, mainActivity, s, adapterCallback);
+
+                // Attach the adapter to the recyclerview to populate items
+
+                rvTopics.setAdapter(adapter);
+
+                getData();
+            }
+        });
     }
 
     @Override

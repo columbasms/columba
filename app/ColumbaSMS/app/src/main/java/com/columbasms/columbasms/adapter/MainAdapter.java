@@ -134,11 +134,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_TEXT, c.getMessage());
-                    intent.setPackage("com.google.android.apps.plus");
-                    mainActivity.startActivity(intent);
+
                 }
             });
 

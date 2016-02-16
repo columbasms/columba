@@ -2,9 +2,11 @@ package com.columbasms.columbasms.activity;
 
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         System.out.println("APERTA");
 
+
         final SharedPreferences state = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         //TOP TOOLBAR SETUP
@@ -88,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar_top.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         toolbar_top.setVisibility(View.INVISIBLE);
         toolbar_bottom.setVisibility(View.INVISIBLE);
-        //toolbar_top.setPadding(0, getStatusBarHeight(), 0, 0);
 
         setSupportActionBar(toolbar_top);
 
