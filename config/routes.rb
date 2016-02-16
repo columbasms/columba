@@ -23,6 +23,10 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users do
         member do
+          post '/avatar', to: 'users#update_avatar'
+          post '/cover', to: 'users#update_cover'
+        end
+        member do
           get :campaigns
           post '/campaigns/:campaign_id', to: 'users#send_campaign'
         end

@@ -56,6 +56,19 @@ module Api
         end
       end
 
+      # POST /users/:id/avatar
+      def update_avatar
+        @user.avatar=request.body
+        @user.save
+        render json: @user
+      end
+
+      # POST /users/:id/cover
+      def update_cover
+        @user.cover=request.body
+        @user.save
+        render json: @user
+      end
 
       # GET /users/:id/campaigns
       def campaigns
@@ -120,7 +133,7 @@ module Api
 
       # GET users/:id/topics/:topic_id
       def show_topic
-        render json: {'following'=>@topic.in?(@user.topics)}, root: false
+        render json: {'following' => @topic.in?(@user.topics)}, root: false
       end
 
       # PUT users/:id/topics/:topic_id
@@ -147,7 +160,7 @@ module Api
 
       # GET /users/:id/organizations/:organization_id
       def show_organization
-        user_follow=DigitsClientsOrganization.find_by( organization_id:@organization, digits_client_id:@user)
+        user_follow=DigitsClientsOrganization.find_by(organization_id: @organization, digits_client_id: @user)
         if user_follow.nil?
           render json: @organization.slice(:organization_name, :avatar_normal, :cover_normal, :description).as_json.merge(:followers => @organization.digits_clients.count, :following => false, :trusting => false), root: false
         else
@@ -239,7 +252,7 @@ module Api
       end
 
       def user_params
-        params[:user].permit(:user_name, :avatar_normal, :cover_normal,:digits_id, :digits_token, :digits_secret, :phone_number, :gcm_token)
+        params[:user].permit(:user_name, :avatar_normal, :cover_normal, :digits_id, :digits_token, :digits_secret, :phone_number, :gcm_token)
       end
 
     end
