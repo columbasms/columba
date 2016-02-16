@@ -156,9 +156,39 @@ module Api
         render json: @user.topics, root: false
       end
 
-      # GET /users/:id/organizations
-      def organizations
-        render json: @user.organizations, root: false
+      # GET /users/:id/campaigns
+      def campaigns
+        # @user.campaigns.includes(:campaign_client_receivers).select('campaigns.*',:created_at).group(:id)
+        # @user.campaigns.includes(:campaign_client_receivers).select('campaigns.*','campaign_client_receivers.created_at as share_time').group(:id)
+        # DigitsClient.find(6).campaigns.includes(:campaign_client_receivers).select('campaigns.*','campaign_client_receivers.created_at as share_time').group(:id)
+        # DigitsClient.find(6).campaigns.select('campaigns.*','campaign_client_receivers.created_at as share_time').group(:id)
+        # DigitsClient.find(6).campaigns.includes(:campaign_client_receivers).select('campaigns','campaign_client_receivers.created_at as share_time').group(:id)
+        # DigitsClient.find(6).campaigns.includes(:campaign_client_receivers).select('campaigns.*',:created_at).group(:id)
+        # DigitsClient.find(6).campaigns.includes(:campaign_client_receivers).select('campaigns.*',CampaignClientReceiver::created_at).group(:id)
+        # Campaign.all.includes(:campaign_client_receivers).select('campaigns.*','campaign_client_receivers.created_at as share_time').group(:id)
+
+        # formally correct, makes 1 more unwanted query
+        # render json: @user.campaigns.includes(:campaign_client_receivers).select('campaigns.*','campaign_client_receivers.created_at as share_time').group(:id)
+
+
+        # correct sql query generated, different answer
+        result=@user.campaigns.select('campaign_client_receivers.created_at as share_time','campaigns.*').group(:id)
+
+        camps=@user.campaigns.uniq
+        time=CampaignClientReceiver.select(:campaign_id, :created_at).where(digits_client_id: @user).group(:campaign_id)
+        times={}
+        time.each do |t|
+          times[t.campaign_id]=t.created_at
+        end
+        result=[]
+        camps.each do |camp|
+          hash = camp.instance_variables.each_with_object({}) { |var, hash| }
+          result+=[hash.as_json.merge(:share_time => times[camp.id])]
+        end
+
+        render json: result, root: false
+
+        # render json: @user.campaigns.uniq, root: false
       end
 
       # GET /users/:id/organizations/:organization_id
