@@ -63,8 +63,14 @@
             android:name=".activity.UserProfileActivity"
             android:screenOrientation="portrait">
         </activity>
+
         <activity
             android:name=".activity.TopicProfileActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".activity.SettingsActivity"
             android:screenOrientation="portrait">
         </activity>
 

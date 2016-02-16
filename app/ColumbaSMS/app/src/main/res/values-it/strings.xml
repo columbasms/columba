@@ -36,5 +36,12 @@
     <string name="Leaderboard">Classifica</string>
 
     <string name="edit_profile">MODIFICA PROFILO</string>
+    <string name="edit_bar">Modifica profilo</string>
 
+    <string name="disable_notify">Disattiva notifiche push</string>
+    <string name="msg_number">Numero limite di messaggi</string>
+
+    <string name="edit_name">Modifica username</string>
+    <string name="edit_img">Cambia immagine profilo</string>
+    <string name="edit_cover">Cambia immagine di copertina</string>
 </resources>

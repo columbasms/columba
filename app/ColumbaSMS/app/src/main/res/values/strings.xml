@@ -40,4 +40,12 @@
     <string name="Leaderboard">Leaderboard</string>
 
     <string name="edit_profile">EDIT PROFILE</string>
+    <string name="edit_bar">Edit profile</string>
+
+    <string name="disable_notify">Disable push notifications</string>
+    <string name="msg_number">Messages number limit</string>
+
+    <string name="edit_name">Edit username</string>
+    <string name="edit_img">Edit profile image</string>
+    <string name="edit_cover">Edit cover image</string>
 </resources>
