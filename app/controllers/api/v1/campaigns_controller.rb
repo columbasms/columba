@@ -47,7 +47,7 @@ class Api::V1::CampaignsController < ApplicationController
 
   def set_user
     if params[:user_id].nil?
-      @user=nil
+      @user = nil
     else
       begin
         @user = DigitsClient.find params[:user_id]

@@ -52,7 +52,7 @@ module Api
         if @user.update user_params
           render json: @user, root: false, serializer: Api::V1::DigitsClientSerializer
         else
-          render json: @user.errors, root: false
+          render json: @user.errors, root: false, status: :unprocessable_entity
         end
       end
 
@@ -82,8 +82,8 @@ module Api
       def send_campaign
         # leaf_list = ActiveSupport::JSON.decode(request.body.read)
         leaf_list = params['users']
-        hashed_leaf_list=[] #lista ORDINATA degli hash dei numeri richiesti
-        result_index_list=[] # lista da ritornare con gli indici dei numeri a cui è possibile inviare la campagna
+        hashed_leaf_list = [] #lista ORDINATA degli hash dei numeri richiesti
+        result_index_list = [] # lista da ritornare con gli indici dei numeri a cui è possibile inviare la campagna
         # result_index_hash =[] # alternativa: lista da ritornare con gli indici e gli hash dei numeri a cui è possibile inviare la campagna
 
         # hash dei numeri in input

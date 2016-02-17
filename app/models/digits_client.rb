@@ -33,4 +33,8 @@ class DigitsClient < ActiveRecord::Base
   def cover_normal
     URI.join(ActionController::Base.asset_host, self.cover.url(:normal)).to_s
   end
+
+  def user_name
+    "user_#{self.id}"
+  end
 end
