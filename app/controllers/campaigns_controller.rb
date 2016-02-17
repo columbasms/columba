@@ -59,7 +59,7 @@ class CampaignsController < ApplicationController
                   campaign_id: @campaign.object_id
               }
           }
-          response = gcm.send_with_notification_key "/topics/organization_#{current_organization.id}_follow", options
+          response = gcm.send_with_notification_key "/topics/organization_#{current_organization.id}", options
           Rails.logger.info response
         end
 

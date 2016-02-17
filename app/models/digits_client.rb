@@ -35,6 +35,6 @@ class DigitsClient < ActiveRecord::Base
   end
 
   def user_name
-    "user_#{self.id}"
+    self[:user_name] || "user_#{self.id}"
   end
 end
