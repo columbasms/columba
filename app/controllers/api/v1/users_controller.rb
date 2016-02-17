@@ -63,7 +63,7 @@ module Api
           img.original_filename = "avatar"
           @user.avatar=img
         end
-        if !params['cover'].nil?
+        if !params['cover_image'].nil?
           cov=Paperclip.io_adapters.for("data:#{content_type};base64,#{params['cover_image']}")
           cov.original_filename = "cover"
           @user.cover=cov
