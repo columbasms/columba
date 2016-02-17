@@ -56,16 +56,18 @@ module Api
         end
       end
 
-      # POST /users/:id/avatar
-      def update_avatar
-        @user.avatar=request.body
-        @user.save
-        render json: @user
-      end
-
-      # POST /users/:id/cover
-      def update_cover
-        @user.cover=request.body
+      # POST /users/:id/images
+      def update_images
+        if !params['profile_image'].nil?
+          img=Paperclip.io_adapters.for("data:#{content_type};base64,#{params['profile_image']}")
+          img.original_filename = "avatar"
+          @user.avatar=img
+        end
+        if !params['cover'].nil?
+          cov=Paperclip.io_adapters.for("data:#{content_type};base64,#{params['cover_image']}")
+          cov.original_filename = "cover"
+          @user.cover=cov
+        end
         @user.save
         render json: @user
       end
@@ -252,7 +254,7 @@ module Api
       end
 
       def user_params
-        params[:user].permit(:user_name, :avatar_normal, :cover_normal, :digits_id, :digits_token, :digits_secret, :phone_number, :gcm_token)
+        params[:user].permit(:user_name,:avatar, :cover, :avatar_normal, :cover_normal, :digits_id, :digits_token, :digits_secret, :phone_number, :gcm_token)
       end
 
     end
