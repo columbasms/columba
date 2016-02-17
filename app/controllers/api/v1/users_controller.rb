@@ -75,7 +75,8 @@ module Api
 
       # GET /users/:id/campaigns
       def campaigns
-        render json: @user.campaigns.uniq, root: false
+        result=@user.campaigns.select('campaign_client_receivers.created_at as shared_at','campaigns.*').group(:id)
+        render json: result, root: false, include_shared_at: true
       end
 
       # POST /users/:id/campaigns/:campaign_id
