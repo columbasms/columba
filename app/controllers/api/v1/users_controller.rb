@@ -58,17 +58,18 @@ module Api
 
       # POST /users/:id/images
       def update_images
-        if !params['profile_image'].nil?
+        if !params['profile_image'].nil? or !params['profile_image'].empty?
           img=Paperclip.io_adapters.for("data:#{content_type};base64,#{params['profile_image']}")
           img.original_filename = "avatar"
           @user.avatar=img
+          @user.save
         end
-        if !params['cover_image'].nil?
+        if !params['cover_image'].nil? or !params['cover_image'].empty?
           cov=Paperclip.io_adapters.for("data:#{content_type};base64,#{params['cover_image']}")
           cov.original_filename = "cover"
           @user.cover=cov
+          @user.save
         end
-        @user.save
         render json: @user
       end
 
