@@ -56,7 +56,7 @@ class CampaignsController < ApplicationController
               data: {
                   organization_name: current_organization.organization_name,
                   message: @campaign.message,
-                  campaign_id: @campaign.object_id
+                  campaign_id: @campaign.id
               }
           }
           response = gcm.send_with_notification_key "/topics/organization_#{current_organization.id}", options
