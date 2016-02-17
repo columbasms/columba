@@ -16,13 +16,13 @@ class DigitsClient < ActiveRecord::Base
   has_attached_file :avatar, styles: {
       normal: '250x250#',
       thumb: '32x32#'
-  }, default_url: '/images/avatar.png'
+  }, default_url: '/images/invalid'
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
   crop_attached_file :avatar
 
   has_attached_file :cover, styles: {
       normal: '1500x844#'
-  }, default_url: '/images/cover.png'
+  }, default_url: '/images/invalid'
   validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
   crop_attached_file :cover, aspect: '16:9'
 
