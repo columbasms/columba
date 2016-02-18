@@ -76,8 +76,9 @@ public class CacheRequest extends Request<NetworkResponse> {
         HashMap<String, String> headers = new HashMap<String, String>();
         String credentials = "47ccf9098174f48be281f86103b9" + ":" + "c5906274ba1a14711a816db53f0d";
         String credBase64 = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT).replace("\n", "");
-        headers.put("Authorization", "Basic "+ credBase64);
+        headers.put("Authorization", "Basic " + credBase64);
         return headers;
     }
+
 
 }

@@ -45,6 +45,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -228,7 +229,7 @@ public class AssociationProfileActivity extends AppCompatActivity implements Ada
 
     private static CacheRequest getCampaigns(){
 
-        String URL = API_URL.ASSOCIATIONS_URL + "/" + ASSOCIATION_ID + API_URL.CAMPAIGNS;
+        String URL = API_URL.ASSOCIATIONS_URL + "/" + ASSOCIATION_ID + API_URL.CAMPAIGNS + "?locale=" + Locale.getDefault().getLanguage();
 
         return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
             @Override

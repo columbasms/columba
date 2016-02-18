@@ -77,12 +77,13 @@ public class HorizontalAssociationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
         });
 
-        Transformation t = new RoundedTransformationBuilder()
+        final Transformation t = new RoundedTransformationBuilder()
                 .cornerRadiusDp(50)
                 .oval(false)
                 .borderWidthDp(1)
                 .borderColor(Color.parseColor("#ffffff"))
                 .build();
+
         RequestCreator request = Picasso.with(im.getContext()).load(a.getAvatar_normal());
         request.transform(t)
                 .placeholder(R.drawable.error_thumbnail_image);
@@ -104,6 +105,7 @@ public class HorizontalAssociationAdapter extends RecyclerView.Adapter<RecyclerV
                     public void onError() {
                         RequestCreator request2 = Picasso.with(im.getContext()).load(a.getAvatar_normal());
                         request2.placeholder(R.drawable.error_thumbnail_image);
+                        request2.transform(t);
                         request2.fit().into(im, new Callback() {
                             @Override
                             public void onSuccess() {

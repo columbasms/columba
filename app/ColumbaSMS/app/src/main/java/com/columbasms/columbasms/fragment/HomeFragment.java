@@ -47,6 +47,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 
@@ -150,7 +151,7 @@ public class HomeFragment extends Fragment {
 
     private static CacheRequest get(){
 
-        String URL = API_URL.CAMPAIGNS_URL + "?order_field=created_at" + "&" + "user_id=" + USER_ID;
+        String URL = API_URL.CAMPAIGNS_URL + "?order_field=created_at" + "&" + "user_id=" + USER_ID + "&locale=" + Locale.getDefault().getLanguage();
 
         System.out.println(URL);
 

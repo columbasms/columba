@@ -138,6 +138,7 @@ public class TopicsFragment extends Fragment implements AdapterCallback {
     private static CacheRequest getTopics(){
 
         String URL = API_URL.USERS_URL + "/" + USER_ID + API_URL.TOPICS + "?locale=" + Locale.getDefault().getLanguage();
+
         System.out.println(URL);
 
         return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {

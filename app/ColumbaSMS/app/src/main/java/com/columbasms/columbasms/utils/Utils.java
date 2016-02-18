@@ -103,7 +103,7 @@ public class Utils {
              request.transform(t)
                     .placeholder(R.drawable.error_thumbnail_image);
         }else {
-            request.placeholder(R.drawable.img_cover);
+            request.placeholder(R.drawable.error_cover_image);
         }
 
         request.networkPolicy(NetworkPolicy.OFFLINE)
@@ -127,7 +127,7 @@ public class Utils {
                             request2.transform(t)
                                     .placeholder(R.drawable.error_thumbnail_image);
                         }else {
-                            request2.placeholder(R.drawable.img_cover);
+                            request2.placeholder(R.drawable.error_cover_image);
                         }
 
                         request2.fit().into(im, new Callback() {
