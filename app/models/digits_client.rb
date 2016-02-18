@@ -43,6 +43,6 @@ class DigitsClient < ActiveRecord::Base
   end
 
   def forwarded_campaigns_count
-    self.campaign_client_receivers.count
+    self.campaign_client_receivers.campaigns.count
   end
 end
