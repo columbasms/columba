@@ -7,6 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-touch-fullscreen" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#009688">
   <meta content="" name="description" />
   <meta content="" name="author" />
   <%= yield(:application_css).presence || stylesheet_link_tag('application', media: 'all', 'data-turbolinks-track' => true) %>
@@ -31,7 +32,7 @@
         <div class="col-sm-12 col-sm-height col-middle <% if action_name == 'account_locked' %>text-center<% end %>">
           <!--<img src="<%= image_path 'logo' %>" alt="logo" data-src="{{ asset('img/logo.png') }}" data-src-retina="{{ asset('img/logo_2x.png') }}" width="78" height="22">-->
           <% if action_name != 'account_locked' %>
-            <h3><%= yield(:h3).presence || 'Login' %></h3>
+            <h3><%= yield(:h3).presence || t('login') %></h3>
           <% end %>
 
           <% if flash[:error] %>

@@ -3,6 +3,7 @@
 en:
   devise:
     confirmations:
+      confirmation: "Resend confirmation instructions"
       confirmed: "Your email address has been successfully confirmed."
       send_instructions: "You will receive an email with instructions for how to confirm your email address in a few minutes."
       send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions for how to confirm your email address in a few minutes."
@@ -17,24 +18,55 @@ en:
       unauthenticated: "You need to sign in or sign up before continuing."
       unconfirmed: "You have to confirm your email address before continuing."
     mailer:
+      welcome: "Welcome"
+      hello: "Hello"
       confirmation_instructions:
+        instruction: "You can confirm your account email through the link below"
         subject: "Confirmation instructions"
+        submit: "Confirm my account"
       reset_password_instructions:
+        instruction: "Someone has requested a link to change your password. You can do this through the link below."
         subject: "Reset password instructions"
+        submit: "Change my password"
+        ignore: "If you didn't request this, please ignore this email."
+        wont_cange: "Your password won't change until you access the link above and create a new one."
       unlock_instructions:
+        instruction: "Click the link below to unlock your account:"
+        locked: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
         subject: "Unlock instructions"
+        submit: "Unlock my account"
       password_change:
+        change: "We're contacting you to notify you that your password has been changed."
         subject: "Password Changed"
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: "Successfully authenticated from %{kind} account."
     passwords:
+      new: "New password"
+      confirm: "Confirm new password"
+      minimum_characters: "(%{length} characters minimum)"
+      change_my_password: "Change my password"
+      change_your_password: "Change your password"
+      forgot_your_password: "Forgot your password?"
+      submit: "Send me reset password instructions"
       no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."
       send_instructions: "You will receive an email with instructions on how to reset your password in a few minutes."
       send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
       updated: "Your password has been changed successfully. You are now signed in."
       updated_not_active: "Your password has been changed successfully."
     registrations:
+      personal_information: "Personal information"
+      general_information: "General information"
+      upload_cover: "Upload cover"
+      upload_avatar: "Upload avatar"
+      topics: "Topics"
+      province: "Province"
+      town: "Town"
+      update_profile: "Update profile"
+      request_account: "Request your Columba account"
+      sign_up: "Sign up - Columba"
+      minimum_characters: "(%{length} characters minimum)"
+      agree: "I agree to the <a href=\"#\" class=\"text-info small\">Terms</a> and <a href=\"#\" class=\"text-info small\">Privacy</a>."
       destroyed: "Bye! Your account has been successfully cancelled. We hope to see you again soon."
       signed_up: "Welcome! You have signed up successfully."
       signed_up_but_inactive: "You have signed up successfully. However, we could not sign you in because your account is not yet activated."
@@ -43,10 +75,13 @@ en:
       update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and follow the confirm link to confirm your new email address."
       updated: "Your account has been updated successfully."
     sessions:
+      login: "Login to your Columba account"
+      title: "Log in - Columba"
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
       already_signed_out: "Signed out successfully."
     unlocks:
+      resend_instructions: "Resend unlock instructions"
       send_instructions: "You will receive an email with instructions for how to unlock your account in a few minutes."
       send_paranoid_instructions: "If your account exists, you will receive an email with instructions for how to unlock it in a few minutes."
       unlocked: "Your account has been unlocked successfully. Please sign in to continue."

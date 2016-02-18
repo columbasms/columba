@@ -31,11 +31,11 @@
           </span>
         </button>
         <ul class="dropdown-menu profile-dropdown" role="menu">
-          <li><a href="<%= url_for edit_organization_registration_path %>"><i class="fa fa-user"></i> Profile</a>
+          <li><a href="<%= url_for edit_organization_registration_path %>"><i class="fa fa-user"></i> <%= t 'profile' %></a>
           </li>
           <li class="bg-master-lighter">
             <%= link_to(destroy_organization_session_path, method: :delete, class: 'clearfix') do %>
-                <span class="pull-left">Logout</span>
+                <span class="pull-left"><%= t 'logout' %></span>
                 <span class="pull-right"><i class="pg-power"></i></span>
             <% end %>
           </li>
@@ -67,11 +67,11 @@
             </span>
         </button>
         <ul class="dropdown-menu profile-dropdown" role="menu">
-          <li><a href="<%= url_for edit_organization_registration_path %>"><i class="fa fa-user"></i> Profile</a>
+          <li><a href="<%= url_for edit_organization_registration_path %>"><i class="fa fa-user"></i> <%= t 'profile' %></a>
           </li>
           <li class="bg-master-lighter">
             <%= link_to(destroy_organization_session_path, method: :delete, class: 'clearfix') do %>
-              <span class="pull-left">Logout</span>
+              <span class="pull-left"><%= t 'logout' %></span>
               <span class="pull-right"><i class="pg-power"></i></span>
             <% end %>
           </li>

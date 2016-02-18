@@ -1,7 +1,9 @@
-<h1>Stop columba service</h1>
+<% content_for :title do %><%= t 'stop.title' %><% end %>
+
+<h1><%= t 'stop.heading' %></h1>
 <p>
   <h5>
-    Why did you receive this SMS?
+    <%= t 'stop.why' %>
   </h5>
 
   -- Columba Project --
@@ -12,9 +14,9 @@
 <!--</p>-->
 
 <p>
-  Do you really want to stop the reception of any kind of message sent through columba?
+  <%= t 'stop.confirmation' %>
 
   <%= form_tag @stop, method: :delete do %>
-      <%= submit_tag 'Confirm' %>
+      <%= submit_tag t('stop.confirm') %>
   <% end %>
 </p>

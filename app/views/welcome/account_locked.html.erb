@@ -2,9 +2,9 @@
   <div class="container-sm-height full-height">
     <div class="row row-sm-height">
       <div class="col-sm-12 col-sm-height col-middle text-center">
-        <h1>Thank you for requesting an account!</h1>
-        <p>We are verifying your identity and we will unlock your account as soon as possible.</p>
-        <%= link_to 'Return to the homepage', root_path %>
+        <h1><%= t 'welcome.account_locked.heading' %></h1>
+        <p><%= t 'welcome.account_locked.verifying' %></p>
+        <%= link_to t('welcome.account_locked.return_to_homepage'), root_path %>
       </div>
     </div>
   </div>

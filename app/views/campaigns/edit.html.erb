@@ -1,6 +1,6 @@
-<h1>Editing Campaign</h1>
+<h1><%= t 'campaigns.editing' %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @campaign %> |
-<%= link_to 'Back', campaigns_path %>
+<%= link_to t('campaigns.show'), @campaign %> |
+<%= link_to t('campaigns.back'), campaigns_path %>

@@ -1,3 +1,5 @@
+<% content_for :title do %><%= t 'campaigns.index_title' %><% end %>
+
 <% content_for :application_js do %>
     <%= javascript_include_tag('application_data', 'data-turbolinks-track' => true) %>
 <% end %>
@@ -10,7 +12,7 @@
 
   <div class="panel panel-transparent">
     <div class="panel-heading">
-      <div class="panel-title">My campaigns
+      <div class="panel-title"><%= t 'campaigns.my_campaigns' %>
       </div>
       <div class="pull-right">
         <div class="col-xs-12">
@@ -25,10 +27,10 @@
 
         <thead>
         <tr>
-          <th>Message</th>
-          <th>Date created</th>
-          <th>Topics</th>
-          <th>Expiration date</th>
+          <th><%= t 'campaigns.message' %></th>
+          <th><%= t 'campaigns.date_created' %></th>
+          <th><%= t 'campaigns.topics' %></th>
+          <th><%= t 'campaigns.expiration_date' %></th>
         </tr>
         </thead>
 
@@ -73,7 +75,7 @@
         "scrollCollapse": true,
         "oLanguage": {
           "sLengthMenu": "_MENU_ ",
-          "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+          "sInfo": "<%= raw t('datatable') %>"
         },
         "iDisplayLength": 5
       };

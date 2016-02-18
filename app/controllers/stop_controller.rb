@@ -30,7 +30,7 @@ class StopController < ApplicationController
       hash = Api::V1::UsersHelper.hash_receiver(params[:id])
       @receiver = Receiver.find_by number:hash
       if @receiver.nil?
-        render json: {errors: 'Receiver not found'}
+        render json: {errors: 'Receiver not found' }
         return
       end
     end

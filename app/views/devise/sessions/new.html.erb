@@ -1,6 +1,6 @@
-<% content_for(:h3) do %>Login to your Columba account<% end %>
+<% content_for(:h3) do %><%= t 'devise.sessions.login' %><% end %>
 
-<% content_for(:title) do %>Columba - Log in<% end %>
+<% content_for(:title) do %><%= t 'devise.sessions.title' %><% end %>
 
 <% content_for :javascripts do %>
 
@@ -47,10 +47,10 @@
         </div>
   <% end -%>
 
-  <%= f.submit 'Log in', class: 'btn btn-primary btn-cons m-t-10' %> <span class="m-r-10 m-l-5">or</span>
-    <%= link_to 'Register', new_organization_registration_path, class: 'btn btn-complete btn-cons m-t-10' %>
+  <%= f.submit t('login'), class: 'btn btn-primary btn-cons m-t-10' %> <span class="m-r-10 m-l-5">or</span>
+    <%= link_to t('register'), new_organization_registration_path, class: 'btn btn-success btn-cons m-t-10' %>
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-    <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+    <%= link_to t('devise.passwords.forgot_your_password'), new_password_path(resource_name) %><br />
 <% end -%>

@@ -20,4 +20,333 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  login: "Login"
+  logout: "Logout"
+  profile: "Profile"
+  or: "or"
+  request: "Request"
+  register: "Register"
+  region: "Region"
+  province: "Province"
+  town: "Town"
+  error: "error"
+  errors: "errors"
+  send: "Send"
+  datatable: "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+  campaigns:
+    index_title: "My Campaigns - Columba"
+    new_title: "New Campaign - Columba"
+    my_campaigns: "My campaigns"
+    new_campaign: "New Campaign"
+    create: "Create a new Campaign"
+    message: "Message"
+    date_created: "Date created"
+    expiration_date: "Expiration date"
+    editing: "Editing campaign"
+    show: "Show"
+    back: "Back"
+    edit: "Edit"
+    prohibited: "prohibited this campaign from being saved:"
+    topics: "Topics"
+    expiration_date: "Expiration date"
+    date_explanation: "Ciao testo di prova"
+    created: "Campaign was successfully created."
+    updated: "Campaign was successfully updated."
+    destroyed: "Campaign was successfully destroyed."
+    update_account: "You have to update your account in order to access all the functionalities"
+  organizations:
+    crop: "Crop"
+  stop:
+    title: "Stop service - Columba"
+    heading: "Stop columba service"
+    why: "Why did you receive this SMS?"
+    confirmation: "Do you really want to stop the reception of any kind of message sent through columba?"
+    confirm: "Confirm"
+  welcome:
+    account_locked:
+      heading: "Thank you for requesting an account!"
+      verifying: "We are verifying your identity and we will unlock your account as soon as possible."
+      return_to_homepage: "Return to the homepage"
+    dashboard:
+      title: "Dashboard - Columba"
+      recent_campaigns: "Recent campaigns"
+    index:
+      heading: "Pages make it easy to enjoy what matters the most in the life"
+      subheading: "images Displayed are solely for representation purposes only, All work copyright of respective owner, otherwise © 2013-2014 REVOX."
+      sign_in: "Login into your columba account"
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "Validation failed: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "Cannot delete record because a dependent %{record} exists"
+          has_many: "Cannot delete record because dependent %{record} exist"
+    models:
+      admin_user: "Admin User"
+      campaign: "Campaign"
+      digits_client: "Client"
+      group: "Group"
+      organization: "Organization"
+      province: "Province"
+      receiver: "Receiver"
+      region: "Region"
+      topic: "Topic"
+      town: "Town"
+    attributes:
+      campaign:
+        address: "Address"
+        created_at: "Created at"
+        digits_clients: "Clients"
+        expires_at: "Expires at"
+        id: "ID"
+        latitude: "Latitude"
+        longitude: "Longitude"
+        message: "Message"
+        organization: "Organization"
+        organization_id: "Organization ID"
+        province: "Province"
+        province_id: "Province ID"
+        receivers: "Receivers"
+        region: "Region"
+        region_id: "Region ID"
+        topics: "Topics"
+        town: "Town"
+        town_id: "Town ID"
+        updated_at: "Updated at"
+      digits_client:
+        campaigns: "Campaigns"
+        created_at: "Created at"
+        enabled: "Enabled"
+        groups: "Groups"
+        organizations: "Organizations"
+        phone_number: "Phone number"
+        topics: "Topics"
+        updated_at: "Updated at"
+        user_name: "Username"
+      organization:
+        address: "Address"
+        campaigns: "Campaigns"
+        created_at: "Created at"
+        description: "Description"
+        digits_clients: "Clients"
+        email: "Email"
+        fiscal_code: "Fiscal code"
+        locked_at: "Locked at"
+        organization_name: "Organization name"
+        phone_number: "Phone number"
+        postal_code: "Postal code"
+        topics: "Topics"
+        town: "Town"
+        updated_at: "Updated at"
+        VAT_number: "VAT number"
+        visible: "Visible"
+        website: "Website"
+      topic:
+        campaigns: "Campaigns"
+        description: "Description"
+        digits_clients: "Clients"
+        main_color: "Main color"
+        name: "Name"
+        organizations: "Organizations"
+        status_color: "Status color"
+  date:
+    abbr_day_names:
+    - Sun
+    - Mon
+    - Tue
+    - Wed
+    - Thu
+    - Fri
+    - Sat
+    abbr_month_names:
+    -
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - May
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+    day_names:
+    - Sunday
+    - Monday
+    - Tuesday
+    - Wednesday
+    - Thursday
+    - Friday
+    - Saturday
+    formats:
+      default: "%Y-%m-%d"
+      long: "%B %d, %Y"
+      short: "%b %d"
+    month_names:
+    -
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+    order:
+    - :year
+    - :month
+    - :day
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: about 1 hour
+        other: about %{count} hours
+      about_x_months:
+        one: about 1 month
+        other: about %{count} months
+      about_x_years:
+        one: about 1 year
+        other: about %{count} years
+      almost_x_years:
+        one: almost 1 year
+        other: almost %{count} years
+      half_a_minute: half a minute
+      less_than_x_minutes:
+        one: less than a minute
+        other: less than %{count} minutes
+      less_than_x_seconds:
+        one: less than 1 second
+        other: less than %{count} seconds
+      over_x_years:
+        one: over 1 year
+        other: over %{count} years
+      x_days:
+        one: 1 day
+        other: "%{count} days"
+      x_minutes:
+        one: 1 minute
+        other: "%{count} minutes"
+      x_months:
+        one: 1 month
+        other: "%{count} months"
+      x_seconds:
+        one: 1 second
+        other: "%{count} seconds"
+    prompts:
+      day: Day
+      hour: Hour
+      minute: Minute
+      month: Month
+      second: Seconds
+      year: Year
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: must be accepted
+      blank: can't be blank
+      present: must be blank
+      confirmation: doesn't match %{attribute}
+      empty: can't be empty
+      equal_to: must be equal to %{count}
+      even: must be even
+      exclusion: is reserved
+      greater_than: must be greater than %{count}
+      greater_than_or_equal_to: must be greater than or equal to %{count}
+      inclusion: is not included in the list
+      invalid: is invalid
+      less_than: must be less than %{count}
+      less_than_or_equal_to: must be less than or equal to %{count}
+      model_invalid: "Validation failed: %{errors}"
+      not_a_number: is not a number
+      not_an_integer: must be an integer
+      odd: must be odd
+      required: must exist
+      taken: has already been taken
+      too_long:
+        one: is too long (maximum is 1 character)
+        other: is too long (maximum is %{count} characters)
+      too_short:
+        one: is too short (minimum is 1 character)
+        other: is too short (minimum is %{count} characters)
+      wrong_length:
+        one: is the wrong length (should be 1 character)
+        other: is the wrong length (should be %{count} characters)
+      other_than: must be other than %{count}
+    template:
+      body: 'There were problems with the following fields:'
+      header:
+        one: 1 error prohibited this %{model} from being saved
+        other: "%{count} errors prohibited this %{model} from being saved"
+  helpers:
+    select:
+      prompt: Please select
+    submit:
+      create: Create %{model}
+      submit: Save %{model}
+      update: Update %{model}
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%u%n"
+        precision: 2
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "$"
+    format:
+      delimiter: ","
+      precision: 3
+      separator: "."
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion: Billion
+          million: Million
+          quadrillion: Quadrillion
+          thousand: Thousand
+          trillion: Trillion
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+        format: "%n%"
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: ", and "
+      two_words_connector: " and "
+      words_connector: ", "
+  time:
+    am: am
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      long: "%B %d, %Y %H:%M"
+      short: "%d %b %H:%M"
+    pm: pm

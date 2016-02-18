@@ -39,6 +39,8 @@ gem 'activeadmin-select2', github: 'mfairburn/activeadmin-select2'
 gem 'papercrop'
 gem 'active_model_serializers'
 gem 'config'
+gem 'rails-i18n', '~> 4.0.0'
+gem 'globalize', '~> 5.0.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -1,4 +1,4 @@
-<% content_for :h3 do %>Forgot your password?<% end %>
+<% content_for :h3 do %><%= t 'devise.passwords.forgot_your_password' %><% end %>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, role: 'form', id: 'form-password' }) do |f| %>
 
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <%= f.submit 'Send me reset password instructions', class: 'btn btn-primary btn-cons m-t-10' %>
+    <%= f.submit t('devise.passwords.submit'), class: 'btn btn-primary btn-cons m-t-10' %>
 <% end %>
 
 <% content_for :javascripts do %>

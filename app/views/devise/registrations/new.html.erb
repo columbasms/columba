@@ -1,6 +1,6 @@
-<% content_for(:h3) do %>Request your Columba account<% end %>
+<% content_for(:h3) do %><%= t 'devise.registrations.request_account' %><% end %>
 
-<% content_for(:title) do %>Columba - Sign up<% end %>
+<% content_for(:title) do %><%= t 'devise.registrations.sign_up' %><% end %>
 
 <% content_for :javascripts do %>
 
@@ -65,7 +65,7 @@
     <div class="row">
       <div class="col-sm-4">
         <div class="form-group form-group-default form-group-default-select2 required full-width">
-          <%= label_tag 'province_id' %>
+          <%= label_tag 'province_id', t('devise.registrations.province') %>
           <%= select_tag :province_id,
                        options_for_select(Province.all.order(name: :asc).collect { |x| [x.name, x.id] }),
                        { 'data-init-plugin': 'select2', class: 'full-width', id: 'province-select' }  %>
@@ -75,7 +75,7 @@
 
       <div class="col-sm-4">
         <div class="form-group form-group-default form-group-default-select2 required full-width">
-            <%= f.label 'town_id' %>
+            <%= f.label 'town_id', t('devise.registrations.town') %>
             <%= f.hidden_field :town_id, id: 'town-select', class: 'full-width'  %>
         </div>
       </div>
@@ -111,7 +111,9 @@
         <div class="form-group form-group-default required">
           <%= f.label :password %>
           <% if @minimum_password_length %>
-              <em>(<%= @minimum_password_length %> characters minimum)</em>
+              <em>
+                <%= t 'devise.registrations.minimum_characters', length: @minimum_password_length %>
+              </em>
           <% end %><br />
           <%= f.password_field :password, autocomplete: 'off', class: 'form-control', required: 'required' %>
         </div>
@@ -129,10 +131,10 @@
 
     <div class="row m-t-10">
       <div class="col-md-6">
-        <p>I agree to the <a href="#" class="text-info small">Terms</a> and <a href="#" class="text-info small">Privacy</a>.</p>
+        <p><%= raw t('devise.registrations.agree') %></p>
       </div>
     </div>
 
-    <%= f.submit 'Request', class: 'btn btn-primary btn-cons m-t-10' %> <span class="m-r-10 m-l-5">or</span>
-    <%= link_to 'Login', new_organization_session_path, class: 'btn btn-complete btn-cons m-t-10' %>
+    <%= f.submit t('request'), class: 'btn btn-primary btn-cons m-t-10' %> <span class="m-r-10 m-l-5"><%= t 'or' %></span>
+    <%= link_to t('login'), new_organization_session_path, class: 'btn btn-success btn-cons m-t-10' %>
 <% end %>

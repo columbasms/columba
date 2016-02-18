@@ -1,10 +1,10 @@
-<% content_for :title do %>Columba - Dashboard<% end %>
+<% content_for :title do %><%= t 'welcome.dashboard.title' %><% end %>
 
 <div class="row">
   <div class="col-sm-12 col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <div class="panel-title">Recent campaigns
+        <div class="panel-title"><%= t 'welcome.dashboard.recent_campaigns' %>
         </div>
       </div>
       <div class="panel-body scrollable">
@@ -15,10 +15,10 @@
 
             <thead>
               <tr>
-                <th>Message</th>
-                <th>Date</th>
-                <th>Topics</th>
-                <th>Expiration date</th>
+                <th><%= t 'campaigns.message' %></th>
+                <th><%= t 'campaigns.date_created' %></th>
+                <th><%= t 'campaigns.topics' %></th>
+                <th><%= t 'campaigns.expiration_date' %></th>
               </tr>
             </thead>
 

@@ -1,6 +1,7 @@
 class Api::V1::TopicsController < ApplicationController
   http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
   before_filter :set_topic, only: [:show, :campaigns, :organizations]
+  before_filter :set_locale, exclude: [:organizations, :campaigns]
   force_ssl unless Rails.env.development?
 
   # GET /api/v1/topics
@@ -41,6 +42,10 @@ class Api::V1::TopicsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       render json: { errors: 'Topic not found' }
     end
+  end
+
+  def set_locale
+    I18n.locale = params[:locale] if params[:locale].present? and %w(en it).include?(params[:locale])
   end
 
 end

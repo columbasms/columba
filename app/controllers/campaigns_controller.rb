@@ -63,7 +63,7 @@ class CampaignsController < ApplicationController
           Rails.logger.info response
         end
 
-        format.html { redirect_to dashboard_path, notice: 'Campaign was successfully created.' }
+        format.html { redirect_to dashboard_path, notice: I18n.t('campaigns.created') }
         format.json { render :show, status: :created, location: @campaign }
       else
         format.html { render :new }
@@ -77,7 +77,7 @@ class CampaignsController < ApplicationController
   def update
     respond_to do |format|
       if @campaign.update(campaign_params)
-        format.html { redirect_to @campaign, notice: 'Campaign was successfully updated.' }
+        format.html { redirect_to @campaign, notice: I18n.t('campaigns.updated') }
         format.json { render :show, status: :ok, location: @campaign }
       else
         format.html { render :edit }
@@ -91,7 +91,7 @@ class CampaignsController < ApplicationController
   def destroy
     @campaign.destroy
     respond_to do |format|
-      format.html { redirect_to campaigns_url, notice: 'Campaign was successfully destroyed.' }
+      format.html { redirect_to campaigns_url, notice: I18n.t('campaigns.destroyed') }
       format.json { head :no_content }
     end
   end
@@ -110,7 +110,7 @@ class CampaignsController < ApplicationController
 
     def validate_visibility
       unless current_organization.visible
-        redirect_to dashboard_path, notice: 'You have to update your account in order to access all the functionalities'
+        redirect_to dashboard_path, notice: I18n.t('campaigns.update_account')
       end
     end
 end

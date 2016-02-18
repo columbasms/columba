@@ -30,7 +30,7 @@
 
           <div class="panel-heading">
             <div class="panel-title">
-              General information
+              <%= t 'devise.registrations.general_information' %>
             </div>
           </div>
 
@@ -40,7 +40,7 @@
                   <div class="col-sm-12 col-md-12">
                     <%= image_tag @organization.cover.url(:normal), id: 'cover-preview', class: 'full-width m-b-15' %>
                     <%= f.file_field :cover, class: 'avatar-form-control', id: 'cover-input' %>
-                    <a href="javascript:;" class="btn btn-success full-width m-b-15" id="cover-upload">Upload cover</a>
+                    <a href="javascript:;" class="btn btn-primary full-width m-b-15" id="cover-upload"><%= t 'devise.registrations.upload_cover' %></a>
                   </div>
                 </div>
 
@@ -48,7 +48,7 @@
                   <div class="col-sm-12 col-md-3 m-b-15">
                     <%= image_tag @organization.avatar.url(:normal), class: 'full-width m-b-10', id: 'avatar-preview', width: '250' %>
                     <%= f.file_field :avatar, class: 'avatar-form-control', id: 'avatar-input' %>
-                    <a href="javascript:;" class="btn btn-success full-width" id="avatar-upload">Upload avatar</a>
+                    <a href="javascript:;" class="btn btn-primary full-width" id="avatar-upload"><%= t 'devise.registrations.upload_avatar' %></a>
                   </div>
                   <div class="col-sm-12 col-md-9 m-b-15">
 
@@ -78,7 +78,7 @@
                 <div class="row m-b-15">
                   <div class="col-sm-12 col-md-12">
                     <div class="form-group form-group-default form-group-default-select2 required">
-                      <label for="topic_ids">Topics</label>
+                      <label for="topic_ids"><%= t 'devise.registrations.topics' %></label>
                       <%= f.select :topic_ids, Topic.all.collect { |x| [x.name, x.id] }, { }, { multiple: true, 'data-init-plugin': 'select2', class: 'full-width' } %>
                     </div>
                   </div>
@@ -144,7 +144,7 @@
 
           <div class="panel-heading">
             <div class="panel-title">
-              Personal information
+              <%= t 'devise.registrations.personal_information' %>
             </div>
           </div>
 
@@ -176,7 +176,7 @@
             <div class="row">
               <div class="col-sm-12 col-md-6">
                 <div class="form-group form-group-default form-group-default-select2 required full-width">
-                  <%= label_tag 'province' %>
+                  <%= label_tag 'province', t('devise.registrations.province') %>
                   <%= select_tag 'province',
                                  options_for_select(Province.all.order(name: :asc).collect { |x| [x.name, x.id] }, selected: @province_id),
                                  { 'data-init-plugin': 'select2', class: 'full-width', id: 'province-select' }  %>
@@ -209,7 +209,7 @@
 
             <div class="row">
               <div class="col-sm-12 col-md-12">
-                <%= f.submit 'Update profile', class: 'btn btn-primary align-right' %>
+                <%= f.submit t('devise.registrations.update_profile'), class: 'btn btn-primary align-right' %>
               </div>
             </div>
 

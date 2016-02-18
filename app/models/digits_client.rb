@@ -37,4 +37,12 @@ class DigitsClient < ActiveRecord::Base
   def user_name
     self[:user_name] || "user_#{self.id}"
   end
+
+  def organizations_count
+    self.organizations.count
+  end
+
+  def forwarded_campaigns_count
+    self.campaign_client_receivers.count
+  end
 end

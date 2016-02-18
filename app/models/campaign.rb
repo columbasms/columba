@@ -6,7 +6,7 @@ class Campaign < ActiveRecord::Base
   belongs_to :province
   belongs_to :region
 
-  has_many :campaign_client_receivers
+  has_many :campaign_client_receivers, :dependent => :delete_all
   has_many :receivers, through: :campaign_client_receivers
   has_many :digits_clients, through: :campaign_client_receivers
 

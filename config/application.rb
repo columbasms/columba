@@ -26,5 +26,7 @@ module Columba
     config.active_record.raise_in_transactional_callbacks = true
 
     config.action_mailer.default_url_options = { host: 'columbasms.com' }
+
+    config.i18n.available_locales = [:en, :it]
   end
 end

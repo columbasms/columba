@@ -1,4 +1,4 @@
-<% content_for :title do %>Columba - New campaign<% end %>
+<% content_for :title do %><%= t 'campaigns.new_title' %><% end %>
 
 <% content_for :application_js do %>
     <%= javascript_include_tag('application_form', 'data-turbolinks-track' => true) %>
@@ -13,12 +13,12 @@
 
     <div class="panel-heading">
       <div class="panel-title">
-        New campaign
+        <%= t 'campaigns.new_campaign' %>
       </div>
     </div>
 
     <div class="panel-body">
-      <h5>Create a new campaign</h5>
+      <h5><%= t 'campaigns.create' %></h5>
 
       <%= render 'form' %>
     </div>
