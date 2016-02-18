@@ -21,7 +21,7 @@ ActiveAdmin.register Topic do
    f.input :main_color, input_html: { class: 'colorpicker' }
    f.input :status_color, input_html: { class: 'colorpicker' }
    f.input :image, image_preview: true
-    f.input :locale, input_html:  { name: 'topic[locale]' }
+    # f.input :locale, input_html:  { name: 'topic[locale]' }
   end
   f.actions
  end
