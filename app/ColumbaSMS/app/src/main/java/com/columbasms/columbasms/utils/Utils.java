@@ -1,5 +1,7 @@
 package com.columbasms.columbasms.utils;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.telephony.SmsManager;
@@ -28,12 +30,17 @@ public class Utils {
 
     //TIMESTAMP CAMPAIGN
 
-    public static String getTimestamp(String time){
+    public static String getTimestamp(String time, Activity a){
         Calendar cal = Calendar.getInstance();
         Date currentLocalTime = cal.getTime();
         String dtArrival = time;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         String dtDeparture = format.format(currentLocalTime);
+        String w = a.getResources().getString(R.string.week);
+        String d = a.getResources().getString(R.string.day);
+        String h = a.getResources().getString(R.string.hour);
+        String m = a.getResources().getString(R.string.minute);
+
         try {
             Date dateDeparture = format.parse(dtDeparture);
             Date dateArrival = format.parse(dtArrival);
@@ -43,13 +50,13 @@ public class Utils {
             long minutes = TimeUnit.MILLISECONDS.toMinutes(diff) - hours*60;
 
             if(hours>168) {
-                return Integer.toString((int)(hours/168)) + "w";
+                return Integer.toString((int)(hours/168)) + w;
             }else if(hours>=24 && hours<168){
-                return Integer.toString((int)(hours/24)) + "d";
+                return Integer.toString((int)(hours/24)) + d;
             }else if(hours<24 && hours>1){
-                return Integer.toString((int)(hours)) + "h";
+                return Integer.toString((int)(hours)) + h;
             }else {
-                return Integer.toString((int)(minutes)) + "m";
+                return Integer.toString((int)(minutes)) + m;
             }
         } catch (ParseException e) {
             e.printStackTrace();

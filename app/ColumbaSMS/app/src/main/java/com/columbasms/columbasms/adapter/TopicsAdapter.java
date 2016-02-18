@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
@@ -30,6 +31,7 @@ import com.android.volley.toolbox.Volley;
 import com.columbasms.columbasms.AdapterCallback;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.TopicProfileActivity;
+import com.columbasms.columbasms.fragment.TopicsFragment;
 import com.columbasms.columbasms.model.Topic;
 import com.columbasms.columbasms.utils.Utils;
 import com.columbasms.columbasms.utils.network.API_URL;
@@ -60,6 +62,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
     private static AdapterCallback adapterCallback;
     private float scale;
     private static String URL;
+    private Context context;
 
     // Pass in the contact array into the constructor
     public TopicsAdapter(List<Topic> ass, Activity a, float s,AdapterCallback ac) {
@@ -76,7 +79,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
     @Override
     public TopicsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        Context context = parent.getContext();
+        context = parent.getContext();
 
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -86,6 +89,8 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(contactView);
 
+
+
         return viewHolder;
     }
 
@@ -94,6 +99,8 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
     public void onBindViewHolder(TopicsAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
 
+        String follow_text = context.getResources().getString(R.string.follow);
+        String following_text = context.getResources().getString(R.string.following);
 
         final Topic topic = topics.get(position);
         String type_name = topic.getName();
@@ -101,9 +108,9 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
 
         TextView follow = viewHolder.follow;
         if (isSelected==false){
-            follow.setText("FOLLOW");
+            follow.setText(follow_text);
         }else {
-            follow.setText("FOLLOWING");
+            follow.setText(following_text);
         }
 
 

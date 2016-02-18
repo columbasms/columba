@@ -14,6 +14,8 @@
 
     <string name="save_as_a_group">Save as a group</string>
 
+    <string name="group_setting">Groups Settings</string>
+
     <string name="home">Home</string>
     <string name="topics">Topics</string>
     <string name="not">Notifications</string>
@@ -58,8 +60,26 @@
 
     <string name="disable_notify">Disable push notifications</string>
     <string name="msg_number">Messages number limit</string>
+    <string name="manage">Manage contacts lists</string>
 
     <string name="edit_name">Edit username</string>
     <string name="edit_img">Edit profile image</string>
     <string name="edit_cover">Edit cover image</string>
+
+    <string name="camp">CAMPAIGNS</string>
+    <string name="ass">ASSOCIATIONS</string>
+
+    <string name="share">Share via</string>
+
+    <string name="week">w</string>
+    <string name="day">d</string>
+    <string name="hour">h</string>
+    <string name="minute">m</string>
+
+    <string name="no_internet">No Internet Connection!</string>
+    <string name="retry">RETRY</string>
+
+    <string name="pic_select">Select Picture</string>
+    <string name="enter_name">Enter your name</string>
+
 </resources>

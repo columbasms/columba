@@ -135,7 +135,9 @@ public class EditProfileActivity extends AppCompatActivity{
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE_PROFILE);
+                startActivityForResult(Intent.createChooser(intent,
+                        activity.getResources().getString(R.string.pic_select)),
+                        RESULT_LOAD_IMAGE_PROFILE);
             }
         });
 
@@ -165,7 +167,9 @@ public class EditProfileActivity extends AppCompatActivity{
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_LOAD_IMAGE_COVER);
+                startActivityForResult(Intent.createChooser(intent,
+                        activity.getResources().getString(R.string.pic_select)),
+                        RESULT_LOAD_IMAGE_COVER);
             }
         });
 

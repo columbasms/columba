@@ -68,6 +68,11 @@
             android:name=".activity.SettingsActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity
+            android:name=".activity.GroupSettingsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="83542be45fe846536111fce705ca7bd4dc2e38dd" />

@@ -261,7 +261,7 @@ public class AssociationProfileActivity extends AppCompatActivity implements Ada
 
                                 Association ass = new Association(a.getString("id"),a.getString("organization_name"),a.getString("avatar_normal"),null,null);
 
-                                CharityCampaign m = new CharityCampaign(o.getString("id"),o.getString("message"),ass,topicList, Utils.getTimestamp(o.getString("created_at").substring(0, 19)));
+                                CharityCampaign m = new CharityCampaign(o.getString("id"),o.getString("message"),ass,topicList, Utils.getTimestamp(o.getString("created_at").substring(0, 19), mainActivity));
 
                                 campaigns_list.add(0, m);
 
@@ -294,8 +294,8 @@ public class AssociationProfileActivity extends AppCompatActivity implements Ada
 
     private static void showSnackbar(){
         Snackbar snackbar = Snackbar
-                .make(coordinatorLayout, "No Internet Connection!", Snackbar.LENGTH_LONG)
-                .setAction("RETRY", new View.OnClickListener() {
+                .make(coordinatorLayout, res.getString(R.string.no_internet), Snackbar.LENGTH_LONG)
+                .setAction(res.getString(R.string.retry), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         getData();

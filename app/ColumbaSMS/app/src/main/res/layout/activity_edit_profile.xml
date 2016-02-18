@@ -32,6 +32,7 @@
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar_edit_profile"
+                    android:title="@string/edit_bar"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:minHeight="?attr/actionBarSize"
@@ -182,7 +183,7 @@
                     android:id="@+id/editUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter your name"
+                    android:hint="@string/enter_name"
                     android:singleLine="true"
                     android:paddingBottom="16dp"
                     android:textColor="@color/colorText"
