@@ -132,7 +132,7 @@ module Api
             result += [current_topic.slice(:id, :name, :main_color, :status_color).as_json.merge(:following => false)]
           end
         end
-        render json: result, root: false
+        render json: result, root: false, serializer: Api::V1::TopicSerializer
       end
 
       # GET users/:id/topics/:topic_id
