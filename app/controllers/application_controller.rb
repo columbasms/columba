@@ -15,11 +15,13 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    if language_change_necessary?
-      I18n.locale = the_new_locale
-      set_locale_cookie(I18n.locale)
-    else
-      use_locale_from_cookie
+    if controller_name.split('::').first != 'Api'
+      if language_change_necessary?
+        I18n.locale = the_new_locale
+        set_locale_cookie(I18n.locale)
+      else
+        use_locale_from_cookie
+      end
     end
   end
 
