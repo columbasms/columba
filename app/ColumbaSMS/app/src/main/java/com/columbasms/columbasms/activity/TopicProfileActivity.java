@@ -1,6 +1,7 @@
 package com.columbasms.columbasms.activity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -62,6 +63,9 @@ public class TopicProfileActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        Resources res = getResources();
+        String camp = res.getString(R.string.camp);
+        String ass = res.getString(R.string.ass);
         Bundle bundle = new Bundle();
         bundle.putString("topic_id", TOPIC_ID);
         CampaignsTabFragment ctf = new CampaignsTabFragment();
@@ -70,8 +74,8 @@ public class TopicProfileActivity extends AppCompatActivity {
         atf.setArguments(bundle);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(ctf, "CAMPAIGNS");
-        adapter.addFragment(atf, "ASSOCIATIONS");
+        adapter.addFragment(ctf, camp);
+        adapter.addFragment(atf, ass);
         viewPager.setAdapter(adapter);
     }
 

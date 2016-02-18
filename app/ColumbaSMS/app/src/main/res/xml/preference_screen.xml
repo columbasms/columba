@@ -7,7 +7,8 @@
     </CheckBoxPreference>
     <EditTextPreference
         android:key="msg_number"
-        android:title="@string/msg_number">
+        android:title="@string/msg_number"
+        android:inputType="number">
     </EditTextPreference>
 
 </PreferenceScreen>

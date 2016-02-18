@@ -243,7 +243,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                 JSONObject a = new JSONObject(o.getString("organization"));
                                 Association ass = new Association(a.getString("id"),a.getString("organization_name"),a.getString("avatar_normal"),null,null);
 
-                                CharityCampaign m = new CharityCampaign(o.getString("id"),o.getString("message"),ass,topicList, Utils.getTimestamp(o.getString("created_at").substring(0, 19)));
+                                CharityCampaign m = new CharityCampaign(o.getString("id"),o.getString("message"),ass,topicList, Utils.getTimestamp(o.getString("created_at").substring(0, 19), activity));
 
                                 campaigns_list.add(0, m);
 

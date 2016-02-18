@@ -62,6 +62,9 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             final CharityCampaign c = mItemList.get(position);
             final Association a = c.getOrganization();
 
+            Resources res = mainActivity.getResources();
+            final String share_via = res.getString(R.string.share);
+
             ImageView profile_image = holder.profile_image;
             profile_image.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -141,7 +144,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     String shareBody = c.getMessage();
                     sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
                     sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                    mainActivity.startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                    mainActivity.startActivity(Intent.createChooser(sharingIntent, share_via));
                 }
 
             });

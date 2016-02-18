@@ -5,6 +5,14 @@
     <string name="feedback">Feedback</string>
     <string name="guide">Guida</string>
 
+    <string name="select_receivers">Seleziona ricevitori</string>
+
+    <string name="notification_follow_message">ha lanciato una nuova campagna!</string>
+    <string name="notification_trust_message">Hai appena condiviso una campagna per</string>
+
+    <string name="save_as_a_group">Salva come gruppo</string>
+    <string name="group_setting">Impostazioni Gruppi</string>
+
     <string name="home">Home</string>
     <string name="topics">Tematiche</string>
     <string name="not">Notifiche</string>
@@ -12,7 +20,7 @@
     <string name="follow">SEGUI</string>
     <string name="following">SEGUI GIÀ</string>
 
-    <string name="more">MORE</string>
+    <string name="more">SCOPRI</string>
     <string name="hide">NASCONDI</string>
 
     <string name="associations">Associazioni</string>
@@ -23,6 +31,7 @@
 
 
     <string name="dialog_contacts_title">Seleziona contatti</string>
+    <string name="dialog_contactsGroups_title">Seleziona un gruppo</string>
     <string name="dialog_number_verification_title">Verifica in corso</string>
     <string name="dialog_number_verification_verify">VERIFICA</string>
 
@@ -40,8 +49,26 @@
 
     <string name="disable_notify">Disattiva notifiche push</string>
     <string name="msg_number">Numero limite di messaggi</string>
+    <string name="manage">Gestisci liste contatti</string>
 
     <string name="edit_name">Modifica username</string>
     <string name="edit_img">Cambia immagine profilo</string>
     <string name="edit_cover">Cambia immagine di copertina</string>
+
+    <string name="camp">CAMPAGNE</string>
+    <string name="ass">ASSOCIAZIONI</string>
+
+    <string name="share">Condividi con</string>
+
+    <string name="week">s</string>
+    <string name="day">g</string>
+    <string name="hour">o</string>
+    <string name="minute">m</string>
+
+    <string name="no_internet">Connessione assente!</string>
+    <string name="retry">RIPROVA</string>
+
+    <string name="pic_select">Seleziona Immagine</string>
+    <string name="enter_name">Inserisci il tuo nome</string>
+
 </resources>
