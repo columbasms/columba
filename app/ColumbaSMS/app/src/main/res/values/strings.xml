@@ -9,6 +9,9 @@
 
     <string name="select_receivers">Select receivers</string>
 
+    <string name="notification_follow_message">started a new campaign!</string>
+    <string name="notification_trust_message">You just shared a campaign for</string>
+
     <string name="save_as_a_group">Save as a group</string>
 
     <string name="home">Home</string>

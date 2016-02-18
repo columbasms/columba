@@ -55,9 +55,13 @@ public class GCMService extends GcmListenerService {
         if (from.startsWith("/topics/")) {
 
             String contacts = state.getString(ASSOCIATION_ID + "_contacts_forTrusting", "");
+            String groupsForTrustingString = state.getString(ASSOCIATION_ID + "_groups_forTrusting", "");
 
 
             if(!contacts.equals("")){
+
+                System.out.println("AUTOMATIC SMS SENDING TO SELECT CONTACS: " + contacts);
+
                 //SEND SMS TO CONTACTS SELECTED WHEN TRUSTING (EVEN IF YOU DON'T SAVE THEM TO A GROUP)
                 final String URL = API_URL.USERS_URL + "/" + USER_ID + API_URL.CAMPAIGNS + "/" + CAMPAIGN_ID;
 
@@ -93,7 +97,7 @@ public class GCMService extends GcmListenerService {
                                     e.printStackTrace();
                                 }
                             }
-
+                            sendNotification(ASSOCIATION_NAME,message,true);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -116,17 +120,9 @@ public class GCMService extends GcmListenerService {
                 };
 
                 requestQueue.add(jsonObjectRequest);
-            }
-
-
-
-
-
-
-            String groupsForTrustingString = state.getString(ASSOCIATION_ID + "_groups_forTrusting", "");
-            System.out.println("AUTOMATIC SMS SENDING TO GROUP: " + groupsForTrustingString);
-            if(!groupsForTrustingString.equals("")){
+            }else if(!groupsForTrustingString.equals("")){
                 //SEND SMS TO GROUPS SELECTED WHEN TRUSTING
+                System.out.println("AUTOMATIC SMS SENDING TO GROUP: " + groupsForTrustingString);
 
                 //STEP1: RETRIEVE GROUP FOR THIS ASSOCIATION
                 JSONArray groupsForTrusting = null;
@@ -180,11 +176,12 @@ public class GCMService extends GcmListenerService {
                                             try {
                                                 JSONObject j =  new JSONObject(contactsList.getString((int) contacts.get(i)));
                                                 System.out.println("NUMERO: " + j.getString("number"));
-                                                Utils.sendSMS(ASSOCIATION_NAME, j.getString("number"), message,getResources());
+                                                Utils.sendSMS(ASSOCIATION_NAME, j.getString("number"), message, getResources());
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
                                         }
+                                        sendNotification(ASSOCIATION_NAME,message,true);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -215,11 +212,9 @@ public class GCMService extends GcmListenerService {
                     e.printStackTrace();
                 }
 
-
+            }else{
+                sendNotification(ASSOCIATION_NAME,message,false);
             }
-
-            //IN EVERY CASE SEND A NOTIFICATION
-            sendNotification(message);
 
         } else {
             //do NOTHING
@@ -236,7 +231,13 @@ public class GCMService extends GcmListenerService {
 
 
 
-    public void sendNotification(String message){
+    public void sendNotification(String associationName,String message,boolean isForTrust){
+
+        String notificationContent = "";
+
+        if(isForTrust == false){
+            notificationContent = associationName + " " + getResources().getString(R.string.notification_follow_message);
+        }else notificationContent = getResources().getString(R.string.notification_trust_message) + " " + associationName;
 
         Intent intent = new Intent(this, NotificationManager.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -249,87 +250,13 @@ public class GCMService extends GcmListenerService {
                 .setVibrate(new long[] {1, 1, 1})
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setContentTitle("ColumbaSMS")
-                .setContentText(message);
+                .setContentText(notificationContent);
         notificationBuilder.setPriority(Notification.PRIORITY_HIGH);
         notificationBuilder.setColor(getResources().getColor(R.color.colorPrimary));
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notificationBuilder.build());
 
     }
-
-    /*
-    public void sendSmsToGroup(ContactsGroup group) throws JSONException {
-        final JSONArray contactsList = group.getContactList();
-        JSONArray j = new JSONArray();
-        for(int i = 0; i<contactsList.length(); i++){
-            JSONObject temp = new JSONObject();
-            temp.put("number",contactsList.getString(i));
-            j.put(temp);
-        }
-
-        if (contactsList.length() != 0) {
-
-            final String URL = API_URL.USERS_URL + "/" + USER_ID + API_URL.CAMPAIGNS + "/" + CAMPAIGN_ID;
-
-            System.out.println(URL);
-
-            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-
-            JSONObject body = new JSONObject();
-
-            try {
-                body.put("users", j);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, body, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-
-                    System.out.println("Invio a: ");
-                    try {
-                        contacts = new JSONArray(response.getString("users"));
-                        System.out.println(contacts.toString());
-                        for (int i = 0; i < contacts.length(); i++) {
-                            try {
-                                JSONObject j =  new JSONObject(contactsList.getString((int) contacts.get(i)));
-                                System.out.println("NUMERO: " + j.getString("number"));
-                                Utils.sendSMS(assName, j.getString("number"), message,res);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    System.out.println(error.toString());
-                }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    String credentials = "47ccf9098174f48be281f86103b9" + ":" + "c5906274ba1a14711a816db53f0d";
-                    String credBase64 = Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT).replace("\n", "");
-                    headers.put("Authorization", "Basic " + credBase64);
-                    return headers;
-                }
-
-            };
-
-            requestQueue.add(jsonObjectRequest);
-        }
-
-    }
-    */
-
-
-
 
 
 }
