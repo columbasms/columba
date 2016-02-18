@@ -36,7 +36,6 @@
                         android:layout_height="0dp"
                         app:layout_widthPercent="100%"
                         app:layout_aspectRatio="178%"
-                        android:src="@drawable/img_cover"
                         android:scaleType="centerCrop"/>
                 </android.support.percent.PercentRelativeLayout>
 
@@ -48,7 +47,6 @@
                     android:layout_height="64dp"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/percentRelativeLayout_usr"
-                    android:src="@drawable/circle_profile_image"
                     android:layout_marginTop="-34dp"
                     android:layout_gravity="center"/>
             </RelativeLayout>
@@ -74,8 +72,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@color/colorText"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
+                    android:textSize="34sp"
                     android:paddingBottom="16dp"/>
 
             </LinearLayout>
