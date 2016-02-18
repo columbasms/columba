@@ -29,8 +29,7 @@ test:
 production:
   adapter: mysql2
   encoding: utf8
-  database: columba_production
+  database: columba_development
   pool: 5
   username: root
-  password: columbapsw
-  socket: /var/run/mysqld/mysqld.sock
+  password: fioredicampo

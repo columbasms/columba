@@ -1,7 +1,8 @@
 class Api::V1::TopicsController < ApplicationController
   http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
-  before_filter :set_topic, only: [:show, :campaigns, :organizations]
+  before_filter :set_topic, only: [:show, :campaigns, :organizations, :update]
   before_filter :set_locale, exclude: [:organizations, :campaigns]
+  skip_before_filter :verify_authenticity_token
   force_ssl unless Rails.env.development?
 
   # GET /api/v1/topics
@@ -17,6 +18,15 @@ class Api::V1::TopicsController < ApplicationController
     @topics = @topics.offset(params[:offset]) if params[:offset].present?
 
     render json: @topics, root: false
+  end
+
+  # PUT /topics/{id}
+  def update
+    if @topic.update(topic_params)
+      render json: @topic, root: false
+    else
+      render json: @topic.errors, root: false
+    end
   end
 
   # GET /topics/{id}
@@ -36,16 +46,20 @@ class Api::V1::TopicsController < ApplicationController
 
   private
 
-  def set_topic
-    begin
-      @topic = Topic.find params[:id]
-    rescue ActiveRecord::RecordNotFound
-      render json: { errors: 'Topic not found' }
+    def topic_params
+      params[:topic].permit(:name, :description, :locale)
     end
-  end
 
-  def set_locale
-    I18n.locale = params[:locale] if params[:locale].present? and %w(en it).include?(params[:locale])
-  end
+    def set_topic
+      begin
+        @topic = Topic.find params[:id]
+      rescue ActiveRecord::RecordNotFound
+        render json: { errors: 'Topic not found' }
+      end
+    end
+
+    def set_locale
+      I18n.locale = params[:locale] if params[:locale].present? and %w(en it).include?(params[:locale])
+    end
 
 end
