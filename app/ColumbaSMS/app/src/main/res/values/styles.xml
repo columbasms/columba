@@ -29,5 +29,16 @@
         <item name="android:textColorSecondary">@color/colorText</item>
     </style>
 
+    <style name="EditText_Theme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
+
+    <style name="EditText_Theme2" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
 
 </resources>

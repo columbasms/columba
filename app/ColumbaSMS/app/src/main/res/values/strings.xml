@@ -1,11 +1,15 @@
 <resources>
     <string name="app_name">Columba</string>
 
-    <string name="version">v.0.1.1a</string>
+    <string name="version">v.0.3.0a</string>
 
     <string name="info">Info</string>
     <string name="feedback">Feedback</string>
     <string name="guide">Guide</string>
+
+    <string name="select_receivers">Select receivers</string>
+
+    <string name="save_as_a_group">Save as a group</string>
 
     <string name="home">Home</string>
     <string name="topics">Topics</string>
@@ -25,6 +29,7 @@
 
 
     <string name="dialog_contacts_title">Select contacts</string>
+    <string name="dialog_contactsGroups_title">Select a group</string>
     <string name="dialog_number_verification_title">Verification</string>
     <string name="dialog_number_verification_verify">VERIFY</string>
 

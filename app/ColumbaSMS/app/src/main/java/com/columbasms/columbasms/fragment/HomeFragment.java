@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment {
 
     private static CacheRequest get(){
 
-        String URL = API_URL.CAMPAIGNS_URL + "?order_field=created_at" + "&" + "?user_id=" + USER_ID;
+        String URL = API_URL.CAMPAIGNS_URL + "?order_field=created_at" + "&" + "user_id=" + USER_ID;
 
         System.out.println(URL);
 

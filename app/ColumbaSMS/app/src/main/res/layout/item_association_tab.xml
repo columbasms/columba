@@ -49,8 +49,7 @@
                 android:layout_marginBottom="2dp"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="16dp"
-                android:text="Emergency"/>
+                android:textSize="16dp"/>
 
                 <TextView
                     android:id="@+id/taba_description"
@@ -59,8 +58,7 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:layout_marginLeft="8dp"
-                    android:textSize="14dp"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
+                    android:textSize="14dp"/>
 
 
 
@@ -85,10 +83,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="2dp"
-                        android:textSize="14dp"
-                        android:text="100"/>
+                        android:textSize="14dp"/>
 
                     <ImageView
+                        android:id="@+id/favourite"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ic_favorite_black_24dp"/>

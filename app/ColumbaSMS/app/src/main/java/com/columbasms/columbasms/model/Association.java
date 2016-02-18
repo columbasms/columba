@@ -35,6 +35,16 @@ public class Association {
             this.trusting = trusting;
         }
 
+        public Association (String id,String organization_name, String avatar_normal, String cover_normal, String description, int followers, boolean following){
+            this.id = id;
+            this.organization_name = organization_name;
+            this.avatar_normal = avatar_normal;
+            this.cover_normal = cover_normal;
+            this.description = description;
+            this.followers = followers;
+            this.following = following;
+        }
+
 
         public String getId() {
             return id;

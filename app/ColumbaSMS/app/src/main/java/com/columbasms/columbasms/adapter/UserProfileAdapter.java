@@ -2,10 +2,12 @@ package com.columbasms.columbasms.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Visibility;
@@ -18,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.AssociationProfileActivity;
+import com.columbasms.columbasms.activity.EditProfileActivity;
 import com.columbasms.columbasms.activity.TopicProfileActivity;
 import com.columbasms.columbasms.fragment.ChooseContactsFragment;
 import com.columbasms.columbasms.model.Association;
@@ -57,6 +60,8 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
         @Bind(R.id.message)TextView message;
         @Bind(R.id.ass_name)TextView assName;
         @Bind(R.id.send)ImageView send;
+        @Bind(R.id.share)ImageView share;
+        @Bind(R.id.timestamp)TextView timestamp;
         @Bind(R.id.profile_image)ImageView profile_image;
 
         public GroupViewHolder(View parent) {
@@ -72,6 +77,7 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
         @Bind(R.id.profile_card_usr)CardView cardView;
         @Bind(R.id.profile_usr_name)TextView usrName;
         @Bind(R.id.supported_campaigns)TextView usrCampaignsTitle;
+        @Bind(R.id.edit)Button edit;
         @Bind(R.id.cover_image_usr) ImageView coverImage;
         @Bind(R.id.thumbnail_image) ImageView thumbnailImage;
 
@@ -118,6 +124,9 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
             case TYPE_PROFILE:
                 final ProfileViewHolder holder1 = (ProfileViewHolder) viewHolder;
 
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
+                SharedPreferences.Editor editor_account_information = sp.edit();
+
                 holder1.usrName.setText(user.getFullName());
 
                 String info = "100" + " followers" + " - " + mItemList.size() + " campaigns";
@@ -133,10 +142,24 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
                 });
 
                 final ImageView cover = holder1.coverImage;
-                //Utils.downloadImage(user.getCover_image(), cover, false, false);
+                Utils.downloadImage(user.getCover_image(), cover, false, false);
 
                 final ImageView p = holder1.thumbnailImage;
-                //Utils.downloadImage(user.getProfile_image(),p,true,true);
+                Utils.downloadImage(user.getProfile_image(),p,true,true);
+
+                editor_account_information.putString("url_profile", user.getProfile_image());
+                editor_account_information.putString("url_cover", user.getCover_image());
+                editor_account_information.apply();
+
+                final Button edit = holder1.edit;
+                edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(v.getContext(), EditProfileActivity.class);
+                        i.putExtra("usr_name", user.getFullName());
+                        v.getContext().startActivity(i);
+                    }
+                });
 
 
                 break;
@@ -197,6 +220,12 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
 
                 ImageView send_hided = holder2.send;
                 send_hided.setVisibility(View.GONE);
+
+                TextView time = holder2.timestamp;
+                time.setText(c.getTimestamp());
+
+                ImageView share_hided = holder2.share;
+                share_hided.setVisibility(View.GONE);
 
                 break;
         }

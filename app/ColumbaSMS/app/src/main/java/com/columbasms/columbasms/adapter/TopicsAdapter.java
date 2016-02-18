@@ -31,11 +31,13 @@ import com.columbasms.columbasms.activity.TopicProfileActivity;
 import com.columbasms.columbasms.model.Topic;
 import com.columbasms.columbasms.utils.Utils;
 import com.columbasms.columbasms.utils.network.API_URL;
+import com.google.android.gms.gcm.GcmPubSub;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -222,6 +224,9 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         }
 
     }
+
+
+
 
 }
 

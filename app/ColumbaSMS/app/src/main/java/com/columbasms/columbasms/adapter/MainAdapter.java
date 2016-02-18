@@ -1,21 +1,14 @@
 package com.columbasms.columbasms.adapter;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.LabeledIntent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +17,13 @@ import android.widget.TextView;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.AssociationProfileActivity;
 import com.columbasms.columbasms.activity.TopicProfileActivity;
+import com.columbasms.columbasms.fragment.AskContactsInputFragment;
 import com.columbasms.columbasms.fragment.ChooseContactsFragment;
 import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
 import com.columbasms.columbasms.model.Topic;
 import com.columbasms.columbasms.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -123,9 +116,18 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     Bundle bundle = new Bundle();
                     bundle.putString("message", c.getMessage());
                     bundle.putString("campaign_id", c.getId());
-                    ChooseContactsFragment newFragment = new ChooseContactsFragment();
-                    newFragment.setArguments(bundle);
-                    newFragment.show(fragmentManager, a.getOrganization_name());
+                    bundle.putString("ass_id", a.getId());
+                    SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(mainActivity);
+
+                    if (p.getString("thereIsaGroup", "").equals("")){
+                        ChooseContactsFragment newFragment = new ChooseContactsFragment();
+                        newFragment.setArguments(bundle);
+                        newFragment.show(fragmentManager, a.getOrganization_name());
+                    }else{
+                        AskContactsInputFragment newFragment = new AskContactsInputFragment();
+                        newFragment.setArguments(bundle);
+                        newFragment.show(fragmentManager, a.getOrganization_name());
+                    }
                 }
             });
 
@@ -134,8 +136,14 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 @Override
                 public void onClick(View v) {
-
+                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    sharingIntent.setType("text/plain");
+                    String shareBody = c.getMessage();
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                    mainActivity.startActivity(Intent.createChooser(sharingIntent, "Share via"));
                 }
+
             });
 
         TextView time = holder.timestamp;

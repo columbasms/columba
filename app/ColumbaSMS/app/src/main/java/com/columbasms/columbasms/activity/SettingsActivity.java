@@ -1,12 +1,18 @@
 package com.columbasms.columbasms.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
+
 import com.columbasms.columbasms.R;
 
 
@@ -23,6 +29,13 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         addPreferencesFromResource(R.xml.preference_screen);
         LinearLayout root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
         Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar_settings, root, false);
+        bar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        bar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SettingsActivity.this.finish();
+            }
+        });
         root.addView(bar, 0); // insert at top
     }
 
@@ -46,4 +59,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
+
+
 }

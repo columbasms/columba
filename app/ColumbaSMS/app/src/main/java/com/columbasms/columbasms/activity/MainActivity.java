@@ -2,14 +2,10 @@ package com.columbasms.columbasms.activity;
 
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -23,17 +19,32 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.Volley;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.fragment.HomeFragment;
 import com.columbasms.columbasms.fragment.MapFragment;
 import com.columbasms.columbasms.fragment.NotificationsFragment;
 import com.columbasms.columbasms.fragment.SplashScreenFragment;
 import com.columbasms.columbasms.fragment.TopicsFragment;
+import com.columbasms.columbasms.utils.Utils;
+import com.columbasms.columbasms.utils.network.API_URL;
+import com.columbasms.columbasms.utils.network.CacheRequest;
+import com.google.android.gms.gcm.GcmReceiver;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.Timer;
 import java.util.TimerTask;
 import butterknife.Bind;
@@ -44,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static long SPLASH_SCREEN_DELAY = 1500;
     private ActionBarDrawerToggle mToggle;
+    private static View header;
+    private static String USER_ID;
+    private static Activity activity;
 
     @Bind(R.id.drawer_layout)DrawerLayout drawer;
     @Bind(R.id.list_view_drawer)NavigationView navView;
@@ -84,8 +98,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         System.out.println("APERTA");
 
 
-        final SharedPreferences state = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         //TOP TOOLBAR SETUP
         toolbar_top.setTitle("Home");
         toolbar_top.setNavigationIcon(R.drawable.ic_menu_white_24dp);
@@ -94,19 +106,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setSupportActionBar(toolbar_top);
 
-        View header= navView.getHeaderView(0);
-        TextView navHeader_phoneNumber = (TextView)header.findViewById(R.id.phone_number);
-        String phone_number = state.getString("phone_number", null);
-        TextView navHeader_userName = (TextView)header.findViewById(R.id.name);
-        String userName = state.getString("user_name", null);
 
-        if(phone_number==null) {
-            navHeader_phoneNumber.setText(getIntent().getStringExtra("phone_number"));
-        }navHeader_phoneNumber.setText(phone_number);
-
-        if(userName==null) {
-            navHeader_userName.setText(getIntent().getStringExtra("user_name"));
-        }navHeader_userName.setText(userName);
+        activity = this;
 
         navView.setNavigationItemSelectedListener(this);
 
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToggle.syncState();
 
 
+        final SharedPreferences state = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 
         if (state.getString("firstLaunch",null)==null && state.getString("splashed",null)==null) {
@@ -155,12 +157,75 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Simulate a long loading process on application startup.
         Timer timer = new Timer();
-    timer.schedule(task, SPLASH_SCREEN_DELAY);
+        timer.schedule(task, SPLASH_SCREEN_DELAY);
 
-        /*
+
         Intent intentGCMListen = new Intent(this,GcmReceiver.class);
         startService(intentGCMListen);
-        */
+
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        final SharedPreferences state = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        header= navView.getHeaderView(0);
+
+        TextView navHeader_phoneNumber = (TextView)header.findViewById(R.id.phone_number);
+        String phone_number = state.getString("phone_number", null);
+        TextView navHeader_userName = (TextView)header.findViewById(R.id.name);
+        String userName = state.getString("user_name", null);
+
+        if(phone_number==null) {
+            navHeader_phoneNumber.setText(getIntent().getStringExtra("phone_number"));
+        }navHeader_phoneNumber.setText(phone_number);
+
+        if(userName==null) {
+            navHeader_userName.setText(getIntent().getStringExtra("user_name"));
+        }navHeader_userName.setText(userName);
+
+        USER_ID = state.getString("user_id", null);
+        if(USER_ID==null)getIntent().getStringExtra("user_id");
+
+        getUser();
+
+    }
+
+    private static void getUser(){
+
+        String URL = API_URL.USERS_URL + "/" + USER_ID;
+
+        System.out.println(URL);
+
+        CacheRequest request = new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                try {
+                    final String jsonString = new String(response.data,
+                            HttpHeaderParser.parseCharset(response.headers));
+
+                    JSONObject o = new JSONObject(jsonString);
+                    ImageView profile = (ImageView)header.findViewById(R.id.profile_image);
+                    ImageView cover = (ImageView)header.findViewById(R.id.cover_image);
+                    Utils.downloadImage(o.getString("avatar_normal"), profile, true, true);
+                    Utils.downloadImage(o.getString("cover_normal"), cover, false, false);
+
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.toString());
+            }
+        });
+        //Creating a Request Queue
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+
+        //Adding request to the queue
+        requestQueue.add(request);
 
     }
 
@@ -222,10 +287,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-
-
 
 
 }

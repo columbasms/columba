@@ -131,7 +131,7 @@ public class AssociationsTabFragment extends Fragment {
 
                                 JSONObject o = jsonArray.getJSONObject(i);
 
-                                Association a = new Association(o.getString("id"),o.getString("organization_name"),o.getString("avatar_normal"),o.getString("cover_normal"), o.getString("description"));
+                                Association a = new Association(o.getString("id"),o.getString("organization_name"),o.getString("avatar_normal"),o.getString("cover_normal"), o.getString("description"),o.getInt("followers"),false);
 
                                 associations_list.add(a);
 

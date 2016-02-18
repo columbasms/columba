@@ -33,7 +33,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:src="@drawable/circle_profile_image"
-            android:id="@+id/circleView"
+            android:id="@+id/profile_image"
             android:layout_marginBottom="8dp"/>
 
 

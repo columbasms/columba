@@ -78,9 +78,8 @@ public class AssociationsTabAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         viewHolder.taba_assName.setText(a.getOrganization_name());
         viewHolder.taba_description.setText(a.getDescription());
+        viewHolder.taba_follower.setText(Integer.toString(a.getFollowers()));
 
-
-        //viewHolder.taba_follower.setText(a.getFollower());
         final ImageView p = viewHolder.taba_profile_image;
         Utils.downloadImage(a.getAvatar_normal(), p, false, false);
 

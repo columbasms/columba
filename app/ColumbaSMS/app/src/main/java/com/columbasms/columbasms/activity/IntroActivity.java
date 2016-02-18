@@ -180,6 +180,7 @@ public class IntroActivity extends AppIntro {
                                     Intent i = new Intent(getApplicationContext(),MainActivity.class);
                                     i.putExtra("phone_number", phoneNumber);
                                     i.putExtra("user_name", digitsClient.getString("user_name"));
+                                    i.putExtra("user_id", digitsClient.getString("id"));
                                     startActivity(i);
                                     finish();
 

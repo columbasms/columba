@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -133,8 +134,11 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int card_size = userProfileAdapter.getCardSize();
                 scrollDy += dy;
-
-                if (scrollDy > card_size) {
+                if(card_size==0){
+                    cd.setAlpha(0);
+                    toolbar.setTitle("");
+                    scrollDy=0;
+                }else if (scrollDy > card_size) {
                     cd.setAlpha(255);
                     toolbar.setTitle(usrName);
                 } else if (scrollDy <= 0) {
@@ -235,7 +239,6 @@ public class UserProfileActivity extends AppCompatActivity {
                                     topicList.add(new Topic(t.getString("id"),t.getString("name"),false,t.getString("main_color"), t.getString("status_color")));
                                 }
 
-
                                 JSONObject a = new JSONObject(o.getString("organization"));
                                 Association ass = new Association(a.getString("id"),a.getString("organization_name"),a.getString("avatar_normal"),null,null);
 
@@ -322,5 +325,12 @@ public class UserProfileActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        System.out.println("RIENTRATO IN USER PROFILE");
+        getData();
     }
 }

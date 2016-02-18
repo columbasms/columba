@@ -50,6 +50,12 @@
             android:name=".activity.IntroActivity"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".activity.EditProfileActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">

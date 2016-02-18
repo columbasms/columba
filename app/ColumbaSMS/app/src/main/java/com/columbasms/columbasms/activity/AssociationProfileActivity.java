@@ -2,6 +2,7 @@ package com.columbasms.columbasms.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
@@ -82,9 +84,14 @@ public class AssociationProfileActivity extends AppCompatActivity implements Ada
         res = getResources();
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        System.out.println(sp.getString(ASSOCIATION_NAME + "_contacts_forTrusting", ""));
         USER_ID =  sp.getString("user_id", "");
         ASSOCIATION_ID = getIntent().getStringExtra("ass_id");
         ASSOCIATION_NAME = getIntent().getStringExtra("ass_name");
+
+        System.out.println("CONTATTI PER IL TRUST DI " + ASSOCIATION_NAME + ": " + sp.getString(ASSOCIATION_ID + "_contacts_forTrusting", ""));
+        System.out.println("GRUPPI PER IL TRUST DI " + ASSOCIATION_NAME + ": " + sp.getString(ASSOCIATION_ID + "_groups_forTrusting", ""));
 
         coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinatorLayout);
         mySwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh_association_profile);
@@ -147,7 +154,10 @@ public class AssociationProfileActivity extends AppCompatActivity implements Ada
                 int card_size = associationProfileAdapter.getCardSize();
                 scrollDy += dy;
 
-                if (scrollDy > card_size) {
+                if(card_size==0){
+                    cd.setAlpha(0);
+                    toolbar.setTitle("");
+                }else  if (scrollDy > card_size) {
                     cd.setAlpha(255);
                     toolbar.setTitle(ASSOCIATION_NAME);
                 } else if (scrollDy <= 0) {
@@ -313,18 +323,30 @@ public class AssociationProfileActivity extends AppCompatActivity implements Ada
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
         switch (item.getItemId()) {
             case R.id.action_info:
+                i = new Intent(this,InfoActivity.class);
+                startActivity(i);
                 return true;
             case R.id.action_feedback:
+                Intent j = new Intent(Intent.ACTION_SEND);
+                j.setType("message/rfc822");
+                j.putExtra(Intent.EXTRA_EMAIL  , new String[]{"columbasms@gmail.com"});
+                j.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
+                j.putExtra(Intent.EXTRA_TEXT, "");
+                try {
+                    startActivity(Intent.createChooser(j, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(AssociationProfileActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case R.id.action_guide:
+                //i = new Intent(this,GuideActivity.class);
+                //startActivity(i);
                 return true;
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
     @Override

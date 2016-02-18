@@ -17,5 +17,6 @@ public class API_URL {
     public static final String CAMPAIGNS = "/campaigns";
     public static final String ASSOCIATIONS = "/organizations";
     public static final String TOPICS = "/topics";
+    public static final String IMAGES = "/images";
 
 }

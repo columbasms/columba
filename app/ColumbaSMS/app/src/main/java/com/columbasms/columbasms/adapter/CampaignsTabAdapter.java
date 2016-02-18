@@ -2,9 +2,11 @@ package com.columbasms.columbasms.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.AssociationProfileActivity;
 import com.columbasms.columbasms.activity.TopicProfileActivity;
+import com.columbasms.columbasms.fragment.AskContactsInputFragment;
 import com.columbasms.columbasms.fragment.ChooseContactsFragment;
 import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
@@ -90,9 +93,18 @@ public class CampaignsTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 Bundle bundle = new Bundle();
                 bundle.putString("message", c.getMessage());
                 bundle.putString("campaign_id", c.getId());
-                ChooseContactsFragment newFragment = new ChooseContactsFragment();
-                newFragment.setArguments(bundle);
-                newFragment.show(fragmentManager, a.getOrganization_name());
+                bundle.putString("ass_id", a.getId());
+                SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(mainActivity);
+
+                if (p.getString("thereIsaGroup", "").equals("")){
+                    ChooseContactsFragment newFragment = new ChooseContactsFragment();
+                    newFragment.setArguments(bundle);
+                    newFragment.show(fragmentManager, a.getOrganization_name());
+                }else{
+                    AskContactsInputFragment newFragment = new AskContactsInputFragment();
+                    newFragment.setArguments(bundle);
+                    newFragment.show(fragmentManager, a.getOrganization_name());
+                }
             }
         });
 
@@ -101,11 +113,12 @@ public class CampaignsTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, c.getMessage());
-                intent.setPackage("com.google.android.apps.plus");
-                mainActivity.startActivity(intent);
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = c.getMessage();
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                mainActivity.startActivity(Intent.createChooser(sharingIntent, "Share via"));
             }
         });
 

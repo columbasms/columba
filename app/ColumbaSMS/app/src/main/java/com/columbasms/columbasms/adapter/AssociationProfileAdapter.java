@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
@@ -32,13 +33,17 @@ import com.android.volley.toolbox.Volley;
 import com.columbasms.columbasms.AdapterCallback;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.TopicProfileActivity;
+import com.columbasms.columbasms.fragment.AskContactsInputFragment;
 import com.columbasms.columbasms.fragment.ChooseContactsFragment;
+import com.columbasms.columbasms.fragment.ChooseGroupFragment;
 import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
 import com.columbasms.columbasms.model.Topic;
 import com.columbasms.columbasms.utils.Utils;
 import com.columbasms.columbasms.utils.network.API_URL;
+import com.google.android.gms.gcm.GcmPubSub;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +81,7 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
         @Bind(R.id.message)TextView message;
         @Bind(R.id.ass_name)TextView associationName;
         @Bind(R.id.send)ImageView send;
+        @Bind(R.id.share)ImageView share;
         @Bind(R.id.timestamp)TextView timestamp;
         @Bind(R.id.profile_image)ImageView profile_image;
 
@@ -199,6 +205,28 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                                 {
                                     @Override
                                     public void onResponse(String response) {
+                                        SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(activity);
+                                        if (parameter.equals("true")){
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("flag", "true");
+                                            bundle.putString("ass_id", association.getId());
+                                            if (p.getString("thereIsaGroup", "").equals("")){
+                                                ChooseContactsFragment newFragment = new ChooseContactsFragment();
+                                                newFragment.setArguments(bundle);
+                                                newFragment.show(fragmentManager, association.getId());
+                                            }else{
+                                                AskContactsInputFragment newFragment = new AskContactsInputFragment();
+                                                newFragment.setArguments(bundle);
+                                                newFragment.show(fragmentManager, association.getId());
+                                            }
+                                        }else{
+                                            //HAI FATTO UNTRUST RIMUOVO LA LISTA DEI GRUPPI E I CONTATTI PER QUESTA ASSOCIAZIONE
+                                            SharedPreferences.Editor editor_account_information = p.edit();
+                                            editor_account_information.remove(association.getId() + "_groups_forTrusting");
+                                            editor_account_information.remove(association.getId() + "_contacts_forTrusting");
+                                            editor_account_information.apply();
+                                        }
+
                                         dialog.dismiss();
                                         adapterCallback.onMethodCallback();
                                     }
@@ -236,7 +264,7 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
 
                 });
 
-                ImageView f = holder1.favourite;
+                final ImageView f = holder1.favourite;
                 if (association.isFollowing()){
                     f.setBackgroundResource(R.drawable.ic_favorite_white_36dp);
                     t.setVisibility(View.VISIBLE);
@@ -252,6 +280,10 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                     @Override
                     public void onClick(View v) {
 
+                        if(f.getTag().equals("0")){
+                            subscribeTopic();
+                        }else unsubscribeTopic();
+
                         final ProgressDialog dialog = new ProgressDialog(activity);
                         dialog.show();
                         dialog.setCancelable(false);
@@ -266,6 +298,13 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
+                                        //HAI FATTO UNTRUST RIMUOVO LA LISTA DEI GRUPPI E I CONTATTI PER QUESTA ASSOCIAZIONE
+                                        SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(activity);
+                                        SharedPreferences.Editor editor_account_information = p.edit();
+                                        editor_account_information.remove(association.getId() + "_groups_forTrusting");
+                                        editor_account_information.remove(association.getId() + "_contacts_forTrusting");
+                                        editor_account_information.apply();
+
                                         dialog.dismiss();
                                         adapterCallback.onMethodCallback();
                                     }
@@ -309,9 +348,10 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
 
                 GroupViewHolder holder2 = (GroupViewHolder) viewHolder;
                 final CharityCampaign c = mItemList.get(position-1);
+                final Association a = c.getOrganization();
 
 
-                TextView an = holder2.associationName;
+                final TextView an = holder2.associationName;
                 an.setText(c.getOrganization().getOrganization_name());
 
                 final List<Topic> topicList = c.getTopics();
@@ -333,10 +373,34 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
                         Bundle bundle = new Bundle();
                         bundle.putString("message", c.getMessage());
                         bundle.putString("campaign_id", c.getId());
-                        ChooseContactsFragment newFragment = new ChooseContactsFragment();
-                        newFragment.setArguments(bundle);
-                        newFragment.show(fragmentManager, association.getOrganization_name());
+                        bundle.putString("ass_id", a.getId());
+                        SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(activity);
+
+                        if (p.getString("thereIsaGroup", "").equals("")){
+                            ChooseContactsFragment newFragment = new ChooseContactsFragment();
+                            newFragment.setArguments(bundle);
+                            newFragment.show(fragmentManager, a.getOrganization_name());
+                        }else{
+                            AskContactsInputFragment newFragment = new AskContactsInputFragment();
+                            newFragment.setArguments(bundle);
+                            newFragment.show(fragmentManager, a.getOrganization_name());
+                        }
                     }
+                });
+
+                ImageView share = holder2.share;
+                share.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                        sharingIntent.setType("text/plain");
+                        String shareBody = c.getMessage();
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                        activity.startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                    }
+
                 });
 
                 final ImageView pi = holder2.profile_image;
@@ -358,6 +422,46 @@ public class AssociationProfileAdapter extends RecyclerView.Adapter<AssociationP
 
     public int getCardSize(){
         return card_size;
+    }
+
+    private void subscribeTopic() {
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(activity);
+                String token = p.getString("gcm-token","");
+                System.out.println("/topics" + "/organization_" + association.getId());
+                GcmPubSub pubSub = GcmPubSub.getInstance(activity);
+
+                try {
+                    pubSub.subscribe(token, "/topics" + "/organization_" + association.getId(), null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+        }.execute(null, null, null);;
+    }
+
+    private void unsubscribeTopic() {
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(activity);
+                String token = p.getString("gcm-token","");
+                System.out.println("/topics" + "/organization_" + association.getId());
+                GcmPubSub pubSub = GcmPubSub.getInstance(activity);
+
+                try {
+                    pubSub.unsubscribe(token, "/topics" + "/organization_" + association.getId());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+        }.execute(null, null, null);;
     }
 
 
