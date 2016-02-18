@@ -71,19 +71,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Matteo Brienza"
                     android:textColor="@color/colorText"
                     android:textSize="34sp"
                     android:paddingBottom="8dp"/>
-
-                <TextView
-                    android:id="@+id/profile_associationFollowed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:gravity="center"
-                    android:textColor="@color/colorText"
-                    android:textSize="14sp"/>
 
             </LinearLayout>
 
@@ -119,26 +109,52 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:layout_margin="16dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/supported_campaigns"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/supported_campaigns"
-            android:gravity="center_vertical"/>
-        <TextView
-            android:id="@+id/number_campaigns"
-            android:paddingLeft="1dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:gravity="center_vertical"/>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/followed_association"/>
+
+            <TextView
+                android:id="@+id/na"
+                android:layout_marginLeft="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/see_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:text="SEE MORE"/>
+
+        </LinearLayout>
+        </LinearLayout>
 
 
 </LinearLayout>

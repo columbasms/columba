@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -131,10 +133,8 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         LinearLayout bc =viewHolder.bc;
         bc.setBackgroundColor(Color.parseColor(topic.getMainColor()));
 
-
-
-
-
+        ImageView im = viewHolder.image;
+        Utils.downloadImage(topic.getImage(), im, false, false);
     }
 
 
@@ -157,6 +157,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         @Bind(R.id.background_card)LinearLayout bc;
         @Bind(R.id.association_name)TextView nameTextView;
         @Bind(R.id.follow)TextView follow;
+        @Bind(R.id.cover_image)ImageView image;
         @OnClick(R.id.follow)
         public void onClick(View v) {
 

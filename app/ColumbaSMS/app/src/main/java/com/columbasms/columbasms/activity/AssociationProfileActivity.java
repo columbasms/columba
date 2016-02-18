@@ -253,7 +253,7 @@ public class AssociationProfileActivity extends AppCompatActivity implements Ada
                                 JSONArray topics = new JSONArray(o.getString("topics"));
                                 for(int j = 0; j< topics.length(); j++){
                                     JSONObject t = topics.getJSONObject(j);
-                                    topicList.add(new Topic(t.getString("id"),t.getString("name"),false,t.getString("main_color"), t.getString("status_color")));
+                                    topicList.add(new Topic(t.getString("id"),t.getString("name"),false,t.getString("main_color"), t.getString("status_color"),null));
                                 }
 
                                 JSONObject a = new JSONObject(o.getString("organization"));

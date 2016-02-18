@@ -67,19 +67,27 @@ public class MapFragment extends Fragment {
 
 
         // latitude and longitude
-        double latitude = 41.891256;
-        double longitude = 12.503574;
 
-        // create marker
-        MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Amici Tester di Columba");
+        //AMICI DI COLUMBA
+        double latitude1 = 41.891256;
+        double longitude1 = 12.503574;
+        MarkerOptions marker1 = new MarkerOptions().position(new LatLng(latitude1, longitude1)).title("Amici di Columba");
+        marker1.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+        googleMap.addMarker(marker1);
 
+        //AISM
+        double latitude2 = 41.895872;
+        double longitude2 = 12.494308;
+        MarkerOptions marker2 = new MarkerOptions().position(new LatLng(latitude2, longitude2)).title("AISM");
+        marker2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+        googleMap.addMarker(marker2);
 
-        // Changing marker icon
-        marker.icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-
-        // adding marker
-        googleMap.addMarker(marker);
+        //AISM
+        double latitude3 = 41.916041;
+        double longitude3 = 12.461371;
+        MarkerOptions marker3 = new MarkerOptions().position(new LatLng(latitude3, longitude3)).title("AIPD");
+        marker3.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+        googleMap.addMarker(marker3);
 
         /*
         CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -90,7 +98,7 @@ public class MapFragment extends Fragment {
 
         // Perform any camera updates here
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(latitude, longitude))      // Sets the center of the map to Mountain View
+                .target(new LatLng(latitude1, longitude1))      // Sets the center of the map to Mountain View
                 .zoom(11)
                 .build();                   // Creates a CameraPosition from the builder
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));

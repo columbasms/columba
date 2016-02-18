@@ -14,6 +14,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -28,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.columbasms.columbasms.MyApplication;
 import com.columbasms.columbasms.R;
+import com.columbasms.columbasms.adapter.AssociationsTabAdapter;
 import com.columbasms.columbasms.adapter.UserProfileAdapter;
 import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
@@ -60,6 +62,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private static CoordinatorLayout coordinatorLayout;
     private static List<CharityCampaign> campaigns_list;
+    private static List<Association> associations_list;
     private static UserProfileAdapter userProfileAdapter;
     private static String usrName;
     private static Activity activity;
@@ -117,6 +120,7 @@ public class UserProfileActivity extends AppCompatActivity {
         });
 
         campaigns_list = new ArrayList<>();
+        associations_list = new ArrayList<>();
 
 
         // Set layout manager to position the items
@@ -237,7 +241,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                 JSONArray topics = new JSONArray(o.getString("topics"));
                                 for(int j = 0; j< topics.length(); j++){
                                     JSONObject t = topics.getJSONObject(j);
-                                    topicList.add(new Topic(t.getString("id"),t.getString("name"),false,t.getString("main_color"), t.getString("status_color")));
+                                    topicList.add(new Topic(t.getString("id"),t.getString("name"),false,t.getString("main_color"), t.getString("status_color"),null));
                                 }
 
                                 JSONObject a = new JSONObject(o.getString("organization"));
@@ -254,9 +258,9 @@ public class UserProfileActivity extends AppCompatActivity {
                         }
                     }
 
-                    userProfileAdapter = new UserProfileAdapter(campaigns_list, user, res, activity);
+                    CacheRequest userAssociationsRequest = getUserAssociationsList();
 
-                    rvUserProfile.setAdapter(userProfileAdapter);
+                    MyApplication.getInstance().addToRequestQueue(userAssociationsRequest);
 
                 } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();
@@ -270,6 +274,61 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
+
+    private static CacheRequest getUserAssociationsList(){
+
+        String URL = API_URL.USERS_URL + "/" + USER_ID + API_URL.ASSOCIATIONS;
+
+
+        return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                try {
+                    final String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+
+                    JSONArray jsonArray = new JSONArray(jsonString);
+
+                    System.out.println(jsonString);
+
+                    associations_list.clear();
+
+                    if (jsonArray.length() > 0) {
+
+                        // looping through json and adding to movies list
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            try {
+
+                                JSONObject o = jsonArray.getJSONObject(i);
+
+                                Association a = new Association(o.getString("id"),o.getString("organization_name"),o.getString("avatar_normal"),o.getString("cover_normal"), o.getString("description"),o.getInt("followers"),false);
+
+                                associations_list.add(a);
+
+                            } catch (JSONException e) {
+                                System.out.println("JSON Parsing error: " + e.getMessage());
+                            }
+                        }
+                    }
+
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
+
+                final LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                userProfileAdapter = new UserProfileAdapter(campaigns_list,associations_list, user, res, activity);
+                rvUserProfile.setLayoutManager(layoutManager);
+                rvUserProfile.setAdapter(userProfileAdapter);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.toString());
+            }
+        });
+
+    }
 
     private static void showSnackbar(){
         Snackbar snackbar = Snackbar

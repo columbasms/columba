@@ -10,14 +10,16 @@ public class Topic {
         private boolean followed;
         private String mainColor;
         private String statusColor;
+        private String image;
 
 
-        public Topic(String id, String name, boolean followed,String mainColor,String statusColor){
+        public Topic(String id, String name, boolean followed,String mainColor,String statusColor,String image){
             this.id = id;
             this.name = name;
             this.followed = followed;
             this.mainColor = mainColor;
             this.statusColor = statusColor;
+            this.image = image;
         }
 
         public String getName() {
@@ -46,7 +48,7 @@ public class Topic {
             followed = b;
         }
 
-
-
-
+    public String getImage() {
+        return image;
+    }
 }

@@ -161,7 +161,7 @@ public class TopicsFragment extends Fragment implements AdapterCallback {
                             try {
                                 JSONObject o = jsonArray.getJSONObject(i);
 
-                                Topic t = new Topic(o.getString("id"),o.getString("name"),o.getBoolean("following"),o.getString("main_color"), o.getString("status_color"));
+                                Topic t = new Topic(o.getString("id"),o.getString("name"),o.getBoolean("following"),o.getString("main_color"), o.getString("status_color"),o.getString("image_mobile"));
 
                                 topics_list.add(t);
 

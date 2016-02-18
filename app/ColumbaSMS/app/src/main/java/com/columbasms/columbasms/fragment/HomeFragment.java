@@ -178,7 +178,7 @@ public class HomeFragment extends Fragment {
                                 JSONArray topics = new JSONArray(o.getString("topics"));
                                 for(int j = 0; j< topics.length(); j++){
                                     JSONObject t = topics.getJSONObject(j);
-                                    topicList.add(new Topic(t.getString("id"),t.getString("name"),false,t.getString("main_color"), t.getString("status_color")));
+                                    topicList.add(new Topic(t.getString("id"),t.getString("name"),false,t.getString("main_color"), t.getString("status_color"),null));
                                 }
 
 

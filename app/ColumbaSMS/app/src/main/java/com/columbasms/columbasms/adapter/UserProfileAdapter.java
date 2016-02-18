@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Visibility;
 import android.view.LayoutInflater;
@@ -41,6 +43,7 @@ import butterknife.ButterKnife;
 public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.ViewHolder> {
 
     private List<CharityCampaign> mItemList;
+    private List<Association> association_list;
     private User user;
     private int card_size;
     private Drawable profile_image;
@@ -48,13 +51,34 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
     private Activity activity;
 
     private static final int TYPE_PROFILE = 0;
-    private static final int TYPE_GROUP = 1;
+    private static final int TYPE_ASS_LIST = 1;
+    private static final int TYPE_CAMPAIGNS_SUPPORTED_TITLE = 2;
+    private static final int TYPE_GROUP = 3;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View v) {
             super(v);
         }
     }
+    public class FollowedAssociationsViewHolder extends ViewHolder {
+
+        @Bind(R.id.rv_horizontal_associations)RecyclerView rv_followedAssociation;
+        public FollowedAssociationsViewHolder(View parent) {
+            super(parent);
+            ButterKnife.bind(this, parent);
+        }
+    }
+
+    public class SupportedCampaignsTitleViewHolder extends ViewHolder {
+
+        @Bind(R.id.number_campaigns_supported)TextView nc;
+
+        public SupportedCampaignsTitleViewHolder(View parent) {
+            super(parent);
+            ButterKnife.bind(this, parent);
+        }
+    }
+
     public class GroupViewHolder extends ViewHolder {
 
         @Bind(R.id.topic)TextView topic;
@@ -77,9 +101,8 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
         @Bind(R.id.lc_background_usr)LinearLayout lc_background;
         @Bind(R.id.profile_card_usr)CardView cardView;
         @Bind(R.id.profile_usr_name)TextView usrName;
-        @Bind(R.id.profile_associationFollowed)TextView assFollowed;
-        @Bind(R.id.number_campaigns)TextView numberCampaigns;
-        @Bind(R.id.supported_campaigns)TextView usrCampaignsTitle;
+        @Bind(R.id.na)TextView na;
+        @Bind(R.id.see_all)TextView seeAll;
         @Bind(R.id.edit)Button edit;
         @Bind(R.id.cover_image_usr) ImageView coverImage;
         @Bind(R.id.thumbnail_image) ImageView thumbnailImage;
@@ -94,11 +117,12 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
 
 
 
-    public UserProfileAdapter(List<CharityCampaign> itemList,User a,Resources res, Activity activity) {
+    public UserProfileAdapter(List<CharityCampaign> itemList,List<Association> association_list,User a,Resources res, Activity activity) {
         mItemList = itemList;
         this.user = a;
         this.res = res;
         this.activity = activity;
+        this.association_list = association_list;
     }
 
 
@@ -106,8 +130,11 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
             return new ProfileViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_profile, parent, false));
+        }else if(viewType == 1){
+            return new FollowedAssociationsViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_followed_association, parent, false));
+        }else if(viewType == 2){
+            return new SupportedCampaignsTitleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_campaigns_supported_title, parent, false));
         }
-
         return new GroupViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feed, parent, false));
     }
 
@@ -115,7 +142,10 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
     @Override
     public int getItemViewType(int position) {
         // here your custom logic to choose the view type
-        return position == 0 ? TYPE_PROFILE : TYPE_GROUP;
+        if(position == 0) return TYPE_PROFILE;
+        else if (position == 1)return TYPE_ASS_LIST;
+        else if(position ==2)return  TYPE_CAMPAIGNS_SUPPORTED_TITLE;
+        else return TYPE_GROUP;
     }
 
 
@@ -164,29 +194,41 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
                     }
                 });
 
-                TextView associationFollowed = holder1.assFollowed;
-                associationFollowed.setText(Integer.toString(user.getAssFollowed()) + " " + activity.getResources().getString(R.string.associations_followed));
-                associationFollowed.setOnClickListener(new View.OnClickListener() {
+                holder1.na.setText("(" + Integer.toString(association_list.size()) + ")");
+
+                holder1.seeAll.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(v.getContext(), UserAssociationsActivity.class);
+                        Intent i = new Intent(activity,UserAssociationsActivity.class);
                         activity.startActivity(i);
                     }
                 });
 
-                holder1.numberCampaigns.setText( "(" + Integer.toString(user.getCampForwarder()) + ")");
+                break;
 
+            case TYPE_CAMPAIGNS_SUPPORTED_TITLE:
+                final SupportedCampaignsTitleViewHolder h = (SupportedCampaignsTitleViewHolder) viewHolder;
+                h.nc.setText("(" + Integer.toString(user.getCampForwarder()) + ")");
+                break;
+
+            case TYPE_ASS_LIST:
+
+                final FollowedAssociationsViewHolder holder2 = (FollowedAssociationsViewHolder) viewHolder;
+                RecyclerView rv = holder2.rv_followedAssociation;
+                HorizontalAssociationAdapter haa = new HorizontalAssociationAdapter(association_list,activity);
+                rv.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+                rv.setAdapter(haa);
                 break;
 
             case TYPE_GROUP:
 
 
-                GroupViewHolder holder2 = (GroupViewHolder) viewHolder;
+                GroupViewHolder holder3 = (GroupViewHolder) viewHolder;
                 final CharityCampaign c = mItemList.get(position - 1);
                 final Association a = c.getOrganization();
 
 
-                TextView an = holder2.assName;
+                TextView an = holder3.assName;
                 an.setText(a.getOrganization_name());
                 an.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -203,7 +245,7 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
                 for (int i = 0; i<topicList.size(); i++){
                     topics += topicList.get(i).getName(); //IF MULTITOPIC ADD "\N"
                 }
-                TextView topic = holder2.topic;
+                TextView topic = holder3.topic;
                 topic.setText(topicList.get(0).getName());
                 topic.setTextColor(Color.parseColor(topicList.get(0).getMainColor()));
                 topic.setOnClickListener(new View.OnClickListener() {
@@ -217,10 +259,10 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
                     }
                 });
 
-                TextView message = holder2.message;
+                TextView message = holder3.message;
                 message.setText(c.getMessage());
 
-                final ImageView pi = holder2.profile_image;
+                final ImageView pi = holder3.profile_image;
                 pi.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -232,13 +274,13 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
                 });
                 Utils.downloadImage(a.getAvatar_normal(), pi, true, false);
 
-                ImageView send_hided = holder2.send;
+                ImageView send_hided = holder3.send;
                 send_hided.setVisibility(View.GONE);
 
-                TextView time = holder2.timestamp;
+                TextView time = holder3.timestamp;
                 time.setText(c.getTimestamp());
 
-                ImageView share_hided = holder2.share;
+                ImageView share_hided = holder3.share;
                 share_hided.setVisibility(View.GONE);
 
                 break;
