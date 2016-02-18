@@ -87,6 +87,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
+                android:visibility="gone"
                 android:background="@drawable/ic_share_black_24dp"/>
 
             <ImageView

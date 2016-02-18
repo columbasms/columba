@@ -42,7 +42,10 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 
 public class TopicsFragment extends Fragment implements AdapterCallback {
@@ -134,11 +137,11 @@ public class TopicsFragment extends Fragment implements AdapterCallback {
 
     private static CacheRequest getTopics(){
 
-        //DOPO DIGITS L'URL SARA' QUESTO ---> https://www.columbasms.com/api/v1/users/{id}/topics
-        String URL = API_URL.USERS_URL + "/" + USER_ID + API_URL.TOPICS;
+        String URL = API_URL.USERS_URL + "/" + USER_ID + API_URL.TOPICS + "?locale=" + Locale.getDefault().getLanguage();
         System.out.println(URL);
 
         return new CacheRequest(0, URL, new Response.Listener<NetworkResponse>() {
+
             @Override
             public void onResponse(NetworkResponse response) {
                 try {

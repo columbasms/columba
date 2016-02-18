@@ -21,6 +21,10 @@
     <string name="follow">FOLLOW</string>
     <string name="following">FOLLOWING</string>
 
+    <string name="associations_followed">associations followed</string>
+
+    <string name="supported_campaigns">Supported campaigns</string>
+
     <string name="more">MORE</string>
     <string name="hide">HIDE</string>
 

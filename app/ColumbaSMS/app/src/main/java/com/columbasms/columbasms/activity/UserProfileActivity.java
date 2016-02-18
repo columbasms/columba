@@ -186,8 +186,9 @@ public class UserProfileActivity extends AppCompatActivity {
 
                     usrName = o.getString("user_name");
 
-                    user = new User(usrName, o.getString("avatar_normal"),
-                            o.getString("cover_normal"));
+                    user = new User(usrName, o.getString("avatar_normal"), o.getString("cover_normal"),o.getInt("organizations_count"),o.getInt("forwarded_campaigns_count"));
+                    //user = new User(usrName, o.getString("avatar_normal"), o.getString("cover_normal"),15,5);
+
 
                     CacheRequest userCampaignsRequest = getUserCampaigns();
 

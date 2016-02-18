@@ -22,6 +22,7 @@ import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.AssociationProfileActivity;
 import com.columbasms.columbasms.activity.EditProfileActivity;
 import com.columbasms.columbasms.activity.TopicProfileActivity;
+import com.columbasms.columbasms.activity.UserAssociationsActivity;
 import com.columbasms.columbasms.fragment.ChooseContactsFragment;
 import com.columbasms.columbasms.model.Association;
 import com.columbasms.columbasms.model.CharityCampaign;
@@ -76,6 +77,8 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
         @Bind(R.id.lc_background_usr)LinearLayout lc_background;
         @Bind(R.id.profile_card_usr)CardView cardView;
         @Bind(R.id.profile_usr_name)TextView usrName;
+        @Bind(R.id.profile_associationFollowed)TextView assFollowed;
+        @Bind(R.id.number_campaigns)TextView numberCampaigns;
         @Bind(R.id.supported_campaigns)TextView usrCampaignsTitle;
         @Bind(R.id.edit)Button edit;
         @Bind(R.id.cover_image_usr) ImageView coverImage;
@@ -145,7 +148,7 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
                 Utils.downloadImage(user.getCover_image(), cover, false, false);
 
                 final ImageView p = holder1.thumbnailImage;
-                Utils.downloadImage(user.getProfile_image(),p,true,true);
+                Utils.downloadImage(user.getProfile_image(), p, true, true);
 
                 editor_account_information.putString("url_profile", user.getProfile_image());
                 editor_account_information.putString("url_cover", user.getCover_image());
@@ -161,6 +164,17 @@ public class UserProfileAdapter extends RecyclerView.Adapter<UserProfileAdapter.
                     }
                 });
 
+                TextView associationFollowed = holder1.assFollowed;
+                associationFollowed.setText(Integer.toString(user.getAssFollowed()) + " " + activity.getResources().getString(R.string.associations_followed));
+                associationFollowed.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(v.getContext(), UserAssociationsActivity.class);
+                        activity.startActivity(i);
+                    }
+                });
+
+                holder1.numberCampaigns.setText( "(" + Integer.toString(user.getCampForwarder()) + ")");
 
                 break;
 

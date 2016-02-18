@@ -47,6 +47,11 @@
         </activity>
 
         <activity
+            android:name=".activity.UserAssociationsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
             android:name=".activity.IntroActivity"
             android:screenOrientation="portrait">
         </activity>
