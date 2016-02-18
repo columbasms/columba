@@ -33,7 +33,9 @@ en:
   errors: "errors"
   send: "Send"
   datatable: "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+  uploading: "Uploading"
   campaigns:
+    campaigns: "Campaigns"
     index_title: "My Campaigns - Columba"
     new_title: "New Campaign - Columba"
     my_campaigns: "My campaigns"
@@ -141,6 +143,11 @@ en:
         VAT_number: "VAT number"
         visible: "Visible"
         website: "Website"
+        current_password: "Current Password"
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Confirm Password"
+        remember_me: "Remember me"
       topic:
         campaigns: "Campaigns"
         description: "Description"
@@ -350,3 +357,8 @@ en:
       long: "%B %d, %Y %H:%M"
       short: "%d %b %H:%M"
     pm: pm
+  devise:
+    passwords:
+      edit:
+        confirm_new_password: "Confirm new password"
+        new_password: "New password"

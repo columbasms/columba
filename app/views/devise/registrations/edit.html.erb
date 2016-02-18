@@ -94,14 +94,14 @@
 
                   <div class="col-sm-12 col-md-4">
                     <div class="form-group form-group-default">
-                      <%= f.label :password, 'New password' %>
+                      <%= f.label :password, t('devise.passwords.edit.new_password') %>
                       <%= f.password_field :password, autocomplete: 'off', class: 'form-control' %>
                     </div>
                   </div>
 
                   <div class="col-sm-12 col-md-4">
                     <div class="form-group form-group-default">
-                      <%= f.label :password_confirmation, 'New password confirmation' %>
+                      <%= f.label :password_confirmation, t('devise.passwords.edit.confirm_new_password') %>
                       <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control' %>
                     </div>
                   </div>
@@ -115,7 +115,7 @@
                   <div class="modal-body">
                     <div class="panel-body">
                       <div class="progress-panel">
-                        <p class="small hint-text" id="hint-text">Uploading... <span id="upload-percentage">0%</span> </p>
+                        <p class="small hint-text" id="hint-text"><%= t 'uploading' %>... <span id="upload-percentage">0%</span> </p>
                         <div class="progress" style="margin: 0;">
                           <div class="progress-bar progress-bar-primary" id="upload-progress" style="width: 0;"></div>
                         </div>
@@ -185,7 +185,7 @@
 
               <div class="col-sm-12 col-md-6">
                 <div class="form-group form-group-default form-group-default-select2 required full-width">
-                  <%= f.label :town_id %>
+                  <%= f.label :town_id, t('town') %>
                   <%= f.hidden_field :town_id, class: 'full-width', required: 'required', id: 'town-select'  %>
                 </div>
               </div>

@@ -39,7 +39,7 @@
         <div class="col-md-6">
           <div class="checkbox ">
             <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
+            <%= f.label :remember_me, t('activerecord.attributes.organization.remember_me') %>
           </div>
         </div>
         <!--<div class="col-md-6 text-right">
@@ -47,7 +47,7 @@
         </div>-->
       </div>
       <!-- END Form Control-->
-      <%= f.submit t('login'), class: 'btn btn-primary btn-cons m-t-10' %> <span class="m-r-10 m-l-5">or</span>
+      <%= f.submit t('login'), class: 'btn btn-primary btn-cons m-t-10' %> <span class="m-r-10 m-l-5"><%= t 'or' %></span>
         <%= link_to t('register'), new_organization_registration_path, class: 'btn btn-success btn-cons m-t-10' %>
     <% end %>
 
