@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/card_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/profile_card"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/lc_background"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.percent.PercentRelativeLayout
+                    android:id="@+id/percentRelativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <ImageView
+                        android:id="@+id/cover_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        app:layout_widthPercent="100%"
+                        app:layout_aspectRatio="178%"
+                        android:scaleType="centerCrop"/>
+                </android.support.percent.PercentRelativeLayout>
+
+
+
+                <ImageView
+                    android:id="@+id/thumbnail_image"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/percentRelativeLayout"
+                    android:layout_marginTop="-34dp"
+                    android:layout_gravity="center"/>
+            </RelativeLayout>
+
+
+
+
+            <LinearLayout
+                android:id="@+id/info_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="16dp"
+                android:layout_gravity="center"
+                android:layout_below="@id/percentRelativeLayout"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/profile_ass_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorText"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:paddingBottom="16dp"/>
+                <TextView
+                    android:id="@+id/profile_ass_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp"
+                    android:paddingBottom="16dp"/>
+
+                <TextView
+                    android:id="@+id/profile_ass_other_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/info_layout"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/fav"
+                    android:tag="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:src="@drawable/ic_favorite_border_white_36dp"
+                    android:layout_gravity="center"/>
+                <Button
+                    android:id="@+id/fol"
+                    android:tag="0"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TRUST"
+                    android:visibility="gone"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@color/colorPrimary"
+                    android:background="@android:color/white"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+    
+    <TextView
+        android:id="@+id/association_campaigns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textStyle="bold"
+        android:text="Campaigns"
+        android:gravity="center_vertical"/>
+    
+</LinearLayout>

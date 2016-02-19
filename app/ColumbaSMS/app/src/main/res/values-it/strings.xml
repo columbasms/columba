@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">Columba</string>
+
+    <string name="appIntro1_title">Columba</string>
+    <string name="appIntro1_description">Con Columba puoi aiutare le associazioni di volontariato diffondendo le loro campagne ed eventi con i tuoi SMS inutilizzati!</string>
+
+    <string name="appIntro2_title">Scopri</string>
+    <string name="appIntro2_description">Scopri le associazioni attive nelle tematiche umanitarie a te care e vicine a dove vivi</string>
+
+    <string name="appIntro3_title">Segui</string>
+    <string name="appIntro3_description">Rimani aggiornato sulle nuove campagne delle tematiche e associazioni preferite</string>
+
+    <string name="appIntro4_title">Diffondi</string>
+    <string name="appIntro4_description">Diffondi le campagne che vuoi supportare e decidi chi renderne partecipe tramite i tuoi SMS inutilizzati</string>
+
+
+    <string name="info">Info</string>
+    <string name="feedback">Feedback</string>
+    <string name="guide">Guida</string>
+
+    <string name="select_receivers">Seleziona ricevitori</string>
+
+    <string name="notification_follow_message">ha lanciato una nuova campagna!</string>
+    <string name="notification_trust_message">Hai appena condiviso una campagna per</string>
+
+    <string name="save_as_a_group">Salva come gruppo</string>
+    <string name="group_setting">Impostazioni Gruppi</string>
+
+    <string name="home">Home</string>
+    <string name="topics">Tematiche</string>
+    <string name="not">Notifiche</string>
+    <string name="map">Mappa</string>
+    <string name="follow">SEGUI</string>
+    <string name="following">SEGUI GIÀ</string>
+
+    <string name="more">SCOPRI</string>
+    <string name="hide">NASCONDI</string>
+
+    <string name="associations">Associazioni</string>
+    <string name="campaigns">Campagne</string>
+
+    <string name="sms_footer">Inviato con Columba</string>
+    <string name="sms_stop">Per interrompere la ricezione di questi messaggi:\nwww.columbasms.com/stop/</string>
+
+
+    <string name="dialog_contacts_title">Seleziona contatti</string>
+    <string name="dialog_contactsGroups_title">Seleziona un gruppo</string>
+    <string name="dialog_number_verification_title">Verifica in corso</string>
+    <string name="dialog_number_verification_verify">VERIFICA</string>
+
+    <string name="gcm_sender_ID">879251508715</string>
+    <string name="setImage">set_image</string>
+    <string name="title_activity_map_fragments">Mappa</string>
+    <string name="title_activity_maps">Mappa</string>
+
+    <string name="Profile">Profilo</string>
+    <string name="Settings">Impostazioni</string>
+    <string name="Leaderboard">Classifica</string>
+
+    <string name="edit_profile">MODIFICA PROFILO</string>
+    <string name="edit_bar">Modifica profilo</string>
+
+    <string name="disable_notify">Disattiva notifiche push</string>
+    <string name="msg_number">Numero limite di messaggi</string>
+    <string name="manage">Gestisci liste contatti</string>
+
+    <string name="edit_name">Modifica username</string>
+    <string name="edit_img">Cambia immagine profilo</string>
+    <string name="edit_cover">Cambia immagine di copertina</string>
+
+    <string name="camp">CAMPAGNE</string>
+    <string name="ass">ASSOCIAZIONI</string>
+
+    <string name="share">Condividi con</string>
+
+    <string name="week">s</string>
+    <string name="day">g</string>
+    <string name="hour">o</string>
+    <string name="minute">m</string>
+
+    <string name="no_internet">Connessione assente!</string>
+    <string name="retry">RIPROVA</string>
+
+    <string name="pic_select">Seleziona Immagine</string>
+    <string name="enter_name">Inserisci il tuo nome</string>
+
+</resources>

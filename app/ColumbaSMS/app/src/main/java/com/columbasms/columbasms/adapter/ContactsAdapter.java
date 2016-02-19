@@ -1,6 +1,6 @@
 package com.columbasms.columbasms.adapter;
-
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,26 +9,33 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.model.Contact;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Federico Fanara,edited by Matteo Brienza on 10/01/16.
+ * Created by Matteo Brienza on 2/2/16.
  */
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
 
     private static List<Contact> contacts;
+    private int[] colors;
+    private boolean colorAlreadySelected;
 
     // Pass in the contact array into the constructor
-    public ContactsAdapter(List<Contact> contacts) {
+    public ContactsAdapter(List<Contact> contacts, int[]colors) {
         this.contacts = contacts;
+        this.colors = colors;
     }
 
     // Provide a direct reference to each of the views within a data item
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView nameTextView;
+        public ImageView contacts_image;
         public ImageView favourite;
         public LinearLayout cl;
 
@@ -37,6 +44,11 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             cl = (LinearLayout)itemView.findViewById(R.id.contact_layout);
             cl.setOnClickListener(this);
             nameTextView = (TextView) itemView.findViewById(R.id.contacts_name);
+            contacts_image = (ImageView)itemView.findViewById(R.id.contacts_image);
+            ColorGenerator generator = ColorGenerator.MATERIAL;
+            int color1 = generator.getRandomColor();
+            TextDrawable drawable = TextDrawable.builder().buildRound("", color1);
+            contacts_image.setImageDrawable(drawable);
             favourite = (ImageView) itemView.findViewById(R.id.favourite);
             favourite.setOnClickListener(this);
 
@@ -45,13 +57,15 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         public void onClick(View v) {
             int pos = getAdapterPosition();
             Contact n = contacts.get(pos);
+
             if(n.isSelected()) {
-                favourite.setBackgroundResource(R.drawable.check_circle_deselected);
+                favourite.setBackgroundResource(R.drawable.ic_check_box_outline_blank_black_24dp);
                 n.setSelected(false);
             }else{
-                favourite.setBackgroundResource(R.drawable.check_circle_selected);
+                favourite.setBackgroundResource(R.drawable.ic_check_box_black_24dp);
                 n.setSelected(true);
             }
+
             contacts.set(pos, n);
         }
 
@@ -62,6 +76,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     public ContactsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
+
+        colorAlreadySelected = false;
 
         // Inflate the custom layout
         View contactView = inflater.inflate(R.layout.item_contact, parent, false);
@@ -82,10 +98,16 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         TextView textView = viewHolder.nameTextView;
         textView.setText(type_name);
 
+        ImageView contacts_image = viewHolder.contacts_image;
+
+        TextDrawable drawable = TextDrawable.builder().buildRound(type_name.substring(0, 1), colors[position]);
+        contacts_image.setImageDrawable(drawable);
+
         ImageView button = viewHolder.favourite;
         if (isSelected==false){
-            button.setBackgroundResource(R.drawable.check_circle_deselected);
-        }else button.setBackgroundResource(R.drawable.check_circle_selected);
+            button.setBackgroundResource(R.drawable.ic_check_box_outline_blank_black_24dp);
+        }else button.setBackgroundResource(R.drawable.ic_check_box_black_24dp);
+
     }
 
     // Return the total count of items

@@ -1,6 +1,8 @@
 <resources xmlns:android="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
+
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -26,4 +28,17 @@
         <item name="android:textColorPrimary">@color/colorText</item>
         <item name="android:textColorSecondary">@color/colorText</item>
     </style>
+
+    <style name="EditText_Theme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
+
+    <style name="EditText_Theme2" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
+
 </resources>
