@@ -1,0 +1,140 @@
+<% content_for(:h3) do %><%= t 'devise.registrations.request_account' %><% end %>
+
+<% content_for(:title) do %><%= t 'devise.registrations.sign_up' %><% end %>
+
+<% content_for :javascripts do %>
+
+    <script>
+      $(function() {
+        $('#form-register').validate();
+      });
+    </script>
+
+    <%= javascript_include_tag 'location-select', 'data-turbolinks-track' => true %>
+
+<% end %>
+
+<% content_for :application_js do %>
+    <%= javascript_include_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
+<% content_for :application_css do %>
+    <%= stylesheet_link_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'p-t-15', role: 'form', id: 'form-register' }) do |f| %>
+
+    <% if devise_error_messages? %>
+        <div class="alert alert-danger">
+          <%= devise_error_messages! %>
+        </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group form-group-default required">
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group form-group-default required">
+          <%= f.label :organization_name %>
+          <%= f.text_field :organization_name, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group form-group-default required">
+          <%= f.label :fiscal_code %>
+          <%= f.text_field :fiscal_code, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group form-group-default">
+          <%= f.label :VAT_number %>
+          <%= f.text_field :VAT_number, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group form-group-default form-group-default-select2 required full-width">
+          <%= label_tag 'province_id', t('devise.registrations.province') %>
+          <%= select_tag :province_id,
+                       options_for_select(Province.all.order(name: :asc).collect { |x| [x.name, x.id] }),
+                       { 'data-init-plugin': 'select2', class: 'full-width', id: 'province-select' }  %>
+        </div>
+
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group form-group-default form-group-default-select2 required full-width">
+            <%= f.label 'town_id', t('devise.registrations.town') %>
+            <%= f.hidden_field :town_id, id: 'town-select', class: 'full-width'  %>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group form-group-default required">
+          <%= f.label :postal_code %>
+          <%= f.text_field :postal_code, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group form-group-default required">
+          <%= f.label :address %>
+          <%= f.text_field :address, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group form-group-default required">
+          <%= f.label :phone_number %>
+          <%= f.text_field :phone_number, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group form-group-default required">
+          <%= f.label :password %>
+          <% if @minimum_password_length %>
+              <em>
+                <%= t 'devise.registrations.minimum_characters', length: @minimum_password_length %>
+              </em>
+          <% end %><br />
+          <%= f.password_field :password, autocomplete: 'off', class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group form-group-default required">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-10">
+      <div class="col-md-6">
+        <p><%= raw t('devise.registrations.agree') %></p>
+      </div>
+    </div>
+
+    <%= f.submit t('request'), class: 'btn btn-primary btn-cons m-t-10' %> <span class="m-r-10 m-l-5"><%= t 'or' %></span>
+    <%= link_to t('login'), new_organization_session_path, class: 'btn btn-success btn-cons m-t-10' %>
+<% end %>

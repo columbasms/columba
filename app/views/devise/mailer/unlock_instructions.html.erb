@@ -1,0 +1,7 @@
+<p><%= t 'devise.mailer.hello' %> <%= @resource.email %>!</p>
+
+<p><%= t 'devise.mailer.unlock_instructions.locked' %></p>
+
+<p><%= t 'devise.mailer.unlock_instructions.instruction' %></p>
+
+<p><%= link_to t('devise.mailer.unlock_instructions.submit'), unlock_url(@resource, unlock_token: @token) %></p>

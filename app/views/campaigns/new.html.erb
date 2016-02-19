@@ -1,0 +1,27 @@
+<% content_for :title do %><%= t 'campaigns.new_title' %><% end %>
+
+<% content_for :application_js do %>
+    <%= javascript_include_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
+<% content_for :application_css do %>
+    <%= stylesheet_link_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
+<div class="col-md-12 col-center">
+  <div class="panel panel-default">
+
+    <div class="panel-heading">
+      <div class="panel-title">
+        <%= t 'campaigns.new_campaign' %>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <h5><%= t 'campaigns.create' %></h5>
+
+      <%= render 'form' %>
+    </div>
+
+  </div>
+</div>

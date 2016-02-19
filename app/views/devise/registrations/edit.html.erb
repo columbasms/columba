@@ -1,0 +1,241 @@
+<% content_for :application_js do %>
+    <%= javascript_include_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
+<% content_for :application_css do %>
+    <%= stylesheet_link_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
+<script>
+  var organization_id = <%= @organization.id %>;
+</script>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, role: 'form', id: 'edit-profile' }) do |f| %>
+
+    <% if devise_error_messages? %>
+      <div class="row padding-25 sm-padding-10">
+        <div class="col-md-12">
+              <div class="alert alert-danger">
+                <%= devise_error_messages! %>
+              </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= f.hidden_field :visible, value: true %>
+
+    <div class="row padding-25 sm-padding-10">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+            <div class="panel-title">
+              <%= t 'devise.registrations.general_information' %>
+            </div>
+          </div>
+
+          <div class="panel-body">
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-12">
+                    <%= image_tag @organization.cover.url(:normal), id: 'cover-preview', class: 'full-width m-b-15' %>
+                    <%= f.file_field :cover, class: 'avatar-form-control', id: 'cover-input' %>
+                    <a href="javascript:;" class="btn btn-primary full-width m-b-15" id="cover-upload"><%= t 'devise.registrations.upload_cover' %></a>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-3 m-b-15">
+                    <%= image_tag @organization.avatar.url(:normal), class: 'full-width m-b-10', id: 'avatar-preview', width: '250' %>
+                    <%= f.file_field :avatar, class: 'avatar-form-control', id: 'avatar-input' %>
+                    <a href="javascript:;" class="btn btn-primary full-width" id="avatar-upload"><%= t 'devise.registrations.upload_avatar' %></a>
+                  </div>
+                  <div class="col-sm-12 col-md-9 m-b-15">
+
+                    <div class="form-group form-group-default required">
+                      <%= f.label :organization_name %>
+                      <%= f.text_field :organization_name, autofocus: true, class: 'form-control' %>
+                    </div>
+
+                    <div class="form-group form-group-default required">
+                      <%= f.label :email %>
+                      <%= f.email_field :email, class: 'form-control' %>
+                    </div>
+
+                    <div class="form-group form-group-default full-height required">
+                      <%= f.label :website %>
+                      <%= f.text_field :website, class: 'form-control full-height', required: 'required' %>
+                    </div>
+
+                    <div class="form-group form-group-default full-height required">
+                      <%= f.label :description %>
+                      <%= f.text_area :description, class: 'form-control full-height', rows: '9', style: 'padding-bottom: 2px;', required: 'required' %>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row m-b-15">
+                  <div class="col-sm-12 col-md-12">
+                    <div class="form-group form-group-default form-group-default-select2 required">
+                      <label for="topic_ids"><%= t 'devise.registrations.topics' %></label>
+                      <%= f.select :topic_ids, Topic.all.collect { |x| [x.name, x.id] }, { }, { multiple: true, 'data-init-plugin': 'select2', class: 'full-width' } %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row m-b-15">
+                  <div class="col-sm-12 col-md-4">
+                    <div class="form-group form-group-default required">
+                      <%= f.label :current_password %>
+                      <%= f.password_field :current_password, autocomplete: 'off', class: 'form-control' %>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-4">
+                    <div class="form-group form-group-default">
+                      <%= f.label :password, t('devise.passwords.edit.new_password') %>
+                      <%= f.password_field :password, autocomplete: 'off', class: 'form-control' %>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-4">
+                    <div class="form-group form-group-default">
+                      <%= f.label :password_confirmation, t('devise.passwords.edit.confirm_new_password') %>
+                      <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control' %>
+                    </div>
+                  </div>
+                </div>
+
+            <div class="modal fade fill-in" id="modal-crop" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="static" data-keyboard="false">
+              <div class="modal-dialog ">
+                <div class="modal-content">
+                  <div class="modal-header">
+                  </div>
+                  <div class="modal-body">
+                    <div class="panel-body">
+                      <div class="progress-panel">
+                        <p class="small hint-text" id="hint-text"><%= t 'uploading' %>... <span id="upload-percentage">0%</span> </p>
+                        <div class="progress" style="margin: 0;">
+                          <div class="progress-bar progress-bar-primary" id="upload-progress" style="width: 0;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+
+                  </div>
+                </div>
+                <!-- /.modal-content -->
+              </div>
+              <!-- /.modal-dialog -->
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row padding-25 sm-padding-10">
+      <div class="col-md-12">
+
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+            <div class="panel-title">
+              <%= t 'devise.registrations.personal_information' %>
+            </div>
+          </div>
+
+          <div class="panel-body">
+
+            <div class="row">
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group form-group-default required">
+                  <%= f.label :phone_number %>
+                  <%= f.text_field :phone_number, class: 'form-control', required: 'required' %>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group form-group-default required">
+                  <%= f.label :fiscal_code %>
+                  <%= f.text_field :fiscal_code, class: 'form-control', required: 'required' %>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group form-group-default">
+                  <%= f.label :VAT_number %>
+                  <%= f.text_field :VAT_number, class: 'form-control' %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group form-group-default form-group-default-select2 required full-width">
+                  <%= label_tag 'province', t('devise.registrations.province') %>
+                  <%= select_tag 'province',
+                                 options_for_select(Province.all.order(name: :asc).collect { |x| [x.name, x.id] }, selected: @province_id),
+                                 { 'data-init-plugin': 'select2', class: 'full-width', id: 'province-select' }  %>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group form-group-default form-group-default-select2 required full-width">
+                  <%= f.label :town_id, t('town') %>
+                  <%= f.hidden_field :town_id, class: 'full-width', required: 'required', id: 'town-select'  %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-md-8">
+                <div class="form-group form-group-default required">
+                  <%= f.label :address %>
+                  <%= f.text_field :address, class: 'form-control', required: 'required' %>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group form-group-default required">
+                  <%= f.label :postal_code %>
+                  <%= f.text_field :postal_code, class: 'form-control', required: 'required' %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-md-12">
+                <%= f.submit t('devise.registrations.update_profile'), class: 'btn btn-primary align-right' %>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+<% end %>
+
+<% content_for :stylesheets do %>
+
+    <%= stylesheet_link_tag 'file-upload', 'data-turbolinks-track' => true %>
+
+<% end %>
+
+<% content_for :javascripts do %>
+
+    <%= javascript_include_tag 'file-upload', 'data-turbolinks-track' => true %>
+
+    <script>
+        $('#edit-profile').validate();
+    </script>
+
+    <%= javascript_include_tag 'location-select', 'data-turbolinks-track' => true %>
+
+<% end %>

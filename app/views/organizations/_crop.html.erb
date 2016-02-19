@@ -1,0 +1,31 @@
+<div id="crop-script">
+  <script>
+    init_papercrop();
+
+    $('#crop-form').submit(function(e) {
+      e.preventDefault();
+      var formData = new FormData($(this)[0]);
+      $.ajax({
+        url: ('/organizations/' + organization_id + '/crop'),
+        type: 'POST',
+        data: formData,
+        success: function(e) {
+          <% if type == 'avatar' %>
+            $('#avatar-preview').attr('src', e.avatar);
+          <% else %>
+            $('#cover-preview').attr('src', e.cover);
+          <% end %>
+          $('#modal-crop').modal('toggle');
+          $('#crop-form').remove();
+          $('#crop-script').remove();
+        },
+        error: function(e) {
+          console.log(e);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+      });
+    });
+  </script>
+</div>

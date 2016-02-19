@@ -1,0 +1,29 @@
+<% content_for :h3 do %><%= t 'devise.passwords.forgot_your_password' %><% end %>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, role: 'form', id: 'form-password' }) do |f| %>
+
+    <% if devise_error_messages? %>
+        <div class="alert alert-danger">
+          <%= devise_error_messages! %>
+        </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group form-group-default">
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <%= f.submit t('devise.passwords.submit'), class: 'btn btn-primary btn-cons m-t-10' %>
+<% end %>
+
+<% content_for :javascripts do %>
+    <script>
+      $(function() {
+        $('#form-password').validate()
+      });
+    </script>
+<% end %>

@@ -1,0 +1,35 @@
+<% content_for :h3 do %><%= t 'devise.passwords.change_your_password' %><% end %>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, id: 'form-password', role: 'form' }) do |f| %>
+
+    <% if devise_error_messages? %>
+        <div class="alert alert-danger">
+          <%= devise_error_messages! %>
+        </div>
+    <% end %>
+
+    <%= f.hidden_field :reset_password_token %>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group form-group-default">
+          <%= f.label :password, t('devise.passwords.new') %><br />
+          <% if @minimum_password_length %>
+            <em><%= t 'devise.passwords.minimum_characters', length: @minimum_password_length %></em>
+          <% end %>
+          <%= f.password_field :password, autofocus: true, autocomplete: 'off', class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group form-group-default">
+          <%= f.label :password_confirmation, t('devise.passwords.confirm') %>
+          <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <%= f.submit t('devise.passwords.change_my_password'), class: 'btn btn-primary btn-cons m-t-10' %>
+<% end %>

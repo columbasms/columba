@@ -1,0 +1,93 @@
+<% content_for :title do %><%= t 'campaigns.index_title' %><% end %>
+
+<% content_for :application_js do %>
+    <%= javascript_include_tag('application_data', 'data-turbolinks-track' => true) %>
+<% end %>
+
+<% content_for :application_css do %>
+    <%= stylesheet_link_tag('application_data', 'data-turbolinks-track' => true) %>
+<% end %>
+
+<div class="container-fluid container-fixed-lg bg-white">
+
+  <div class="panel panel-transparent">
+    <div class="panel-heading">
+      <div class="panel-title"><%= t 'campaigns.my_campaigns' %>
+      </div>
+      <div class="pull-right">
+        <div class="col-xs-12">
+          <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+
+      <table id="campaigns-table" class="table table-hover" cellspacing="0" width="100%">
+
+        <thead>
+        <tr>
+          <th><%= t 'campaigns.message' %></th>
+          <th><%= t 'campaigns.date_created' %></th>
+          <th><%= t 'campaigns.topics' %></th>
+          <th><%= t 'campaigns.expiration_date' %></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @campaigns.each do |campaign| %>
+            <tr>
+              <td class="v-align-middle"><%= campaign.message %></td>
+              <td class="v-align-middle"><%= campaign.created_at.strftime("%B %-d, %Y %H:%M") %></td>
+              <td class="v-align-middle">
+                <% campaign.topics.each do |topic| %>
+                    <a href="javascript:;" class="btn btn-tag"><%= topic.name %></a>
+                <% end %>
+              </td>
+              <td class="v-align-middle"><%= campaign.expires_at_format %></td>
+            </tr>
+        <% end %>
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+
+</div>
+
+<% content_for :javascripts do %>
+
+  <script>
+    $(function() {
+
+      var responsiveHelper = undefined;
+      var breakpointDefinition = {
+        tablet: 1024,
+        phone: 480
+      };
+
+      var table = $('#campaigns-table');
+
+      var settings = {
+        "sDom": "<'table-responsive't><'row'<p i>>",
+        "destroy": true,
+        "scrollCollapse": true,
+        "oLanguage": {
+          "sLengthMenu": "_MENU_ ",
+          "sInfo": "<%= raw t('datatable') %>"
+        },
+        "iDisplayLength": 5
+      };
+
+      table.dataTable(settings);
+
+      // search box for table
+      $('#search-table').keyup(function() {
+        table.fnFilter($(this).val());
+      });
+
+    });
+  </script>
+
+<% end %>

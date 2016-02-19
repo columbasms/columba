@@ -1,0 +1,56 @@
+<% content_for(:h3) do %><%= t 'devise.sessions.login' %><% end %>
+
+<% content_for(:title) do %><%= t 'devise.sessions.title' %><% end %>
+
+<% content_for :javascripts do %>
+
+    <script>
+      $(function() {
+        $('#form-login').validate();
+      });
+    </script>
+
+<% end %>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form', id: 'form-login', class: (flash[:error] ? 'p-t-15 m-b-10' : 'm-b-10') }) do |f| %>
+
+    <%- flash.each do |name, msg| -%>
+        <%= content_tag :div, msg, class: 'alert alert-danger', :id => "flash_#{name}" if msg.is_a?(String) %>
+    <%- end -%>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group form-group-default">
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true, class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group form-group-default">
+          <%= f.label :password %>
+          <%= f.password_field :password, autocomplete: 'off', class: 'form-control', required: 'required' %>
+        </div>
+      </div>
+    </div>
+
+  <% if devise_mapping.rememberable? -%>
+        <div class="row">
+          <div class="col-sm-12 ">
+            <div class="checkbox">
+              <%= f.check_box :remember_me %>
+              <%= f.label :remember_me %>
+            </div>
+          </div>
+        </div>
+  <% end -%>
+
+  <%= f.submit t('login'), class: 'btn btn-primary btn-cons m-t-10' %> <span class="m-r-10 m-l-5">or</span>
+    <%= link_to t('register'), new_organization_registration_path, class: 'btn btn-success btn-cons m-t-10' %>
+<% end %>
+
+<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+    <%= link_to t('devise.passwords.forgot_your_password'), new_password_path(resource_name) %><br />
+<% end -%>

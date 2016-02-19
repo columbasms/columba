@@ -1,0 +1,118 @@
+<%= form_for(@campaign, html: { role: 'form', id: 'new-campaign' }) do |f| %>
+  <% if @campaign.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(@campaign.errors.count, t('error'), t('errors')) %> <%= t 'campaigns.prohibited' %></h2>
+
+      <ul>
+      <% @campaign.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group form-group-default required">
+    <%= f.label :message %>
+    <%= f.text_area :message, class: 'form-control full-height', rows: '10', required: 'required' %>
+  </div>
+
+  <div class="form-group form-group-default form-group-default-select2 required">
+    <label for="topic_ids"><%= t 'campaigns.topics' %></label>
+    <%= f.select :topic_ids, current_organization.topics.collect { |x| [x.name, x.id] }, { }, { multiple: true, 'data-init-plugin': 'select2', class: 'full-width' } %>
+  </div>
+
+  <div class="form-group form-group-default required">
+    <label for="expires_at"><%= t 'campaigns.expiration_date' %></label>
+    <%= f.text_field :expires_at, class: 'form-control', id: 'datepicker', required: 'required' %>
+  </div>
+
+  <div class="row" style="margin-left: 0; margin-right: 0;">
+    <div class="col-sm-12 col-md-12">
+        <em><%= t 'campaigns.date_explanation' %></em>
+    </div>
+  </div>
+
+    <div class="row m-t-10" style="margin-left: 0; margin-right: 0;">
+      <div class="col-sm-12 col-md-4">
+        <div class="form-group form-group-default form-group-default-select2">
+          <label for="region_id"><%= t 'region' %></label>
+          <%= f.select :region_id, Region.order(name: :asc).all.collect { |r| [r.name, r.id] }.push(['', '']), { selected: '' },
+                       { 'data-init-plugin': 'select2', class: 'full-width', id: 'region-select' } %>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-4">
+        <div class="form-group form-group-default form-group-default-select2">
+          <label for="province_id"><%= t 'province' %></label>
+          <%= f.hidden_field :province_id, class: 'full-width', id: 'province-select'  %>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-4">
+        <div class="form-group form-group-default form-group-default-select2 full-width">
+          <label for="town_id"><%= t 'town' %></label>
+          <%= f.hidden_field :town_id, class: 'full-width', id: 'town-select'  %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-10" style="margin-left: 0; margin-right: 0;">
+      <div class="col-sm-12 col-md-12">
+        <div class="form-group form-group-default">
+          <%= f.label :address %>
+          <%= f.text_field :address, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+
+  <%= f.submit t('send'), class: 'btn btn-primary btn-cons m-t-10' %>
+<% end %>
+
+<% content_for :javascripts do %>
+
+    <script>
+      $('#new-campaign').validate();
+      $('#province-select').select2({
+        data: [{ id: '', text: '' }]
+      });
+      $('#town-select').select2({
+        data: [{ id: '', text: '' }]
+      });
+
+      $('#region-select').on('change', function() {
+        sendLocation('region', $(this).val(), $('#province-select'));
+      });
+
+      $('#province-select').on('change', function() {
+        sendLocation('province', $(this).val(), $('#town-select'));
+      });
+
+      function sendLocation(type, value, $elem) {
+        var url = '';
+        switch (type) {
+          case 'region':
+                url = '/provinces-by-region';
+                break;
+          case 'province':
+                url = '/town-by-province';
+                break;
+          default:
+                url = '/town-by-province';
+                break;
+        }
+        var data = {};
+        data[type + '_id'] = value;
+        data['first'] = false;
+        $.ajax({
+          url: url,
+          data: data,
+          success: function(data) {
+            $elem.select2({
+              data: data.data
+            }).select2('val', data.selected);
+          }
+        })
+      }
+    </script>
+
+<% end %>

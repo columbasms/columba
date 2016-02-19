@@ -1,0 +1,8 @@
+<%= form_for(@organization, url: organizations_crop_url(@organization), html: { id: 'crop-form', style: 'display: none;' }) do |f| %>
+  <div style="margin: auto; width: 500px;">
+    <%= f.cropbox :"#{@type}", width: 500 %>
+    <%= f.submit t('organizations.crop'), class: 'btn btn-primary btn-cons full-width m-t-15' %>
+  </div>
+<% end %>
+
+<%= render partial: 'organizations/crop', :locals => { type: @type } %>

@@ -1,0 +1,335 @@
+it:
+  login: "Login"
+  logout: "Logout"
+  profile: "Profilo"
+  or: "o"
+  request: "Richiedi"
+  register: "Registrati"
+  region: "Regione"
+  province: "Provincia"
+  town: "Comune"
+  error: "errore ha proibito"
+  errors: "errori hanno proibito"
+  send: "Invia"
+  datatable: "Mostrati <b>da _START_ a _END_</b> di _TOTAL_ elementi"
+  uploading: "Caricamento"
+  campaigns:
+    campaigns: "Campagne"
+    index_title: "Le mie Campagne - Columba"
+    new_title: "Nuova Campagna - Columba"
+    my_campaigns: "Le mie Campagne"
+    new_campaign: "Nuova Campagna"
+    create: "Crea una nuova Campagna"
+    message: "Messaggio"
+    date_created: "Data di creazione"
+    expiration_date: "Data di scadenza"
+    editing: "Modificando la Campagna"
+    show: "Mostra"
+    back: "Indietro"
+    edit: "Modifica"
+    prohibited: "questa campagna dall'essere salvata:"
+    topics: "Topic"
+    expiration_date: "Data di scadenza"
+    date_explanation: "Ciao testo di prova"
+    created: "Campagna creata con successo."
+    updated: "Campagna aggiornata con successo."
+    destroyed: "Campagna eliminata con successo."
+    update_account: "Devi aggiornare il tuo profilo per accedere a tutte le funzionalità del sito"
+  organizations:
+    crop: "Taglia"
+  stop:
+    title: "Stop del servizio - Columba"
+    heading: "Ferma il servizio Columba"
+    why: "Perché hai ricevuto questo SMS?"
+    confirmation: "Vuoi veramente fermare la ricezione di tutti i tipi di messaggi da parte di Columba?"
+    confirm: "Conferma"
+  welcome:
+    account_locked:
+      heading: "Grazie per aver richiesto un nuovo account!"
+      verifying: "Stiamo verificando la tua identità e sbloccheremo il tuo account il più presto possibile."
+      return_to_homepage: "Ritorna alla Homepage"
+    dashboard:
+      title: "Dashboard - Columba"
+      recent_campaigns: "Campagne recenti"
+    index:
+      heading: "Pages make it easy to enjoy what matters the most in the life"
+      subheading: "images Displayed are solely for representation purposes only, All work copyright of respective owner, otherwise © 2013-2014 REVOX."
+      sign_in: "Entra con il tuo account Columba"
+  activerecord:
+    errors:
+      messages:
+        record_invalid: 'Validazione fallita: %{errors}'
+        restrict_dependent_destroy:
+          has_one: Il record non può essere cancellato perchè esiste un %{record} dipendente
+          has_many: Il record non può essere cancellato perchè esistono %{record} dipendenti
+    models:
+      admin_user: "Amministratori"
+      campaign: "Campagne"
+      digits_client: "Clienti"
+      group: "Grouppi"
+      organization: "Organizzazioni"
+      province: "Province"
+      receiver: "Riceventi"
+      region: "Regioni"
+      topic: "Topic"
+      town: "Comuni"
+    attributes:
+      campaign:
+        address: "Indirizzo"
+        created_at: "Creato il"
+        digits_clients: "Clienti"
+        expires_at: "Scade il"
+        id: "ID"
+        latitude: "Latitudine"
+        longitude: "Longitudine"
+        message: "Messaggio"
+        organization: "Organizzazione"
+        organization_id: "ID Organizzazione"
+        province: "Provincia"
+        province_id: "ID Provincia"
+        receivers: "Riceventi"
+        region: "Regione"
+        region_id: "ID Regione"
+        topics: "Topic"
+        town: "Comune"
+        town_id: "ID Comune"
+        updated_at: "Aggiornato il"
+      digits_client:
+        campaigns: "Campagne"
+        created_at: "Creato il"
+        enabled: "Attivo"
+        groups: "Grouppi"
+        organizations: "Organizzazioni"
+        phone_number: "Numero di telefono"
+        topics: "Topic"
+        updated_at: "Aggiornato il"
+        user_name: "Username"
+      organization:
+        address: "Indirizzo"
+        campaigns: "Campagne"
+        created_at: "Creato il"
+        description: "Descrizione"
+        digits_clients: "Clienti"
+        fiscal_code: "Codice fiscale"
+        locked_at: "Bloccato il"
+        organization_name: "Nome organizzazione"
+        phone_number: "Numero di telefono"
+        postal_code: "CAP"
+        topics: "Topic"
+        town: "Comune"
+        updated_at: "Aggiornato il"
+        VAT_number: "Partita IVA"
+        visible: "Visibile"
+        website: "Sito Web"
+        current_password: "Password corrente"
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Conferma password"
+        remember_me: "Ricordami"
+      topic:
+        campaigns: "Campagne"
+        description: "Descrizione"
+        digits_clients: "Clienti"
+        main_color: "Colore principale"
+        name: "Nome"
+        organizations: "Organizzazioni"
+        status_color: "Colore di stato"
+  date:
+    abbr_day_names:
+    - dom
+    - lun
+    - mar
+    - mer
+    - gio
+    - ven
+    - sab
+    abbr_month_names:
+    -
+    - gen
+    - feb
+    - mar
+    - apr
+    - mag
+    - giu
+    - lug
+    - ago
+    - set
+    - ott
+    - nov
+    - dic
+    day_names:
+    - domenica
+    - lunedì
+    - martedì
+    - mercoledì
+    - giovedì
+    - venerdì
+    - sabato
+    formats:
+      default: "%d/%m/%Y"
+      long: "%d %B %Y"
+      short: "%d %b"
+    month_names:
+    -
+    - gennaio
+    - febbraio
+    - marzo
+    - aprile
+    - maggio
+    - giugno
+    - luglio
+    - agosto
+    - settembre
+    - ottobre
+    - novembre
+    - dicembre
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: circa un'ora
+        other: circa %{count} ore
+      about_x_months:
+        one: circa un mese
+        other: circa %{count} mesi
+      about_x_years:
+        one: circa un anno
+        other: circa %{count} anni
+      almost_x_years:
+        one: circa 1 anno
+        other: circa %{count} anni
+      half_a_minute: mezzo minuto
+      less_than_x_minutes:
+        one: meno di un minuto
+        other: meno di %{count} minuti
+      less_than_x_seconds:
+        one: meno di un secondo
+        other: meno di %{count} secondi
+      over_x_years:
+        one: oltre un anno
+        other: oltre %{count} anni
+      x_days:
+        one: 1 giorno
+        other: "%{count} giorni"
+      x_minutes:
+        one: 1 minuto
+        other: "%{count} minuti"
+      x_months:
+        one: 1 mese
+        other: "%{count} mesi"
+      x_seconds:
+        one: 1 secondo
+        other: "%{count} secondi"
+    prompts:
+      day: Giorno
+      hour: Ora
+      minute: Minuto
+      month: Mese
+      second: Secondi
+      year: Anno
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: deve essere accettata
+      blank: non può essere lasciato in bianco
+      present: deve essere lasciato in bianco
+      confirmation: non coincide con %{attribute}
+      empty: non può essere vuoto
+      equal_to: deve essere uguale a %{count}
+      even: deve essere pari
+      exclusion: è riservato
+      greater_than: deve essere maggiore di %{count}
+      greater_than_or_equal_to: deve essere maggiore o uguale a %{count}
+      inclusion: non è compreso tra le opzioni disponibili
+      invalid: non è valido
+      less_than: deve essere minore di %{count}
+      less_than_or_equal_to: deve essere minore o uguale a %{count}
+      not_a_number: non è un numero
+      not_an_integer: non è un numero intero
+      odd: deve essere dispari
+      taken: è già presente
+      too_long:
+        one: è troppo lungo (il massimo è 1 carattere)
+        other: è troppo lungo (il massimo è %{count} caratteri)
+      too_short:
+        one: è troppo corto (il minimo è 1 carattere)
+        other: è troppo corto (il minimo è %{count} caratteri)
+      wrong_length:
+        one: è della lunghezza sbagliata (deve essere di 1 carattere)
+        other: è della lunghezza sbagliata (deve essere di %{count} caratteri)
+      other_than: devono essere di numero diverso da %{count}
+    template:
+      body: 'Ricontrolla i seguenti campi:'
+      header:
+        one: 'Non posso salvare questo %{model}: 1 errore'
+        other: 'Non posso salvare questo %{model}: %{count} errori.'
+  helpers:
+    select:
+      prompt: Seleziona...
+    submit:
+      create: Crea %{model}
+      submit: Invia %{model}
+      update: Aggiorna %{model}
+  number:
+    currency:
+      format:
+        delimiter: "."
+        format: "%n %u"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "€"
+    format:
+      delimiter: "."
+      precision: 2
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion: Miliardi
+          million: Milioni
+          quadrillion: Biliardi
+          thousand: Mila
+          trillion: Bilioni
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: Byte
+            other: Byte
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+        format: "%n%"
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: " e "
+      two_words_connector: " e "
+      words_connector: ", "
+  time:
+    am: am
+    formats:
+      default: "%a %d %b %Y, %H:%M:%S %z"
+      long: "%d %B %Y %H:%M"
+      short: "%d %b %H:%M"
+    pm: pm

@@ -1,0 +1,22 @@
+<% content_for :title do %><%= t 'stop.title' %><% end %>
+
+<h1><%= t 'stop.heading' %></h1>
+<p>
+  <h5>
+    <%= t 'stop.why' %>
+  </h5>
+
+  -- Columba Project --
+</p>
+
+<!--<p>-->
+  <!--Do you prefer to limit the number or kind of messages?-->
+<!--</p>-->
+
+<p>
+  <%= t 'stop.confirmation' %>
+
+  <%= form_tag @stop, method: :delete do %>
+      <%= submit_tag t('stop.confirm') %>
+  <% end %>
+</p>

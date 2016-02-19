@@ -1,0 +1,68 @@
+<div class="bg-pic">
+  <!-- START Background Pic-->
+  <%= image_tag 'new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg', class: 'lazy' %>
+  <!-- END Background Pic-->
+  <!-- START Background Caption-->
+
+  <!-- END Background Caption-->
+</div>
+
+<div class="login-container bg-white">
+  <div class="p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
+    <img src="<%= image_path 'logo_website_dark.png' %>" alt="logo" data-src="<%= image_path 'logo_website_dark.png' %>" data-src-retina="<%= image_path 'logo_website_dark.png' %>" width="78" height="22">
+    <p class="p-t-35"><%= t 'welcome.index.sign_in' %></p>
+    <!-- START Login Form -->
+    <%= form_for(:organization, :url => session_path(:organization), html: { id: 'form-login', class: 'p-t-15 m-b-15', role: 'form' }) do |f| %>
+      <!-- START Form Control-->
+      <div class="form-group form-group-default">
+        <%= f.label :email %>
+        <div class="controls">
+          <%= f.email_field :email, class: 'form-control', placeholder: 'Email', required: 'required' %>
+        </div>
+      </div>
+      <!-- END Form Control-->
+      <!-- START Form Control-->
+      <div class="form-group form-group-default">
+        <%= f.label :password %>
+        <div class="controls">
+          <%= f.password_field :password, class: 'form-control', placeholder: 'Password', required: 'required' %>
+        </div>
+      </div>
+      <!-- START Form Control-->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="checkbox ">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me, t('activerecord.attributes.organization.remember_me') %>
+          </div>
+        </div>
+        <!--<div class="col-md-6 text-right">
+          <a href="#" class="text-info small">Help? Contact Support</a>
+        </div>-->
+      </div>
+      <!-- END Form Control-->
+      <%= f.submit t('login'), class: 'btn btn-primary btn-cons m-t-10' %> <span class="m-r-10 m-l-5"><%= t 'or' %></span>
+        <%= link_to t('register'), new_organization_registration_path, class: 'btn btn-success btn-cons m-t-10' %>
+    <% end %>
+
+    <%= link_to t('devise.passwords.forgot_your_password'), new_password_path('organization') %><br />
+    <!--END Login Form-->
+    <!--<div class="pull-bottom sm-pull-bottom">
+      <div class="m-b-30 p-r-80 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
+        <div class="col-sm-3 col-md-2 no-padding">
+          <img alt="" class="m-t-5" data-src="assets/img/demo/pages_icon.png" data-src-retina="assets/img/demo/pages_icon_2x.png" height="60" src="assets/img/demo/pages_icon.png" width="60">
+        </div>
+      </div>
+    </div>-->
+  </div>
+</div>
+
+<% content_for :javascripts do %>
+
+    <script>
+      $(function() {
+        $('#form-login').validate()
+      })
+    </script>
+
+<% end %>

@@ -1,0 +1,22 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require plugins/boostrapv3/css/bootstrap.min
+ *= require font-awesome
+ *= require plugins/jquery-scrollbar/jquery.scrollbar
+ *= require plugins/jquery-datatable/media/css/dataTables.bootstrap.min
+ *= require plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min
+ *= require plugins/datatables-responsive/css/datatables.responsive
+ *= require pages-icons
+ *= require pages.css.erb
+ *= require style
+ */

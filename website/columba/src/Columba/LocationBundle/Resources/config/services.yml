@@ -1,4 +1,0 @@
-services:
-#    columba_location.example:
-#        class: Columba\LocationBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
