@@ -57,7 +57,13 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.AssociationProfileActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainActivity"/>
+
+        </activity>
         <activity
             android:name=".activity.UserProfileActivity"
             android:screenOrientation="portrait"></activity>
@@ -68,10 +74,7 @@
             android:name=".activity.SettingsActivity"
             android:screenOrientation="portrait"></activity>
 
-        <activity
-            android:name=".activity.GroupSettingsActivity"
-            android:screenOrientation="portrait">
-        </activity>
+
 
         <meta-data
             android:name="io.fabric.ApiKey"

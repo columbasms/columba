@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.telephony.SmsManager;
 import android.util.Base64;
 import android.util.Log;
@@ -22,6 +23,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.columbasms.columbasms.R;
+import com.columbasms.columbasms.activity.AssociationProfileActivity;
+import com.columbasms.columbasms.activity.MainActivity;
 import com.columbasms.columbasms.model.ContactsGroup;
 import com.columbasms.columbasms.utils.Utils;
 import com.columbasms.columbasms.utils.network.API_URL;
@@ -37,17 +40,19 @@ import java.util.Map;
 public class GCMService extends GcmListenerService {
 
     private static JSONArray j;
+    private static String ASSOCIATION_ID;
+    private static String ASSOCIATION_NAME;
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
 
         SharedPreferences state = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        final String ASSOCIATION_ID = from.split("_")[1];
+        ASSOCIATION_ID = from.split("_")[1];
         String USER_ID = state.getString("user_id", "");
         final String message = data.getString("message");
         String CAMPAIGN_ID = data.getString("campaign_id");
-        final String ASSOCIATION_NAME = data.getString("organization_name");
+        ASSOCIATION_NAME = data.getString("organization_name");
 
         Log.d("App", "from: " + from);
         Log.d("App", "message: " + message);
@@ -239,9 +244,17 @@ public class GCMService extends GcmListenerService {
             notificationContent = associationName + " " + getResources().getString(R.string.notification_follow_message);
         }else notificationContent = getResources().getString(R.string.notification_trust_message) + " " + associationName;
 
-        Intent intent = new Intent(this, NotificationManager.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        Intent resultIntent = new Intent(this, AssociationProfileActivity.class);
+        resultIntent.putExtra("ass_id",ASSOCIATION_ID);
+        resultIntent.putExtra("ass_name",ASSOCIATION_NAME);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        // Adds the back stack
+        stackBuilder.addParentStack(AssociationProfileActivity.class);
+        // Adds the Intent to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        // Gets a PendingIntent containing the entire back stack
+        PendingIntent pendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
@@ -250,11 +263,34 @@ public class GCMService extends GcmListenerService {
                 .setVibrate(new long[] {1, 1, 1})
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setContentTitle("ColumbaSMS")
+                .setContentIntent(pendingIntent)
                 .setContentText(notificationContent);
         notificationBuilder.setPriority(Notification.PRIORITY_HIGH);
         notificationBuilder.setColor(getResources().getColor(R.color.colorPrimary));
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notificationBuilder.build());
+        notificationManager.notify(1, notificationBuilder.build());
+
+        /*
+        Intent intent = new Intent(this, NotificationReceiverActivity.class);
+    PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+
+    // Build notification
+    // Actions are just fake
+    Notification noti = new Notification.Builder(this)
+        .setContentTitle("New mail from " + "test@gmail.com")
+        .setContentText("Subject").setSmallIcon(R.drawable.icon)
+        .setContentIntent(pIntent)
+        .addAction(R.drawable.icon, "Call", pIntent)
+        .addAction(R.drawable.icon, "More", pIntent)
+        .addAction(R.drawable.icon, "And more", pIntent).build();
+    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    // hide the notification after its selected
+    noti.flags |= Notification.FLAG_AUTO_CANCEL;
+
+    notificationManager.notify(0, noti);
+         */
+
+
 
     }
 
