@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">Columba</string>
 
+    <string name="appIntro1_title">Columba</string>
+    <string name="appIntro1_description">Con Columba puoi aiutare le associazioni di volontariato diffondendo le loro campagne ed eventi con i tuoi SMS inutilizzati!</string>
+
+    <string name="appIntro2_title">Scopri</string>
+    <string name="appIntro2_description">Scopri le associazioni attive nelle tematiche umanitarie a te care e vicine a dove vivi</string>
+
+    <string name="appIntro3_title">Segui</string>
+    <string name="appIntro3_description">Rimani aggiornato sulle nuove campagne delle tematiche e associazioni preferite</string>
+
+    <string name="appIntro4_title">Diffondi</string>
+    <string name="appIntro4_description">Diffondi le campagne che vuoi supportare e decidi chi renderne partecipe tramite i tuoi SMS inutilizzati</string>
+
+
     <string name="info">Info</string>
     <string name="feedback">Feedback</string>
     <string name="guide">Guida</string>

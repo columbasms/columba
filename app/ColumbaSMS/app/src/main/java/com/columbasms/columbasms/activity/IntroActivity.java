@@ -1,18 +1,15 @@
 package com.columbasms.columbasms.activity;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -89,17 +86,12 @@ public class IntroActivity extends AppIntro {
             editor_account_information.commit();
 
             //TUTORIAL SCREEN SETTINGS
-            addSlide(AppIntroFragment.newInstance("Scegli", "Seleziona le campagne che vuoi supportare e"
-                            + " decidi chi rendere partecipe!", R.drawable.colomba_icns,
-                    Color.parseColor("#009688")));
-            addSlide(AppIntroFragment.newInstance("Dona", "Diffondi iniziative benifiche donando i tuoi "
-                    + "SMS inutilizzati!", R.drawable.colomba_icns, Color.parseColor("#009688")));
-            addSlide(AppIntroFragment.newInstance("Condividi", "Sii social! Nella schermata principale "
-                            + "potrai trovare e mostrare tutte le campagne e le iniziative promosse e molto altro!",
-                    R.drawable.colomba_icns, Color.parseColor("#009688")));
-            addSlide(AppIntroFragment.newInstance("Competi!", "Mostra a tutti chi è il migliore! "
-                            + "Diventa il miglior Columber della tua zona e scala la classifica!",
-                    R.drawable.colomba_icns, Color.parseColor("#009688")));
+            Resources r = getResources();
+            int color = Color.parseColor("#009688");
+            addSlide(AppIntroFragment.newInstance(r.getString(R.string.appIntro1_title), r.getString(R.string.appIntro1_description), R.drawable.app_intro1, color));
+            addSlide(AppIntroFragment.newInstance(r.getString(R.string.appIntro2_title), r.getString(R.string.appIntro2_description), R.drawable.app_intro2,color));
+            addSlide(AppIntroFragment.newInstance(r.getString(R.string.appIntro3_title), r.getString(R.string.appIntro3_description), R.drawable.app_intro1,color));
+            addSlide(AppIntroFragment.newInstance(r.getString(R.string.appIntro4_title), r.getString(R.string.appIntro4_description), R.drawable.app_intro1,color));
 
             setBarColor(Color.parseColor("#00796B"));
             setSeparatorColor(Color.parseColor("#B2DFDB"));

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.telephony.SmsManager;
 import android.util.Base64;
 import android.util.Log;
 
@@ -24,7 +23,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.columbasms.columbasms.R;
 import com.columbasms.columbasms.activity.AssociationProfileActivity;
-import com.columbasms.columbasms.activity.MainActivity;
 import com.columbasms.columbasms.model.ContactsGroup;
 import com.columbasms.columbasms.utils.Utils;
 import com.columbasms.columbasms.utils.network.API_URL;
@@ -245,8 +243,8 @@ public class GCMService extends GcmListenerService {
         }else notificationContent = getResources().getString(R.string.notification_trust_message) + " " + associationName;
 
         Intent resultIntent = new Intent(this, AssociationProfileActivity.class);
-        resultIntent.putExtra("ass_id",ASSOCIATION_ID);
-        resultIntent.putExtra("ass_name",ASSOCIATION_NAME);
+        resultIntent.putExtra("ass_id", ASSOCIATION_ID);
+        resultIntent.putExtra("ass_name", ASSOCIATION_NAME);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         // Adds the back stack
         stackBuilder.addParentStack(AssociationProfileActivity.class);
@@ -258,7 +256,7 @@ public class GCMService extends GcmListenerService {
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.colomba_icns)
+                .setSmallIcon(R.drawable.app_intro1)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setVibrate(new long[] {1, 1, 1})
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
