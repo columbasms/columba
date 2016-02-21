@@ -1,10 +1,13 @@
+If you're searching for the Columba Android Application go to our other repository: [ColumbaAndroid](https://github.com/columbasms/ColumbaAndroid)
+
+
 # Columba
 
-Are you full of free SMS that you don't use? Donate your wasted SMS for care! 
+Are you full of free SMS that you don't use? Help charity agencies with these wasted messages! 
 
-Columba is a no-profit and open-source service for charity agencies to send bunch of SMS simply and for free, thanks to smartphone users who do not use their free SMS (usually provided in bundle with mobile internet connection contracts).
+Columba is a no-profit and open-source service for charity agencies that permits spreading of informations, events and campaigns through smartphone users' wasted SMS in a simple and free way.
 
-Columba is under development for "Google Technologies for Cloud and Web Development" university workshop.
+Columba is under development for [Google Technologies for Cloud and Web Development](https://sites.google.com/a/dis.uniroma1.it/google-technologies-for-cloud-and-web-development-2015/) university workshop.
 
 Concept validation
 ==============
@@ -18,3 +21,9 @@ Project Presentation
 Milestone 1 - Proof Of Concept
 ==============
 - [Presentation](https://docs.google.com/presentation/d/13PM9ZOeuu_qwNcWmSas6EMMbuZNPBDkvzrR7QQrRvHQ/present)
+
+Milestone 2 - Release Candidate
+==============
+- [Presentation](https://docs.google.com/presentation/d/1r-0Rf4S8wx79rXWTywxbFidCubLAn1Ju94qu1WxHGYM/present)
+- Android application (authorized only) [APK](https://drive.google.com/open?id=0Bz1hDzyYqxpxWG9iME9mQlVDYzg)
+- Android application [Video](https://drive.google.com/open?id=0Bz1hDzyYqxpxaGR1QkdhYWZPdU0)
