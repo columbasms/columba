@@ -13,6 +13,10 @@ it:
   send: "Invia"
   datatable: "Mostrati <b>da _START_ a _END_</b> di _TOTAL_ elementi"
   uploading: "Caricamento"
+  language:
+    reverse:
+      en: "Italiano"
+      it: "Inglese"
   campaigns:
     campaigns: "Campagne"
     index_title: "Le mie Campagne - Columba"

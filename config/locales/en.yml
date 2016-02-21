@@ -34,6 +34,10 @@ en:
   send: "Send"
   datatable: "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
   uploading: "Uploading"
+  language:
+    reverse:
+      en: "Italian"
+      it: "English"
   campaigns:
     campaigns: "Campaigns"
     index_title: "My Campaigns - Columba"
