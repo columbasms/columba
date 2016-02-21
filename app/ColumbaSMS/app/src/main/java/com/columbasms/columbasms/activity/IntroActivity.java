@@ -90,8 +90,8 @@ public class IntroActivity extends AppIntro {
             int color = Color.parseColor("#009688");
             addSlide(AppIntroFragment.newInstance(r.getString(R.string.appIntro1_title), r.getString(R.string.appIntro1_description), R.drawable.app_intro1, color));
             addSlide(AppIntroFragment.newInstance(r.getString(R.string.appIntro2_title), r.getString(R.string.appIntro2_description), R.drawable.app_intro2,color));
-            addSlide(AppIntroFragment.newInstance(r.getString(R.string.appIntro3_title), r.getString(R.string.appIntro3_description), R.drawable.app_intro1,color));
-            addSlide(AppIntroFragment.newInstance(r.getString(R.string.appIntro4_title), r.getString(R.string.appIntro4_description), R.drawable.app_intro1,color));
+            addSlide(AppIntroFragment.newInstance(r.getString(R.string.appIntro3_title), r.getString(R.string.appIntro3_description), R.drawable.app_intro3,color));
+            addSlide(AppIntroFragment.newInstance(r.getString(R.string.appIntro4_title), r.getString(R.string.appIntro4_description), R.drawable.app_intro4,color));
 
             setBarColor(Color.parseColor("#00796B"));
             setSeparatorColor(Color.parseColor("#B2DFDB"));
