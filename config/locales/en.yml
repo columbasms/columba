@@ -60,6 +60,8 @@ en:
     updated: "Campaign was successfully updated."
     destroyed: "Campaign was successfully destroyed."
     update_account: "You have to update your account in order to access all the functionalities"
+    errors:
+      cant_be_in_the_past: "can't be in the past"
   organizations:
     crop: "Crop"
   stop:

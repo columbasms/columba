@@ -71,7 +71,7 @@ class Organizations::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
     devise_parameter_sanitizer.for(:account_update).push(:organization_name, :description, :fiscal_code, :VAT_number, :town_id,
-                                                         :address, :postal_code, :phone_number, :website, :visible, :topic_ids => [])
+                                                         :address, :postal_code, :phone_number, :website, :visible, :topic_id)
   end
 
   # The path used after sign up.

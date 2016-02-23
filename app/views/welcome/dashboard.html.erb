@@ -17,7 +17,6 @@
               <tr>
                 <th><%= t 'campaigns.message' %></th>
                 <th><%= t 'campaigns.date_created' %></th>
-                <th><%= t 'campaigns.topics' %></th>
                 <th><%= t 'campaigns.expiration_date' %></th>
               </tr>
             </thead>
@@ -27,7 +26,6 @@
                 <tr>
                   <td><%= c.message %></td>
                   <td><%= c.created_at_format %></td>
-                  <td><%= c.topics.map { |t| t.name }.join(', ') %></td>
                   <td><%= c.expires_at_format %></td>
                 </tr>
               <% end %>

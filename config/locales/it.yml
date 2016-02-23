@@ -39,6 +39,8 @@ it:
     updated: "Campagna aggiornata con successo."
     destroyed: "Campagna eliminata con successo."
     update_account: "Devi aggiornare il tuo profilo per accedere a tutte le funzionalità del sito"
+    errors:
+      cant_be_in_the_past: "non può essere nel passato"
   organizations:
     crop: "Taglia"
   stop:
@@ -82,7 +84,7 @@ it:
         address: "Indirizzo"
         created_at: "Creato il"
         digits_clients: "Clienti"
-        expires_at: "Scade il"
+        expires_at: "Data di scadenza"
         id: "ID"
         latitude: "Latitudine"
         longitude: "Longitudine"

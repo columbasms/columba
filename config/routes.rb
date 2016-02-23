@@ -14,9 +14,6 @@ Rails.application.routes.draw do
   get '/town-by-province' => 'location#town_by_province', as: :town_by_province
   get '/provinces-by-region' => 'location#provinces_by_region', as: :provinces_by_region
 
-  get '/dashboard' => 'welcome#dashboard', as: :dashboard
-  get '/dashboard/campaigns' => 'campaigns#index', as: :index_campaigns
-  get '/dashboard/campaigns/filter' => 'campaigns#filter'
   get '/account-locked' => 'welcome#account_locked', as: :account_locked
 
   namespace :api do
@@ -55,7 +52,14 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :campaigns, except: [ :index, :update, :destroy ]
+  scope 'dashboard' do
+    get '/' => 'welcome#dashboard', as: :dashboard
+    resources :campaigns, except: [ :edit, :update, :destroy ] do
+      collection do
+        get '/filter' => 'campaigns#filter'
+      end
+    end
+  end
 
   post '/organizations/:id/upload' => 'organizations#upload', as: :organizations_upload
   match '/organizations/:id/crop' => 'organizations#crop', as: :organizations_crop, via: [:post, :patch]

@@ -8,10 +8,9 @@ class DigitsClient < ActiveRecord::Base
 
   has_and_belongs_to_many :topics
 
-  validates :phone_number, presence: true, uniqueness: true
-  validates :gcm_token, presence: true
-  validates :digits_secret, presence: true
-  validates :digits_token, presence: true
+  validates_presence_of :phone_number, :gcm_token, :digits_secret, :digits_id, :id_str,
+                        :digits_verification_type, :digits_token, :user_name
+  validates_uniqueness_of :phone_number, :user_name
 
   has_attached_file :avatar, styles: {
       normal: '250x250#',

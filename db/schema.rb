@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218115511) do
+ActiveRecord::Schema.define(version: 20160223170754) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -59,17 +59,17 @@ ActiveRecord::Schema.define(version: 20160218115511) do
   add_index "campaign_client_receivers", ["receiver_id"], name: "fk_rails_c32529c84f", using: :btree
 
   create_table "campaigns", force: :cascade do |t|
-    t.string   "message",         limit: 255
+    t.string   "message",         limit: 255,                null: false
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
-    t.integer  "organization_id", limit: 4
+    t.integer  "organization_id", limit: 4,                  null: false
     t.integer  "town_id",         limit: 4
     t.integer  "province_id",     limit: 4
     t.integer  "region_id",       limit: 4
     t.string   "address",         limit: 255
     t.decimal  "latitude",                    precision: 10
     t.decimal  "longitude",                   precision: 10
-    t.date     "expires_at"
+    t.date     "expires_at",                                 null: false
   end
 
   add_index "campaigns", ["organization_id"], name: "fk_rails_a74bb03c49", using: :btree
@@ -85,25 +85,17 @@ ActiveRecord::Schema.define(version: 20160218115511) do
   add_index "campaigns_digits_clients", ["campaign_id"], name: "index_campaigns_digits_clients_on_campaign_id", using: :btree
   add_index "campaigns_digits_clients", ["digits_client_id"], name: "index_campaigns_digits_clients_on_digits_client_id", using: :btree
 
-  create_table "campaigns_topics", id: false, force: :cascade do |t|
-    t.integer "campaign_id", limit: 4, null: false
-    t.integer "topic_id",    limit: 4, null: false
-  end
-
-  add_index "campaigns_topics", ["campaign_id"], name: "index_campaigns_topics_on_campaign_id", using: :btree
-  add_index "campaigns_topics", ["topic_id"], name: "index_campaigns_topics_on_topic_id", using: :btree
-
   create_table "digits_clients", force: :cascade do |t|
-    t.string   "phone_number",             limit: 255
+    t.string   "phone_number",             limit: 255,   null: false
     t.boolean  "enabled"
-    t.text     "gcm_token",                limit: 65535
-    t.text     "digits_token",             limit: 65535
+    t.text     "gcm_token",                limit: 65535, null: false
+    t.text     "digits_token",             limit: 65535, null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
-    t.text     "digits_secret",            limit: 65535
+    t.text     "digits_secret",            limit: 65535, null: false
     t.string   "id_str",                   limit: 255
     t.string   "digits_verification_type", limit: 255
-    t.string   "digits_id",                limit: 255
+    t.string   "digits_id",                limit: 255,   null: false
     t.string   "avatar_file_name",         limit: 255
     t.string   "avatar_content_type",      limit: 255
     t.integer  "avatar_file_size",         limit: 4
@@ -112,13 +104,13 @@ ActiveRecord::Schema.define(version: 20160218115511) do
     t.string   "cover_content_type",       limit: 255
     t.integer  "cover_file_size",          limit: 4
     t.datetime "cover_updated_at"
-    t.string   "user_name",                limit: 255
+    t.string   "user_name",                limit: 255,   null: false
   end
 
   create_table "digits_clients_organizations", id: false, force: :cascade do |t|
-    t.integer "organization_id",  limit: 4, null: false
-    t.integer "digits_client_id", limit: 4, null: false
-    t.boolean "trusted"
+    t.integer "organization_id",  limit: 4,                 null: false
+    t.integer "digits_client_id", limit: 4,                 null: false
+    t.boolean "trusted",                    default: false, null: false
   end
 
   add_index "digits_clients_organizations", ["digits_client_id"], name: "index_digits_clients_organizations_on_digits_client_id", using: :btree
@@ -150,25 +142,21 @@ ActiveRecord::Schema.define(version: 20160218115511) do
   add_index "groups_receivers", ["receiver_id"], name: "index_groups_receivers_on_receiver_id", using: :btree
 
   create_table "organizations", force: :cascade do |t|
-    t.string   "email",                  limit: 255,   default: "", null: false
-    t.string   "encrypted_password",     limit: 255,   default: "", null: false
+    t.string   "email",                  limit: 255,   default: "",    null: false
+    t.string   "encrypted_password",     limit: 255,   default: "",    null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,     default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,     default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
-    t.string   "organization_name",      limit: 255
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.string   "organization_name",      limit: 255,                   null: false
     t.string   "VAT_number",             limit: 255
     t.datetime "locked_at"
-    t.string   "logo_file_name",         limit: 255
-    t.string   "logo_content_type",      limit: 255
-    t.integer  "logo_file_size",         limit: 4
-    t.datetime "logo_updated_at"
     t.string   "avatar_file_name",       limit: 255
     t.string   "avatar_content_type",    limit: 255
     t.integer  "avatar_file_size",       limit: 4
@@ -178,30 +166,24 @@ ActiveRecord::Schema.define(version: 20160218115511) do
     t.string   "cover_content_type",     limit: 255
     t.integer  "cover_file_size",        limit: 4
     t.datetime "cover_updated_at"
-    t.string   "fiscal_code",            limit: 255
-    t.string   "address",                limit: 255
-    t.integer  "postal_code",            limit: 4
-    t.string   "phone_number",           limit: 255
-    t.boolean  "visible"
+    t.string   "fiscal_code",            limit: 255,                   null: false
+    t.string   "address",                limit: 255,                   null: false
+    t.integer  "postal_code",            limit: 4,                     null: false
+    t.string   "phone_number",           limit: 255,                   null: false
+    t.boolean  "visible",                              default: false, null: false
     t.string   "website",                limit: 255
-    t.integer  "town_id",                limit: 4
+    t.integer  "town_id",                limit: 4,                     null: false
+    t.integer  "topic_id",               limit: 4
   end
 
   add_index "organizations", ["email"], name: "index_organizations_on_email", unique: true, using: :btree
   add_index "organizations", ["reset_password_token"], name: "index_organizations_on_reset_password_token", unique: true, using: :btree
+  add_index "organizations", ["topic_id"], name: "fk_rails_ddc32bfb0f", using: :btree
   add_index "organizations", ["town_id"], name: "fk_rails_a4c150a086", using: :btree
 
-  create_table "organizations_topics", id: false, force: :cascade do |t|
-    t.integer "organization_id", limit: 4, null: false
-    t.integer "topic_id",        limit: 4, null: false
-  end
-
-  add_index "organizations_topics", ["organization_id"], name: "index_organizations_topics_on_organization_id", using: :btree
-  add_index "organizations_topics", ["topic_id"], name: "index_organizations_topics_on_topic_id", using: :btree
-
   create_table "provinces", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "code",       limit: 255
+    t.string   "name",       limit: 255, null: false
+    t.string   "code",       limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "region_id",  limit: 4
@@ -210,14 +192,14 @@ ActiveRecord::Schema.define(version: 20160218115511) do
   add_index "provinces", ["region_id"], name: "fk_rails_5aca3eede1", using: :btree
 
   create_table "receivers", force: :cascade do |t|
-    t.string   "number",      limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.boolean  "blacklisted"
+    t.string   "number",      limit: 255,                 null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.boolean  "blacklisted",             default: false, null: false
   end
 
   create_table "regions", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name",       limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -239,8 +221,8 @@ ActiveRecord::Schema.define(version: 20160218115511) do
     t.text     "description",        limit: 65535
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.string   "main_color",         limit: 255
-    t.string   "status_color",       limit: 255
+    t.string   "main_color",         limit: 255,   null: false
+    t.string   "status_color",       limit: 255,   null: false
     t.string   "image_file_name",    limit: 255
     t.string   "image_content_type", limit: 255
     t.integer  "image_file_size",    limit: 4
@@ -248,7 +230,7 @@ ActiveRecord::Schema.define(version: 20160218115511) do
   end
 
   create_table "towns", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name",        limit: 255, null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "province_id", limit: 4
@@ -264,6 +246,7 @@ ActiveRecord::Schema.define(version: 20160218115511) do
   add_foreign_key "campaigns", "regions"
   add_foreign_key "campaigns", "towns"
   add_foreign_key "groups", "digits_clients"
+  add_foreign_key "organizations", "topics"
   add_foreign_key "organizations", "towns"
   add_foreign_key "provinces", "regions"
   add_foreign_key "towns", "provinces"

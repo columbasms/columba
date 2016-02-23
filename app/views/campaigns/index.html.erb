@@ -29,7 +29,6 @@
         <tr>
           <th><%= t 'campaigns.message' %></th>
           <th><%= t 'campaigns.date_created' %></th>
-          <th><%= t 'campaigns.topics' %></th>
           <th><%= t 'campaigns.expiration_date' %></th>
         </tr>
         </thead>
@@ -39,11 +38,6 @@
             <tr>
               <td class="v-align-middle"><%= campaign.message %></td>
               <td class="v-align-middle"><%= campaign.created_at.strftime("%B %-d, %Y %H:%M") %></td>
-              <td class="v-align-middle">
-                <% campaign.topics.each do |topic| %>
-                    <a href="javascript:;" class="btn btn-tag"><%= topic.name %></a>
-                <% end %>
-              </td>
               <td class="v-align-middle"><%= campaign.expires_at_format %></td>
             </tr>
         <% end %>
