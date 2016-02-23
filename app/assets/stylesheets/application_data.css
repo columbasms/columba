@@ -18,5 +18,6 @@
  *= require plugins/datatables-responsive/css/datatables.responsive
  *= require pages-icons
  *= require pages.css.erb
+ *= require themes/simple
  *= require style
  */
