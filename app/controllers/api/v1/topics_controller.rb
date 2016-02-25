@@ -1,5 +1,6 @@
 class Api::V1::TopicsController < ApplicationController
-  http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
+  #http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
+  before_filter :restrict_access
   before_filter :set_topic, only: [:show, :campaigns, :organizations, :update]
   before_filter :set_locale, exclude: [:organizations, :campaigns]
   skip_before_filter :verify_authenticity_token
@@ -61,5 +62,9 @@ class Api::V1::TopicsController < ApplicationController
     def set_locale
       I18n.locale = params[:locale] if params[:locale].present? and %w(en it).include?(params[:locale])
     end
+
+  def restrict_access
+    head :unauthorized unless DigitsClient.find_by_auth_token(params[:auth_token])
+  end
 
 end

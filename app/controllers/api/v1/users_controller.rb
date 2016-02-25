@@ -1,9 +1,11 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
+      http_basic_authenticate_with name: ::Settings.http_basic.name,
+                                   password: ::Settings.http_basic.password, only: [:create]
       force_ssl unless Rails.env.development?
       protect_from_forgery except: :create
+      before_filter :restrict_access, except: [:create]
       before_filter :set_user, except: [:create]
       before_filter :set_campaign, only: [:send_campaign]
       before_filter :set_organization, only: [:follow_organization, :show_organization]
@@ -256,7 +258,11 @@ module Api
       end
 
       def user_params
-        params[:user].permit(:user_name,:avatar, :cover, :avatar_normal, :cover_normal, :digits_id, :digits_token, :digits_secret, :phone_number, :gcm_token)
+        params[:user].permit(:user_name, :avatar, :cover, :avatar_normal, :cover_normal, :digits_id, :digits_token, :digits_secret, :phone_number, :gcm_token)
+      end
+
+      def restrict_access
+        head :unauthorized unless DigitsClient.find_by_auth_token(params[:auth_token])
       end
 
     end

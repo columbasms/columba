@@ -1,5 +1,6 @@
 class Api::V1::CampaignsController < ApplicationController
-  http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
+  #http_basic_authenticate_with name: ::Settings.http_basic.name, password: ::Settings.http_basic.password
+  before_filter :restrict_access
   before_filter :set_campaign, only: [:show]
   before_filter :set_user, only: [:index]
   force_ssl unless Rails.env.development?
@@ -60,6 +61,10 @@ class Api::V1::CampaignsController < ApplicationController
         render json: { errors: 'User not found' }
       end
     end
+  end
+
+  def restrict_access
+    head :unauthorized unless DigitsClient.find_by_auth_token(params[:auth_token])
   end
 
 end
