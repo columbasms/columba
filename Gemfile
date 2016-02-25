@@ -43,6 +43,7 @@ gem 'rails-i18n', '~> 4.0.0'
 gem 'globalize', '~> 5.0.0'
 gem 'has_secure_token'
 gem 'cocoon'
+gem 'geokit-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require maps
 //= require turbolinks
 //= require plugins/modernizr.custom
 //= require plugins/jquery-ui/jquery-ui.min

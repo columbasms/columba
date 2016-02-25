@@ -118,6 +118,12 @@
         $('#photo_text').html(fileName);
       });
 
+      $('#addresses').on('cocoon:after-insert', function(e, added_task) {
+        var autocomplete = new google.maps.places.Autocomplete(
+            added_task.find('input').get(0), { types: ['geocode'] }
+        );
+      });
+
       function sendLocation(type, value, $elem) {
         var url = '';
         switch (type) {
