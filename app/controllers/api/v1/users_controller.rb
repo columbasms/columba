@@ -97,22 +97,28 @@ module Api
 
         hashed_leaf_list.each_with_index do |hashed_leaf, index|
           # aggiungo nel DB il ricevente (se non già presente)
-          current_receiver_id=Api::V1::UsersHelper.add_receiver(hashed_leaf)
+          current_receiver = Api::V1::UsersHelper.add_receiver(hashed_leaf)
 
           # verifico se il ricevente non ha richiesto il blocco del servizio
-          if Api::V1::UsersHelper.blacklisted_receiver?(current_receiver_id)
+          if current_receiver.blacklisted
             next
           end
           # verifico se il ricevente è stato già raggiunto da una campagna.
-          if Api::V1::UsersHelper.already_reached_receiver?(current_receiver_id, @campaign)
+          if Api::V1::UsersHelper.already_reached_receiver?(current_receiver.id, @campaign)
             next
           end
           # aggiungo nel DB la relazione tra campagna-utente-ricevente e campagna-utente
-          Api::V1::UsersHelper.add_campaign_client_receiver_relation(@campaign, @user, Receiver.find_by_id(current_receiver_id))
+          Api::V1::UsersHelper.add_campaign_client_receiver_relation(@campaign, @user, current_receiver)
 
+          s = Shortener::ShortenedUrl.generate(stop_service_url(current_receiver.number), owner: current_receiver)
+
+          Rails.logger.info s.inspect
 
           # aggiungo l'indice del ricevente al risultato
-          result_index_list+=[index]
+          result_index_list += [{
+              index: index,
+              stop_url: s.present? ? short_url_url(s.unique_key) : ''
+          }]
 
           # alternativa: aggiungo l'indice e l'hash del ricevente al risultato
           # result_index_hash+=[[index,hashed_leaf]]

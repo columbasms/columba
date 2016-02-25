@@ -44,6 +44,7 @@ gem 'globalize', '~> 5.0.0'
 gem 'has_secure_token'
 gem 'cocoon'
 gem 'geokit-rails'
+gem 'shortener'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

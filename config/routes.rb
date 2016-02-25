@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get '/town-by-province' => 'location#town_by_province', as: :town_by_province
   get '/provinces-by-region' => 'location#provinces_by_region', as: :provinces_by_region
 
+  get '/s/:id' => 'shortener/shortened_urls#show', as: :short_url
+
   get '/account-locked' => 'welcome#account_locked', as: :account_locked
 
   namespace :api do
@@ -67,7 +69,7 @@ Rails.application.routes.draw do
   post '/organizations/:id/upload' => 'organizations#upload', as: :organizations_upload
   match '/organizations/:id/crop' => 'organizations#crop', as: :organizations_crop, via: [:post, :patch]
 
-  get '/stop/:id' => 'stop#show'
+  get '/stop/:id' => 'stop#show', as: :stop_service
   delete '/stop/:id' => 'stop#destroy'
 
   # Example of regular route:

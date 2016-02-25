@@ -18,8 +18,7 @@ class StopController < ApplicationController
   # DELETE /stop/:id
   def destroy
     # BLACKLIST
-    @receiver.blacklisted=true
-    @receiver.save
+    @receiver.update_attribute :blacklisted, true
     render json: "Receiver correclty blacklisted: #{@receiver.blacklisted}"
   end
 
@@ -27,8 +26,7 @@ class StopController < ApplicationController
 
   def set_receiver
     begin
-      hash = Api::V1::UsersHelper.hash_receiver(params[:id])
-      @receiver = Receiver.find_by number:hash
+      @receiver = Receiver.find_by_number params[:id]
       if @receiver.nil?
         render json: {errors: 'Receiver not found' }
         return

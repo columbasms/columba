@@ -44,35 +44,25 @@ module Api::V1::UsersHelper
 
   # aggiunge un nuovo utente foglia al DB
   def self.add_receiver(hashed_number)
-    existing_receiver=Receiver.find_by_number(hashed_number)
-    if !existing_receiver.nil?
-      return existing_receiver.id
+    existing_receiver = Receiver.find_by_number(hashed_number)
+    unless existing_receiver.nil?
+      return existing_receiver
     end
 
-    receiver = Receiver.new
-    receiver.number = hashed_number
-    receiver.blacklisted = false
-
-    receiver.save
-
-    return receiver.id
+    Receiver.create! number: hashed_number, blacklisted: false
   end
 
   # controlla se un utente foglia non ha già ricevuto una campagna
   def self.already_reached_receiver?(receiver_id, campaign_id)
     # ATTENZIONE implementazione base, non garantisce al 100% che non avvengano collisioni:
     #     due richieste contemporanee al DB  restituirebbero entrambe 'false'!
-    if CampaignClientReceiver.exists?(campaign_id: campaign_id, receiver_id: receiver_id)
-      return true
-    else
-      return false
-    end
+    CampaignClientReceiver.exists?(campaign_id: campaign_id, receiver_id: receiver_id)
   end
 
   # controlla se un utente folglia ha richiesto il blocco del servizio
   def self.blacklisted_receiver?(receiver_id)
-    if Receiver.find_by_id(receiver_id).blacklisted
-      return true
+    if (r = Receiver.find_by_id(receiver_id))
+      return r.blacklisted
     else
       return false
     end
