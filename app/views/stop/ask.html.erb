@@ -1,6 +1,7 @@
 <% content_for :title do %><%= t 'stop.title' %><% end %>
 
-<h1><%= t 'stop.heading' %></h1>
+<% content_for :h3 do %><%= t 'stop.heading' %><% end %>
+
 <p>
   <h5>
     <%= t 'stop.why' %>
@@ -16,7 +17,7 @@
 <p>
   <%= t 'stop.confirmation' %>
 
-  <%= form_tag @stop, method: :delete do %>
-      <%= submit_tag t('stop.confirm') %>
+  <%= form_tag "/stop/#{@receiver.number}", method: :delete do %>
+      <%= submit_tag t('stop.confirm'), class: 'btn btn-primary btn-cons' %>
   <% end %>
 </p>

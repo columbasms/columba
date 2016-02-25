@@ -375,3 +375,6 @@ en:
   addresses: "Addresses"
   file_format_not_valid: "File format not valid."
   processing: "Processing"
+  destroyed:
+    title: "Number deactivated"
+    number_deactivated: "You won't receive our messages anymore"

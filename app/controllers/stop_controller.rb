@@ -2,6 +2,7 @@ class StopController < ApplicationController
   force_ssl unless Rails.env.development?
   protect_from_forgery
   before_filter :set_receiver
+  layout 'application_login_no_content'
 
 
   # GET /stop/:id
@@ -19,7 +20,6 @@ class StopController < ApplicationController
   def destroy
     # BLACKLIST
     @receiver.update_attribute :blacklisted, true
-    render json: "Receiver correclty blacklisted: #{@receiver.blacklisted}"
   end
 
   private

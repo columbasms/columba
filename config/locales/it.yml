@@ -351,3 +351,6 @@ it:
   addresses: "Indirizzi"
   file_format_not_valid: "Formato file non valido."
   processing: "Elaborazione"
+  destroyed:
+    title: "Numero disattivato"
+    number_deactivated: "Non riceverai più messaggi da parte nostra"
