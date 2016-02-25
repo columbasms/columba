@@ -15,7 +15,7 @@ function readURL(input, type) {
         var file = input.files[0];
 
         if ((/\.(png|jpeg|jpg|gif)$/i).test(file.name)) {
-            $('#hint-text').html('Uploading... <span id="upload-percentage">0%</span>');
+            $('#hint-text').html('<%= t 'uploading' %>... <span id="upload-percentage">0%</span>');
             $('#modal-crop').modal();
             $('.progress-panel').show();
 
@@ -51,7 +51,7 @@ function readURL(input, type) {
                         $('.progress-panel').hide();
                         $('#modal-crop').modal('toggle');
                     } else {
-                        $('#hint-text').html('Processing...');
+                        $('#hint-text').html('<%= t 'processing' %>...');
                         $('#modal-crop .panel-body .progress-panel').after(e).ready(function() {
                             var $imgs = $('#modal-crop img');
                             var count = $imgs.length;
@@ -85,7 +85,7 @@ function readURL(input, type) {
                 processData: false
             });
         } else {
-            alert('File format not valid.');
+            alert('<%= t 'file_format_not_valid' %>');
         }
     }
 }

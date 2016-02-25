@@ -1,0 +1,8 @@
+<div class="nested-fields m-t-10">
+  <div class="field form-group form-group-default required">
+    <%= f.label :address %>
+    <%= f.text_field :address, class: 'form-control' %>
+  </div>
+  <%= link_to_remove_association t('campaigns.addresses.remove_address'), f,
+                                 class: 'btn btn-primary btn-cons' %>
+</div>

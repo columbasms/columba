@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223170754) do
+ActiveRecord::Schema.define(version: 20160224113325) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -46,6 +46,15 @@ ActiveRecord::Schema.define(version: 20160223170754) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "campaign_addresses", force: :cascade do |t|
+    t.string   "address",     limit: 255, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "campaign_id", limit: 4
+  end
+
+  add_index "campaign_addresses", ["campaign_id"], name: "fk_rails_8063fe85c5", using: :btree
+
   create_table "campaign_client_receivers", force: :cascade do |t|
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
@@ -59,17 +68,21 @@ ActiveRecord::Schema.define(version: 20160223170754) do
   add_index "campaign_client_receivers", ["receiver_id"], name: "fk_rails_c32529c84f", using: :btree
 
   create_table "campaigns", force: :cascade do |t|
-    t.string   "message",         limit: 255,                null: false
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-    t.integer  "organization_id", limit: 4,                  null: false
-    t.integer  "town_id",         limit: 4
-    t.integer  "province_id",     limit: 4
-    t.integer  "region_id",       limit: 4
-    t.string   "address",         limit: 255
-    t.decimal  "latitude",                    precision: 10
-    t.decimal  "longitude",                   precision: 10
-    t.date     "expires_at",                                 null: false
+    t.string   "message",            limit: 255,                  null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.integer  "organization_id",    limit: 4,                    null: false
+    t.integer  "town_id",            limit: 4
+    t.integer  "province_id",        limit: 4
+    t.integer  "region_id",          limit: 4
+    t.decimal  "latitude",                         precision: 10
+    t.decimal  "longitude",                        precision: 10
+    t.date     "expires_at",                                      null: false
+    t.string   "photo_file_name",    limit: 255
+    t.string   "photo_content_type", limit: 255
+    t.integer  "photo_file_size",    limit: 4
+    t.datetime "photo_updated_at"
+    t.text     "long_description",   limit: 65535
   end
 
   add_index "campaigns", ["organization_id"], name: "fk_rails_a74bb03c49", using: :btree
@@ -84,6 +97,14 @@ ActiveRecord::Schema.define(version: 20160223170754) do
 
   add_index "campaigns_digits_clients", ["campaign_id"], name: "index_campaigns_digits_clients_on_campaign_id", using: :btree
   add_index "campaigns_digits_clients", ["digits_client_id"], name: "index_campaigns_digits_clients_on_digits_client_id", using: :btree
+
+  create_table "campaigns_topics", id: false, force: :cascade do |t|
+    t.integer "campaign_id", limit: 4, null: false
+    t.integer "topic_id",    limit: 4, null: false
+  end
+
+  add_index "campaigns_topics", ["campaign_id"], name: "index_campaigns_topics_on_campaign_id", using: :btree
+  add_index "campaigns_topics", ["topic_id"], name: "index_campaigns_topics_on_topic_id", using: :btree
 
   create_table "digits_clients", force: :cascade do |t|
     t.string   "phone_number",             limit: 255,   null: false
@@ -105,6 +126,7 @@ ActiveRecord::Schema.define(version: 20160223170754) do
     t.integer  "cover_file_size",          limit: 4
     t.datetime "cover_updated_at"
     t.string   "user_name",                limit: 255,   null: false
+    t.string   "auth_token",               limit: 255,   null: false
   end
 
   create_table "digits_clients_organizations", id: false, force: :cascade do |t|
@@ -173,13 +195,19 @@ ActiveRecord::Schema.define(version: 20160223170754) do
     t.boolean  "visible",                              default: false, null: false
     t.string   "website",                limit: 255
     t.integer  "town_id",                limit: 4,                     null: false
-    t.integer  "topic_id",               limit: 4
   end
 
   add_index "organizations", ["email"], name: "index_organizations_on_email", unique: true, using: :btree
   add_index "organizations", ["reset_password_token"], name: "index_organizations_on_reset_password_token", unique: true, using: :btree
-  add_index "organizations", ["topic_id"], name: "fk_rails_ddc32bfb0f", using: :btree
   add_index "organizations", ["town_id"], name: "fk_rails_a4c150a086", using: :btree
+
+  create_table "organizations_topics", id: false, force: :cascade do |t|
+    t.integer "organization_id", limit: 4, null: false
+    t.integer "topic_id",        limit: 4, null: false
+  end
+
+  add_index "organizations_topics", ["organization_id"], name: "index_organizations_topics_on_organization_id", using: :btree
+  add_index "organizations_topics", ["topic_id"], name: "index_organizations_topics_on_topic_id", using: :btree
 
   create_table "provinces", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
@@ -238,6 +266,7 @@ ActiveRecord::Schema.define(version: 20160223170754) do
 
   add_index "towns", ["province_id"], name: "fk_rails_9d80790578", using: :btree
 
+  add_foreign_key "campaign_addresses", "campaigns"
   add_foreign_key "campaign_client_receivers", "campaigns"
   add_foreign_key "campaign_client_receivers", "digits_clients"
   add_foreign_key "campaign_client_receivers", "receivers"
@@ -246,7 +275,6 @@ ActiveRecord::Schema.define(version: 20160223170754) do
   add_foreign_key "campaigns", "regions"
   add_foreign_key "campaigns", "towns"
   add_foreign_key "groups", "digits_clients"
-  add_foreign_key "organizations", "topics"
   add_foreign_key "organizations", "towns"
   add_foreign_key "provinces", "regions"
   add_foreign_key "towns", "provinces"

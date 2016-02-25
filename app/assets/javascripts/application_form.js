@@ -20,10 +20,13 @@
 //= require plugins/jquery-validation/js/jquery.validate.min
 //= require plugins/jquery-scrollbar/jquery.scrollbar.min
 //= require plugins/bootstrap-datepicker/js/bootstrap-datepicker
+//= require plugins/bootstrap3-wysihtml5/bootstrap3-wysihtml5.all.min
 //= require pages
+//= require cocoon
 
 $(function() {
     $('#datepicker').datepicker({
         format: 'dd/mm/yyyy'
     });
+    $('.wysiwyg').wysihtml5();
 });

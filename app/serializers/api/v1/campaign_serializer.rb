@@ -1,6 +1,8 @@
 class Api::V1::CampaignSerializer < ActiveModel::Serializer
-  attributes :id, :message, :expires_at, :created_at, :shared_at, :topic
+  attributes :id, :message, :photo_mobile, :expires_at, :created_at, :shared_at
   has_one :organization, only: [:id, :organization_name, :avatar_normal]
+  has_many :topics
+  has_many :addresses
 
   def filter(keys)
     if serialization_options[:include_shared_at]
@@ -10,7 +12,4 @@ class Api::V1::CampaignSerializer < ActiveModel::Serializer
     end
   end
 
-  def topic
-    Api::V1::TopicSerializer.new object.organization.topic, { root: false }
-  end
 end

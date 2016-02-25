@@ -58,6 +58,9 @@ Rails.application.routes.draw do
       collection do
         get '/filter' => 'campaigns#filter'
       end
+      member do
+        match :crop, via: [:get, :post]
+      end
     end
   end
 

@@ -41,6 +41,10 @@ it:
     update_account: "Devi aggiornare il tuo profilo per accedere a tutte le funzionalità del sito"
     errors:
       cant_be_in_the_past: "non può essere nel passato"
+    addresses:
+      add_address: "Aggiungi indirizzo"
+      remove_address: "Rimuovi indirizzo"
+    upload_photo: "Carica foto"
   organizations:
     crop: "Taglia"
   stop:
@@ -79,6 +83,7 @@ it:
       region: "Regioni"
       topic: "Topic"
       town: "Comuni"
+      campaign_address: "Indirizzi Campagna"
     attributes:
       campaign:
         address: "Indirizzo"
@@ -100,6 +105,10 @@ it:
         town: "Comune"
         town_id: "ID Comune"
         updated_at: "Aggiornato il"
+        long_description: "Descrizione lunga"
+        photo: "Foto"
+      campaign_address:
+        address: "Indirizzo"
       digits_client:
         campaigns: "Campagne"
         created_at: "Creato il"
@@ -339,3 +348,6 @@ it:
       long: "%d %B %Y %H:%M"
       short: "%d %b %H:%M"
     pm: pm
+  addresses: "Indirizzi"
+  file_format_not_valid: "Formato file non valido."
+  processing: "Elaborazione"

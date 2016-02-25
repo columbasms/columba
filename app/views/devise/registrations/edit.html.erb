@@ -88,8 +88,8 @@
                 <div class="row m-b-15">
                   <div class="col-sm-12 col-md-12">
                     <div class="form-group form-group-default form-group-default-select2 required">
-                      <label for="topic_id"><%= t 'devise.registrations.topics' %></label>
-                      <%= f.select :topic_id, Topic.all.collect { |x| [x.name, x.id] }, { }, { 'data-init-plugin': 'select2', class: 'full-width' } %>
+                      <label for="topic_ids"><%= t 'devise.registrations.topics' %></label>
+                      <%= f.select :topic_ids, Topic.all.collect { |x| [x.name, x.id] }, { }, { multiple: true, 'data-init-plugin': 'select2', class: 'full-width' } %>
                     </div>
                   </div>
                 </div>

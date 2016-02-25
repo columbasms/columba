@@ -62,6 +62,10 @@ en:
     update_account: "You have to update your account in order to access all the functionalities"
     errors:
       cant_be_in_the_past: "can't be in the past"
+    addresses:
+      add_address: "Add address"
+      remove_address: "Remove address"
+    upload_photo: "Upload photo"
   organizations:
     crop: "Crop"
   stop:
@@ -368,3 +372,6 @@ en:
       edit:
         confirm_new_password: "Confirm new password"
         new_password: "New password"
+  addresses: "Addresses"
+  file_format_not_valid: "File format not valid."
+  processing: "Processing"

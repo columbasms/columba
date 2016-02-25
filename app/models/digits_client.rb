@@ -1,4 +1,5 @@
 class DigitsClient < ActiveRecord::Base
+  has_secure_token :auth_token
 
   has_many :campaign_client_receivers
   has_many :groups
@@ -17,13 +18,11 @@ class DigitsClient < ActiveRecord::Base
       thumb: '32x32#'
   }, default_url: '/images/invalid'
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
-  crop_attached_file :avatar
 
   has_attached_file :cover, styles: {
       normal: '1500x844#'
   }, default_url: '/images/invalid'
   validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
-  crop_attached_file :cover, aspect: '16:9'
 
   def avatar_normal
     URI.join(ActionController::Base.asset_host, self.avatar.url(:normal)).to_s

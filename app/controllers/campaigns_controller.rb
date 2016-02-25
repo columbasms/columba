@@ -1,6 +1,6 @@
 class CampaignsController < ApplicationController
   before_filter :authenticate_organization!
-  before_action :set_campaign, only: [:show, :edit, :update, :destroy]
+  before_action :set_campaign, only: [:show, :edit, :crop]
   before_action :validate_visibility
   layout 'application_dashboard'
 
@@ -68,6 +68,11 @@ class CampaignsController < ApplicationController
     end
   end
 
+  # GET|POST /campaigns/:id/crop
+  def crop
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_campaign
@@ -77,7 +82,9 @@ class CampaignsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def campaign_params
       params[:campaign].permit(:message, :region_id, :province_id, :town_id, :expires_at,
-                               :address)
+                               :long_description, :photo,
+                               :topic_ids => [], :campaign_address_ids => [],
+                               :campaign_addresses_attributes => [:id, :address, :_destroy])
     end
 
     def validate_visibility

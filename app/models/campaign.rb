@@ -9,10 +9,22 @@ class Campaign < ActiveRecord::Base
   has_many :campaign_client_receivers, :dependent => :delete_all
   has_many :receivers, through: :campaign_client_receivers
   has_many :digits_clients, through: :campaign_client_receivers
+  has_many :campaign_addresses
+
+  has_and_belongs_to_many :topics
+
+  accepts_nested_attributes_for :campaign_addresses, allow_destroy: true
+
+  has_attached_file :photo, styles: {
+      normal: '1280x720#',
+      mobile: '800x450#',
+  }, default_url: '/images/invalid'
+  validates_attachment_content_type :photo, content_type: /\Aimage\/.*\Z/
+  crop_attached_file :photo, aspect: '16:9'
 
   validates :message, presence: true
   validates :organization, presence: true
-  validates_presence_of :organization_id
+  validates_presence_of :organization_id, :topics
   validates :expires_at, presence: true
   validate :expiration_date_cannot_be_in_the_past
 
@@ -34,6 +46,14 @@ class Campaign < ActiveRecord::Base
     if expires_at.present? && expires_at < Date.today
       errors.add(:expires_at, I18n.t('campaigns.errors.cant_be_in_the_past'))
     end
+  end
+
+  def photo_mobile
+    URI.join(ActionController::Base.asset_host, self.photo.url(:mobile)).to_s
+  end
+
+  def photo_normal
+    URI.join(ActionController::Base.asset_host, self.photo.url(:normal)).to_s
   end
 
 end
