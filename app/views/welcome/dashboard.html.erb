@@ -19,6 +19,7 @@
                 <th><%= t 'campaigns.date_created' %></th>
                 <th><%= t 'campaigns.topics' %></th>
                 <th><%= t 'campaigns.expiration_date' %></th>
+                <th><%= t 'campaigns.actions' %></th>
               </tr>
             </thead>
 
@@ -29,6 +30,7 @@
                   <td><%= c.created_at_format %></td>
                   <td><%= c.topics.map { |t| t.name }.join(', ') %></td>
                   <td><%= c.expires_at_format %></td>
+                  <td><%= link_to t('campaigns.stop'), stop_campaign_path(c), method: :delete %></td>
                 </tr>
               <% end %>
             </tbody>

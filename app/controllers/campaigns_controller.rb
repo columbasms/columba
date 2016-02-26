@@ -1,6 +1,6 @@
 class CampaignsController < ApplicationController
   before_filter :authenticate_organization!
-  before_action :set_campaign, only: [:show, :edit, :crop]
+  before_action :set_campaign, only: [:show, :edit, :crop, :stop]
   before_action :validate_visibility
   layout 'application_dashboard'
 
@@ -71,6 +71,16 @@ class CampaignsController < ApplicationController
   # GET|POST /campaigns/:id/crop
   def crop
 
+  end
+
+  # DELETE /campaigns/:id/stop
+  def stop
+    if @campaign.deactivate
+      flash[:notice] = t('campaigns.deactivated')
+    else
+      flash[:danger] = t('campaigns.error')
+    end
+    redirect_to :back
   end
 
   private

@@ -37,6 +37,20 @@
       <div class="content sm-gutter">
         <div class="container-fluid padding-25 sm-padding-10">
 
+          <% if flash[:notice].present? %>
+            <div class="alert alert-info alert-dismissable m-b-15 p-15">
+              <button type="button" class="close m-r-15" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <%= flash[:notice] %>
+            </div>
+          <% end %>
+
+          <% if flash[:danger].present? %>
+              <div class="alert alert-danger alert-dismissable m-b-15 p-15">
+                <button type="button" class="close m-r-15" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <%= flash[:danger] %>
+              </div>
+          <% end %>
+
           <%= yield %>
 
         </div>

@@ -45,6 +45,10 @@ it:
       add_address: "Aggiungi indirizzo"
       remove_address: "Rimuovi indirizzo"
     upload_photo: "Carica foto"
+    actions: "Azioni"
+    stop: "Termina campagna"
+    deactivated: "Campagna disattivata con successo"
+    error: "C'è stato un errore nel processare la tua richiesta"
   organizations:
     crop: "Taglia"
   stop:

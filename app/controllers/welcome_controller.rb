@@ -10,7 +10,7 @@ class WelcomeController < ApplicationController
   end
 
   def dashboard
-    @campaigns = current_organization.campaigns.order(:created_at => :desc).limit 5
+    @campaigns = current_organization.campaigns.not_expired.order(:created_at => :desc).limit 5
     render 'welcome/dashboard', layout: 'application_dashboard'
   end
 

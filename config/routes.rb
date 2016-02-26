@@ -62,6 +62,7 @@ Rails.application.routes.draw do
       end
       member do
         match :crop, via: [:get, :post]
+        delete :stop
       end
     end
   end

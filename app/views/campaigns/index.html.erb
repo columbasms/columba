@@ -31,6 +31,7 @@
           <th><%= t 'campaigns.date_created' %></th>
           <th><%= t 'campaigns.topics' %></th>
           <th><%= t 'campaigns.expiration_date' %></th>
+          <th><%= t 'campaigns.actions' %></th>
         </tr>
         </thead>
 
@@ -45,6 +46,7 @@
                 <% end %>
               </td>
               <td class="v-align-middle"><%= campaign.expires_at_format %></td>
+              <td class="v-align-middle"><%= link_to t('campaigns.stop'), stop_campaign_path(campaign), method: :delete %></td>
             </tr>
         <% end %>
         </tbody>

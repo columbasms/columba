@@ -34,6 +34,10 @@ class Campaign < ActiveRecord::Base
     self.expires_at < Date.today
   end
 
+  def deactivate
+    self.update_attribute :expires_at, Date.yesterday
+  end
+
   def expires_at_format
     self.expires_at.strftime '%B %-d, %Y' if self.expires_at.present?
   end

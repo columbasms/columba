@@ -66,6 +66,10 @@ en:
       add_address: "Add address"
       remove_address: "Remove address"
     upload_photo: "Upload photo"
+    actions: "Actions"
+    stop: "Stop campaign"
+    deactivated: "Campaign successfully deactivated"
+    error: "There was an error processing your request"
   organizations:
     crop: "Crop"
   stop:
