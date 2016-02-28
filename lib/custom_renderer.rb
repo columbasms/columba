@@ -11,7 +11,7 @@ class CustomRenderer < SimpleNavigation::Renderer::Base
       if item.sub_navigation.present?
         li_content += render_sub_navigation_for(item)
       end
-      list << content_tag(:li, li_content, class: "#{item.html_options[:li_class]} #{'open active' if item.selected?}")
+      list << content_tag(:li, li_content, class: "#{item.html_options[:li_class]} #{item.selected? ? 'open active' : 'static'}")
     end.join
     if skip_if_empty? && item_container.empty?
       ''

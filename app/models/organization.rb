@@ -64,8 +64,6 @@ class Organization < ActiveRecord::Base
     self.organization_name
   end
 
-  private
-
   def visible?
     self.visible
   end

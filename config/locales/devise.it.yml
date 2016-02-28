@@ -105,6 +105,8 @@ it:
         sign_in: Accedi
       signed_in: Accesso effettuato con successo.
       signed_out: Sei uscito correttamente.
+      organization:
+        not_visible: "Il tuo account è attivo ma non è visible. Per renderlo tale, per favore compila i campi richiesti."
     shared:
       links:
         back: Indietro

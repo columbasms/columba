@@ -15,5 +15,6 @@
  *= require plugins/jquery-scrollbar/jquery.scrollbar
  *= require pages-icons
  *= require pages.css.erb
+ *= require themes/simple
  *= require style
  */

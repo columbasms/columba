@@ -28,7 +28,6 @@
 # .idea/mongoSettings.xml
 
 .env.production
-config/database.yml
 
 ## File-based project format:
 *.ipr
@@ -66,7 +65,6 @@ rerun.txt
 pickle-email-*.html
 
 /config/secrets.yml
-/config/database.yml
 /public/assets/
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 

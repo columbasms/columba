@@ -22,6 +22,26 @@
       </div>
     </div>
     <!-- RIGHT SIDE -->
+    <div class="pull-right visible-sm visible-xs">
+      <div class="header-inner">
+        <button class="btn-link m-l-20 visible-sm visible-xs" data-toggle="dropdown" data-toggle-element="#language" aria-haspopup="true" aria-expanded="true">
+          <span class="thumbnail-wrapper d32 inline m-t-5">
+            <%= image_tag "#{I18n.locale}.png", width: 32, height: 32 %>
+          </span>
+        </button>
+        <ul id="language" class="dropdown-menu profile-dropdown" role="menu" style="left: -75px;">
+          <li style="padding-bottom: 11px;">
+            <a href="javascript:window.location.href = '<%= url_for action: action_name, controller: controller_name, locale: ((I18n.locale.to_s == 'it') ? 'en' : 'it') %>';">
+              <span class="d32">
+                <%= image_tag "#{((I18n.locale.to_s == 'it') ? 'en' : 'it')}.png", width: 32, height: 32 %>
+              </span>
+              <span class="m-l-10"><%= t "language.reverse.#{I18n.locale}" %></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <div class="pull-right full-height visible-sm visible-xs">
       <!-- START ACTION BAR -->
       <div class="header-inner dropdown">
@@ -52,6 +72,26 @@
         <img src="<%= logo %>" alt="logo" data-src="<%= logo %>" data-src-retina="<%= logo2x %>" width="78" height="22">
       </div>
     </div>
+  </div>
+
+  <div class="pull-right hidden-xs hidden-sm">
+      <div class="m-t-10">
+        <button class="btn-link m-l-20 sm-no-margin hidden-sm hidden-xs" data-toggle="dropdown" data-toggle-element="#language" aria-haspopup="true" aria-expanded="true">
+          <span class="thumbnail-wrapper d32 inline m-t-5">
+            <%= image_tag "#{I18n.locale}.png", width: 32, height: 32 %>
+          </span>
+        </button>
+        <ul id="language" class="dropdown-menu profile-dropdown" role="menu" style="left: -75px;">
+          <li style="padding-bottom: 11px;">
+            <a href="javascript:window.location.href = '<%= url_for action: action_name, controller: controller_name, locale: ((I18n.locale.to_s == 'it') ? 'en' : 'it') %>';">
+              <span class="d32">
+                <%= image_tag "#{((I18n.locale.to_s == 'it') ? 'en' : 'it')}.png", width: 32, height: 32 %>
+              </span>
+              <span class="m-l-10"><%= t "language.reverse.#{I18n.locale}" %></span>
+            </a>
+          </li>
+        </ul>
+      </div>
   </div>
 
   <div class=" pull-right">
