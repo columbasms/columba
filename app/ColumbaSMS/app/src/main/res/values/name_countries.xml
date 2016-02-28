@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="country_name_array">
-        <item>Italy</item>
-        <item>England</item>
-        <item>France</item>
-        <item>Germany</item>
-    </string-array>
-</resources>
