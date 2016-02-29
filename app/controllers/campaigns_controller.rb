@@ -1,6 +1,6 @@
 class CampaignsController < ApplicationController
   before_filter :authenticate_organization!
-  before_action :set_campaign, only: [:show, :edit, :crop, :stop]
+  before_action :set_campaign, only: [:show, :edit, :update, :crop, :stop]
   before_action :validate_visibility
   layout 'application_dashboard'
 
@@ -8,7 +8,7 @@ class CampaignsController < ApplicationController
   # GET /campaigns.json
   def index
     @campaigns = current_organization.campaigns
-    render :index, layout: 'application_dashboard'
+    render :index
   end
 
   def filter
@@ -32,6 +32,23 @@ class CampaignsController < ApplicationController
   # GET /campaigns/new
   def new
     @campaign = Campaign.new
+  end
+
+  # GET /campaigns/{id}/edit
+  def edit
+  end
+
+  # PUT /campaigns/{id}
+  def update
+    respond_to do |f|
+      if @campaign.update(campaign_params)
+        f.html { redirect_to campaigns_path, notice: t('campaigns.edited') }
+        f.json { render json: @campaign, root: false }
+      else
+        f.html { render 'edit' }
+        f.json { render json: @campaign.errors, root: false }
+      end
+    end
   end
 
   # POST /campaigns

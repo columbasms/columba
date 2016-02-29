@@ -56,7 +56,7 @@ Rails.application.routes.draw do
 
   scope 'dashboard' do
     get '/' => 'welcome#dashboard', as: :dashboard
-    resources :campaigns, except: [ :edit, :update, :destroy ] do
+    resources :campaigns, except: [ :destroy ] do
       collection do
         get '/filter' => 'campaigns#filter'
       end

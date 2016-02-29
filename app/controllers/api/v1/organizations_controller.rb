@@ -40,7 +40,7 @@ class Api::V1::OrganizationsController < ApplicationController
   end
 
   def restrict_access
-    head :unauthorized unless DigitsClient.find_by_auth_token(params[:auth_token])
+    head :unauthorized unless DigitsClient.find_by_auth_token(request.headers['X-Auth-Token'])
   end
 
 end

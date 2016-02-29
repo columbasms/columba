@@ -42,9 +42,12 @@ en:
     campaigns: "Campaigns"
     index_title: "My Campaigns - Columba"
     new_title: "New Campaign - Columba"
+    edit_title: "Edit Campaign - Columba"
     my_campaigns: "My campaigns"
     new_campaign: "New Campaign"
+    edit_campaign: "Edit Campaign"
     create: "Create a new Campaign"
+    update: "Edit your Campaign"
     message: "Message"
     date_created: "Date created"
     expiration_date: "Expiration date"
@@ -67,9 +70,10 @@ en:
       remove_address: "Remove address"
     upload_photo: "Upload photo"
     actions: "Actions"
-    stop: "Stop campaign"
+    stop: "Stop"
     deactivated: "Campaign successfully deactivated"
     error: "There was an error processing your request"
+    edited: "Campaign edited successfully"
   organizations:
     crop: "Crop"
   stop:
@@ -382,3 +386,4 @@ en:
   destroyed:
     title: "Number deactivated"
     number_deactivated: "You won't receive our messages anymore"
+  preview: "Preview"

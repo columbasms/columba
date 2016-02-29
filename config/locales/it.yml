@@ -21,9 +21,12 @@ it:
     campaigns: "Campagne"
     index_title: "Le mie Campagne - Columba"
     new_title: "Nuova Campagna - Columba"
+    edit_title: "Modifica Campagna - Columba"
     my_campaigns: "Le mie Campagne"
     new_campaign: "Nuova Campagna"
+    edit_campaign: "Modifica Campagna"
     create: "Crea una nuova Campagna"
+    update: "Modifica la tua Campagna"
     message: "Messaggio"
     date_created: "Data di creazione"
     expiration_date: "Data di scadenza"
@@ -46,9 +49,10 @@ it:
       remove_address: "Rimuovi indirizzo"
     upload_photo: "Carica foto"
     actions: "Azioni"
-    stop: "Termina campagna"
+    stop: "Termina"
     deactivated: "Campagna disattivata con successo"
     error: "C'è stato un errore nel processare la tua richiesta"
+    edited: "Campagna aggiornata con successo"
   organizations:
     crop: "Taglia"
   stop:
@@ -358,3 +362,4 @@ it:
   destroyed:
     title: "Numero disattivato"
     number_deactivated: "Non riceverai più messaggi da parte nostra"
+  preview: "Anteprima"

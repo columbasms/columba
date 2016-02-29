@@ -16,9 +16,13 @@ class Campaign < ActiveRecord::Base
   accepts_nested_attributes_for :campaign_addresses, allow_destroy: true
 
   has_attached_file :photo, styles: {
-      normal: '1280x720#',
-      mobile: '800x450#',
-  }, default_url: '/images/invalid'
+      normal: '1280x720>',
+      mobile: '800x450>',
+  }, default_url: '/images/invalid',
+                    convert_options: {
+                        normal: '-gravity center -extent 1280x720',
+                        mobile: '-gravity center -extent 800x450'
+                    }
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\Z/
   crop_attached_file :photo, aspect: '16:9'
 
@@ -43,7 +47,7 @@ class Campaign < ActiveRecord::Base
   end
 
   def created_at_format
-    self.created_at.strftime("%B %-d, %Y")
+    self.created_at.strftime('%B %-d, %Y')
   end
 
   def expiration_date_cannot_be_in_the_past
