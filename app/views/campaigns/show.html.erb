@@ -1,1 +1,52 @@
+<% content_for :title do %><%= @campaign.message %><% end %>
 
+<div class="col-md-12 col-center">
+  <div class="panel panel-default">
+
+    <div class="panel-body">
+      <% if @campaign.photo.exists? %>
+        <div style="max-height: 300px;" class="full-width m-b-10">
+          <div style="height: 300px; max-height: 300px; display: block; margin: 0 auto;">
+            <%= image_tag @campaign.photo.url(:normal), class: 'img-responsive', style: 'max-height: 300px; margin: 0 auto;' %>
+          </div>
+        </div>
+      <% end %>
+      <table class="table full-width campaign-single">
+        <tr>
+          <td><strong><%= t('campaigns.message') %>:</strong></td>
+          <td><%= @campaign.message %></td>
+        </tr>
+        <tr>
+          <td><strong><%= t('activerecord.attributes.campaign.long_description') %>:</strong></td>
+          <td><%= raw @campaign.long_description %></td>
+        </tr>
+        <tr>
+          <td><strong><%= t('campaigns.topics') %>:</strong></td>
+          <td><%= @campaign.topics.collect { |t| t.name }.join(', ') %></td>
+        </tr>
+        <tr>
+          <td><strong><%= t('campaigns.expiration_date') %>:</strong></td>
+          <td><%= @campaign.expires_at.strftime('%d/%m/%Y') %></td>
+        </tr>
+        <tr>
+          <td><strong><%= t('region') %>:</strong></td>
+          <td><%= @campaign.region if @campaign.region.present? %></td>
+        </tr>
+        <tr>
+          <td><strong><%= t('province') %>:</strong></td>
+          <td><%= @campaign.province if @campaign.province.present? %></td>
+        </tr>
+        <tr>
+          <td><strong><%= t('town') %>:</strong></td>
+          <td><%= @campaign.town if @campaign.town.present? %></td>
+        </tr>
+        <tr>
+          <td><strong><%= t('addresses') %>:</strong></td>
+          <td><%= raw @campaign.campaign_addresses.collect { |c| c.address }.join('<br />') if @campaign.campaign_addresses.present? %></td>
+        </tr>
+      </table>
+      <%= link_to t('campaigns.edit'), edit_campaign_path(@campaign), class: 'btn btn-primary btn-cons' %>
+    </div>
+
+  </div>
+</div>

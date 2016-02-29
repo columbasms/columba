@@ -8,7 +8,8 @@ class Organization < ActiveRecord::Base
 
   has_attached_file :avatar, styles: {
       normal: '250x250#',
-      thumb: '32x32#'
+      thumb: '32x32#',
+      thumb_48: '48x48#'
   }, default_url: '/images/avatar.png'
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
   crop_attached_file :avatar

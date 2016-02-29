@@ -42,7 +42,7 @@ class CampaignsController < ApplicationController
   def update
     respond_to do |f|
       if @campaign.update(campaign_params)
-        f.html { redirect_to campaigns_path, notice: t('campaigns.edited') }
+        f.html { redirect_to @campaign, notice: t('campaigns.edited') }
         f.json { render json: @campaign, root: false }
       else
         f.html { render 'edit' }
@@ -76,7 +76,7 @@ class CampaignsController < ApplicationController
           Rails.logger.info response
         end
 
-        format.html { redirect_to dashboard_path, notice: I18n.t('campaigns.created') }
+        format.html { redirect_to @campaign, notice: I18n.t('campaigns.created') }
         format.json { render :show, status: :created, location: @campaign }
       else
         format.html { render :new }

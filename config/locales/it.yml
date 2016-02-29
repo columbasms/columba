@@ -53,6 +53,7 @@ it:
     deactivated: "Campagna disattivata con successo"
     error: "C'è stato un errore nel processare la tua richiesta"
     edited: "Campagna aggiornata con successo"
+    photo: "Locandina"
   organizations:
     crop: "Taglia"
   stop:

@@ -7,4 +7,8 @@ class Province < ActiveRecord::Base
 
   validates_presence_of :name, :code
 
+  def to_s
+    "#{self.name}"
+  end
+
 end

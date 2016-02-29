@@ -74,6 +74,7 @@ en:
     deactivated: "Campaign successfully deactivated"
     error: "There was an error processing your request"
     edited: "Campaign edited successfully"
+    photo: "Playbill"
   organizations:
     crop: "Crop"
   stop:
@@ -133,6 +134,7 @@ en:
         town: "Town"
         town_id: "Town ID"
         updated_at: "Updated at"
+        long_description: "Long description"
       digits_client:
         campaigns: "Campaigns"
         created_at: "Created at"
