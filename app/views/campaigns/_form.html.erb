@@ -19,7 +19,8 @@
 
   <div class="form-group form-group-default required">
     <%= f.label :message %>
-    <%= f.text_area :message, class: 'form-control full-height', rows: '10', required: 'required' %>
+    <%= f.text_field :message, class: 'form-control full-height', rows: '10', required: 'required', maxlength: '306' %>
+    <em id="message_length"></em>
   </div>
 
   <div class="form-group form-group-default">
@@ -143,6 +144,20 @@
         var autocomplete = new google.maps.places.Autocomplete(
             added_task.find('input').get(0), { types: ['geocode'] }
         );
+      });
+
+      function computeLength() {
+        var message = $('#campaign_message').val();
+        if (message != null && typeof message !== 'undefined') {
+          $('#message_length').html(message.length + ' / 306');
+        } else {
+          $('#message_length').html('0 / 306');
+        }
+      }
+
+      computeLength();
+      $('#campaign_message').keyup(function() {
+        computeLength();
       });
 
       function sendLocation(type, value, $elem, $nullElement) {
