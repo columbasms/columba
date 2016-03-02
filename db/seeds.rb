@@ -5,20 +5,22 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-sangue = Topic.create(
+sangue = Topic.create([
     {
-        :name => 'sangue'
-    }
-)
-
-Organization.create!(
+        :name => 'sangue',
+        main_color: '#fff',
+        status_color: '#fff'
+    },
     {
-        :email => 'lorenzo.rapetti.94@gmail.com',
-        :password => 'fioredicampo',
-        :password_confirmation => 'fioredicampo',
-        :organization_name => 'Lorenzo Rapetti SRL',
-        :topics => [sangue]
+        name: 'Rifugiati',
+        main_color: '#fff',
+        status_color: '#fff'
+    },
+    {
+        name: 'Aiuto',
+        main_color: '#fff',
+        status_color: '#fff'
     }
-)
+])
 
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')

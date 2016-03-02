@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160225201726) do
+ActiveRecord::Schema.define(version: 20160302102533) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20160225201726) do
   add_index "campaign_client_receivers", ["receiver_id"], name: "fk_rails_c32529c84f", using: :btree
 
   create_table "campaigns", force: :cascade do |t|
-    t.string   "message",            limit: 255,   null: false
+    t.string   "message",            limit: 320,   null: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.integer  "organization_id",    limit: 4,     null: false
@@ -179,6 +179,10 @@ ActiveRecord::Schema.define(version: 20160225201726) do
     t.string   "organization_name",      limit: 255,                   null: false
     t.string   "VAT_number",             limit: 255
     t.datetime "locked_at"
+    t.string   "logo_file_name",         limit: 255
+    t.string   "logo_content_type",      limit: 255
+    t.integer  "logo_file_size",         limit: 4
+    t.datetime "logo_updated_at"
     t.string   "avatar_file_name",       limit: 255
     t.string   "avatar_content_type",    limit: 255
     t.integer  "avatar_file_size",       limit: 4
@@ -250,8 +254,8 @@ ActiveRecord::Schema.define(version: 20160225201726) do
   create_table "topic_translations", force: :cascade do |t|
     t.integer  "topic_id",    limit: 4,   null: false
     t.string   "locale",      limit: 255, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
   end

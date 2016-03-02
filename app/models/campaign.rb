@@ -26,7 +26,7 @@ class Campaign < ActiveRecord::Base
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\Z/
   crop_attached_file :photo, aspect: '16:9'
 
-  validates :message, presence: true
+  validates :message, presence: true, length: { maximum: 306 }
   validates :organization, presence: true
   validates_presence_of :organization_id, :topics
   validates :expires_at, presence: true
