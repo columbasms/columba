@@ -1,0 +1,31 @@
+<!doctype html>
+<html class="theme-c has-gradient has-pattern">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><%= yield(:title).presence || 'Columba' %></title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9, user-scalable=no, target-densitydpi=device-dpi">
+    <%= stylesheet_link_tag('frontend/screen', media: 'screen', 'data-turbolinks-track' => true) %>
+    <%= stylesheet_link_tag('frontend/print', media: 'print', 'data-turbolinks-track' => true) %>
+    <%= javascript_include_tag('frontend/head', 'data-turbolinks-track' => true) %>
+    <%= favicon_link_tag 'favicon.ico' %>
+  </head>
+  <body>
+    <div id="root">
+
+      <%= render partial: 'layouts/header_frontend' %>
+
+      <%= yield %>
+
+      <%= render partial: 'layouts/footer_frontend' %>
+
+    </div>
+    <script>
+      head.load('<%= asset_path 'application_frontend.js' %>')
+    </script>
+  </body>
+</html>

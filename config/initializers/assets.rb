@@ -11,4 +11,6 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile +=
     %w( ie9.css windows.chrome.fix.css login.js favicon.ico file-upload.js file-upload.css
         application_form.js application_form.css application_data.css application_data.js
-        location-select.js )
+        location-select.js application_frontend.css application_frontend.js frontend/head.js
+        frontend/screen.css.erb frontend/print.css tinymce/plugins/uploadimage/plugin.js
+        tinymce/plugins/uploadimage/langs/en.js )

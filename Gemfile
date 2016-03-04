@@ -45,6 +45,10 @@ gem 'has_secure_token'
 gem 'cocoon'
 gem 'geokit-rails'
 gem 'shortener'
+gem 'tinymce-rails'
+gem 'tinymce-rails-imageupload', github: 'PerfectlyNormal/tinymce-rails-imageupload'
+gem 'will_paginate', '~> 3.0.6'
+gem 'html_truncator', '~>0.2'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -17,6 +17,8 @@ it:
     reverse:
       en: "Italiano"
       it: "Inglese"
+  active_admin:
+    clone_model: "Copia"
   campaigns:
     campaigns: "Campagne"
     index_title: "Le mie Campagne - Columba"
@@ -364,3 +366,17 @@ it:
     title: "Numero disattivato"
     number_deactivated: "Non riceverai più messaggi da parte nostra"
   preview: "Anteprima"
+  frontend:
+    columbasms: "Columba SMS"
+    motto: "Dona i tuoi SMS per scopi benefici!"
+    contact: "Contatti"
+    the_project: "Il progetto"
+    blog: "Blog - Columba"
+    read_more: "Leggi tutto"
+    next: "Successivo"
+    previous: "Precedente"
+    categories: "Categorie"
+    tags: "Tag"
+  frontent:
+    rights: "Tutti i diritti riservati"
+    by: "Di"

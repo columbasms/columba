@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160302102533) do
+ActiveRecord::Schema.define(version: 20160304131146) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -29,18 +29,24 @@ ActiveRecord::Schema.define(version: 20160302102533) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "admin_users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "email",                  limit: 255,   default: "", null: false
+    t.string   "encrypted_password",     limit: 255,   default: "", null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,     default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.string   "avatar_file_name",       limit: 255
+    t.string   "avatar_content_type",    limit: 255
+    t.integer  "avatar_file_size",       limit: 4
+    t.datetime "avatar_updated_at"
+    t.string   "name",                   limit: 255
+    t.text     "description",            limit: 65535
   end
 
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
@@ -105,6 +111,12 @@ ActiveRecord::Schema.define(version: 20160302102533) do
 
   add_index "campaigns_topics", ["campaign_id"], name: "index_campaigns_topics_on_campaign_id", using: :btree
   add_index "campaigns_topics", ["topic_id"], name: "index_campaigns_topics_on_topic_id", using: :btree
+
+  create_table "categories", force: :cascade do |t|
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "title",      limit: 255, null: false
+  end
 
   create_table "digits_clients", force: :cascade do |t|
     t.string   "phone_number",             limit: 255,   null: false
@@ -213,6 +225,45 @@ ActiveRecord::Schema.define(version: 20160302102533) do
   add_index "organizations_topics", ["organization_id"], name: "index_organizations_topics_on_organization_id", using: :btree
   add_index "organizations_topics", ["topic_id"], name: "index_organizations_topics_on_topic_id", using: :btree
 
+  create_table "post_images", force: :cascade do |t|
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "alt",               limit: 255
+    t.string   "hint",              limit: 255
+    t.integer  "post_id",           limit: 4
+    t.string   "file_file_name",    limit: 255
+    t.string   "file_content_type", limit: 255
+    t.integer  "file_file_size",    limit: 4
+    t.datetime "file_updated_at"
+  end
+
+  add_index "post_images", ["post_id"], name: "fk_rails_3ee54b46c4", using: :btree
+
+  create_table "posts", force: :cascade do |t|
+    t.string   "title",              limit: 255
+    t.text     "content",            limit: 65535
+    t.boolean  "published"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.integer  "admin_user_id",      limit: 4
+    t.integer  "category_id",        limit: 4
+    t.string   "photo_file_name",    limit: 255
+    t.string   "photo_content_type", limit: 255
+    t.integer  "photo_file_size",    limit: 4
+    t.datetime "photo_updated_at"
+  end
+
+  add_index "posts", ["admin_user_id"], name: "fk_rails_c9f8ba6d38", using: :btree
+  add_index "posts", ["category_id"], name: "fk_rails_9b1b26f040", using: :btree
+
+  create_table "posts_tags", id: false, force: :cascade do |t|
+    t.integer "post_id", limit: 4, null: false
+    t.integer "tag_id",  limit: 4, null: false
+  end
+
+  add_index "posts_tags", ["post_id"], name: "index_posts_tags_on_post_id", using: :btree
+  add_index "posts_tags", ["tag_id"], name: "index_posts_tags_on_tag_id", using: :btree
+
   create_table "provinces", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
     t.string   "code",       limit: 255, null: false
@@ -250,6 +301,12 @@ ActiveRecord::Schema.define(version: 20160302102533) do
   add_index "shortened_urls", ["owner_id", "owner_type"], name: "index_shortened_urls_on_owner_id_and_owner_type", using: :btree
   add_index "shortened_urls", ["unique_key"], name: "index_shortened_urls_on_unique_key", unique: true, using: :btree
   add_index "shortened_urls", ["url"], name: "index_shortened_urls_on_url", length: {"url"=>255}, using: :btree
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "topic_translations", force: :cascade do |t|
     t.integer  "topic_id",    limit: 4,   null: false
@@ -295,6 +352,9 @@ ActiveRecord::Schema.define(version: 20160302102533) do
   add_foreign_key "campaigns", "towns"
   add_foreign_key "groups", "digits_clients"
   add_foreign_key "organizations", "towns"
+  add_foreign_key "post_images", "posts"
+  add_foreign_key "posts", "admin_users"
+  add_foreign_key "posts", "categories"
   add_foreign_key "provinces", "regions"
   add_foreign_key "towns", "provinces"
 end

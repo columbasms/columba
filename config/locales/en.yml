@@ -389,3 +389,17 @@ en:
     title: "Number deactivated"
     number_deactivated: "You won't receive our messages anymore"
   preview: "Preview"
+  frontend:
+    columbasms: "Columba SMS"
+    motto: "Donate your wasted SMS for charity!"
+    contact: "Contact"
+    the_project: "The project"
+    blog: "Blog - Columba"
+    read_more: "Read more"
+    next: "Next"
+    previous: "Previous"
+    categories: "Categories"
+    tags: "Tags"
+  frontent:
+    rights: "All rights reserved"
+    by: "By"

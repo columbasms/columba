@@ -116,8 +116,8 @@ module Api
 
           # aggiungo l'indice del ricevente al risultato
           result_index_list += [{
-              index: index,
-              stop_url: s.present? ? short_url_url(s.unique_key) : ''
+                                    index: index,
+                                    stop_url: s.present? ? short_url_url(s.unique_key) : ''
           }]
 
           # alternativa: aggiungo l'indice e l'hash del ricevente al risultato

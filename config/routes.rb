@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   get '/account-locked' => 'welcome#account_locked', as: :account_locked
 
+  post '/tinymce_assets' => 'posts#tinymce_assets_create'
+
   namespace :api do
     namespace :v1 do
       resources :users do
@@ -52,6 +54,10 @@ Rails.application.routes.draw do
         end
       end
     end
+  end
+
+  scope 'blog' do
+    resources :posts, only: [:index, :show], path: '/'
   end
 
   scope 'dashboard' do

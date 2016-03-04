@@ -1,0 +1,40 @@
+<% content_for :title do %>
+    <%= t 'frontend.blog' %>
+<% end %>
+
+<article id="featured">
+  <h2>
+    <% if @category %>
+      <%= @category.title %>
+    <% elsif @tag %>
+      <%= @tag.title %>
+    <% else %>
+      Blog
+    <% end %>
+  </h2>
+</article>
+
+<section id="content">
+  <div class="cols-a">
+    <div class="news-e">
+      <% @posts.each do |post| %>
+          <article>
+            <header>
+              <figure><%= image_tag post.photo.url(:normal), width: 700, height: 315 %></figure>
+              <h3><%= link_to post.title, post %></h3>
+              <ul>
+                <li><a href="javascript:;"><%= image_tag post.admin_user.avatar.url(:thumb_48), width: 40, height: 40 %>
+                  <%= t 'frontent.by' %> <%= post.admin_user %></a></li>
+                <li><i class="icon-basic" data-icon="x"></i> <%= raw I18n.localize post.created_at, format: '%d %B %Y' %></li>
+              </ul>
+            </header>
+            <%= raw HTML_Truncator.truncate post.content, 50 %>
+            <p class="link-a"><%= link_to t('frontend.read_more'), post %></p>
+          </article>
+      <% end %>
+      <%= will_paginate @posts, next_label: t('frontend.next'), previous_label: t('frontend.previous') %>
+    </div>
+
+    <%= render partial: 'aside' %>
+  </div>
+</section>
