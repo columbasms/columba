@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+  <h1>C'è una nuova richiesta di contatto da <%= @contact[:name] %> (<%= @contact[:email] %>)</h1>
+  <p>Il messaggio è il seguente:</p>
+  <p>
+    <%= @contact[:message] %>
+  </p>
+</body>
+</html>

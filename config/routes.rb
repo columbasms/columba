@@ -13,12 +13,11 @@ Rails.application.routes.draw do
 
   get '/town-by-province' => 'location#town_by_province', as: :town_by_province
   get '/provinces-by-region' => 'location#provinces_by_region', as: :provinces_by_region
-
   get '/s/:id' => 'shortener/shortened_urls#show', as: :short_url
-
   get '/account-locked' => 'welcome#account_locked', as: :account_locked
 
   post '/tinymce_assets' => 'posts#tinymce_assets_create'
+  post '/contact' => 'welcome#contact', as: :contact
 
   namespace :api do
     namespace :v1 do

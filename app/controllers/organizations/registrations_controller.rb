@@ -15,6 +15,8 @@ class Organizations::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
+    OrganizationMailer.account_locked(resource).deliver_later
+    OrganizationMailer.account_created(resource).deliver_later
   end
 
   # GET /resource/edit

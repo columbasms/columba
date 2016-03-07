@@ -400,6 +400,12 @@ en:
     previous: "Previous"
     categories: "Categories"
     tags: "Tags"
+    send: "Send"
+    name: "Name"
+    message: "Message"
+    contact_us: "Contact us"
+    follow_us: "Follow us"
+    team: "The team"
   frontent:
     rights: "All rights reserved"
     by: "By"

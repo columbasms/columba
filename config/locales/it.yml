@@ -377,6 +377,12 @@ it:
     previous: "Precedente"
     categories: "Categorie"
     tags: "Tag"
+    send: "Invia"
+    name: "Nome"
+    message: "Messaggio"
+    contact_us: "Contattaci"
+    follow_us: "Seguici sui social"
+    team: "Il team"
   frontent:
     rights: "Tutti i diritti riservati"
     by: "Di"

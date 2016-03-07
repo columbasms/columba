@@ -469,12 +469,27 @@ head.ready(function() {
 /*!*/
 
 var config1 = {
-    "id": '345170787868762112',
+    "id": '833087142',
     "domId": 'twitter',
     "maxTweets": 3,
     "enableLinks": false,
     "showInteraction": false,
     "showUser": true,
-    "showImages" : true
+    "showImages" : true,
+    "lang": "it"
 };
 twitterFetcher.fetch(config1);
+
+$(function() {
+  $('#contact-form').submit(function(e) {
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr('action'),
+      type: 'post',
+      data: $(this).serialize(),
+      success: function(data) {
+        alert(data);
+      }
+    })
+  });
+});

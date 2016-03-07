@@ -14,11 +14,16 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      port: 2525,
-      domain: 'columbasms.com'
+      :address   => 'smtp.mandrillapp.com',
+      :port      => 587,
+      :enable_starttls_auto => true,
+      :user_name => ENV['MANDRILL_USERNAME'],
+      :password  => ENV['MANDRILL_API_KEY'],
+      :authentication => 'login',
+      :domain => 'columbasms.com'
   }
 
   config.action_controller.asset_host = 'http://localhost:3000'

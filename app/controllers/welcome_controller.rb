@@ -14,4 +14,15 @@ class WelcomeController < ApplicationController
     render 'welcome/account_locked', layout: 'application_login_no_content'
   end
 
+  # POST /contact
+  def contact
+    p = params[:contact].permit(:name, :email, :message)
+    if p[:name].present? and p[:email].present? and p[:message].present?
+      ContactMailer.contact_email(p).deliver_now
+      render json: { success: true }
+    else
+      render json: { error: true }
+    end
+  end
+
 end
