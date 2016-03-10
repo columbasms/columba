@@ -264,7 +264,8 @@ module Api
       end
 
       def user_params
-        params[:user].permit(:user_name, :avatar, :cover, :avatar_normal, :cover_normal, :digits_id, :digits_token, :digits_secret, :phone_number, :gcm_token)
+        params[:user].permit(:user_name, :avatar, :cover, :avatar_normal, :cover_normal, :digits_id,
+                             :digits_token, :digits_secret, :phone_number, :gcm_token, :max_sms)
       end
 
       def restrict_access

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160304131146) do
+ActiveRecord::Schema.define(version: 20160310175007) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -63,12 +63,24 @@ ActiveRecord::Schema.define(version: 20160304131146) do
 
   add_index "campaign_addresses", ["campaign_id"], name: "fk_rails_8063fe85c5", using: :btree
 
+  create_table "campaign_analytics", force: :cascade do |t|
+    t.integer  "supporters",  limit: 4
+    t.integer  "sent_sms",    limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "campaign_id", limit: 4
+  end
+
+  add_index "campaign_analytics", ["campaign_id"], name: "fk_rails_26fe8d0442", using: :btree
+
   create_table "campaign_client_receivers", force: :cascade do |t|
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
     t.integer  "campaign_id",      limit: 4
     t.integer  "digits_client_id", limit: 4
     t.integer  "receiver_id",      limit: 4
+    t.decimal  "lat",                        precision: 13, scale: 10
+    t.decimal  "lng",                        precision: 13, scale: 10
   end
 
   add_index "campaign_client_receivers", ["campaign_id"], name: "fk_rails_0af7050c11", using: :btree
@@ -139,6 +151,7 @@ ActiveRecord::Schema.define(version: 20160304131146) do
     t.datetime "cover_updated_at"
     t.string   "user_name",                limit: 255,   null: false
     t.string   "auth_token",               limit: 255,   null: false
+    t.integer  "max_sms",                  limit: 4
   end
 
   create_table "digits_clients_organizations", id: false, force: :cascade do |t|
@@ -174,6 +187,21 @@ ActiveRecord::Schema.define(version: 20160304131146) do
 
   add_index "groups_receivers", ["group_id"], name: "index_groups_receivers_on_group_id", using: :btree
   add_index "groups_receivers", ["receiver_id"], name: "index_groups_receivers_on_receiver_id", using: :btree
+
+  create_table "organization_analytics", force: :cascade do |t|
+    t.integer  "follower",           limit: 4
+    t.integer  "truster",            limit: 4
+    t.float    "sms_range_general",  limit: 24
+    t.float    "sms_range_follower", limit: 24
+    t.float    "sms_range_truster",  limit: 24
+    t.integer  "global_supporter",   limit: 4
+    t.integer  "global_sent_sms",    limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "organization_id",    limit: 4
+  end
+
+  add_index "organization_analytics", ["organization_id"], name: "fk_rails_aaf02dc4fd", using: :btree
 
   create_table "organizations", force: :cascade do |t|
     t.string   "email",                  limit: 255,   default: "",    null: false
@@ -308,6 +336,16 @@ ActiveRecord::Schema.define(version: 20160304131146) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "topic_analytics", force: :cascade do |t|
+    t.integer  "followers",  limit: 4
+    t.float    "sms_range",  limit: 24
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "topic_id",   limit: 4
+  end
+
+  add_index "topic_analytics", ["topic_id"], name: "fk_rails_8377fec63d", using: :btree
+
   create_table "topic_translations", force: :cascade do |t|
     t.integer  "topic_id",    limit: 4,   null: false
     t.string   "locale",      limit: 255, null: false
@@ -343,6 +381,7 @@ ActiveRecord::Schema.define(version: 20160304131146) do
   add_index "towns", ["province_id"], name: "fk_rails_9d80790578", using: :btree
 
   add_foreign_key "campaign_addresses", "campaigns"
+  add_foreign_key "campaign_analytics", "campaigns"
   add_foreign_key "campaign_client_receivers", "campaigns"
   add_foreign_key "campaign_client_receivers", "digits_clients"
   add_foreign_key "campaign_client_receivers", "receivers"
@@ -351,10 +390,12 @@ ActiveRecord::Schema.define(version: 20160304131146) do
   add_foreign_key "campaigns", "regions"
   add_foreign_key "campaigns", "towns"
   add_foreign_key "groups", "digits_clients"
+  add_foreign_key "organization_analytics", "organizations"
   add_foreign_key "organizations", "towns"
   add_foreign_key "post_images", "posts"
   add_foreign_key "posts", "admin_users"
   add_foreign_key "posts", "categories"
   add_foreign_key "provinces", "regions"
+  add_foreign_key "topic_analytics", "topics"
   add_foreign_key "towns", "provinces"
 end

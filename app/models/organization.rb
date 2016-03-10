@@ -23,6 +23,7 @@ class Organization < ActiveRecord::Base
   belongs_to :town
 
   has_many :campaigns
+  has_many :organization_analytics
   has_many :digits_clients_organizations
   has_many :digits_clients, through: :digits_clients_organizations
 
