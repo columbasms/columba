@@ -63,7 +63,7 @@ class CampaignsController < ApplicationController
       if @campaign.save
 
         if DigitsClient.count > 0
-          gcm = GCM.new('AIzaSyBGHPEr4yAWYFyvfEOdyEz3MtPOmLajggw')
+          gcm = GCM.new(Rails.application.secrets[:gcm_api_key])
 
           options = {
               data: {

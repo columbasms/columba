@@ -29,20 +29,18 @@ module Api::V1::UsersHelper
   end
 
 
-  # ritorna l'hash di un numero richieso
-  # IMPORTANTE PER IL FUTURO questa funzione dovrebbe trovarssi in una zona separata e sicura del DB.
+  # return the hash of a desired phone number
+  # IMPORTANT in the future this function will be placed in a complete separate and safe place of the server.
   def self.hash_receiver(clear_number)
     require 'digest'
     require 'openssl'
     digest=OpenSSL::Digest.new('sha512')
-    fixed_salt = ::Settings.crypto_keyed_hashing.fixed_salt
-    fixed_key = ::Settings.crypto_keyed_hashing.fixed_key
-    #put the key in a file in the server not accessible place
+    #put the keys in a file placed securely in the server
     #sha2 crypto hash clear_number + salt
     #hmac key encrypt with key
 
-    hash= Digest::SHA2.hexdigest(clear_number+fixed_salt)
-    return OpenSSL::HMAC.hexdigest(digest, fixed_key, hash)
+    hash= Digest::SHA2.hexdigest(clear_number+Rails.application.secrets[:crypto_keyed_hashing][:fixed_salt])
+    return OpenSSL::HMAC.hexdigest(digest, Rails.application.secrets[:crypto_keyed_hashing][:fixed_key], hash)
   end
 
   # aggiunge un nuovo utente foglia al DB

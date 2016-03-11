@@ -63,7 +63,8 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'meta_request'
-  gem 'capistrano', '~> 3.1'
+  gem 'capistrano', '>= 3.2.1'
+  gem 'capistrano-secrets-yml', '~> 1.0.0'
   gem 'capistrano-rvm',     require: false
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false

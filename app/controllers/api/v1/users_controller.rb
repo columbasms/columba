@@ -1,8 +1,8 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      http_basic_authenticate_with name: ::Settings.http_basic.name,
-                                   password: ::Settings.http_basic.password, only: [:create]
+      http_basic_authenticate_with name: Rails.application.secrets[:http_basic][:name],
+                                   password: Rails.application.secrets[:http_basic][:password], only: [:create]
       force_ssl unless Rails.env.development?
       protect_from_forgery except: :create
       before_filter :restrict_access, except: [:create]
@@ -269,7 +269,7 @@ module Api
       end
 
       def restrict_access
-        head :unauthorized unless DigitsClient.find_by_auth_token(request.headers['X-Auth-Token'])
+        head :unauthorized unless DigitsClient.find_by_auth_token(request.headers['X-Auth-Token']).id.equal?(params[:id].to_i)
       end
 
     end
