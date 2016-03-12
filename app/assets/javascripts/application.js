@@ -19,4 +19,13 @@
 //= require plugins/jquery/jquery-easy
 //= require plugins/jquery-scrollbar/jquery.scrollbar.min
 //= require plugins/jquery-validation/js/jquery.validate.min
+//= require plugins/nvd3/lib/d3.v3
+//= require plugins/nvd3/nv.d3.min
+//= require plugins/nvd3/src/utils
+//= require plugins/nvd3/src/tooltip
+//= require plugins/nvd3/src/interactiveLayer
+//= require plugins/nvd3/src/models/axis
+//= require plugins/nvd3/src/models/line
+//= require plugins/nvd3/src/models/lineWithFocusChart
 //= require pages
+//= require charts

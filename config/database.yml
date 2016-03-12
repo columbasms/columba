@@ -12,10 +12,10 @@ default: &default
 development:
   adapter: mysql2
   encoding: utf8
-  database: <%= Rails.application.secrets[:database][:database] %>
+  database: columba_development
   pool: 5
-  username: <%= Rails.application.secrets[:database][:username] %>
-  password: <%= Rails.application.secrets[:database][:password] %>
+  username: root
+  password: fioredicampo
 
 #  socket: /tmp/mysql.sock
 

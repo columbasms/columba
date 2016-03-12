@@ -1,5 +1,5 @@
 <article id="welcome">
-  <figure class="mobile-c"><img src="http://placehold.it/352x628" alt="Placeholder" width="352" height="628"></figure>
+  <figure class="mobile-c"><img src="<%= image_path 'main_images352x628.png' %>" alt="Placeholder" width="352" height="628"></figure>
   <h2><%= t 'frontend.columbasms' %></h2>
   <p><%= t 'frontend.motto' %></p>
   <ul class="download-a a">
@@ -26,7 +26,7 @@
       <h3><span class="small">Features us</span> <span class="strong">Lorem ipsum</span> dolor sit amet</h3>
       <p>Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip.</p>
     </header>
-    <figure class="sticky-b"><img src="<%= image_path 'frontend/temp/a.png' %>" alt="Placeholder" width="516" height="790"></figure>
+    <figure class="sticky-b"><img src="<%= image_path 'columba-a.png' %>" alt="Placeholder" width="516" height="790"></figure>
   </article>
   <article>
     <header class="heading-a">
@@ -37,7 +37,7 @@
       <li><span class="title">Lorem ipsum</span> Consectetuer adipiscing elit, sed diam nonummy</li>
       <li><span class="title">Lorem ipsum</span> Consectetuer adipiscing elit, sed diam nonummy</li>
       <li><span class="title">Lorem ipsum</span> Consectetuer adipiscing elit, sed diam nonummy</li>
-      <li class="mobile-f"><img src="<%= image_path 'frontend/temp/c.png' %>" alt="Placeholder" width="738" height="681"></li>
+      <li class="mobile-f"><img src="<%= image_path 'columba-c.png' %>" alt="Placeholder" width="738" height="681"></li>
     </ol>
   </article>
   <article>
@@ -46,18 +46,19 @@
       <p>See what’s included in the App</p>
     </header>
     <ul class="slider-b">
-      <li><img src="http://placehold.it/320x568" alt="Placeholder" width="320" height="568"></li>
-      <li><img src="http://placehold.it/320x568" alt="Placeholder" width="320" height="568"></li>
-      <li><img src="http://placehold.it/320x568" alt="Placeholder" width="320" height="568"></li>
-      <li><img src="http://placehold.it/320x568" alt="Placeholder" width="320" height="568"></li>
-      <li><img src="http://placehold.it/320x568" alt="Placeholder" width="320" height="568"></li>
+      <li><img src="<%= image_path 'screenshot02.png' %>" alt="Placeholder" width="320" height="568"></li>
+      <li><img src="<%= image_path 'screenshot03.png' %>" alt="Placeholder" width="320" height="568"></li>
+      <li><img src="<%= image_path 'screenshot04.png' %>" alt="Placeholder" width="320" height="568"></li>
+      <li><img src="<%= image_path 'screenshot06.png' %>" alt="Placeholder" width="320" height="568"></li>
+      <li><img src="<%= image_path 'screenshot08.png' %>" alt="Placeholder" width="320" height="568"></li>
+      <li><img src="<%= image_path 'screenshot09.png' %>" alt="Placeholder" width="320" height="568"></li>
     </ul>
   </article>
   <article class="vid">
     <header class="heading-a">
       <h3><span class="small">Demo</span> <span class="strong">Lorem ipsum</span> dolor sit amet</h3>
     </header>
-    <figure><a href="http://vimeo.com/47480346"><img src="http://placehold.it/1400x655" alt="Placeholder" width="1400" height="655"></a></figure>
+    <figure><a href="http://vimeo.com/47480346"><img src="<%= image_path 'background_video1400x655.png' %>" alt="Placeholder" width="1400" height="655"></a></figure>
   </article>
   <article class="vb">
     <header class="heading-a">
@@ -65,15 +66,15 @@
     </header>
     <ul class="slider-a">
       <li>
-        <img src="http://placehold.it/157x157" alt="Placeholder" width="157" height="157">
+        <img src="<%= image_path 'team/Alessio.jpg' %>" alt="Placeholder" width="157" height="157">
         <span class="title"><span>Alessio Cecconi</span> Digital Designer & Backend Developer</span>
         Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam eratvo lutpat. Ut wisi enim ad minim veniam, quis nostrud v</li>
       <li>
-        <img src="http://placehold.it/157x157" alt="Placeholder" width="157" height="157">
+        <img src="<%= image_path 'team/Federico.jpg' %>" alt="Placeholder" width="157" height="157">
         <span class="title"><span>Federico Fanara</span> Android Developer</span> Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam eratvo lutpat. Ut wisi enim ad minim veniam, quis nostrud v Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam eratvo lutpat. Ut wisi enim ad minim veniam, quis nostrud v</li>
-      <li><img src="http://placehold.it/157x157" alt="Placeholder" width="157" height="157">
+      <li><img src="<%= image_path 'team/Lorenzo.jpg' %>" alt="Placeholder" width="157" height="157">
         <span class="title"><span>Lorenzo Rapetti</span> Backend & Frontend Developer</span> Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam eratvo lutpat. Ut wisi enim ad minim veniam, quis nostrud v</li>
-      <li><img src="http://placehold.it/157x157" alt="Placeholder" width="157" height="157">
+      <li><img src="<%= image_path 'team/Matteo.jpg' %>" alt="Placeholder" width="157" height="157">
         <span class="title"><span>Matteo Brienza</span> Android Developer</span> Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam eratvo lutpat. Ut wisi enim ad minim veniam, quis nostrud v</li>
     </ul>
   </article>
@@ -95,7 +96,7 @@
           <label for="ce"><%= t 'frontend.message' %></label>
           <textarea id="ce" name="contact[message]" required></textarea>
         </p>
-        <p><button type="submit"><%= t 'frontend.send' %></button></p>
+        <p><button type="submit" id="contact-form-submit"><%= t 'frontend.send' %></button></p>
       </fieldset>
     <% end %>
   </article>
@@ -107,7 +108,5 @@
     <ul class="download-a a">
       <li class="gp"><a rel="external" target="_blank" href="https://play.google.com/store/apps/details?id=com.columbasms.columbasms">Get it on Google Play</a></li>
     </ul>
-    <figure class="sticky-c"><img src="<%= image_path 'frontend/temp/b.png' %>" alt="Placeholder" width="866" height="574"></figure>
-    <p class="counter"><span>0238</span> Downloads</p>
   </article>
 </section>

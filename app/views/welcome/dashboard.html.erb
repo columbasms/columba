@@ -1,6 +1,76 @@
 <% content_for :title do %><%= t 'welcome.dashboard.title' %><% end %>
 
 <div class="row">
+  <div class="col-md-6 col-sm-12">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <div class="panel-title"><%= t 'welcome.dashboard.general_statistics' %></div>
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-75-25">
+          <tbody>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.topic_followers' %>:</strong></td>
+              <td><%= @analytics[:topic_followers] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.followers' %>:</strong></td>
+              <td><%= @analytics[:followers] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.truster' %>:</strong></td>
+              <td><%= @analytics[:truster] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.campaigns' %>:</strong></td>
+              <td><%= @analytics[:campaigns] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.active_campaigns' %>:</strong></td>
+              <td><%= @analytics[:active_campaigns] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.sent_sms' %>:</strong></td>
+              <td><%= @analytics[:sent_sms] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.sms_avg' %>:</strong></td>
+              <td><%= @analytics[:sms_avg] %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <div class="panel-title"><%= t 'welcome.dashboard.like_trending' %></div>
+      </div>
+
+      <div class="panel-body full-height" style="min-height: 300px;">
+        <div id="nvd3" class="line-chart"
+            data-line-color="success"
+            data-area-color="master"
+            data-points="true"
+            data-point-color="white"
+            data-stroke-width="2">
+          <svg style="height: 300px;"></svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-sm-12 col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">

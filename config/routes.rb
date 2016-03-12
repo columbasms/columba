@@ -72,6 +72,10 @@ Rails.application.routes.draw do
     end
   end
 
+  scope 'analytics' do
+    get '/follow_trending' => 'welcome#follow_trending', as: :follow_trending
+  end
+
   post '/organizations/:id/upload' => 'organizations#upload', as: :organizations_upload
   match '/organizations/:id/crop' => 'organizations#crop', as: :organizations_crop, via: [:post, :patch]
 

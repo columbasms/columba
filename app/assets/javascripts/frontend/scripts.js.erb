@@ -483,12 +483,14 @@ twitterFetcher.fetch(config1);
 $(function() {
   $('#contact-form').submit(function(e) {
     e.preventDefault();
+    $('#contact-form-submit').html('<%= I18n.t 'frontend.sending' %>');
     $.ajax({
       url: $(this).attr('action'),
       type: 'post',
       data: $(this).serialize(),
       success: function(data) {
-        alert(data);
+        $('#contact-form-submit').html('<%= I18n.t 'frontend.send' %>')
+            .parent().after('<p style="text-align: center;"><%= I18n.t 'frontend.your_message_has_been_sent' %></p>');
       }
     })
   });

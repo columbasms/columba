@@ -1,13 +1,20 @@
 <header id="top">
-  <h1><a href="./"><img src="http://placehold.it/257x81" alt="Placeholder" width="257" height="81"></a></h1>
+  <h1><a href="/"><img src="<%= image_path 'logo_257x81_white.png' %>" alt="Placeholder" width="257" height="81"></a></h1>
   <nav id="nav">
     <ul>
       <li><%= link_to 'Home', root_path %></li>
       <% if controller_name == 'welcome' and action_name == 'index' %>
-        <li><a href="javascript:windowScrollTo('content')"><%= t 'frontend.the_project' %></a></li>
-        <li><a href="javascript:windowScrollTo('contact');"><%= t 'frontend.contact' %></a></li>
+          <li><a href="javascript:windowScrollTo('content')"><%= t 'frontend.the_project' %></a></li>
+          <li><a href="javascript:windowScrollTo('contact');"><%= t 'frontend.contact' %></a></li>
       <% end %>
       <li><%= link_to 'Blog', posts_path %></li>
+      <li>
+        <% if organization_signed_in? %>
+            <%= link_to 'Dashboard', dashboard_path %>
+        <% else %>
+            <%= link_to t('frontend.login_for_organizations'), new_organization_session_path %>
+        <% end %>
+      </li>
     </ul>
   </nav>
 </header>

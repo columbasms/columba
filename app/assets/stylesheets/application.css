@@ -17,4 +17,5 @@
  *= require pages.css.erb
  *= require themes/simple
  *= require style
+ *= require plugins/nvd3/nv.d3.min
  */

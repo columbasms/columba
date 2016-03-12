@@ -72,6 +72,15 @@ it:
     dashboard:
       title: "Dashboard - Columba"
       recent_campaigns: "Campagne recenti"
+      general_statistics: "Statistiche Generali"
+      topic_followers: "Persone che seguono i tuoi topic"
+      followers: "Persone che ti seguono"
+      truster: "Persone che ti sostengono"
+      campaigns: "Campagne create"
+      active_campaigns: "Campagne attive"
+      sent_sms: "SMS inviati (per tutte le campagne)"
+      sms_avg: "Media di SMS disponibili dei tuoi follower"
+      like_trending: "Andamento dei follow"
     index:
       heading: "Pages make it easy to enjoy what matters the most in the life"
       subheading: "images Displayed are solely for representation purposes only, All work copyright of respective owner, otherwise © 2013-2014 REVOX."
@@ -367,6 +376,8 @@ it:
     number_deactivated: "Non riceverai più messaggi da parte nostra"
   preview: "Anteprima"
   frontend:
+    sending: "Attendi..."
+    your_message_has_been_sent: "Il tuo messaggio è stato inviato!"
     columbasms: "Columba SMS"
     motto: "Dona i tuoi SMS per scopi benefici!"
     contact: "Contatti"
@@ -383,6 +394,7 @@ it:
     contact_us: "Contattaci"
     follow_us: "Seguici sui social"
     team: "Il team"
+    login_for_organizations: "Login per associazioni"
   frontent:
     rights: "Tutti i diritti riservati"
     by: "Di"
