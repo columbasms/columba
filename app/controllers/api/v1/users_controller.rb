@@ -219,7 +219,7 @@ module Api
           new_connection.save
 
           # auto follow dei topic dell'associazione
-          @user.topics+=@organization.topics
+          # @user.topics+=@organization.topics
         end
 
         render json: @user.organizations, root: false
