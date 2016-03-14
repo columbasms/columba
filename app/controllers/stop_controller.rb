@@ -22,6 +22,12 @@ class StopController < ApplicationController
     @receiver.update_attribute :blacklisted, true
   end
 
+  # PUT /stop/:id
+  def unblacklist
+  #   UN-BLACKLIST
+    @receiver.update_attribute :blacklisted, false
+  end
+
   private
 
   def set_receiver

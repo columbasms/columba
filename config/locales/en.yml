@@ -399,6 +399,9 @@ en:
   destroyed:
     title: "Number deactivated"
     number_deactivated: "You won't receive anymore messages though Columba"
+  unblacklist:
+      title: "Number active again"
+      number_reactived: "You will be able to receive again messages sent through Columba, thanks!"
   preview: "Preview"
   frontend:
     sending: "Wait..."

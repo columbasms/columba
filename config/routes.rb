@@ -83,6 +83,7 @@ Rails.application.routes.draw do
 
   get '/stop/:id' => 'stop#show', as: :stop_service
   delete '/stop/:id' => 'stop#destroy'
+  put '/stop/:id' => 'stop#unblacklist'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
