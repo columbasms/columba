@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+  get '/welcome_organizations' =>'welcome#index_organizations', as: :welcome_organizations
+
   get '/town-by-province' => 'location#town_by_province', as: :town_by_province
   get '/provinces-by-region' => 'location#provinces_by_region', as: :provinces_by_region
   get '/s/:id' => 'shortener/shortened_urls#show', as: :short_url

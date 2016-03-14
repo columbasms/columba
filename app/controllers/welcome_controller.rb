@@ -1,8 +1,14 @@
 class WelcomeController < ApplicationController
   before_action :authenticate_organization!, only: [:dashboard]
 
+  # GET /
   def index
     render 'welcome/index', layout: 'application_frontend'
+  end
+
+  # GET /
+  def index_organizations
+    render 'welcome/index_organizations', layout: 'application_frontend'
   end
 
   def dashboard
