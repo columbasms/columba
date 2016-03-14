@@ -4,7 +4,7 @@ class Topic < ActiveRecord::Base
 
   scope :active, -> { joins(:organizations).uniq }
 
-  has_many :organizations
+  has_and_belongs_to_many :organizations
   has_many :topic_analytics
 
   has_and_belongs_to_many :campaigns
