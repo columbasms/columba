@@ -9,22 +9,27 @@ class Api::V1::CampaignsController < ApplicationController
 
   # GET /campaigns
   def index
-    # if user param is not used or the user doesn't follow any topic/organization
-    if @user.nil? or (@user.topics.empty? and @user.organizations.empty?)
-      @campaigns = Campaign.not_expired
-    else
-      # campaigns under user followed topic
-      @topics_campaigns = Campaign.not_expired.includes(:topics).where(topics: { id: @user.topics.select(:topic_id) })
-      # campaigns of organizations followed by user
-      @organizations_campaigns = Campaign.not_expired.where(organization_id: @user.organizations)
 
-      @campaigns= (@topics_campaigns + @organizations_campaigns).uniq
-      if @campaigns.empty?
-        # if no active campaign match the user's preferences all the campaigns are returned
-        # ALESSIO: maybe in this case we should notify the user about it
-        @campaigns = Campaign.not_expired
-      end
-    end
+    # WHILE only few agencies and campaigns are present in Columba, just return all the campaigns
+
+    # # if user param is not used or the user doesn't follow any topic/organization
+    # if @user.nil? or (@user.topics.empty? and @user.organizations.empty?)
+    #   @campaigns = Campaign.not_expired
+    # else
+    #   # campaigns under user followed topic
+    #   @topics_campaigns = Campaign.not_expired.includes(:topics).where(topics: { id: @user.topics.select(:topic_id) })
+    #   # campaigns of organizations followed by user
+    #   @organizations_campaigns = Campaign.not_expired.where(organization_id: @user.organizations)
+    #
+    #   @campaigns= (@topics_campaigns + @organizations_campaigns).uniq
+    #   if @campaigns.empty?
+    #     # if no active campaign match the user's preferences all the campaigns are returned
+    #     # ALESSIO: maybe in this case we should notify the user about it
+    #     @campaigns = Campaign.not_expired
+    #   end
+    # end
+
+    @campaigns = Campaign.not_expired
     if params[:order_field].present? and params[:order_type].present?
       @campaigns = @campaigns.order("#{params[:order_field]}": :"#{params[:order_type]}")
     end
