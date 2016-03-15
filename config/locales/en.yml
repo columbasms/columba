@@ -40,9 +40,9 @@ en:
       it: "English"
   campaigns:
     campaigns: "Campaigns"
-    index_title: "My Campaigns - Columba"
-    new_title: "New Campaign - Columba"
-    edit_title: "Edit Campaign - Columba"
+    index_title: "My Campaigns"
+    new_title: "New Campaign"
+    edit_title: "Edit Campaign"
     my_campaigns: "My campaigns"
     new_campaign: "New Campaign"
     edit_campaign: "Edit Campaign"
@@ -75,10 +75,11 @@ en:
     error: "There was an error processing your request"
     edited: "Campaign edited successfully"
     photo: "Playbill"
+    created_campaigns: "Created campaigns"
   organizations:
     crop: "Crop"
   stop:
-    title: "Stop service - Columba"
+    title: "Stop service"
     heading: "Stop columba service"
     why: "Why did you receive this SMS?"
     why_explanation: "It means that a friend or acquaintance of your having your phone number is using Columba and had share with you an active charity campaign."
@@ -91,7 +92,7 @@ en:
       verifying: "We are verifying your identity and we will unlock your account as soon as possible."
       return_to_homepage: "Return to the homepage"
     dashboard:
-      title: "Dashboard - Columba"
+      title: "Dashboard"
       recent_campaigns: "Recent campaigns"
       general_statistics: "General Statistics"
       topic_followers: "Followers of your topics"
@@ -442,7 +443,7 @@ en:
     register: "Register"
     demo: "Demo"
     demo_subtitle: ""
-    blog: "Blog - Columba"
+    blog: "Blog"
     read_more: "Read more"
     next: "Next"
     previous: "Previous"
@@ -489,3 +490,21 @@ en:
   frontent:
     rights: "All rights reserved"
     by: "By"
+  menu:
+    statistics: "Statistics"
+  analytics:
+    campaigns:
+      created_campaigns:
+        one: "campaign created"
+        other: "campaigns created"
+      active_campaigns:
+        one: "active campaign"
+        other: "active campaigns"
+      active_users:
+        one: "active user"
+        other: "active users"
+      receivers:
+        one: "person reached"
+        other: "people reached"
+      sent_sms: "Sent sms"
+      sms_received: "Actually received SMS"

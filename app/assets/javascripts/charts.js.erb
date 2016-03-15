@@ -20,8 +20,10 @@ $(function() {
         chart.yAxis
             .axisLabel('Follower');
 
+        var url = $('#nvd3').data('url');
+
         $.ajax({
-            url: '/analytics/follow_trending',
+            url: '/dashboard/analytics/' + url,
             type: 'get',
             success: function(data) {
               d3.select('#nvd3 svg').datum(data).call(chart);

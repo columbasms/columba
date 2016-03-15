@@ -44,11 +44,11 @@ class Campaign < ActiveRecord::Base
   end
 
   def expires_at_format
-    self.expires_at.strftime '%B %-d, %Y' if self.expires_at.present?
+    self.expires_at.strftime '%d/%m/%Y' if self.expires_at.present?
   end
 
   def created_at_format
-    self.created_at.strftime('%B %-d, %Y')
+    self.created_at.strftime('%d/%m/%Y')
   end
 
   def expiration_date_cannot_be_in_the_past

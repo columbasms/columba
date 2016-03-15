@@ -21,9 +21,9 @@ it:
     clone_model: "Copia"
   campaigns:
     campaigns: "Campagne"
-    index_title: "Le mie Campagne - Columba"
-    new_title: "Nuova Campagna - Columba"
-    edit_title: "Modifica Campagna - Columba"
+    index_title: "Le mie Campagne"
+    new_title: "Nuova Campagna"
+    edit_title: "Modifica Campagna"
     my_campaigns: "Le mie Campagne"
     new_campaign: "Nuova Campagna"
     edit_campaign: "Modifica Campagna"
@@ -56,10 +56,12 @@ it:
     error: "C'è stato un errore nel processare la tua richiesta"
     edited: "Campagna aggiornata con successo"
     photo: "Locandina"
+    campaigns_sent: "Campagne inviate"
+    created_campaigns: "Campagne create"
   organizations:
     crop: "Taglia"
   stop:
-    title: "Stop del servizio - Columba"
+    title: "Stop del servizio"
     heading: "Ferma il servizio Columba"
     why: "Perché hai ricevuto questo SMS?"
     why_explanation: "Vuol dire che un tuo amico o conoscente in possesso del tuo numero sta utilizzando Columba e ha voluto renderti partecipe di qualche campagna umanitaria in corso."
@@ -72,7 +74,7 @@ it:
       verifying: "Stiamo verificando la tua identità e sbloccheremo il tuo account il più presto possibile."
       return_to_homepage: "Ritorna alla Homepage"
     dashboard:
-      title: "Dashboard - Columba"
+      title: "Dashboard"
       recent_campaigns: "Campagne recenti"
       general_statistics: "Statistiche Generali"
       topic_followers: "Persone che seguono i tuoi topic"
@@ -419,7 +421,7 @@ it:
     register: "Registrati"
     demo: "Demo"
     demo_subtitle: ""
-    blog: "Blog - Columba"
+    blog: "Blog"
     read_more: "Leggi tutto"
     next: "Successivo"
     previous: "Precedente"
@@ -469,3 +471,23 @@ it:
   frontent:
     rights: "Tutti i diritti riservati"
     by: "Di"
+  menu:
+    statistics: "Statistiche"
+  meta:
+    description: "Dona i tuoi SMS per scopi benefici!"
+  analytics:
+    campaigns:
+      created_campaigns:
+        one: "campagna creata"
+        other: "campagne create"
+      active_campaigns:
+        one: "campagna attiva"
+        other: "campagne attive"
+      active_users:
+        one: "utente attivo"
+        other: "utenti attivi"
+      receivers:
+        one: "persona raggiunta"
+        other: "persone raggiunte"
+      sent_sms: "SMS inviati"
+      sms_received: "SMS effettivamente ricevuti"

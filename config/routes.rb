@@ -72,10 +72,11 @@ Rails.application.routes.draw do
         delete :stop
       end
     end
-  end
-
-  scope 'analytics' do
-    get '/follow_trending' => 'welcome#follow_trending', as: :follow_trending
+    scope 'analytics' do
+      get '/follow_trending' => 'welcome#follow_trending', as: :follow_trending
+      get '/campaigns' => 'analytics#campaigns_analytics', as: :campaigns_analytics
+      get '/campaigns_async' => 'analytics#campaigns_analytics_async'
+    end
   end
 
   post '/organizations/:id/upload' => 'organizations#upload', as: :organizations_upload

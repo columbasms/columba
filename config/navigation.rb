@@ -63,6 +63,10 @@ SimpleNavigation::Configuration.run do |navigation|
       campaigns.item :my_campaigns, I18n.t('campaigns.my_campaigns'), campaigns_path, html: { icon_class: 'pg-note' }
       campaigns.item :new_campaign, I18n.t('campaigns.new_campaign'), new_campaign_path, html: { icon_class: 'pg-plus' }
     end
+    primary.item :statistics, I18n.t('menu.statistics'), '#', html: { icon_class: 'fa fa-bar-chart' } do |s|
+      s.dom_class = 'sub-menu'
+      s.item :campaign, I18n.t('campaigns.campaigns'), campaigns_analytics_path, html: { icon_class: 'pg-note' }
+    end
 
     # you can also specify html attributes to attach to this particular level
     # works for all levels of the menu

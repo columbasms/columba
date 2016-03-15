@@ -2,15 +2,25 @@
 <html class="theme-c has-gradient has-pattern">
   <head>
     <meta charset="utf-8">
+    <%= metamagic site: 'Columba',
+                  title: [:title, :site], separator: ' - ',
+                  og: {
+                      site_name: 'Columba SMS',
+                      title: 'Columba SMS',
+                      type: 'website',
+                      description: t('frontend_organizations.project_short'),
+                      locale: 'it_IT',
+                      :'locale:alternate' => 'en_US',
+                      url: 'https://9b41191.ngrok.com/',
+                      image: image_url('cover.png')
+                  } %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><%= yield(:title).presence || 'Columba' %></title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
     <meta name="HandheldFriendly" content="true">
     <meta name="MobileOptimized" content="320">
     <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9, user-scalable=no, target-densitydpi=device-dpi">
     <%= stylesheet_link_tag('frontend/screen', media: 'screen', 'data-turbolinks-track' => true) %>
     <%= stylesheet_link_tag('frontend/print', media: 'print', 'data-turbolinks-track' => true) %>
+    <%= stylesheet_link_tag('frontend/custom', media: 'screen', 'data-turbolinks-track' => true) %>
     <%= javascript_include_tag('frontend/head', 'data-turbolinks-track' => true) %>
     <%= favicon_link_tag 'favicon.ico' %>
   </head>

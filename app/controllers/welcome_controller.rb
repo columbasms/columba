@@ -78,27 +78,27 @@ class WelcomeController < ApplicationController
 
       organization_followers_select = organization_followers.select { |t| t[:created_at] == date }
 
-      organization_follower_n = organization_followers_select.map { |x| x[:follower] }.sum
+      organization_follower_n = organization_followers_select.map { |x| x[:followers] }.sum
       followers.push({ x: new_date, y: organization_follower_n })
 
-      organization_truster_n = organization_followers_select.map { |x| x[:truster] }.sum
+      organization_truster_n = organization_followers_select.map { |x| x[:trusters] }.sum
       trusters.push({ x: new_date, y: organization_truster_n })
     end
 
     render json: [
         {
             values: topic,
-            key: 'Topic follower',
+            key: I18n.t('welcome.dashboard.topic_followers'),
             color: "#ff7f0e"
         },
         {
             values: followers,
-            key: 'Followers',
+            key: I18n.t('welcome.dashboard.followers'),
             color: "#2ca02c"
         },
         {
             values: trusters,
-            key: 'Trusters',
+            key: I18n.t('welcome.dashboard.truster'),
             color: "#7777ff"
         }
     ], root: false
