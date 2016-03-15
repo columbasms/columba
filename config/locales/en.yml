@@ -461,7 +461,7 @@ en:
     team_lorenzo_description: "Bachelor degree student in Computer Science at Sapienza University of Rome"
     team_matteo_description: "Bachelor degree student in Computer Science and Control Engineering at Sapienza University of Rome"
     get_app: "Get app"
-    get_app_text: "Choose your native platform and get into Columba world!"
+    get_app_text: "Participate to the open-alpha and get into Columba world!"
     login_for_organizations: "login"
   frontend_organizations:
     project_short:  "Columba is a no-profit and open-source service which links people to Charity and Social Organizations, allowing the former to discover and support the charity world around them and the latter to gain more visibility and spreading of their messages. The project was born inside the Google Technologies for Cloud and Web Development 2015 Workshop"
@@ -486,6 +486,7 @@ en:
     contact_info: "For every info but also comment, doubtm curiosity o help do not esitate to contact us"
     join_us_long: ""
     spread_app: "Share the App"
+    spread_app_text: "Share the App with your supporters and collaborators and participate to the open-alpha "
     partners_subtitle: "already choose Columba"
   frontent:
     rights: "All rights reserved"
