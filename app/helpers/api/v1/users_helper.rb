@@ -13,12 +13,6 @@ module Api::V1::UsersHelper
     client = DigitsClient.find_or_create_by(phone_number: digits['phone_number'])
     unless client.new_record?
       client.auth_token = SecureRandom.base58(24)
-    else
-      random_name="user_#{(rand*10000).to_int}"
-      while DigitsClient.find_by_user_name(random_name).present?
-        random_name="user_#{(rand*10000).to_int}"
-      end
-      client.user_name = random_name
     end
     client.enabled = true
     client.phone_number = digits['phone_number']
