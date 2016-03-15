@@ -437,7 +437,7 @@ it:
     team_lorenzo_description: "Studente in Informatica presso l'Università Sapienza di Roma"
     team_matteo_description: "Studente in Ingegneria Informatica e Automatica presso l'università Sapienza di Roma"
     get_app: "Scarica l'app"
-    get_app_text: "Scegli la tua piattaforma ed entra nel mondo di Columba!"
+    get_app_text: "Partecipa all'open-alpha ed entra nel mondo di Columba!"
     login_for_organizations: "Login"
   frontend_organizations:
     project_short: "Columba è un servizio no-profit ed open-source che mette in comunicazione persone e ONLUS, permettendo ai primi di scoprire e supportare il mondo del volontariato che li circonda e ai secondi di diffondere i propri messaggi ed ottenere una maggiore visibilità. Il progetto è nato all'interno del Workshop Google Technologies for Cloud and Web Development 2015"
