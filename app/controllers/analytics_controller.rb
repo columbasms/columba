@@ -56,6 +56,11 @@ class AnalyticsController < ApplicationController
       @data[:total_trusters] = last_analytics.truster
       @data[:sms_range_followers] = last_analytics.sms_range_follower
       @data[:sms_range_trusters] = last_analytics.sms_range_truster
+    else
+      @data[:total_followers] = 0
+      @data[:total_trusters] = 0
+      @data[:sms_range_followers] = 0
+      @data[:sms_range_trusters] = 0
     end
   end
 
