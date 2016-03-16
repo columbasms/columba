@@ -36,7 +36,7 @@ class AnalyticsController < ApplicationController
     render json: [
         {
             values: active_users_data,
-            key: I18n.t('analytics.campaigns.sent_sms'),
+            key: I18n.t('analytics.campaigns.relauncheds'),
             color: "#ff7f0e"
         },
         {
@@ -46,6 +46,39 @@ class AnalyticsController < ApplicationController
         }
     ], root: false
 
+  end
+
+  def campaign_analytics_async
+    month_ago = Date.today - 29.days
+
+    active_users = CampaignAnalytic.where(campaign_id: params[:id]).where('created_at >= ?', month_ago)
+
+    active_users_data = []
+    people_reached_data = []
+    (month_ago..Date.today).each do |date|
+      new_date = date.to_time.to_i * 1000
+
+      a = active_users.select { |t| t[:created_at] == date }
+
+      supporters_sum = a.map { |x| x[:supporters] }.sum
+      active_users_data.push({ x: new_date, y: supporters_sum })
+
+      sms_sent_sum = a.map { |x| x[:sent_sms] }.sum
+      people_reached_data.push({ x: new_date, y: sms_sent_sum })
+    end
+
+    render json: [
+        {
+            values: active_users_data,
+            key: I18n.t('analytics.campaigns.relaunched'),
+            color: "#ff7f0e"
+        },
+        {
+            values: people_reached_data,
+            key: I18n.t('analytics.campaigns.sms_received'),
+            color: "#2ca02c"
+        }
+    ], root: false
   end
 
   def organization_analytics

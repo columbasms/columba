@@ -1,6 +1,6 @@
 class CampaignsController < ApplicationController
   before_filter :authenticate_organization!
-  before_action :set_campaign, only: [:show, :edit, :update, :crop, :stop]
+  before_action :set_campaign, only: [:show, :edit, :update, :crop, :stop, :statistics]
   before_action :validate_visibility
   layout 'application_dashboard'
 
@@ -98,6 +98,18 @@ class CampaignsController < ApplicationController
       flash[:danger] = t('campaigns.error')
     end
     redirect_to :back
+  end
+
+  def statistics
+    campaign_analytic_today = @campaign.campaign_analytics.last
+    @data = {}
+    if campaign_analytic_today.present?
+      @data[:supporters] = campaign_analytic_today.supporters
+      @data[:sent_sms] = campaign_analytic_today.sent_sms
+    else
+      @data[:supporters] = 0
+      @data[:sent_sms] = 0
+    end
   end
 
   private

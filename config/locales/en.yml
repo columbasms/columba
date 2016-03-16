@@ -508,9 +508,14 @@ en:
       receivers:
         one: "person reached"
         other: "people reached"
+      sms:
+        one: "sent SMS"
+        other: "sent SMS"
       sent_sms: "Sent sms"
       sms_received: "Actually received SMS"
       sms_trending: "SMS trending"
+      relaunched: "People who have relaunched the campaign"
+      relauncheds: "People who have relaunched the campaigns"
     organizations:
       total_followers:
         one: "total follower"
@@ -519,4 +524,5 @@ en:
         one: "trusted person"
         other: "trusted people"
       sms_range_followers:
-        one: "average SMS available"
+        one: "max SMS available"
+        other: "max SMS available"

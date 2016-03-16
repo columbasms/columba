@@ -70,11 +70,13 @@ Rails.application.routes.draw do
       member do
         match :crop, via: [:get, :post]
         delete :stop
+        get :statistics
       end
     end
     scope 'analytics' do
       get '/follow_trending' => 'welcome#follow_trending', as: :follow_trending
       get '/campaigns' => 'analytics#campaigns_analytics', as: :campaigns_analytics
+      get '/campaign/:id' => 'analytics#campaign_analytics_async', as: :campaign_analytics_async
       get '/campaigns_async' => 'analytics#campaigns_analytics_async'
       get '/my-organization' => 'analytics#organization_analytics', as: :organization_analytics
     end

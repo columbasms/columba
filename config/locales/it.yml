@@ -491,9 +491,14 @@ it:
       receivers:
         one: "persona raggiunta"
         other: "persone raggiunte"
+      sms:
+        one: "SMS inviato"
+        other: "SMS inviati"
       sent_sms: "SMS inviati"
       sms_received: "SMS effettivamente ricevuti"
       sms_trending: "Andamento degli SMS"
+      relaunched: "Persone che hanno rilanciato la campagna"
+      relauncheds: "Persone che hanno rilanciato le campagne"
     organizations:
       total_followers:
         one: "follower in totale"
@@ -502,4 +507,5 @@ it:
         one: "persona fidata"
         other: "persone fidate"
       sms_range_followers:
-        one: "media SMS a disposizione"
+        one: "SMS massimo a disposizione"
+        other: "SMS massimi a disposizione"
