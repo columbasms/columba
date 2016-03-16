@@ -66,6 +66,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :statistics, I18n.t('menu.statistics'), '#', html: { icon_class: 'fa fa-bar-chart' } do |s|
       s.dom_class = 'sub-menu'
       s.item :campaign, I18n.t('campaigns.campaigns'), campaigns_analytics_path, html: { icon_class: 'pg-note' }
+      s.item :organization, I18n.t('organizations.organization'), organization_analytics_path, html: { icon_class: 'fa fa-users' }
     end
 
     # you can also specify html attributes to attach to this particular level

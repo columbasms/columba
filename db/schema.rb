@@ -382,6 +382,13 @@ ActiveRecord::Schema.define(version: 20160310175007) do
 
   add_foreign_key "campaign_addresses", "campaigns"
   add_foreign_key "campaign_analytics", "campaigns"
+  add_foreign_key "campaign_client_receivers", "campaigns"
+  add_foreign_key "campaign_client_receivers", "digits_clients"
+  add_foreign_key "campaign_client_receivers", "receivers"
+  add_foreign_key "campaigns", "organizations"
+  add_foreign_key "campaigns", "provinces"
+  add_foreign_key "campaigns", "regions"
+  add_foreign_key "campaigns", "towns"
   add_foreign_key "groups", "digits_clients"
   add_foreign_key "organization_analytics", "organizations"
   add_foreign_key "organizations", "towns"

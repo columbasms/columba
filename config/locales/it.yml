@@ -60,6 +60,7 @@ it:
     created_campaigns: "Campagne create"
   organizations:
     crop: "Taglia"
+    organization: "Organizzazione"
   stop:
     title: "Stop del servizio"
     heading: "Ferma il servizio Columba"
@@ -492,3 +493,13 @@ it:
         other: "persone raggiunte"
       sent_sms: "SMS inviati"
       sms_received: "SMS effettivamente ricevuti"
+      sms_trending: "Andamento degli SMS"
+    organizations:
+      total_followers:
+        one: "follower in totale"
+        other: "follower in totale"
+      total_trusters:
+        one: "persona fidata"
+        other: "persone fidate"
+      sms_range_followers:
+        one: "media SMS a disposizione"

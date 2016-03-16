@@ -48,4 +48,15 @@ class AnalyticsController < ApplicationController
 
   end
 
+  def organization_analytics
+    last_analytics = current_organization.organization_analytics.last
+    @data = {}
+    if last_analytics.present?
+      @data[:total_followers] = last_analytics.follower
+      @data[:total_trusters] = last_analytics.truster
+      @data[:sms_range_followers] = last_analytics.sms_range_follower
+      @data[:sms_range_trusters] = last_analytics.sms_range_truster
+    end
+  end
+
 end

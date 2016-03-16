@@ -78,6 +78,7 @@ en:
     created_campaigns: "Created campaigns"
   organizations:
     crop: "Crop"
+    organization: "Organization"
   stop:
     title: "Stop service"
     heading: "Stop columba service"
@@ -509,3 +510,13 @@ en:
         other: "people reached"
       sent_sms: "Sent sms"
       sms_received: "Actually received SMS"
+      sms_trending: "SMS trending"
+    organizations:
+      total_followers:
+        one: "total follower"
+        other: "total followers"
+      total_trusters:
+        one: "trusted person"
+        other: "trusted people"
+      sms_range_followers:
+        one: "average SMS available"

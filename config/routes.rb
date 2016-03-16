@@ -76,6 +76,7 @@ Rails.application.routes.draw do
       get '/follow_trending' => 'welcome#follow_trending', as: :follow_trending
       get '/campaigns' => 'analytics#campaigns_analytics', as: :campaigns_analytics
       get '/campaigns_async' => 'analytics#campaigns_analytics_async'
+      get '/my-organization' => 'analytics#organization_analytics', as: :organization_analytics
     end
   end
 

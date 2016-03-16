@@ -269,7 +269,8 @@ module Api
       end
 
       def restrict_access
-        head :unauthorized unless DigitsClient.find_by_auth_token(request.headers['X-Auth-Token']).id.equal?(params[:id].to_i)
+        auth_token_client = DigitsClient.find_by_auth_token(request.headers['X-Auth-Token'])
+        head :unauthorized unless auth_token_client.present? and auth_token_client.id.equal?(params[:id].to_i)
       end
 
     end
