@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160310175007) do
+ActiveRecord::Schema.define(version: 20160316060133) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace",     limit: 255
@@ -64,14 +64,15 @@ ActiveRecord::Schema.define(version: 20160310175007) do
   add_index "campaign_addresses", ["campaign_id"], name: "fk_rails_8063fe85c5", using: :btree
 
   create_table "campaign_analytics", force: :cascade do |t|
-    t.integer  "supporters",  limit: 4
-    t.integer  "sent_sms",    limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "supporters",  limit: 4, default: 0
+    t.integer  "sent_sms",    limit: 4, default: 0
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "campaign_id", limit: 4
   end
 
   add_index "campaign_analytics", ["campaign_id"], name: "fk_rails_26fe8d0442", using: :btree
+  add_index "campaign_analytics", ["created_at"], name: "index_campaign_analytics_on_created_at", using: :btree
 
   create_table "campaign_client_receivers", force: :cascade do |t|
     t.datetime "created_at",                                           null: false
@@ -189,18 +190,19 @@ ActiveRecord::Schema.define(version: 20160310175007) do
   add_index "groups_receivers", ["receiver_id"], name: "index_groups_receivers_on_receiver_id", using: :btree
 
   create_table "organization_analytics", force: :cascade do |t|
-    t.integer  "follower",           limit: 4
-    t.integer  "truster",            limit: 4
-    t.float    "sms_range_general",  limit: 24
-    t.float    "sms_range_follower", limit: 24
-    t.float    "sms_range_truster",  limit: 24
-    t.integer  "global_supporter",   limit: 4
-    t.integer  "global_sent_sms",    limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.integer  "follower",           limit: 4, default: 0
+    t.integer  "truster",            limit: 4, default: 0
+    t.integer  "sms_range_general",  limit: 4, default: 0
+    t.integer  "sms_range_follower", limit: 4, default: 0
+    t.integer  "sms_range_truster",  limit: 4, default: 0
+    t.integer  "global_supporter",   limit: 4, default: 0
+    t.integer  "global_sent_sms",    limit: 4, default: 0
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "organization_id",    limit: 4
   end
 
+  add_index "organization_analytics", ["created_at"], name: "index_organization_analytics_on_created_at", using: :btree
   add_index "organization_analytics", ["organization_id"], name: "fk_rails_aaf02dc4fd", using: :btree
 
   create_table "organizations", force: :cascade do |t|
@@ -337,13 +339,14 @@ ActiveRecord::Schema.define(version: 20160310175007) do
   end
 
   create_table "topic_analytics", force: :cascade do |t|
-    t.integer  "followers",  limit: 4
-    t.float    "sms_range",  limit: 24
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "followers",  limit: 4, default: 0
+    t.integer  "sms_range",  limit: 4, default: 0
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "topic_id",   limit: 4
   end
 
+  add_index "topic_analytics", ["created_at"], name: "index_topic_analytics_on_created_at", using: :btree
   add_index "topic_analytics", ["topic_id"], name: "fk_rails_8377fec63d", using: :btree
 
   create_table "topic_translations", force: :cascade do |t|
@@ -382,13 +385,6 @@ ActiveRecord::Schema.define(version: 20160310175007) do
 
   add_foreign_key "campaign_addresses", "campaigns"
   add_foreign_key "campaign_analytics", "campaigns"
-  add_foreign_key "campaign_client_receivers", "campaigns"
-  add_foreign_key "campaign_client_receivers", "digits_clients"
-  add_foreign_key "campaign_client_receivers", "receivers"
-  add_foreign_key "campaigns", "organizations"
-  add_foreign_key "campaigns", "provinces"
-  add_foreign_key "campaigns", "regions"
-  add_foreign_key "campaigns", "towns"
   add_foreign_key "groups", "digits_clients"
   add_foreign_key "organization_analytics", "organizations"
   add_foreign_key "organizations", "towns"

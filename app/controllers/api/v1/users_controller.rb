@@ -124,6 +124,10 @@ module Api
           # result_index_hash+=[[index,hashed_leaf]]
         end
 
+        # Analytic update
+        analytic_control=Analytics::CampaignAnalyticsController.new
+        analytic_control.update_supporters_and_sms_sent(@campaign)
+
         # l'API restituisce all'utente gli indici della lista di contatti a cui può inviare l'sms
         render json: result_index_list
       end
@@ -162,6 +166,11 @@ module Api
           new_connection.digits_client=@user
           new_connection.save
         end
+
+        # Analytic update
+        analytic_control=Analytics::TopicAnalyticsController.new
+        analytic_control.update_followers_and_sms_range(@topic)
+
         render json: @user.topics, root: false
       end
 
@@ -221,6 +230,10 @@ module Api
           # auto follow dei topic dell'associazione
           # @user.topics+=@organization.topics
         end
+
+        # Analytic update
+        analytic_control=Analytics::OrganizationAnalyticsController.new
+        analytic_control.update_followers_trusters_range(@organization)
 
         render json: @user.organizations, root: false
       end

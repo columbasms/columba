@@ -1,0 +1,2 @@
+module Analytics::TopicAnalyticsHelper
+end
