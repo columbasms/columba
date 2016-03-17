@@ -54,6 +54,9 @@ Rails.application.routes.draw do
           get :organizations
         end
       end
+      scope 'leaderboard' do
+        get '/' => 'leaderboard#index', as: :leaderboard
+      end
     end
   end
 
