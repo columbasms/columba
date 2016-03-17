@@ -49,8 +49,10 @@
               <td class="v-align-middle" style="width: 30%;">
                 <%= link_to t('campaigns.show'), campaign %> |
                 <%= link_to t('campaigns.edit'), edit_campaign_path(campaign) %> |
-                <%= link_to t('menu.statistics'), statistics_campaign_path(campaign) %> |
-                <%= link_to t('campaigns.stop'), stop_campaign_path(campaign), method: :delete %>
+                <%= link_to t('menu.statistics'), statistics_campaign_path(campaign) %>
+                <% if campaign.expired? %>
+                 | <%= link_to t('campaigns.stop'), stop_campaign_path(campaign), method: :delete %>
+                <% end %>
               </td>
             </tr>
         <% end %>
