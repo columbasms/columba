@@ -50,7 +50,7 @@
                 <%= link_to t('campaigns.show'), campaign %> |
                 <%= link_to t('campaigns.edit'), edit_campaign_path(campaign) %> |
                 <%= link_to t('menu.statistics'), statistics_campaign_path(campaign) %>
-                <% if campaign.expired? %>
+                <% unless campaign.expired? %>
                  | <%= link_to t('campaigns.stop'), stop_campaign_path(campaign), method: :delete %>
                 <% end %>
               </td>
