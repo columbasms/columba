@@ -76,7 +76,7 @@ module Api::V1::UsersHelper
   end
 
   # crea una nuova relazione tra una campagna, un utente ed un utente foglia
-  def self.add_campaign_client_receiver_relation(campaign, client, receiver)
+  def self.add_campaign_client_receiver_relation(campaign, client, receiver, latitude, longitude)
 
     #inserire relazione tra campagna e digit client
 
@@ -84,6 +84,10 @@ module Api::V1::UsersHelper
     new_ternary_relation.campaign = campaign
     new_ternary_relation.digits_client = client
     new_ternary_relation.receiver = receiver
+    if latitude!= nil and longitude!= nil
+      new_ternary_relation.lat= latitude
+      new_ternary_relation.lng= longitude
+    end
 
     new_ternary_relation.save
   end

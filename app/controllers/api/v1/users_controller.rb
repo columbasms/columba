@@ -87,7 +87,16 @@ module Api
         leaf_list = params['users']
         hashed_leaf_list = [] #lista ORDINATA degli hash dei numeri richiesti
         result_index_list = [] # lista da ritornare con gli indici dei numeri a cui è possibile inviare la campagna
-        # result_index_hash =[] # alternativa: lista da ritornare con gli indici e gli hash dei numeri a cui è possibile inviare la campagna
+        latitude= nil
+        if !params['latitude'].nil?
+          latitude=params['latitude']
+        end
+        longitude= nil
+        if !params['longitude'].nil?
+          longitude=params['longitude']
+        end
+        blacklisted=0
+        collisions=0
 
         # hash dei numeri in input
         leaf_list.each do |number|
@@ -101,14 +110,16 @@ module Api
 
           # verifico se il ricevente non ha richiesto il blocco del servizio
           if current_receiver.blacklisted
+            blacklisted+=1
             next
           end
           # verifico se il ricevente è stato già raggiunto da una campagna.
           if Api::V1::UsersHelper.already_reached_receiver?(current_receiver.id, @campaign)
+            collisions+=1
             next
           end
           # aggiungo nel DB la relazione tra campagna-utente-ricevente e campagna-utente
-          Api::V1::UsersHelper.add_campaign_client_receiver_relation(@campaign, @user, current_receiver)
+          Api::V1::UsersHelper.add_campaign_client_receiver_relation(@campaign, @user, current_receiver,latitude, longitude)
 
           s = Shortener::ShortenedUrl.generate(stop_service_url(current_receiver.number), owner: current_receiver)
 
@@ -119,9 +130,6 @@ module Api
                                     index: index,
                                     stop_url: s.present? ? short_url_url(s.unique_key) : ''
           }]
-
-          # alternativa: aggiungo l'indice e l'hash del ricevente al risultato
-          # result_index_hash+=[[index,hashed_leaf]]
         end
 
         # Analytic update
@@ -129,7 +137,7 @@ module Api
         analytic_control.update_supporters_and_sms_sent(@campaign)
 
         # l'API restituisce all'utente gli indici della lista di contatti a cui può inviare l'sms
-        render json: result_index_list
+        render json: {users:result_index_list, blacklisted: blacklisted, collisions: collisions}
       end
 
       # GET users/:id/topics
