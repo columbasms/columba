@@ -10,6 +10,7 @@
   <meta name="theme-color" content="#009688">
   <meta content="" name="description" />
   <meta content="" name="author" />
+  <%= yield :head_js %>
   <%= yield(:application_css).presence || stylesheet_link_tag('application', media: 'all', 'data-turbolinks-track' => true) %>
   <!--[if lte IE 9]>
     <%= stylesheet_link_tag 'ie9', media: 'all', 'data-turbolinks-track' => true %>

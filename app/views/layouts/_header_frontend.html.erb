@@ -47,6 +47,7 @@
                 <%= link_to 'Dashboard', dashboard_path %>
             <% else %>
                 <%= link_to t('frontend.login_for_organizations'), new_organization_session_path %>
+                <%= link_to t('register'), new_organization_registration_path %>
             <% end %>
           </li>
         </ul>

@@ -4,6 +4,11 @@ class Organization < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
+  acts_as_mappable default_units: :kms,
+                   distance_field_name: :distance,
+                   lat_column_name: :lat,
+                   lng_column_name: :lng
+
   scope :locked, -> { where(:locked_at => nil) }
 
   has_attached_file :avatar, styles: {
@@ -45,6 +50,8 @@ class Organization < ActiveRecord::Base
 
   before_create do
     self.locked_at = Time.now
+    g = Geokit::Geocoders::MultiGeocoder.geocode self.address
+    self.lat, self.lng = g.lat, g.lng
   end
 
   def locked
