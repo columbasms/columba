@@ -1,6 +1,6 @@
 class Api::V1::OrganizationsController < ApplicationController
   # http_basic_authenticate_with name: Rails.application.secrets[:http_basic][:name], password: Rails.application.secrets[:http_basic][:password]
-  before_filter :restrict_access
+  before_filter :restrict_access unless Rails.env.development?
   before_filter :set_organization, only: [:show, :campaigns]
   force_ssl unless Rails.env.development?
 

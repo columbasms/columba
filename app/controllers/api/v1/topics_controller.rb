@@ -1,6 +1,6 @@
 class Api::V1::TopicsController < ApplicationController
   # http_basic_authenticate_with name: Rails.application.secrets[:http_basic][:name], password: Rails.application.secrets[:http_basic][:password]
-  before_filter :restrict_access
+  before_filter :restrict_access unless Rails.env.development?
   before_filter :set_topic, only: [:show, :campaigns, :organizations, :update]
   before_filter :set_locale, exclude: [:organizations, :campaigns]
   skip_before_filter :verify_authenticity_token

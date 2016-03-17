@@ -5,7 +5,7 @@ module Api
                                    password: Rails.application.secrets[:http_basic][:password], only: [:create]
       force_ssl unless Rails.env.development?
       protect_from_forgery except: :create
-      before_filter :restrict_access, except: [:create]
+      before_filter :restrict_access, except: [:create] unless Rails.env.development?
       before_filter :set_user, except: [:create]
       before_filter :set_campaign, only: [:send_campaign]
       before_filter :set_organization, only: [:follow_organization, :show_organization]
