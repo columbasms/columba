@@ -50,6 +50,9 @@ class Organization < ActiveRecord::Base
 
   before_create do
     self.locked_at = Time.now
+  end
+
+  before_save do
     g = Geokit::Geocoders::MultiGeocoder.geocode self.address
     self.lat, self.lng = g.lat, g.lng
   end
