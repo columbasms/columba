@@ -16,7 +16,7 @@ order by points desc'
   private
 
   def restrict_access
-    #head :unauthorized unless DigitsClient.find_by_auth_token(request.headers['X-Auth-Token'])
+    head :unauthorized unless DigitsClient.find_by_auth_token(request.headers['X-Auth-Token'])
   end
 
 end
