@@ -86,7 +86,8 @@ class Analytics::OrganizationAnalyticsController < ApplicationController
     end
     global_sms_count=0
     current_organization.campaigns.each  do |camp|
-      global_sms_count+=CampaignAnalytic.find_by_campaign_id(camp.id).sent_sms
+      campaign_analytic = CampaignAnalytic.find_by_campaign_id(camp.id)
+      global_sms_count += campaign_analytic.sent_sms if campaign_analytic.present?
     end
     current_analytics.global_sent_sms=global_sms_count
     current_analytics.save
