@@ -21,6 +21,7 @@ class WelcomeController < ApplicationController
     if oa_last.present?
       @analytics[:followers] = oa_last.follower
       @analytics[:truster] = oa_last.truster
+      @analytics[:sms_range_followers] = oa_last.sms_range_follower
     else
       @analytics[:followers] = 0
       @analytics[:truster] = 0
@@ -34,13 +35,6 @@ class WelcomeController < ApplicationController
       @analytics[:campaigns] = 0
       @analytics[:active_campaigns] = 0
       @analytics[:sent_sms] = 0
-    end
-
-    digits = current_organization.digits_clients
-    if digits.present?
-      @analytics[:sms_avg] = digits.average(:max_sms)
-    else
-      @analytics[:sms_avg] = 0
     end
 
     render 'welcome/dashboard', layout: 'application_dashboard'
