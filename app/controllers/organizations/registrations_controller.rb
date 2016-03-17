@@ -34,6 +34,8 @@ class Organizations::RegistrationsController < Devise::RegistrationsController
     resource_updated = update_resource(resource, account_update_params)
     yield resource if block_given?
     if resource_updated
+      Rails.logger.info request.referer
+      Rails.logger.info after_update_path_for(resource)
       if is_flashing_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
             :update_needs_confirmation : :updated
@@ -42,6 +44,7 @@ class Organizations::RegistrationsController < Devise::RegistrationsController
       sign_in resource_name, resource, bypass: true
       respond_with resource, location: after_update_path_for(resource)
     else
+      Rails.logger.info 'asdkjhaskjdhasdh'
       clean_up_passwords resource
       set_location
       render :edit, layout: 'application_dashboard'
@@ -74,6 +77,25 @@ class Organizations::RegistrationsController < Devise::RegistrationsController
   def configure_account_update_params
     devise_parameter_sanitizer.for(:account_update).push(:organization_name, :description, :fiscal_code, :VAT_number, :town_id,
                                                          :address, :postal_code, :phone_number, :website, :visible, :topic_ids => [])
+  end
+
+  def after_update_path_for(resource)
+    update_url = edit_organization_registration_url
+    if request.referer == update_url
+      dashboard_path
+    else
+      stored_location_for(resource) || request.referer || dashboard_path
+    end
+  end
+
+  def after_sign_in_path_for(resource)
+    sign_in_url = new_organization_session_url
+    edit_path = 'http://localhost:3000/organizations/edit'
+    if request.referer != sign_in_url and request.referer != edit_path
+      stored_location_for(resource) || request.referer || dashboard_path
+    else
+      dashboard_path
+    end
   end
 
   # The path used after sign up.

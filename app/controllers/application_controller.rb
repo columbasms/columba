@@ -8,7 +8,16 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     sign_in_url = new_organization_session_url
     if request.referer == sign_in_url
-      super
+      dashboard_path
+    else
+      stored_location_for(resource) || request.referer || dashboard_path
+    end
+  end
+
+  def after_update_path_for(resource)
+    update_url = edit_organization_registration_url
+    if request.referer == update_url
+      dashboard_path
     else
       stored_location_for(resource) || request.referer || dashboard_path
     end
