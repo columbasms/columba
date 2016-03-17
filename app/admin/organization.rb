@@ -116,6 +116,8 @@ ActiveAdmin.register Organization do
       row :address
       row :postal_code
       row :phone_number
+      row :lat
+      row :lng
       row :cover do |a|
         image_tag a.cover.url(:normal)
       end
