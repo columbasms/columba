@@ -77,31 +77,28 @@ module Api
 
       # GET /users/:id/campaigns
       def campaigns
-        result=@user.campaigns.select('campaign_client_receivers.created_at as shared_at','campaigns.*').group(:id)
+        result = @user.campaigns.select('campaign_client_receivers.created_at as shared_at','campaigns.*').group(:id)
         render json: result, root: false, include_shared_at: true
       end
 
       # POST /users/:id/campaigns/:campaign_id
       def send_campaign
+        Rails.logger.info "------------ PARAMS ----------- \n #{params} \n ------------ END PARAMS -----------"
         # leaf_list = ActiveSupport::JSON.decode(request.body.read)
         leaf_list = params['users']
         hashed_leaf_list = [] #lista ORDINATA degli hash dei numeri richiesti
         result_index_list = [] # lista da ritornare con gli indici dei numeri a cui è possibile inviare la campagna
-        latitude= nil
-        if !params['latitude'].nil?
-          latitude=params['latitude']
-        end
-        longitude= nil
-        if !params['longitude'].nil?
-          longitude=params['longitude']
-        end
-        blacklisted=0
-        collisions=0
+        latitude = nil
+        latitude = params['latitude'] unless params['latitude'].nil?
+        longitude = nil
+        longitude = params['longitude'] unless params['longitude'].nil?
+        blacklisted = 0
+        collisions = 0
 
         # hash dei numeri in input
         leaf_list.each do |number|
           hash = Api::V1::UsersHelper.hash_receiver(number['number'])
-          hashed_leaf_list+=[hash]
+          hashed_leaf_list += [hash]
         end
 
         hashed_leaf_list.each_with_index do |hashed_leaf, index|
@@ -110,12 +107,12 @@ module Api
 
           # verifico se il ricevente non ha richiesto il blocco del servizio
           if current_receiver.blacklisted
-            blacklisted+=1
+            blacklisted += 1
             next
           end
           # verifico se il ricevente è stato già raggiunto da una campagna.
           if Api::V1::UsersHelper.already_reached_receiver?(current_receiver.id, @campaign)
-            collisions+=1
+            collisions += 1
             next
           end
           # aggiungo nel DB la relazione tra campagna-utente-ricevente e campagna-utente
@@ -189,7 +186,7 @@ module Api
 
       # GET /users/:id/organizations/:organization_id
       def show_organization
-        user_follow=DigitsClientsOrganization.find_by(organization_id: @organization, digits_client_id: @user)
+        user_follow = DigitsClientsOrganization.find_by(organization_id: @organization, digits_client_id: @user)
         if user_follow.nil?
           render json: @organization.slice(:organization_name, :avatar_normal, :cover_normal, :description).as_json.merge(:followers => @organization.digits_clients.count, :following => false, :trusting => false), root: false
         else

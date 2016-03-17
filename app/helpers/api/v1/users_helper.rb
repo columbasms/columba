@@ -40,12 +40,12 @@ module Api::V1::UsersHelper
   def self.hash_receiver(clear_number)
     require 'digest'
     require 'openssl'
-    digest=OpenSSL::Digest.new('sha512')
+    digest = OpenSSL::Digest.new('sha512')
     #put the keys in a file placed securely in the server
     #sha2 crypto hash clear_number + salt
     #hmac key encrypt with key
 
-    hash= Digest::SHA2.hexdigest(clear_number+Rails.application.secrets[:crypto_keyed_hashing][:fixed_salt])
+    hash = Digest::SHA2.hexdigest(clear_number + Rails.application.secrets[:crypto_keyed_hashing][:fixed_salt])
     return OpenSSL::HMAC.hexdigest(digest, Rails.application.secrets[:crypto_keyed_hashing][:fixed_key], hash)
   end
 
