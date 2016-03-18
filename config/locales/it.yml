@@ -39,7 +39,7 @@ it:
     prohibited: "questa campagna dall'essere salvata:"
     topics: "Topic"
     expiration_date: "Data di scadenza"
-    date_explanation: "Ciao testo di prova"
+    date_explanation: "Lascia i campi seguenti vuoti se la campagna ha valenza nazionale, altrimenti sii preciso quanto necessario dal solo livello regionale fino alle vie precise"
     created: "Campagna creata con successo."
     updated: "Campagna aggiornata con successo."
     destroyed: "Campagna eliminata con successo."
