@@ -14,11 +14,13 @@ class WelcomeController < ApplicationController
   def dashboard
     @campaigns = current_organization.campaigns.not_expired.order(:created_at => :desc).limit 5
     @analytics = {}
-    @analytics[:topic_followers] = TopicAnalytic.where(:topic_id => current_organization.topics.collect { |t| t.id })
-                                       .where('topic_analytics.created_at >= ?', Date.today)
-                                       .sum(:followers)
+    # @analytics[:topic_followers] = TopicAnalytic.where(:topic_id => current_organization.topics.collect { |t| t.id })
+    #                                    .where('topic_analytics.created_at >= ?', Date.today)
+    #                                    .sum(:followers)
     oa_last = current_organization.organization_analytics.where('organization_analytics.created_at >= ?', Date.today).last
+
     if oa_last.present?
+      @analytics[:topic_followers] = oa_last.global_supporter
       @analytics[:followers] = oa_last.follower
       @analytics[:truster] = oa_last.truster
       @analytics[:sms_range_followers] = oa_last.sms_range_follower
