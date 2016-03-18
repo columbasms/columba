@@ -442,6 +442,12 @@ en:
     join_us_long: "Are you a charity or social agency that want to use our service? You are welcome!"
     info: "Info"
     register: "Register"
+    open: "Open-Source...and open-Data"
+    open_description:
+    open_data: "Social Graph"
+    open_data_short: "The developement of the project is completely transparent! Check our source code and take a look on who we're building it. Also it's possible to analyze the (anonymous) social graph emerged from the service"
+    open_source: "Source code"
+    open_source_short: ""
     demo: "Demo"
     demo_subtitle: ""
     blog: "Blog"
