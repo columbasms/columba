@@ -82,4 +82,48 @@ namespace :analytics do
 
   end
 
+  desc "generate the csv file of the social graph"
+  task social_graph: :environment do
+    Dir.mkdir('./app/assets/open_data/') unless File.exists?('./app/assets/open_data/')
+
+    graph=File.open('./app/assets/open_data/social_graph.csv','w')
+
+    DigitsClient.find_each do |user|
+      # trust and follow organization
+      user.organizations.find_each do |org|
+        a=DigitsClientsOrganization.find_by(digits_client_id:user,organization_id:org)
+        if a.trusted
+          graph.write("u"+ user.id.to_s+",trust,o"+ org.id.to_s+"\n")
+        else
+          graph.write("u"+ user.id.to_s+",follow,o"+ org.id.to_s+"\n")
+        end
+      end
+
+      # follow topic
+      user.topics.find_each do |top|
+        graph.write("u"+ user.id.to_s+",follow,t"+ top.id.to_s+"\n")
+      end
+
+    #   reached contacts
+      DigitsClient.new.campaign_client_receivers
+      user.campaign_client_receivers.find_each do |rec|
+        graph.write("u"+ user.id.to_s+",follow,r"+ rec.receiver_id.to_s+"\n")
+        graph.write("u"+ user.id.to_s+",sent,c"+ rec.campaign_id.to_s+"\n")
+        graph.write("r"+ rec.receiver_id.to_s+",received,c"+ rec.campaign_id.to_s+"\n")
+      end
+    end
+
+    Organization.find_each do |org|
+    #   topic
+      org.topics.find_each do |top|
+        graph.write("o"+ org.id.to_s+",in,t"+ top.id.to_s+"\n")
+      end
+    #   campaigns
+      org.campaigns.find_each do |camp|
+        graph.write("o"+ org.id.to_s+",launch,c"+ camp.id.to_s+"\n")
+      end
+    end
+    graph.close
+  end
+
 end

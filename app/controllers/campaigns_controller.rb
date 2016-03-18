@@ -42,6 +42,9 @@ class CampaignsController < ApplicationController
   def update
     respond_to do |f|
       if @campaign.update(campaign_params)
+        # Spam check
+        Rails.logger.info "SPAM_SCORE:"+SpamController.new.check_spam_score(@campaign.message)
+
         f.html { redirect_to @campaign, notice: t('campaigns.edited') }
         f.json { render json: @campaign, root: false }
       else
@@ -58,6 +61,9 @@ class CampaignsController < ApplicationController
     @campaign.organization = current_organization
     date = Date.strptime campaign_params[:expires_at], '%d/%m/%Y'
     @campaign.expires_at = date if date.present?
+
+    # Spam check
+    Rails.logger.info "SPAM_SCORE:"+SpamController.new.check_spam_score(@campaign.message)
 
     respond_to do |format|
       if @campaign.save
