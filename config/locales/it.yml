@@ -486,8 +486,8 @@ it:
   analytics:
     campaigns:
       created_campaigns:
-        one: "campagna creata"
-        other: "campagne create"
+        one: "campagna lanciata"
+        other: "campagne lanciate"
       active_campaigns:
         one: "campagna attiva"
         other: "campagne attive"
@@ -510,8 +510,8 @@ it:
         one: "follower in totale"
         other: "follower in totale"
       total_trusters:
-        one: "persona fidata"
-        other: "persone fidate"
+        one: "sostenitori in totale"
+        other: "sostenitori in totale"
       sms_range_followers:
-        one: "SMS massimo a disposizione"
-        other: "SMS massimi a disposizione"
+        one: "Portata massima SMS"
+        other: "Portata massima SMS"

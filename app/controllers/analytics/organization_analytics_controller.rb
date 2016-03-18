@@ -84,11 +84,7 @@ class Analytics::OrganizationAnalyticsController < ApplicationController
     if current_analytics.nil?
       return
     end
-    global_sms_count=0
-    current_organization.campaigns.each  do |camp|
-      campaign_analytic = CampaignAnalytic.find_by_campaign_id(camp.id)
-      global_sms_count += campaign_analytic.sent_sms if campaign_analytic.present?
-    end
+    global_sms_count=current_organization.campaigns.joins(:campaign_analytics).where('campaign_analytics.created_at >= ?', Date.today).sum(:sent_sms)
     current_analytics.global_sent_sms=global_sms_count
     current_analytics.save
   end

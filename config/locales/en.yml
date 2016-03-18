@@ -527,8 +527,8 @@ en:
         one: "total follower"
         other: "total followers"
       total_trusters:
-        one: "trusted person"
-        other: "trusted people"
+        one: "total trusters"
+        other: "total trusters"
       sms_range_followers:
-        one: "max SMS available"
-        other: "max SMS available"
+        one: "max SMS range"
+        other: "max SMS range"

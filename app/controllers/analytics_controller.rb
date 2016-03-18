@@ -7,8 +7,9 @@ class AnalyticsController < ApplicationController
     @data = {
         campaigns: current_organization.campaigns.count,
         active_campaigns: current_organization.campaigns.not_expired.count,
-        active_users: DigitsClient.joins(:campaign_client_receivers).where(
-            campaign_client_receivers: { campaign_id: campaign_ids }).count,
+        # active_users: DigitsClient.joins(:campaign_client_receivers).where(
+        #     campaign_client_receivers: { campaign_id: campaign_ids }).count,
+        active_users: CampaignAnalytic.where(campaign_id: campaign_ids).sum(:supporters),
         people_reached: CampaignClientReceiver.where(campaign_id: campaign_ids).count
     }
   end
