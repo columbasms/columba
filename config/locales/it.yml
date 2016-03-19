@@ -421,7 +421,7 @@ it:
     info: "Info"
     register: "Registrati"
     open: "Open-source... e open-data"
-    open_description: "Lo sviluppo del progetto è completamente trasparente! Controlla il nostro il nostro codice sorgente per vedere come lo stiamo realizzando. È inoltre possibile studiare il grafo sociale (anonimizzato) delle relazioni emerse dal servizio"
+    open_description: "Lo sviluppo del progetto è completamente trasparente! Controlla il nostro il nostro codice sorgente per vedere come lo stiamo realizzando. È inoltre possibile studiare il grafo sociale (anonimizzato) delle relazioni emerse dal servizio (La documentazione sarà disponibile a breve)"
     open_data: "Grafo Sociale"
     open_data_short: ""
     open_source: "Codice Sorgente"
