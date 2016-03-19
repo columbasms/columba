@@ -11,13 +11,15 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+  get '/welcome_organizations' =>'welcome#index_organizations', as: :welcome_organizations
+
   get '/town-by-province' => 'location#town_by_province', as: :town_by_province
   get '/provinces-by-region' => 'location#provinces_by_region', as: :provinces_by_region
-
-  get '/dashboard' => 'welcome#dashboard', as: :dashboard
-  get '/dashboard/campaigns' => 'campaigns#index', as: :index_campaigns
-  get '/dashboard/campaigns/filter' => 'campaigns#filter'
+  get '/s/:id' => 'shortener/shortened_urls#show', as: :short_url
   get '/account-locked' => 'welcome#account_locked', as: :account_locked
+
+  post '/tinymce_assets' => 'posts#tinymce_assets_create'
+  post '/contact' => 'welcome#contact', as: :contact
 
   namespace :api do
     namespace :v1 do
@@ -52,16 +54,43 @@ Rails.application.routes.draw do
           get :organizations
         end
       end
+      scope 'leaderboard' do
+        get '/' => 'leaderboard#index', as: :leaderboard
+      end
     end
   end
 
-  resources :campaigns, except: [ :index, :update, :destroy ]
+  scope 'blog' do
+    resources :posts, only: [:index, :show], path: '/'
+  end
+
+  scope 'dashboard' do
+    get '/' => 'welcome#dashboard', as: :dashboard
+    resources :campaigns, except: [ :destroy ] do
+      collection do
+        get '/filter' => 'campaigns#filter'
+      end
+      member do
+        match :crop, via: [:get, :post]
+        delete :stop
+        get :statistics
+      end
+    end
+    scope 'analytics' do
+      get '/follow_trending' => 'welcome#follow_trending', as: :follow_trending
+      get '/campaigns' => 'analytics#campaigns_analytics', as: :campaigns_analytics
+      get '/campaign/:id' => 'analytics#campaign_analytics_async', as: :campaign_analytics_async
+      get '/campaigns_async' => 'analytics#campaigns_analytics_async'
+      get '/my-organization' => 'analytics#organization_analytics', as: :organization_analytics
+    end
+  end
 
   post '/organizations/:id/upload' => 'organizations#upload', as: :organizations_upload
   match '/organizations/:id/crop' => 'organizations#crop', as: :organizations_crop, via: [:post, :patch]
 
-  get '/stop/:id' => 'stop#show'
+  get '/stop/:id' => 'stop#show', as: :stop_service
   delete '/stop/:id' => 'stop#destroy'
+  put '/stop/:id' => 'stop#unblacklist'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -1,0 +1,36 @@
+$(function() {
+    nv.addGraph(function() {
+        var chart = nv.models.lineChart()
+            .useInteractiveGuideline(true)
+            .margin({left: 100, bottom: 100})
+            .transitionDuration(350)
+            .showLegend(true)
+            .showYAxis(true)
+            .showXAxis(true);
+
+        chart.xAxis
+            .axisLabel('Giorno')
+            .tickFormat(function(d) {
+              return d3.time.format('%d %b')(new Date(d));
+            })
+            .rotateLabels(-45);
+
+        chart.forceX([<%= ((Date.today - 29.days)..Date.today).map { |x| x.to_time.to_i * 1000 }.join(', ') %>]);
+
+        chart.yAxis
+            .axisLabel('Follower');
+
+        var url = $('#nvd3').data('url');
+
+        $.ajax({
+            url: '/dashboard/analytics/' + url,
+            type: 'get',
+            success: function(data) {
+              d3.select('#nvd3 svg').datum(data).call(chart);
+            }
+        });
+
+        nv.utils.windowResize(function() { chart.update() });
+        return chart;
+    });
+});

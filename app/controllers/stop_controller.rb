@@ -2,6 +2,7 @@ class StopController < ApplicationController
   force_ssl unless Rails.env.development?
   protect_from_forgery
   before_filter :set_receiver
+  layout 'application_login_no_content'
 
 
   # GET /stop/:id
@@ -18,17 +19,20 @@ class StopController < ApplicationController
   # DELETE /stop/:id
   def destroy
     # BLACKLIST
-    @receiver.blacklisted=true
-    @receiver.save
-    render json: "Receiver correclty blacklisted: #{@receiver.blacklisted}"
+    @receiver.update_attribute :blacklisted, true
+  end
+
+  # PUT /stop/:id
+  def unblacklist
+  #   UN-BLACKLIST
+    @receiver.update_attribute :blacklisted, false
   end
 
   private
 
   def set_receiver
     begin
-      hash = Api::V1::UsersHelper.hash_receiver(params[:id])
-      @receiver = Receiver.find_by number:hash
+      @receiver = Receiver.find_by_number params[:id]
       if @receiver.nil?
         render json: {errors: 'Receiver not found' }
         return

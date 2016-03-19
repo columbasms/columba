@@ -1,6 +1,27 @@
-<h1><%= t 'campaigns.editing' %></h1>
+<% title t('campaigns.edit_title') %>
 
-<%= render 'form' %>
+<% content_for :application_js do %>
+    <%= javascript_include_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
 
-<%= link_to t('campaigns.show'), @campaign %> |
-<%= link_to t('campaigns.back'), campaigns_path %>
+<% content_for :application_css do %>
+    <%= stylesheet_link_tag('application_form', 'data-turbolinks-track' => true) %>
+<% end %>
+
+<div class="col-md-12 col-center">
+  <div class="panel panel-default">
+
+    <div class="panel-heading">
+      <div class="panel-title">
+        <%= t 'campaigns.edit_campaign' %>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <h5><%= t 'campaigns.update' %></h5>
+
+      <%= render 'form' %>
+    </div>
+
+  </div>
+</div>

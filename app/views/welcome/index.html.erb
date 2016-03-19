@@ -1,68 +1,266 @@
-<div class="bg-pic">
-  <!-- START Background Pic-->
-  <%= image_tag 'new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg', class: 'lazy' %>
-  <!-- END Background Pic-->
-  <!-- START Background Caption-->
+<!--COVER-->
+<article id="welcome">
+  <figure class="mobile-c"><img src="<%= image_path 'main_images352x628.png' %>" alt="Placeholder" width="352" height="628"></figure>
+  <h2><%= t 'frontend.columbasms' %></h2>
+  <p><%= t 'frontend.motto' %></p>
+  <ul class="download-a a">
+    <li class="gp"><a rel="external" target="_blank" href="https://play.google.com/apps/testing/com.columbasms.columbasms">Get it on Google Play</a></li>
+  </ul>
+</article>
 
-  <!-- END Background Caption-->
-</div>
+<section id="content" class="a">
+  <!--PROJECT-->
+  <article>
+    <header class="heading-a">
+      <h3><span class="strong"><%= t 'frontend.the_project' %></span></h3>
+      <p><%= t 'frontend.project_description_short' %></p>
+    </header>
+    <ul class="list-a">
+      <li><a href="javascript:windowScrollTo('discover')"><i class="icon-basic" data-icon="#"></i> <span class="title"><%= t 'frontend.discover' %></span>
+        <%= t 'frontend.discover_short' %></a></li>
+      <li><a href="javascript:windowScrollTo('follow')"><i class="icon-basic" data-icon="&#87"></i> <span class="title"><%= t 'frontend.follow' %></span>
+        <%= t 'frontend.follow_short' %></a></li>
+      <li><a href="javascript:windowScrollTo('support')"><i class="icon-basic" data-icon="&#46"></i> <span class="title"><%= t 'frontend.support' %></span>
+        <%= t 'frontend.support_short' %></a></li>
+    </ul>
+  </article>
 
-<div class="login-container bg-white">
-  <div class="p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
-    <img src="<%= image_path 'logo_website_dark.png' %>" alt="logo" data-src="<%= image_path 'logo_website_dark.png' %>" data-src-retina="<%= image_path 'logo_website_dark.png' %>" width="78" height="22">
-    <p class="p-t-35"><%= t 'welcome.index.sign_in' %></p>
-    <!-- START Login Form -->
-    <%= form_for(:organization, :url => session_path(:organization), html: { id: 'form-login', class: 'p-t-15 m-b-15', role: 'form' }) do |f| %>
-      <!-- START Form Control-->
-      <div class="form-group form-group-default">
-        <%= f.label :email %>
-        <div class="controls">
-          <%= f.email_field :email, class: 'form-control', placeholder: 'Email', required: 'required' %>
+  <!--FEATURE DISCOVER-->
+  <article id="discover">
+    <header class="heading-a">
+      <h3><span class="small"><%= t 'frontend.feature' %></span> <span class="strong"><%= t 'frontend.discover' %></span> <%= t 'frontend.discover_subtitle' %> </h3>
+    </header>
+    <ol class="list-b a">
+      <li><span class="title"><%= t 'frontend.discover_point_1_head' %></span> <%= t 'frontend.discover_point_1' %></li>
+      <li><span class="title"><%= t 'frontend.discover_point_2_head' %></span> <%= t 'frontend.discover_point_2' %></li>
+      <li><span class="title"><%= t 'frontend.discover_point_3_head' %></span> <%= t 'frontend.discover_point_3' %></li>
+      <li><span class="title"><%= t 'frontend.discover_point_4_head' %></span> <%= t 'frontend.discover_point_4' %></li>
+      <li class="mobile-f"><img src="<%= image_path 'columba-c.png' %>" alt="Placeholder" width="738" height="681"></li>
+    </ol>
+  </article>
+
+  <!--FEATURE FOLLOW-->
+  <article id="follow" class="module-a va">
+    <header class="heading-a a">
+      <h3><span class="small"><%= t 'frontend.feature' %></span> <span class="strong"><%= t 'frontend.follow' %></span> <%= t 'frontend.follow_subtitle' %></h3>
+      <p><%= t 'frontend.follow_long' %></p>
+    </header>
+    <figure class="sticky-b"><img src="<%= image_path 'columba-a_2.png' %>" alt="Placeholder" width="516" height="790"></figure>
+  </article>
+
+  <!--FEATURE SUPPORT-->
+  <article id="support" class="vb unscrolled shown">
+    <header class="heading-a c">
+      <h3><span class="small"><%= t 'frontend.feature' %></span> <span class="strong"><%= t 'frontend.support' %></span> <%= t 'frontend.support_subtitle' %></h3>
+      <p><%= t 'frontend.support_long' %></p>
+    </header>
+    <figure class="sticky-c"><img src="<%= image_path 'columba-b.png' %>" alt="Placeholder" height="604" width="481"></figure>
+  </article>
+
+  <!--SCREENSHOT-->
+  <article id="media">
+    <header class="heading-a">
+      <h3><span class="small"><%= t 'frontend.screen' %></span> <span class="strong"></span> <%= t 'frontend.screen_subtitle' %></h3>
+      <!--<p>See what’s included in the App</p>-->
+    </header>
+    <ul class="slider-b">
+      <li><img src="<%= image_path 'screenshot02.png' %>" alt="Placeholder" width="320" height="568"></li>
+      <li><img src="<%= image_path 'screenshot03.png' %>" alt="Placeholder" width="320" height="568"></li>
+      <li><img src="<%= image_path 'screenshot04.png' %>" alt="Placeholder" width="320" height="568"></li>
+      <li><img src="<%= image_path 'screenshot06.png' %>" alt="Placeholder" width="320" height="568"></li>
+      <li><img src="<%= image_path 'screenshot08.png' %>" alt="Placeholder" width="320" height="568"></li>
+      <li><img src="<%= image_path 'screenshot09.png' %>" alt="Placeholder" width="320" height="568"></li>
+      <li><img src="<%= image_path 'screenshot12.png' %>" alt="Placeholder" width="320" height="568"></li>
+    </ul>
+  </article>
+
+  <!--VIDEO-->
+  <article class="vid">
+    <header class="heading-a">
+      <h3><span class="small">Video</span> <span class="strong"><%= t 'frontend.demo' %></span> <%= t 'frontend.demo_subtitle' %></h3>
+    </header>
+    <figure><a href="https://www.youtube.com/embed/gMG6DfeV_L0"><img src="<%= image_path 'background_video1400x655_minimal.png' %>" alt="Placeholder" width="1400" height="655"></a></figure>
+  </article>
+
+  <!--PARTNER-->
+
+  <article id="partners" class="unscrolled shown">
+    <header class="heading-a">
+      <h3><span class="small"><%= t 'frontend.partners' %></span> <span class="strong"><%= t 'frontend.partners_subtitle_a' %></span> <%= t 'frontend.partners_subtitle_b' %></h3>
+    </header>
+    <ul class="gallery-b mobile-hide">
+
+      <!--AIPD-Roma-->
+      <li>
+        <a href="http://www.aipd-roma.it/"><img src="<%= image_path 'partner_AIPD-roma.png' %>" alt="Placeholder" height="300" width="300"> </a>
+        <div style="margin-top: -64px;">
+          <h4><span>AIPD-Roma</span> Associazione Italiana Persone Down</h4>
+          <a class="link" href="http://www.aipd-roma.it/"><img src="<%= image_path 'partner_AIPD-roma.png' %>" alt="Placeholder" height="300" width="300"> </a>
         </div>
-      </div>
-      <!-- END Form Control-->
-      <!-- START Form Control-->
-      <div class="form-group form-group-default">
-        <%= f.label :password %>
-        <div class="controls">
-          <%= f.password_field :password, class: 'form-control', placeholder: 'Password', required: 'required' %>
-        </div>
-      </div>
-      <!-- START Form Control-->
-      <div class="row">
-        <div class="col-md-6">
-          <div class="checkbox ">
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me, t('activerecord.attributes.organization.remember_me') %>
+        <div class="fit-a">
+          <div>
+            <a class="link" href="http://www.aipd-roma.it/"><img src="<%= image_path 'partner_AIPD-roma.png' %>" alt="Placeholder" height="300" width="300"> </a>
           </div>
         </div>
-        <!--<div class="col-md-6 text-right">
-          <a href="#" class="text-info small">Help? Contact Support</a>
-        </div>-->
-      </div>
-      <!-- END Form Control-->
-      <%= f.submit t('login'), class: 'btn btn-primary btn-cons m-t-10' %> <span class="m-r-10 m-l-5"><%= t 'or' %></span>
-        <%= link_to t('register'), new_organization_registration_path, class: 'btn btn-success btn-cons m-t-10' %>
-    <% end %>
+        <a class="link" href="http://www.aipd-roma.it/"><img src="<%= image_path 'partner_AIPD-roma.png' %>" alt="Placeholder" height="300" width="300"> </a>
+      </li>
 
-    <%= link_to t('devise.passwords.forgot_your_password'), new_password_path('organization') %><br />
-    <!--END Login Form-->
-    <!--<div class="pull-bottom sm-pull-bottom">
-      <div class="m-b-30 p-r-80 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
-        <div class="col-sm-3 col-md-2 no-padding">
-          <img alt="" class="m-t-5" data-src="assets/img/demo/pages_icon.png" data-src-retina="assets/img/demo/pages_icon_2x.png" height="60" src="assets/img/demo/pages_icon.png" width="60">
+      <!--AISM-Roma-->
+      <li>
+        <a href="http://www.aism.it/roma/"><img src="<%= image_path 'partner_AISM.png' %>" alt="Placeholder" height="300" width="300"> </a>
+        <div style="margin-top: -64px;">
+          <h4><span>AISM-Roma</span> Associazione Italiana Sclerosi Multipla</h4>
+          <a class="link" href="http://www.aism.it/roma/"><img src="<%= image_path 'partner_AISM.png' %>" alt="Placeholder" height="300" width="300"> </a>
         </div>
-      </div>
-    </div>-->
-  </div>
-</div>
+        <div class="fit-a">
+          <div>
+            <a class="link" href="http://www.aism.it/roma/"><img src="<%= image_path 'partner_AISM.png' %>" alt="Placeholder" height="300" width="300"> </a>
+          </div>
+        </div>
+        <a class="link" href="http://www.aism.it/roma/"><img src="<%= image_path 'partner_AISM.png' %>" alt="Placeholder" height="300" width="300"> </a>
+      </li>
 
-<% content_for :javascripts do %>
+      <!--Maluba-->
+      <li>
+        <a href="http://www.maluba.org/"><img src="<%= image_path 'partner_maluba.png' %>" alt="Placeholder" height="300" width="300"> </a>
+        <div style="margin-top: -64px;">
+          <h4><span>MALUBA</span></h4>
+          <a class="link" href="http://www.maluba.org/"><img src="<%= image_path 'partner_maluba.png' %>" alt="Placeholder" height="300" width="300"> </a>
+        </div>
+        <div class="fit-a">
+          <div>
+            <a class="link" href="http://www.maluba.org/"><img src="<%= image_path 'partner_maluba.png' %>" alt="Placeholder" height="300" width="300"> </a>
+          </div>
+        </div>
+        <a class="link" href="http://www.maluba.org/"><img src="<%= image_path 'partner_maluba.png' %>" alt="Placeholder" height="300" width="300"> </a>
+      </li>
 
-    <script>
-      $(function() {
-        $('#form-login').validate()
-      })
-    </script>
+      <!--Greenpeace-->
+      <li>
+        <a href="http://www.greenpeace.org/italy/it/"><img src="<%= image_path 'partner_greenpeace.png' %>" alt="Placeholder" height="300" width="300"> </a>
+        <div style="margin-top: -64px;">
+          <h4><span>Greenpeace</span> Italia</h4>
+          <a class="link" href="http://www.greenpeace.org/italy/it/"><img src="<%= image_path 'partner_greenpeace.png' %>" alt="Placeholder" height="300" width="300"> </a>
+        </div>
+        <div class="fit-a">
+          <div>
+            <a class="link" href="http://www.greenpeace.org/italy/it/"><img src="<%= image_path 'partner_greenpeace.png' %>" alt="Placeholder" height="300" width="300"> </a>
+          </div>
+        </div>
+        <a class="link" href="http://www.greenpeace.org/italy/it/"><img src="<%= image_path 'partner_greenpeace.png' %>" alt="Placeholder" height="300" width="300"> </a>
+      </li>
 
-<% end %>
+      <!--AIL-->
+      <li>
+        <a href="https://www.ail.it/"><img src="<%= image_path 'partner_AIL.png' %>" alt="Placeholder" height="300" width="300"> </a>
+        <div style="margin-top: -64px;">
+          <h4><span>AIL</span> Associazione Italiana contro le Leucemie-linfomi e mieloma </h4>
+          <a class="link" href="https://www.ail.it/"><img src="<%= image_path 'partner_AIL.png' %>" alt="Placeholder" height="300" width="300"> </a>
+        </div>
+        <div class="fit-a">
+          <div>
+            <a class="link" href="https://www.ail.it/"><img src="<%= image_path 'partner_AIL.png' %>" alt="Placeholder" height="300" width="300"> </a>
+          </div>
+        </div>
+        <a class="link" href="https://www.ail.it/"><img src="<%= image_path 'partner_AIL.png' %>" alt="Placeholder" height="300" width="300"> </a>
+      </li>
+
+    </ul>
+
+    <!--JOIN US-->
+    <header class="heading-a">
+      <h3>
+        <span class="strong"><%= t 'frontend.join_us' %></span>
+      </h3>
+      <p>
+        <%= t 'frontend.join_us_long' %>
+      </p>
+
+    </header>
+
+    <ul class="list-c">
+      <li class="a">
+        <a href="/welcome_organizations"><%= t 'frontend.info' %></a>
+      </li>
+      <li class="b">
+        <a href="/organizations/sign_up"><%= t 'frontend.register' %></a>
+      </li>
+      <li class="c">
+        <a href="javascript:windowScrollTo('contact');"><%= t 'frontend.contact' %></a>
+      </li>
+    </ul>
+  </article>
+
+  <!--OPEN SOURCE/DATA-->
+  <article >
+    <header class="heading-a">
+      <h3><span class="strong"><%= t 'frontend.open' %></span></h3>
+      <p><%= t 'frontend.open_description' %></p>
+    </header>
+    <ul class="list-a">
+      <li><a href="https://drive.google.com/open?id=0Bz1hDzyYqxpxMXhoWFVwNG1yOHM"><i class="icon-basic" data-icon="&#66"></i> <span class="title"><%= t 'frontend.open_data' %></span>
+      <%= t 'frontend.open_data_short' %></a></li>
+      <li></li>
+      <li><a href="https://github.com/columbasms/"><i class="icon-basic" data-icon="&#33"></i> <span class="title"><%= t 'frontend.open_source' %></span>
+        <%= t 'frontend.open_source_short' %></a></li>
+    </ul>
+  </article>
+
+  <!--TEAM-->
+  <article id="team" class="vb">
+    <header class="heading-a">
+      <h3><span class="strong"><%= t 'frontend.team' %></span></h3>
+    </header>
+    <ul class="slider-a">
+      <li>
+        <img src="<%= image_path 'team/Alessio.jpg' %>" alt="Placeholder" width="157" height="157">
+        <span class="title"><span>Alessio Cecconi</span> Backend Developer</span> <%= t 'frontend.team_alessio_description' %>
+      </li>
+      <li>
+        <img src="<%= image_path 'team/Federico.jpg' %>" alt="Placeholder" width="157" height="157">
+        <span class="title"><span>Federico Fanara</span> Android Developer</span> <%= t 'frontend.team_federico_description' %>
+      </li>
+      <li><img src="<%= image_path 'team/Lorenzo.jpg' %>" alt="Placeholder" width="157" height="157">
+        <span class="title"><span>Lorenzo Rapetti</span> Backend & Frontend Developer</span> <%= t 'frontend.team_lorenzo_description' %>
+      </li>
+      <li><img src="<%= image_path 'team/Matteo.jpg' %>" alt="Placeholder" width="157" height="157">
+        <span class="title"><span>Matteo Brienza</span>  Android devoleper & Digital Designer</span> <%= t 'frontend.team_matteo_description' %>
+      </li>
+    </ul>
+  </article>
+
+  <!--CONTACT-->
+  <article id="contact" style="background-color: rgb(229, 227, 223);">
+    <header class="heading-a">
+      <h3><span class="strong"><%= t 'frontend.contact_us' %></span></h3>
+    </header>
+    <%= form_tag contact_path, id: 'contact-form' do %>
+      <fieldset>
+        <p>
+          <label for="ca"><%= t 'frontend.name' %></label>
+          <input type="text" id="ca" name="contact[name]" required>
+        </p>
+        <p>
+          <label for="cb">Email</label>
+          <input type="email" id="cb" name="contact[email]" required>
+        </p>
+        <p>
+          <label for="ce"><%= t 'frontend.message' %></label>
+          <textarea id="ce" name="contact[message]" required></textarea>
+        </p>
+        <p><button type="submit" id="contact-form-submit"><%= t 'frontend.send' %></button></p>
+      </fieldset>
+    <% end %>
+  </article>
+
+  <!--DOWNLOAD-->
+  <article class="vb">
+    <header class="heading-a b">
+      <h3><span class="strong"><%= t 'frontend.get_app' %></span></h3>
+      <p><%= t 'frontend.get_app_text' %></p>
+    </header>
+    <ul class="download-a a">
+      <li class="gp"><a rel="external" target="_blank" href="https://play.google.com/apps/testing/com.columbasms.columbasms">Get the Alpha on Google Play</a></li>
+    </ul>
+  </article>
+</section>

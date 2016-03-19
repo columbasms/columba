@@ -1,0 +1,24 @@
+<% title @post.title %>
+
+<article id="featured">
+  <h2>Blog</h2>
+</article>
+
+<section id="content" class="cols-a">
+  <div class="news-a">
+    <article>
+      <header>
+        <h3><%= @post.title %></h3>
+        <ul>
+          <li><a href="javascript:;"><%= image_tag @post.admin_user.avatar.url(:thumb_48), width: 40, height: 40 %>
+            <%= t 'frontent.by' %> <%= @post.admin_user %></a></li>
+          <li><i class="icon-basic" data-icon="x"></i> <%= raw I18n.localize @post.created_at, format: '%d %B %Y' %></li>
+        </ul>
+      </header>
+      <figure><%= image_tag @post.photo.url(:normal), width: 700, height: 315 %></figure>
+      <%= raw @post.content %>
+    </article>
+  </div>
+
+  <%= render partial: 'aside' %>
+</section>

@@ -60,8 +60,13 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :dashboard, 'Dashboard', dashboard_path, html: { li_class: 'm-t-30', icon_class: 'pg-home' }
     primary.item :campaigns, I18n.t('campaigns.campaigns'), '#', html: { icon_class: 'pg-note' } do |campaigns|
       campaigns.dom_class = 'sub-menu'
-      campaigns.item :my_campaigns, I18n.t('campaigns.my_campaigns'), index_campaigns_path, html: { icon_class: 'pg-note' }
+      campaigns.item :my_campaigns, I18n.t('campaigns.my_campaigns'), campaigns_path, html: { icon_class: 'pg-note' }
       campaigns.item :new_campaign, I18n.t('campaigns.new_campaign'), new_campaign_path, html: { icon_class: 'pg-plus' }
+    end
+    primary.item :statistics, I18n.t('menu.statistics'), '#', html: { icon_class: 'fa fa-bar-chart' } do |s|
+      s.dom_class = 'sub-menu'
+      s.item :campaign, I18n.t('campaigns.campaigns'), campaigns_analytics_path, html: { icon_class: 'pg-note' }
+      s.item :organization, I18n.t('organizations.organization'), organization_analytics_path, html: { icon_class: 'fa fa-users' }
     end
 
     # you can also specify html attributes to attach to this particular level

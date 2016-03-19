@@ -1,7 +1,52 @@
-<% content_for :title do %><%= t 'welcome.dashboard.title' %><% end %>
+<% title t('welcome.dashboard.title') %>
 
 <div class="row">
-  <div class="col-sm-12 col-md-12">
+  <div class="col-sm-12 col-md-6">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <div class="panel-title"><%= t 'welcome.dashboard.general_statistics' %></div>
+      </div>
+
+      <div class="panel-body">
+        <table class="table table-75-25">
+          <tbody>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.topic_followers' %>:</strong></td>
+              <td><%= @analytics[:topic_followers] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.followers' %>:</strong></td>
+              <td><%= @analytics[:followers] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.truster' %>:</strong></td>
+              <td><%= @analytics[:truster] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.campaigns' %>:</strong></td>
+              <td><%= @analytics[:campaigns] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.active_campaigns' %>:</strong></td>
+              <td><%= @analytics[:active_campaigns] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'welcome.dashboard.sent_sms' %>:</strong></td>
+              <td><%= @analytics[:sent_sms] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'analytics.organizations.sms_range_followers.other' %>:</strong></td>
+              <td><%= @analytics[:sms_range_followers] %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-sm-12 col-md-6">
     <div class="panel panel-default">
       <div class="panel-heading">
         <div class="panel-title"><%= t 'welcome.dashboard.recent_campaigns' %>
@@ -9,34 +54,58 @@
       </div>
       <div class="panel-body scrollable">
         <!-- REMOVE THIS WRAPPER IF .scrollable IS NOT USED -->
-        <div style="max-height: 250px">
+        <div style="max-height: 515px">
 
           <table class="table table-hover">
 
             <thead>
-              <tr>
-                <th><%= t 'campaigns.message' %></th>
-                <th><%= t 'campaigns.date_created' %></th>
-                <th><%= t 'campaigns.topics' %></th>
-                <th><%= t 'campaigns.expiration_date' %></th>
-              </tr>
+            <tr>
+              <th><%= t 'campaigns.message' %></th>
+              <th><%= t 'campaigns.expiration_date' %></th>
+              <th><%= t 'campaigns.actions' %></th>
+            </tr>
             </thead>
 
             <tbody>
-              <% @campaigns.each do |c| %>
+            <% @campaigns.each do |c| %>
                 <tr>
                   <td><%= c.message %></td>
-                  <td><%= c.created_at_format %></td>
-                  <td><%= c.topics.map { |t| t.name }.join(', ') %></td>
                   <td><%= c.expires_at_format %></td>
+                  <td>
+                    <%= link_to t('campaigns.show'), c %> <br />
+                    <%= link_to t('campaigns.edit'), edit_campaign_path(c) %> <br />
+                    <%= link_to t('campaigns.stop'), stop_campaign_path(c), method: :delete %>
+                  </td>
                 </tr>
-              <% end %>
+            <% end %>
             </tbody>
 
           </table>
 
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <div class="panel-title"><%= t 'welcome.dashboard.like_trending' %></div>
+      </div>
+
+      <div class="panel-body full-height" style="min-height: 300px;">
+        <div id="nvd3" class="line-chart"
+            data-area-color="master"
+            data-points="true"
+            data-url="follow_trending">
+          <svg style="height: 500px;"></svg>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

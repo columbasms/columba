@@ -41,6 +41,18 @@ gem 'active_model_serializers'
 gem 'config'
 gem 'rails-i18n', '~> 4.0.0'
 gem 'globalize', '~> 5.0.0'
+gem 'has_secure_token'
+gem 'cocoon'
+gem 'geokit-rails'
+gem 'shortener'
+gem 'tinymce-rails'
+gem 'tinymce-rails-imageupload', github: 'PerfectlyNormal/tinymce-rails-imageupload'
+gem 'will_paginate', '~> 3.0.6'
+gem 'html_truncator', '~>0.2'
+gem 'metamagic'
+gem 'postmark-spam_check'
+
+gem 'RubySpamAssassin'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -55,11 +67,13 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'meta_request'
-  gem 'capistrano', '~> 3.1'
+  gem 'capistrano', '>= 3.2.1'
+  gem 'capistrano-secrets-yml', '~> 1.0.0'
   gem 'capistrano-rvm',     require: false
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
+  gem 'capistrano-rails-console'
 end
 
 group :development do

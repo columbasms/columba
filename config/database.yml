@@ -12,10 +12,10 @@ default: &default
 development:
   adapter: mysql2
   encoding: utf8
-  database: columba_development
+  database: <%= Rails.application.secrets[:database][:database] %>
   pool: 5
-  username: root
-  password: fioredicampo
+  username: <%= Rails.application.secrets[:database][:username] %>
+  password: <%= Rails.application.secrets[:database][:password] %>
 
 #  socket: /tmp/mysql.sock
 
@@ -29,8 +29,8 @@ test:
 production:
   adapter: mysql2
   encoding: utf8
-  database: columba_production
+  database: <%= Rails.application.secrets[:database][:database] %>
   pool: 5
-  username: root
-  password: columbapsw
+  username: <%= Rails.application.secrets[:database][:username] %>
+  password: <%= Rails.application.secrets[:database][:password] %>
   socket: /var/run/mysqld/mysqld.sock

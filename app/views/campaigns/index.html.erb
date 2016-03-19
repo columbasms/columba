@@ -1,4 +1,4 @@
-<% content_for :title do %><%= t 'campaigns.index_title' %><% end %>
+<% title t('campaigns.index_title') %>
 
 <% content_for :application_js do %>
     <%= javascript_include_tag('application_data', 'data-turbolinks-track' => true) %>
@@ -31,6 +31,7 @@
           <th><%= t 'campaigns.date_created' %></th>
           <th><%= t 'campaigns.topics' %></th>
           <th><%= t 'campaigns.expiration_date' %></th>
+          <th><%= t 'campaigns.actions' %></th>
         </tr>
         </thead>
 
@@ -45,6 +46,14 @@
                 <% end %>
               </td>
               <td class="v-align-middle"><%= campaign.expires_at_format %></td>
+              <td class="v-align-middle" style="width: 30%;">
+                <%= link_to t('campaigns.show'), campaign %> |
+                <%= link_to t('campaigns.edit'), edit_campaign_path(campaign) %> |
+                <%= link_to t('menu.statistics'), statistics_campaign_path(campaign) %>
+                <% unless campaign.expired? %>
+                 | <%= link_to t('campaigns.stop'), stop_campaign_path(campaign), method: :delete %>
+                <% end %>
+              </td>
             </tr>
         <% end %>
         </tbody>
@@ -77,7 +86,8 @@
           "sLengthMenu": "_MENU_ ",
           "sInfo": "<%= raw t('datatable') %>"
         },
-        "iDisplayLength": 5
+        "iDisplayLength": 5,
+        "order": [[3, "desc"]]
       };
 
       table.dataTable(settings);

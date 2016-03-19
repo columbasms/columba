@@ -1,4 +1,5 @@
 class Receiver < ActiveRecord::Base
+  has_shortened_urls
 
   has_many :campaign_client_receivers
   has_many :campaigns, through: :campaign_client_receivers

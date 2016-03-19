@@ -1,6 +1,6 @@
 class CampaignsController < ApplicationController
   before_filter :authenticate_organization!
-  before_action :set_campaign, only: [:show, :edit, :update, :destroy]
+  before_action :set_campaign, only: [:show, :edit, :update, :crop, :stop, :statistics]
   before_action :validate_visibility
   layout 'application_dashboard'
 
@@ -8,7 +8,7 @@ class CampaignsController < ApplicationController
   # GET /campaigns.json
   def index
     @campaigns = current_organization.campaigns
-    render :index, layout: 'application_dashboard'
+    render :index
   end
 
   def filter
@@ -34,8 +34,24 @@ class CampaignsController < ApplicationController
     @campaign = Campaign.new
   end
 
-  # GET /campaigns/1/edit
+  # GET /campaigns/{id}/edit
   def edit
+  end
+
+  # PUT /campaigns/{id}
+  def update
+    respond_to do |f|
+      if @campaign.update(campaign_params)
+        # Spam check
+        Rails.logger.info "SPAM_SCORE:"+SpamController.new.check_spam_score(@campaign.message)
+
+        f.html { redirect_to @campaign, notice: t('campaigns.edited') }
+        f.json { render json: @campaign, root: false }
+      else
+        f.html { render 'edit' }
+        f.json { render json: @campaign.errors, root: false }
+      end
+    end
   end
 
   # POST /campaigns
@@ -46,11 +62,14 @@ class CampaignsController < ApplicationController
     date = Date.strptime campaign_params[:expires_at], '%d/%m/%Y'
     @campaign.expires_at = date if date.present?
 
+    # Spam check
+    Rails.logger.info "SPAM_SCORE:"+SpamController.new.check_spam_score(@campaign.message)
+
     respond_to do |format|
       if @campaign.save
 
         if DigitsClient.count > 0
-          gcm = GCM.new('AIzaSyBGHPEr4yAWYFyvfEOdyEz3MtPOmLajggw')
+          gcm = GCM.new(Rails.application.secrets[:gcm_api_key])
 
           options = {
               data: {
@@ -63,7 +82,7 @@ class CampaignsController < ApplicationController
           Rails.logger.info response
         end
 
-        format.html { redirect_to dashboard_path, notice: I18n.t('campaigns.created') }
+        format.html { redirect_to @campaign, notice: I18n.t('campaigns.created') }
         format.json { render :show, status: :created, location: @campaign }
       else
         format.html { render :new }
@@ -72,27 +91,30 @@ class CampaignsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /campaigns/1
-  # PATCH/PUT /campaigns/1.json
-  def update
-    respond_to do |format|
-      if @campaign.update(campaign_params)
-        format.html { redirect_to @campaign, notice: I18n.t('campaigns.updated') }
-        format.json { render :show, status: :ok, location: @campaign }
-      else
-        format.html { render :edit }
-        format.json { render json: @campaign.errors, status: :unprocessable_entity }
-      end
-    end
+  # GET|POST /campaigns/:id/crop
+  def crop
+
   end
 
-  # DELETE /campaigns/1
-  # DELETE /campaigns/1.json
-  def destroy
-    @campaign.destroy
-    respond_to do |format|
-      format.html { redirect_to campaigns_url, notice: I18n.t('campaigns.destroyed') }
-      format.json { head :no_content }
+  # DELETE /campaigns/:id/stop
+  def stop
+    if @campaign.deactivate
+      flash[:notice] = t('campaigns.deactivated')
+    else
+      flash[:danger] = t('campaigns.error')
+    end
+    redirect_to :back
+  end
+
+  def statistics
+    campaign_analytic_today = @campaign.campaign_analytics.last
+    @data = {}
+    if campaign_analytic_today.present?
+      @data[:supporters] = campaign_analytic_today.supporters
+      @data[:sent_sms] = campaign_analytic_today.sent_sms
+    else
+      @data[:supporters] = 0
+      @data[:sent_sms] = 0
     end
   end
 
@@ -105,7 +127,9 @@ class CampaignsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def campaign_params
       params[:campaign].permit(:message, :region_id, :province_id, :town_id, :expires_at,
-                               :address, :topic_ids => [])
+                               :long_description, :photo,
+                               :topic_ids => [], :campaign_address_ids => [],
+                               :campaign_addresses_attributes => [:id, :address, :_destroy])
     end
 
     def validate_visibility

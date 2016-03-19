@@ -1,0 +1,18 @@
+<aside>
+  <nav class="nav-a">
+    <h3><%= t 'frontend.categories' %></h3>
+    <ul>
+      <% Category.all.each do |category| %>
+          <li><%= link_to raw("#{category.title} <span>#{category.post_count}</span>"), posts_path(category: category.id) %></li>
+      <% end %>
+    </ul>
+  </nav>
+  <nav class="nav-a nav-a-new2">
+    <h3><%= t 'frontend.tags' %></h3>
+    <ul>
+      <% Tag.all.each do |tag| %>
+          <li><%= link_to tag.title, posts_path(tag: tag.id) %></li>
+      <% end %>
+    </ul>
+  </nav>
+</aside>

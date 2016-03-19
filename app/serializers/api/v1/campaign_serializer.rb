@@ -1,7 +1,8 @@
 class Api::V1::CampaignSerializer < ActiveModel::Serializer
-  attributes :id, :message, :expires_at, :created_at, :shared_at
+  attributes :id, :message, :photo_mobile, :long_description, :expires_at, :created_at, :shared_at
   has_one :organization, only: [:id, :organization_name, :avatar_normal]
   has_many :topics
+  has_many :campaign_addresses
 
   def filter(keys)
     if serialization_options[:include_shared_at]
@@ -10,4 +11,5 @@ class Api::V1::CampaignSerializer < ActiveModel::Serializer
       keys - [:shared_at]
     end
   end
+
 end

@@ -28,6 +28,7 @@
 # .idea/mongoSettings.xml
 
 .env.production
+.env.development
 
 ## File-based project format:
 *.ipr

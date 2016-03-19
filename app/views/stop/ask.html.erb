@@ -1,12 +1,15 @@
-<% content_for :title do %><%= t 'stop.title' %><% end %>
+<% title t('stop.title') %>
 
-<h1><%= t 'stop.heading' %></h1>
+<% content_for :h3 do %><%= t 'stop.heading' %><% end %>
+
 <p>
   <h5>
     <%= t 'stop.why' %>
   </h5>
 
-  -- Columba Project --
+  <%= t 'stop.why_explanation' %>
+  <%= t 'frontend.project_description_short' %>
+  <%= t 'stop.more_info' %><a href="https://www.columbasms.com">https://www.columbasms.com</a>
 </p>
 
 <!--<p>-->
@@ -16,7 +19,7 @@
 <p>
   <%= t 'stop.confirmation' %>
 
-  <%= form_tag @stop, method: :delete do %>
-      <%= submit_tag t('stop.confirm') %>
+  <%= form_tag "/stop/#{@receiver.number}", method: :delete do %>
+      <%= submit_tag t('stop.confirm'), class: 'btn btn-primary btn-cons' %>
   <% end %>
 </p>

@@ -1,0 +1,72 @@
+<header id="top">
+  <h1><a href="/"><img src="<%= image_path 'logo_257x81_white.png' %>" alt="Placeholder" width="257" height="81"></a></h1>
+  <nav id="nav">
+    <ul>
+      <!--HOME-->
+      <li><%= link_to 'Home', root_path %></li>
+
+      <!--APP: index SCROLL-->
+      <% if controller_name == 'welcome' and action_name == 'index' %>
+          <li><a href="javascript:windowScrollTo('content')">APP</a></li>
+          <li><a href="javascript:windowScrollTo('media')">MEDIA</a></li>
+      <% end %>
+
+      <!--ONLUS index SCROLL -->
+      <% if controller_name == 'welcome' and action_name == 'index_organizations' %>
+          <li><a href="javascript:windowScrollTo('content')"><%= t 'frontend_organizations.motivations' %></a></li>
+      <% end %>
+
+      <!--ONLUS: blog of Campaigns-->
+      <!--<% if controller_name == 'welcome' and action_name == 'index_organizations' %>-->
+          <!--<li><a href="javascript:windowScrollTo('content')"><%= t 'campaigns.campaigns' %></a></li>-->
+      <!--<% end %>-->
+
+      <!--PARTNERS-->
+      <li><a href="javascript:windowScrollTo('partners')"><%= t 'frontend.partners' %></a></li>
+
+      <!--PROJECT-->
+      <li class="sub">
+        <a href="javascript:windowScrollTo('content')"><%= t 'frontend.the_project' %></a>
+        <ul>
+          <!--<li><a href="#">La Storia</a></li>-->
+          <li><a href="javascript:windowScrollTo('team');"><%= t 'frontend.who_we_are' %></a></li>
+          <li><a href="javascript:windowScrollTo('contact');"><%= t 'frontend.contact' %></a></li>
+          <!--<li><a href="/blog">Blog</a></li>-->
+        </ul>
+      </li>
+
+      <!--BLOG-->
+      <!--<li><%= link_to 'Blog', posts_path %></li>-->
+
+      <!--ONLUS, login/dashboard-->
+      <li class="sub">
+        <%= link_to 'ONLUS', welcome_organizations_path %>
+        <ul>
+          <li>
+            <% if organization_signed_in? %>
+                <%= link_to 'Dashboard', dashboard_path %>
+            <% else %>
+                <%= link_to t('frontend.login_for_organizations'), new_organization_session_path %>
+                <%= link_to t('register'), new_organization_registration_path %>
+            <% end %>
+          </li>
+        </ul>
+      </li>
+
+      <!--LANGUAGE-->
+      <li class="sub">
+        <a accesskey="2"><%= image_tag "#{I18n.locale.to_s}.png", width: 32, height: 32 %></a> <em>(2)</em>
+        <ul>
+          <li style="padding-bottom: 11px;">
+            <a href="javascript:window.location.href = '<%= url_for action: action_name, controller: controller_name, locale: ((I18n.locale.to_s == 'it') ? 'en' : 'it') %>';">
+              <span class="d32">
+                <%= image_tag "#{((I18n.locale.to_s == 'it') ? 'en' : 'it')}.png", width: 32, height: 32 %>
+              </span>
+              <span class="m-l-10"><%= t "language.reverse.#{I18n.locale}" %></span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>

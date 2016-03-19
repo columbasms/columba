@@ -6,6 +6,12 @@
     <%= stylesheet_link_tag('application_form', 'data-turbolinks-track' => true) %>
 <% end %>
 
+<% content_for :head_js do %>
+    <!--suppress ALL -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMeEfCTnpsPhSqICGC5e7QEIhzCpYjazg&libraries=places"
+            async defer></script>
+<% end %>
+
 <script>
   var organization_id = <%= @organization.id %>;
 </script>
@@ -205,7 +211,7 @@
               <div class="col-sm-12 col-md-8">
                 <div class="form-group form-group-default required">
                   <%= f.label :address %>
-                  <%= f.text_field :address, class: 'form-control', required: 'required' %>
+                  <%= f.text_field :address, class: 'form-control', id: 'geocode', required: 'required' %>
                 </div>
               </div>
 
@@ -244,6 +250,12 @@
 
     <script>
         $('#edit-profile').validate();
+
+        $(function() {
+          var autocomplete = new google.maps.places.Autocomplete(
+            $('#geocode').get(0), { types: ['geocode'] }
+          );
+        });
     </script>
 
     <%= javascript_include_tag 'location-select', 'data-turbolinks-track' => true %>

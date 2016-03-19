@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-6 col-sm-12 col-xs-12 m-b-10">
+    <div class="widget-9 panel no-border bg-complete no-margin widget-loader-bar" style="height: 100px;">
+      <div class="container-xs-height full-height">
+        <div class="row-xs-height">
+          <div class="col-xs-height col-middle">
+            <div class="text-center">
+              <h2 class="no-margin text-white"><%= @data[:supporters] %></h2>
+            </div>
+            <div class="text-center">
+              <h5 class="no-margin p-b-5 text-white">
+                <%= t 'analytics.campaigns.active_users', count: @data[:supporters] %>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-12 col-xs-12 m-b-10">
+    <div class="widget-9 panel no-border bg-primary no-margin widget-loader-bar" style="height: 100px;">
+      <div class="container-xs-height full-height">
+        <div class="row-xs-height">
+          <div class="col-xs-height col-middle">
+            <div class="text-center">
+              <h2 class="no-margin text-white"><%= @data[:sent_sms] %></h2>
+            </div>
+            <div class="text-center">
+              <h5 class="no-margin p-b-5 text-white">
+                <%= t 'analytics.campaigns.sms', count: @data[:sent_sms] %>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row m-t-10">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <div class="panel-title"><%= t 'analytics.campaigns.sms_trending' %></div>
+      </div>
+
+      <div class="panel-body full-height" style="min-height: 300px;">
+        <div id="nvd3" class="line-chart"
+             data-area-color="master"
+             data-points="true"
+             data-url="campaign/<%= @campaign.id %>">
+          <svg style="height: 500px;"></svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
