@@ -27,3 +27,12 @@ Milestone 2 - Release Candidate
 - [Presentation](https://docs.google.com/presentation/d/1r-0Rf4S8wx79rXWTywxbFidCubLAn1Ju94qu1WxHGYM/present)
 - Android application (authorized only) [APK](https://drive.google.com/open?id=0Bz1hDzyYqxpxWG9iME9mQlVDYzg)
 - Android application [Video](https://drive.google.com/open?id=0Bz1hDzyYqxpxaGR1QkdhYWZPdU0)
+
+Milestone 3 - Final
+==============
+- [Presentation](https://docs.google.com/presentation/d/1neJUq17KvUQBhozh3Zo5k0AMX1qbUjKnZAbrgLewEYw/present)
+- Android application now publicly available as open-beta, get it on [Google play](https://play.google.com/apps/testing/com.columbasms.columbasms)!. Instruction:
+  - Follow to this [link](https://play.google.com/apps/testing/com.columbasms.columbasms)
+  - Log-in with your Google account
+  - Click on "Become a Tester"
+  - Follow the link "Download it on Play Store"
