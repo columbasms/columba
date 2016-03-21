@@ -160,8 +160,6 @@ GEM
     has_scope (0.6.0)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
-    has_secure_token (1.0.0)
-      activerecord (>= 3.0)
     html_truncator (0.4.1)
       nokogiri (~> 1.5)
     httparty (0.13.7)
@@ -344,7 +342,6 @@ DEPENDENCIES
   gcm
   geokit-rails
   globalize (~> 5.0.0)
-  has_secure_token
   html_truncator (~> 0.2)
   jbuilder (~> 2.0)
   jquery-rails
