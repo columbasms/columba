@@ -116,7 +116,10 @@ module Api
             next
           end
           # aggiungo nel DB la relazione tra campagna-utente-ricevente e campagna-utente
-          Api::V1::UsersHelper.add_campaign_client_receiver_relation(@campaign, @user, current_receiver,latitude, longitude)
+          if Api::V1::UsersHelper.add_campaign_client_receiver_relation(@campaign, @user, current_receiver,latitude, longitude)==false
+          #   problema salvataggio nel db
+            next
+          end
 
           s = Shortener::ShortenedUrl.generate(stop_service_url(current_receiver.number), owner: current_receiver)
 
