@@ -2,6 +2,8 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+require_relative '../lib/timestamp'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -28,5 +30,7 @@ module Columba
     config.action_mailer.default_url_options = { host: 'columbasms.com' }
 
     config.i18n.available_locales = [:en, :it]
+
+    config.middleware.use Timestamp
   end
 end

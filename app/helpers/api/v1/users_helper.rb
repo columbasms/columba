@@ -8,16 +8,9 @@ module Api::V1::UsersHelper
     end
   end
 
-  def self.register_user(digits, gcm_token)
+  def self.register_user(digits, gcm_token, timestamp)
 
     client = DigitsClient.find_or_create_by(phone_number: digits['phone_number'])
-    if client.new_record?
-      random_name="user_#{(rand*10000).to_int}"
-      while DigitsClient.find_by_user_name(random_name).present?
-        random_name="user_#{(rand*10000).to_int}"
-      end
-      client.user_name = random_name
-    end
     client.enabled = true
     client.phone_number = digits['phone_number']
     client.digits_token = digits['access_token']['token']
@@ -28,6 +21,17 @@ module Api::V1::UsersHelper
     client.gcm_token = gcm_token
     client.auth_token = SecureRandom.base64
 
+    if client.new_record?
+      random_name="user_#{(rand*10000).to_int}"
+      while DigitsClient.find_by_user_name(random_name).present?
+        random_name="user_#{(rand*10000).to_int}"
+      end
+      client.user_name = random_name
+    else
+      if (timestamp<client.updated_at)
+        return false
+      end
+    end
     client.save
 
     client

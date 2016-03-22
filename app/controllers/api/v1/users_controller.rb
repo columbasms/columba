@@ -18,6 +18,7 @@ module Api
 
       # POST /users/
       def create
+        Rails.logger.info "Started POST /api/v1/user controller at #{env[:timestamp]}"
 
         provider = request.headers[:'X-Auth-Service-Provider']
         if provider.nil? or provider.empty?
@@ -41,7 +42,11 @@ module Api
 
         if digits.header_str.include? 'HTTP/1.1 200 OK'
           credentials = JSON.parse digits.body_str
-          client = Api::V1::UsersHelper.register_user credentials, gcm_token
+          client = Api::V1::UsersHelper.register_user(credentials, gcm_token,env[:timestamp])
+          if client==false
+            Rails.logger.info "POST request outdated: User already registered."
+            return
+          end
           render json: client
         else
           render json: JSON.parse(digits.body_str)
