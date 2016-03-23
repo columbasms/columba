@@ -22,19 +22,19 @@ module Api
 
         provider = request.headers[:'X-Auth-Service-Provider']
         if provider.nil? or provider.empty?
-          render json: {errors: 'Provider must be set'}
+          render json: {errors: 'Provider must be set'}, status:400
           return
         end
 
         auth = request.headers[:'X-Verify-Credentials-Authorization']
         if auth.nil? or auth.empty?
-          render json: {errors: 'Credentials authorization must be set'}
+          render json: {errors: 'Credentials authorization must be set'}, status:400
           return
         end
 
         gcm_token = request.headers[:'gcm-token']
         if gcm_token.nil? or gcm_token.empty?
-          render json: {errors: 'gcm-token must be set'}
+          render json: {errors: 'gcm-token must be set'}, status:400
           return
         end
 
@@ -44,12 +44,12 @@ module Api
           credentials = JSON.parse digits.body_str
           client = Api::V1::UsersHelper.register_user(credentials, gcm_token,env[:timestamp])
           if client==false
-            Rails.logger.info "POST request outdated: User already registered."
+            Rails.logger.info "POST request outdated: User already registered.", status:408
             return
           end
           render json: client
         else
-          render json: JSON.parse(digits.body_str)
+          render json: JSON.parse(digits.body_str), status:424
         end
 
       end
