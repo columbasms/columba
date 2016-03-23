@@ -37,7 +37,7 @@ class Api::V1::TopicsController < ApplicationController
 
   # GET /topics/{id}/campaigns
   def campaigns
-    render json: @topic.campaigns, root: false
+    render json: @topic.campaigns.not_expired, root: false
   end
 
   # GET /topics/{id}/organizations
