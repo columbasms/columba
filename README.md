@@ -30,7 +30,8 @@ Milestone 2 - Release Candidate
 
 Milestone 3 - Public live BETA
 ==============
-- [Presentation](https://docs.google.com/presentation/d/1neJUq17KvUQBhozh3Zo5k0AMX1qbUjKnZAbrgLewEYw/present)
+- [Presentation - Slides](https://docs.google.com/presentation/d/1neJUq17KvUQBhozh3Zo5k0AMX1qbUjKnZAbrgLewEYw/present)
+- [Presentation - Video](https://youtu.be/6Bt9FA7Zfbw)
 - New [website](https://www.columbasms.com/)
 - Android application now publicly available as open-beta, get it on [Google play](https://play.google.com/apps/testing/com.columbasms.columbasms)! Instructions:
   - Follow to this [link](https://play.google.com/apps/testing/com.columbasms.columbasms)
