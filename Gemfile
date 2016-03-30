@@ -50,8 +50,8 @@ gem 'will_paginate', '~> 3.0.6'
 gem 'html_truncator', '~>0.2'
 gem 'metamagic'
 gem 'postmark-spam_check'
-
 gem 'RubySpamAssassin'
+gem 'whenever', require: false
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
