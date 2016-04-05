@@ -19,6 +19,6 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every :day, :at => '0:00 am' do
+every :day, :at => '2:00 am' do
   rake "analytics:initialize analytics:start_day analytics:compute"
 end
