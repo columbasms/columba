@@ -23,7 +23,7 @@ class AnalyticsController < ApplicationController
     }
   end
 
-  # temporal graph of sms trend
+  # temporal graph of general sms trend
   def campaigns_analytics_async
     month_ago = Date.today - 29.days
     campaign_ids = current_organization.campaigns.pluck(:id)
@@ -61,6 +61,7 @@ class AnalyticsController < ApplicationController
 
   end
 
+  # temporal graph of sms trend for a specific campaign
   def campaign_analytics_async
     month_ago = Date.today - 29.days
 
@@ -71,7 +72,7 @@ class AnalyticsController < ApplicationController
     (month_ago..Date.today).each do |date|
       new_date = date.to_time.to_i * 1000
 
-      a = active_users.select { |t| t[:created_at] == date }
+      a = active_users.select { |t| t[:created_at].to_date == date }
 
       supporters_sum = a.map { |x| x[:supporters] }.sum
       active_users_data.push({ x: new_date, y: supporters_sum })
