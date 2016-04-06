@@ -2,14 +2,13 @@ class AnalyticsController < ApplicationController
   layout 'application_dashboard'
   before_filter :authenticate_organization!
 
+  # GET /dashboard/analytics/campaigns
   def campaigns_analytics
     campaign_ids = current_organization.campaigns.pluck(:id)
     @data = {
         campaigns: current_organization.campaigns.count,
         active_campaigns: current_organization.campaigns.not_expired.count,
-        # active_users: DigitsClient.joins(:campaign_client_receivers).where(
-        #     campaign_client_receivers: { campaign_id: campaign_ids }).count,
-        active_users: CampaignAnalytic.where(campaign_id: campaign_ids).sum(:supporters),
+        active_users: CampaignClientReceiver.where(campaign_id: campaign_ids).select(:digits_client_id).distinct.count,
         people_reached: CampaignClientReceiver.where(campaign_id: campaign_ids).count
     }
   end
