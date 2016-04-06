@@ -6,10 +6,20 @@ class AnalyticsController < ApplicationController
   def campaigns_analytics
     campaign_ids = current_organization.campaigns.pluck(:id)
     @data = {
+        # number of campaigns sent by this organization
         campaigns: current_organization.campaigns.count,
+
+        # number of campaigns actually running of this organization
         active_campaigns: current_organization.campaigns.not_expired.count,
+
+        # number of DISTINCT users that had spread the campaigns of this organization
         active_users: CampaignClientReceiver.where(campaign_id: campaign_ids).select(:digits_client_id).distinct.count,
-        people_reached: CampaignClientReceiver.where(campaign_id: campaign_ids).count
+
+        # number of DISTINCT people reaced by this organization though all its campaigns
+        people_reached: CampaignClientReceiver.where(campaign_id: campaign_ids).select(:receiver_id).distinct.count,
+
+        # total number of sent SMS
+        sms_sent: CampaignClientReceiver.where(campaign_id: campaign_ids).count
     }
   end
 
