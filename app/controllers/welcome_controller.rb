@@ -23,7 +23,9 @@ class WelcomeController < ApplicationController
       @analytics[:topic_followers] = oa_last.global_supporter
       @analytics[:followers] = oa_last.follower
       @analytics[:truster] = oa_last.truster
+      @analytics[:sms_range_trusters] = oa_last.sms_range_truster
       @analytics[:sms_range_followers] = oa_last.sms_range_follower
+      @analytics[:sms_range_general] = oa_last.sms_range_general
     else
       @analytics[:followers] = 0
       @analytics[:truster] = 0

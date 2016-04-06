@@ -36,8 +36,16 @@
               <td><%= @analytics[:sent_sms] %></td>
             </tr>
             <tr>
+              <td><strong><%= t 'analytics.organizations.sms_range_trusters.other' %>:</strong></td>
+              <td><%= @analytics[:sms_range_trusters] %></td>
+            </tr>
+            <tr>
               <td><strong><%= t 'analytics.organizations.sms_range_followers.other' %>:</strong></td>
               <td><%= @analytics[:sms_range_followers] %></td>
+            </tr>
+            <tr>
+              <td><strong><%= t 'analytics.organizations.sms_range_general.other' %>:</strong></td>
+              <td><%= @analytics[:sms_range_general] %></td>
             </tr>
           </tbody>
         </table>

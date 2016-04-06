@@ -512,6 +512,12 @@ it:
       total_trusters:
         one: "sostenitori in totale"
         other: "sostenitori in totale"
+      sms_range_trusters:
+        one: "Portata massima SMS via sostenitori"
+        other: "Portata massima SMS via sostenitori"
       sms_range_followers:
-        one: "Portata massima SMS"
-        other: "Portata massima SMS"
+        one: "Portata massima SMS via seguaci"
+        other: "Portata massima SMS via seguaci"
+      sms_range_general:
+        one: "Portata massima SMS via tematiche"
+        other: "Portata massima SMS via tematiche"

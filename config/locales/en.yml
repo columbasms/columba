@@ -529,6 +529,12 @@ en:
       total_trusters:
         one: "total trusters"
         other: "total trusters"
+      sms_range_trusters:
+        one: "max SMS range by \"trusters\""
+        other: "max SMS range by \"trusters\""
       sms_range_followers:
-        one: "max SMS range"
-        other: "max SMS range"
+        one: "max SMS range by follower"
+        other: "max SMS range by followers"
+      sms_range_general:
+        one: "max SMS range by topics"
+        other: "max SMS range by topics"

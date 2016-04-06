@@ -18,7 +18,7 @@ class Analytics::OrganizationAnalyticsController < ApplicationController
   #   OrganizationAnalytic.find_by(id: input_organization.id).dup.save
   # end
 
-  # recalculate the number of followers and truster
+  # recalculate the number of followers and truster and their respective SMS range
   def update_followers_trusters_range(input_organization)
     current_organization=Organization.find_by(id: input_organization.id)
     if current_organization.nil?
@@ -40,6 +40,8 @@ class Analytics::OrganizationAnalyticsController < ApplicationController
     current_analytics.save
   end
 
+  # calculate the SMS range at topic followers level
+  # "how many SMS would be sent if all the people that like my topics would spread my campaign with all their available SMS?"
   def update_sms_general_range(input_organization)
     current_organization=Organization.find_by(id: input_organization.id)
     if current_organization.nil?
@@ -50,14 +52,13 @@ class Analytics::OrganizationAnalyticsController < ApplicationController
       return
     end
 
-    organization_topics=current_organization.topics
-    users=organization_topics.joins(:digits_clients).distinct
-    general_range=users.sum(:max_sms)
+    general_range=DigitsClient.joins(:digitsclients_topics).where('digits_clients_topics.topic_id': current_organization.topics).distinct.map{|a| a.max_sms}.sum
 
     current_analytics.sms_range_general=general_range
     current_analytics.save
   end
 
+  # number of distinct users that had spread my campaigns in general
   def update_global_supporters(input_organization)
     current_organization=Organization.find_by(id: input_organization)
     if current_organization.nil?
@@ -75,6 +76,7 @@ class Analytics::OrganizationAnalyticsController < ApplicationController
 
   end
 
+  # total amount of sms sent for all my campaigns
   def update_global_sent_sms(input_organization)
     current_organization=Organization.find_by(id: input_organization)
     if current_organization.nil?
