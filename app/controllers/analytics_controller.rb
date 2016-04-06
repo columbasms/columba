@@ -23,23 +23,26 @@ class AnalyticsController < ApplicationController
     }
   end
 
+  # temporal graph of sms trend
   def campaigns_analytics_async
     month_ago = Date.today - 29.days
     campaign_ids = current_organization.campaigns.pluck(:id)
 
-    active_users = CampaignAnalytic.where(campaign_id: campaign_ids).where('created_at >= ?', month_ago)
+    ca = CampaignAnalytic.where(campaign_id: campaign_ids).where('created_at >= ?', month_ago)
+
+    campaigns_data = ca.map { |x| {created_at: x.created_at, supporters: x.supporters ,sent_sms: x.sent_sms}}
 
     active_users_data = []
     people_reached_data = []
-    (month_ago..Date.today).each do |date|
+    ((Date.today - 29.days)..Date.today).each do |date|
       new_date = date.to_time.to_i * 1000
 
-      a = active_users.select { |t| t[:created_at] == date }
+      campaign_data_select = campaigns_data.select { |t| t[:created_at].to_date == date }
 
-      supporters_sum = a.map { |x| x[:supporters] }.sum
+      supporters_sum = campaign_data_select.map { |x| x[:supporters] }.sum
       active_users_data.push({ x: new_date, y: supporters_sum })
 
-      sms_sent_sum = a.map { |x| x[:sent_sms] }.sum
+      sms_sent_sum = campaign_data_select.map { |x| x[:sent_sms] }.sum
       people_reached_data.push({ x: new_date, y: sms_sent_sum })
     end
 
