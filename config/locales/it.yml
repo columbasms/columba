@@ -482,7 +482,7 @@ it:
   menu:
     statistics: "Statistiche"
   meta:
-    description: "Dona i tuoi SMS per scopi benefici!"
+    description: "Usa i tuoi SMS per scopi benefici!"
   analytics:
     campaigns:
       created_campaigns:
@@ -492,8 +492,8 @@ it:
         one: "campagna attiva"
         other: "campagne attive"
       active_users:
-        one: "utente attivo"
-        other: "utenti attivi"
+        one: "utente mobilitato"
+        other: "utenti mobilitati"
       receivers:
         one: "persona raggiunta"
         other: "persone raggiunte"
@@ -501,10 +501,13 @@ it:
         one: "SMS inviato"
         other: "SMS inviati"
       sent_sms: "SMS inviati"
-      sms_received: "SMS effettivamente ricevuti"
+      sms_sent: "Totale SMS inviati"
+      daily_sms_sent: "SMS giornalieri"
       sms_trending: "Andamento degli SMS"
-      relaunched: "Persone che hanno rilanciato la campagna"
-      relauncheds: "Persone che hanno rilanciato le campagne"
+      relaunched: "Totale utenti che hanno rilanciato la campagna"
+      daily_relaunched: "Utenti giornalieri che hanno rilanciato la campagna"
+      relauncheds: "Utenti che hanno rilanciato le campagne"
+      daily_relauncheds: "Utenti giornalieri che hanno rilanciato le campagne"
     organizations:
       total_followers:
         one: "follower in totale"
