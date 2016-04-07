@@ -109,7 +109,7 @@ class AnalyticsController < ApplicationController
         },
         {
             values: daily_supporters,
-            key: I18n.t('analytics.campaigns.daily_relauncheds'),
+            key: I18n.t('analytics.campaigns.daily_relaunched'),
             color: "#ffff00"
         },
         {
