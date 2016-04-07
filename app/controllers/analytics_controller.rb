@@ -34,15 +34,34 @@ class AnalyticsController < ApplicationController
 
     active_users_data = []
     people_reached_data = []
+    daily_supporters = []
+    daily_sent_sms = []
     ((Date.today - 29.days)..Date.today).each do |date|
       new_date = date.to_time.to_i * 1000
 
       campaign_data_select = campaigns_data.select { |t| t[:created_at].to_date == date }
 
       supporters_sum = campaign_data_select.map { |x| x[:supporters] }.sum
+
+
+      if daily_supporters.empty?
+        daily_supporters.push({x: new_date, y:0})
+      else
+        daily_supporters_select= supporters_sum - active_users_data.last[:y]
+        daily_supporters.push({x: new_date, y:daily_supporters_select})
+      end
+
       active_users_data.push({ x: new_date, y: supporters_sum })
 
       sms_sent_sum = campaign_data_select.map { |x| x[:sent_sms] }.sum
+
+
+      if daily_sent_sms.empty?
+        daily_sent_sms.push({x: new_date, y: 0})
+      else
+        daily_sent_sms.push({x: new_date, y: (sms_sent_sum-people_reached_data.last[:y])})
+        end
+
       people_reached_data.push({ x: new_date, y: sms_sent_sum })
     end
 
@@ -56,6 +75,16 @@ class AnalyticsController < ApplicationController
             values: people_reached_data,
             key: I18n.t('analytics.campaigns.sms_received'),
             color: "#2ca02c"
+        },
+        {
+            values: daily_supporters,
+            key: "daily supporters",
+            color: "#ffff00"
+        },
+        {
+            values: daily_sent_sms,
+            key: "daily sms sent",
+            color: "#00ff99"
         }
     ], root: false
 
