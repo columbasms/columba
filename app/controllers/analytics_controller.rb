@@ -15,7 +15,7 @@ class AnalyticsController < ApplicationController
         # number of DISTINCT users that had spread the campaigns of this organization
         active_users: CampaignClientReceiver.where(campaign_id: campaign_ids).select(:digits_client_id).distinct.count,
 
-        # number of DISTINCT people reaced by this organization though all its campaigns
+        # number of DISTINCT people reached by this organization though all its campaigns
         people_reached: CampaignClientReceiver.where(campaign_id: campaign_ids).select(:receiver_id).distinct.count,
 
         # total number of sent SMS
@@ -30,31 +30,16 @@ class AnalyticsController < ApplicationController
 
     ca = CampaignAnalytic.where(campaign_id: campaign_ids).where('created_at >= ?', month_ago)
 
-    campaigns_data = ca.map { |x| {created_at: x.created_at, supporters: x.supporters ,sent_sms: x.sent_sms}}
+    campaigns_data = ca.map { |x| {created_at: x.created_at, sent_sms: x.sent_sms}}
 
-    active_users_data = []
     people_reached_data = []
-    daily_supporters = []
     daily_sent_sms = []
     ((Date.today - 29.days)..Date.today).each do |date|
       new_date = date.to_time.to_i * 1000
 
       campaign_data_select = campaigns_data.select { |t| t[:created_at].to_date == date }
 
-      supporters_sum = campaign_data_select.map { |x| x[:supporters] }.sum
-
-
-      if daily_supporters.empty?
-        daily_supporters.push({x: new_date, y:0})
-      else
-        daily_supporters_select= supporters_sum - active_users_data.last[:y]
-        daily_supporters.push({x: new_date, y:daily_supporters_select})
-      end
-
-      active_users_data.push({ x: new_date, y: supporters_sum })
-
       sms_sent_sum = campaign_data_select.map { |x| x[:sent_sms] }.sum
-
 
       if daily_sent_sms.empty?
         daily_sent_sms.push({x: new_date, y: 0})
@@ -67,23 +52,13 @@ class AnalyticsController < ApplicationController
 
     render json: [
         {
-            values: active_users_data,
-            key: I18n.t('analytics.campaigns.relauncheds'),
-            color: "#ff7f0e"
-        },
-        {
             values: people_reached_data,
-            key: I18n.t('analytics.campaigns.sms_received'),
+            key: I18n.t('analytics.campaigns.sms_sent'),
             color: "#2ca02c"
         },
         {
-            values: daily_supporters,
-            key: "daily supporters",
-            color: "#ffff00"
-        },
-        {
             values: daily_sent_sms,
-            key: "daily sms sent",
+            key: I18n.t('analytics.campaigns.daily_sms_sent'),
             color: "#00ff99"
         }
     ], root: false
@@ -94,19 +69,35 @@ class AnalyticsController < ApplicationController
   def campaign_analytics_async
     month_ago = Date.today - 29.days
 
-    active_users = CampaignAnalytic.where(campaign_id: params[:id]).where('created_at >= ?', month_ago)
+    ca = CampaignAnalytic.where(campaign_id: params[:id]).where('created_at >= ?', month_ago)
 
     active_users_data = []
     people_reached_data = []
+    daily_supporters = []
+    daily_sent_sms = []
     (month_ago..Date.today).each do |date|
       new_date = date.to_time.to_i * 1000
 
-      a = active_users.select { |t| t[:created_at].to_date == date }
+      campaign_data_selected = ca.select { |t| t[:created_at].to_date == date }
 
-      supporters_sum = a.map { |x| x[:supporters] }.sum
+      supporters_sum = campaign_data_selected.map { |x| x[:supporters] }.sum
+
+      if daily_supporters.empty?
+        daily_supporters.push({x: new_date, y:0})
+      else
+        daily_supporters.push({x: new_date, y:supporters_sum - active_users_data.last[:y]})
+      end
+
       active_users_data.push({ x: new_date, y: supporters_sum })
 
-      sms_sent_sum = a.map { |x| x[:sent_sms] }.sum
+      sms_sent_sum = campaign_data_selected.map { |x| x[:sent_sms] }.sum
+
+      if daily_sent_sms.empty?
+        daily_sent_sms.push({x: new_date, y: 0})
+      else
+        daily_sent_sms.push({x: new_date, y: (sms_sent_sum-people_reached_data.last[:y])})
+      end
+
       people_reached_data.push({ x: new_date, y: sms_sent_sum })
     end
 
@@ -117,9 +108,19 @@ class AnalyticsController < ApplicationController
             color: "#ff7f0e"
         },
         {
+            values: daily_supporters,
+            key: I18n.t('analytics.campaigns.daily_relauncheds'),
+            color: "#ffff00"
+        },
+        {
             values: people_reached_data,
-            key: I18n.t('analytics.campaigns.sms_received'),
+            key: I18n.t('analytics.campaigns.sms_sent'),
             color: "#2ca02c"
+        },
+        {
+          values: daily_sent_sms,
+          key: I18n.t('analytics.campaigns.daily_sms_sent'),
+          color: "#00ff99"
         }
     ], root: false
   end
