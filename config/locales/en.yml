@@ -101,7 +101,7 @@ en:
       truster: "People who trust you"
       campaigns: "Created campaigns"
       active_campaigns: "Active campaigns"
-      sent_sms: "Sent SMS"
+      sent_sms: "Sent SMS (globally)"
       sms_avg: "Your followers average sms availability"
       like_trending: "Follow trending"
     index:
@@ -500,6 +500,8 @@ en:
     by: "By"
   menu:
     statistics: "Statistics"
+  meta:
+    description: "Use your SMS for charity!"
   analytics:
     campaigns:
       created_campaigns:
@@ -518,10 +520,13 @@ en:
         one: "sent SMS"
         other: "sent SMS"
       sent_sms: "Sent sms"
-      sms_received: "Actually received SMS"
+      sms_sent: "Total sent SMS"
+      daily_sms_sent: "Daily sent SMS"
       sms_trending: "SMS trending"
-      relaunched: "People who have relaunched the campaign"
-      relauncheds: "People who have relaunched the campaigns"
+      relaunched: "Total active users"
+      daily_relaunched: "Daily active users"
+      relauncheds: "Total active users"
+      daily_relauncheds: "Daily active users"
     organizations:
       total_followers:
         one: "total follower"
@@ -529,6 +534,12 @@ en:
       total_trusters:
         one: "total trusters"
         other: "total trusters"
+      sms_range_trusters:
+        one: "max SMS range by \"trusters\""
+        other: "max SMS range by \"trusters\""
       sms_range_followers:
-        one: "max SMS range"
-        other: "max SMS range"
+        one: "max SMS range by follower"
+        other: "max SMS range by followers"
+      sms_range_general:
+        one: "max SMS range by topics"
+        other: "max SMS range by topics"

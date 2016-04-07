@@ -1,6 +1,4 @@
 class DigitsClient < ActiveRecord::Base
-  has_secure_token :auth_token
-
   has_many :campaign_client_receivers
   has_many :groups
   has_many :campaigns, through: :campaign_client_receivers

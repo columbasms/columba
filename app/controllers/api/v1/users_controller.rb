@@ -18,22 +18,23 @@ module Api
 
       # POST /users/
       def create
+        Rails.logger.info "Started POST /api/v1/user controller at #{env[:timestamp]}"
 
         provider = request.headers[:'X-Auth-Service-Provider']
         if provider.nil? or provider.empty?
-          render json: {errors: 'Provider must be set'}
+          render json: {errors: 'Provider must be set'}, status:400
           return
         end
 
         auth = request.headers[:'X-Verify-Credentials-Authorization']
         if auth.nil? or auth.empty?
-          render json: {errors: 'Credentials authorization must be set'}
+          render json: {errors: 'Credentials authorization must be set'}, status:400
           return
         end
 
         gcm_token = request.headers[:'gcm-token']
         if gcm_token.nil? or gcm_token.empty?
-          render json: {errors: 'gcm-token must be set'}
+          render json: {errors: 'gcm-token must be set'}, status:400
           return
         end
 
@@ -41,10 +42,14 @@ module Api
 
         if digits.header_str.include? 'HTTP/1.1 200 OK'
           credentials = JSON.parse digits.body_str
-          client = Api::V1::UsersHelper.register_user credentials, gcm_token
+          client = Api::V1::UsersHelper.register_user(credentials, gcm_token,env[:timestamp])
+          if client==false
+            Rails.logger.info "POST request outdated: User already registered.", status:408
+            return
+          end
           render json: client
         else
-          render json: JSON.parse(digits.body_str)
+          render json: JSON.parse(digits.body_str), status:424
         end
 
       end
@@ -116,7 +121,10 @@ module Api
             next
           end
           # aggiungo nel DB la relazione tra campagna-utente-ricevente e campagna-utente
-          Api::V1::UsersHelper.add_campaign_client_receiver_relation(@campaign, @user, current_receiver,latitude, longitude)
+          if Api::V1::UsersHelper.add_campaign_client_receiver_relation(@campaign, @user, current_receiver,latitude, longitude)==false
+          #   problema salvataggio nel db
+            next
+          end
 
           s = Shortener::ShortenedUrl.generate(stop_service_url(current_receiver.number), owner: current_receiver)
 

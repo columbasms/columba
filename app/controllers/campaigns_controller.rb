@@ -121,7 +121,18 @@ class CampaignsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_campaign
-      @campaign = Campaign.find(params[:id])
+      begin
+        @campaign = Campaign.find(params[:id])
+
+        #   checks if the requested campaign belongs to the current organization
+        if current_organization.campaigns.include?(Campaign.find(params[:id]))==false
+          # head :unauthorized
+          render json: { errors: 'Not your campaign' }, status: :unauthorized
+        end
+      rescue ActiveRecord::RecordNotFound
+        render json: { errors: 'Campaign not found' }, status: :not_found
+      end
+
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

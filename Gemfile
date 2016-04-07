@@ -41,7 +41,6 @@ gem 'active_model_serializers'
 gem 'config'
 gem 'rails-i18n', '~> 4.0.0'
 gem 'globalize', '~> 5.0.0'
-gem 'has_secure_token'
 gem 'cocoon'
 gem 'geokit-rails'
 gem 'shortener'
@@ -51,8 +50,8 @@ gem 'will_paginate', '~> 3.0.6'
 gem 'html_truncator', '~>0.2'
 gem 'metamagic'
 gem 'postmark-spam_check'
-
 gem 'RubySpamAssassin'
+gem 'whenever', require: false
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -107,6 +107,7 @@ GEM
     capistrano3-puma (1.2.1)
       capistrano (~> 3.0)
       puma (>= 2.6)
+    chronic (0.10.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.8)
@@ -160,8 +161,6 @@ GEM
     has_scope (0.6.0)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
-    has_secure_token (1.0.0)
-      activerecord (>= 3.0)
     html_truncator (0.4.1)
       nokogiri (~> 1.5)
     httparty (0.13.7)
@@ -316,6 +315,8 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    whenever (0.9.4)
+      chronic (>= 0.6.3)
     will_paginate (3.0.7)
 
 PLATFORMS
@@ -344,7 +345,6 @@ DEPENDENCIES
   gcm
   geokit-rails
   globalize (~> 5.0.0)
-  has_secure_token
   html_truncator (~> 0.2)
   jbuilder (~> 2.0)
   jquery-rails
@@ -370,6 +370,7 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
+  whenever
   will_paginate (~> 3.0.6)
 
 BUNDLED WITH
