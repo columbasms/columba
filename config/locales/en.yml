@@ -518,10 +518,13 @@ en:
         one: "sent SMS"
         other: "sent SMS"
       sent_sms: "Sent sms"
-      sms_received: "Actually received SMS"
+      sms_sent: "Actually sent SMS"
+      daily_sms_sent: "Daily sent SMS"
       sms_trending: "SMS trending"
       relaunched: "People who have relaunched the campaign"
+      daily_relaunched: "People who have relaunched the campaign this day"
       relauncheds: "People who have relaunched the campaigns"
+      daily_relauncheds: "People who have relaunched the campaigns this day"
     organizations:
       total_followers:
         one: "total follower"

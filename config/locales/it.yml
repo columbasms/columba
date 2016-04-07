@@ -501,10 +501,13 @@ it:
         one: "SMS inviato"
         other: "SMS inviati"
       sent_sms: "SMS inviati"
-      sms_received: "SMS effettivamente ricevuti"
+      sms_sent: "SMS effettivamente inviati"
+      daily_sms_sent: "SMS effettivamente inviati questo giorno"
       sms_trending: "Andamento degli SMS"
       relaunched: "Persone che hanno rilanciato la campagna"
+      daily_relaunched: "Persone che hanno rilanciato la campagna questo giorno"
       relauncheds: "Persone che hanno rilanciato le campagne"
+      daily_relauncheds: "Persone che hanno rilanciato le campagne questo giorno"
     organizations:
       total_followers:
         one: "follower in totale"
