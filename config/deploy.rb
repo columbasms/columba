@@ -27,7 +27,7 @@ set :puma_init_active_record, true  # Change to false when not using ActiveRecor
 
 ## Defaults:
 # set :scm,           :git
-set :branch,        :site
+set :branch,        :master
 # set :format,        :pretty
 # set :log_level,     :debug
 # set :keep_releases, 5
@@ -57,8 +57,8 @@ namespace :deploy do
   desc "Make sure local git is in sync with remote."
   task :check_revision do
     on roles(:app) do
-      unless `git rev-parse HEAD` == `git rev-parse origin/site`
-        puts "WARNING: HEAD is not the same as origin/site"
+      unless `git rev-parse HEAD` == `git rev-parse origin/master`
+        puts "WARNING: HEAD is not the same as origin/master"
         puts "Run `git push` to sync changes."
         exit
       end
