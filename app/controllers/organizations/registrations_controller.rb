@@ -42,9 +42,9 @@ class Organizations::RegistrationsController < Devise::RegistrationsController
         set_flash_message :notice, flash_key
       end
       sign_in resource_name, resource, bypass: true
-      respond_with resource, location: after_update_path_for(resource)
+      respond_with resource, location: :dashboard
     else
-      Rails.logger.info 'asdkjhaskjdhasdh'
+      Rails.logger.info 'NO UPDATE'
       clean_up_passwords resource
       set_location
       render :edit, layout: 'application_dashboard'
