@@ -52,6 +52,7 @@ gem 'metamagic'
 gem 'postmark-spam_check'
 gem 'RubySpamAssassin'
 gem 'whenever', require: false
+gem 'mailgun_rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
