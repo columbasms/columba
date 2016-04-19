@@ -7,6 +7,7 @@ class Api::V1::LeaderboardController < ApplicationController
     records = DigitsClient
         .joins(:campaign_client_receivers)
         .select('digits_clients.*, count(campaign_client_receivers.id) as points')
+        .where('digits_clients.is_private = ?', false)
         .group(:user_name)
         .order('points desc')
     render json: records.map { |v| { user_name: v.user_name, avatar_normal: v.avatar_normal, points: v.points } }, root: false, serializer: nil

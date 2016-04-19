@@ -28,7 +28,7 @@ module Api::V1::UsersHelper
       end
       client.user_name = random_name
     else
-      if (timestamp<client.updated_at)
+      if timestamp < client.updated_at
         return false
       end
     end

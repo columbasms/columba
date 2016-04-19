@@ -1,7 +1,7 @@
 class Api::V1::DigitsClientSerializer < ActiveModel::Serializer
   attributes :id, :user_name, :avatar_normal, :cover_normal,
              :organizations_count, :forwarded_campaigns_count,
-             :auth_token, :max_sms, :sms_total, :sms_last_month
+             :auth_token, :max_sms, :sms_total, :sms_last_month, :is_private
 
   def sms_total
     object.campaign_client_receivers.count
