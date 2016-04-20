@@ -1,4 +1,5 @@
-class PostsController < ApplicationController
+class Blog::PostsController < ApplicationController
+  force_ssl unless Rails.env.development?
   protect_from_forgery except: [:tinymce_assets_create]
   before_filter :set_post, only: [:show]
   layout 'application_frontend'
@@ -34,6 +35,19 @@ class PostsController < ApplicationController
   end
 
   def show
+  end
+
+  def create_campaign_post(this_campaign)
+    post=Post.new
+    post.title=this_campaign.organization.organization_name
+    post.content=this_campaign.message + "\n MORE INFO \n" + this_campaign.long_description
+    post.admin_user=AdminUser.find(6)
+    post.category=Category.find_or_create_by(title: this_campaign.topics[0].name)
+    post.published=true
+    unless this_campaign.photo_normal.nil?
+      post.photo =this_campaign.photo
+    end
+    post.save
   end
 
   private
