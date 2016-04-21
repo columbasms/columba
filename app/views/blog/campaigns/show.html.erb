@@ -1,5 +1,20 @@
 <% title @campaign.organization.organization_name %>
 
+<!-- Meta for Facebook -->
+<meta property="og:title" content="Columba SMS - <%= @campaign.organization.organization_name %>"/>
+<meta property="og:url" content="<%= blog_campaign_url %>"/>
+<meta property="og:description" content="<%= @campaign.message %>"/>
+
+<!-- Meta for Google -->
+<meta name="title" content="Columba SMS - <%= @campaign.organization.organization_name %>" />
+<meta name="description" content="<%= @campaign.message %>" />
+
+<!-- Meta for Twitter -->
+<meta name="twitter:card" content="<%= @campaign.message %>" />
+<meta name="twitter:title" content="Columba SMS - <%= @campaign.organization.organization_name %>" />
+<meta name="twitter:description" content="<%= @campaign.message %>" />
+
+
 <article id="featured">
   <h2><%= @campaign.organization.organization_name %></h2>
 </article>
@@ -20,7 +35,17 @@
         </ul>
       </header>
       <% if @campaign.photo.exists? %>
-          <figure><%= image_tag @campaign.photo.url(:original)%></figure>
+          <meta property="og:image" content="<%= @campaign.photo %>"/>
+          <meta name="twitter:image" content="<%= @campaign.photo %>" />
+          <meta name="image" content="<%= @campaign.photo %>" />
+
+          <figure ><%= image_tag @campaign.photo.url(:original)%></figure>
+      <%else%>
+          <% if @campaign.organization.cover.exists? %>
+            <meta property="og:image" content="<%= @campaign.organization.cover %>"/>
+            <meta name="twitter:image" content="<%= @campaign.organization.cover %>" />
+            <meta name="image" content="<%= @campaign.organization.cover %>" />
+          <% end %>
       <% end %>
       <p><%= raw @campaign.message %></p>
       <p><%= raw @campaign.long_description %></p>
