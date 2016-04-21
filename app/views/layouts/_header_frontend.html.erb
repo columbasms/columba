@@ -5,38 +5,40 @@
       <!--HOME-->
       <li><%= link_to 'Home', root_path %></li>
 
+      <!--PROJECT-->
+      <% if controller_name != 'campaigns'%>
+          <li class="sub">
+            <a href="javascript:windowScrollTo('content')"><%= t 'frontend.the_project' %></a>
+            <ul>
+              <!--<li><a href="#">La Storia</a></li>-->
+              <li><a href="javascript:windowScrollTo('team');"><%= t 'frontend.who_we_are' %></a></li>
+              <li><a href="javascript:windowScrollTo('contact');"><%= t 'frontend.contact' %></a></li>
+            </ul>
+          </li>
+      <% end %>
+
       <!--APP: index SCROLL-->
       <% if controller_name == 'welcome' and action_name == 'index' %>
-          <li><a href="javascript:windowScrollTo('content')">APP</a></li>
+          <!--<li><a href="javascript:windowScrollTo('content')">APP</a></li>-->
           <li><a href="javascript:windowScrollTo('media')">MEDIA</a></li>
       <% end %>
 
       <!--ONLUS index SCROLL -->
       <% if controller_name == 'welcome' and action_name == 'index_organizations' %>
-          <li><a href="javascript:windowScrollTo('content')"><%= t 'frontend_organizations.motivations' %></a></li>
+          <!--<li><a href="javascript:windowScrollTo('content')"><%= t 'frontend_organizations.motivations' %></a></li>-->
       <% end %>
 
-      <!--ONLUS: blog of Campaigns-->
-      <!--<% if controller_name == 'welcome' and action_name == 'index_organizations' %>-->
-          <!--<li><a href="javascript:windowScrollTo('content')"><%= t 'campaigns.campaigns' %></a></li>-->
-      <!--<% end %>-->
-
       <!--PARTNERS-->
-      <li><a href="javascript:windowScrollTo('partners')"><%= t 'frontend.partners' %></a></li>
+      <% if controller_name != 'campaigns'%>
+          <li><a href="javascript:windowScrollTo('partners')"><%= t 'frontend.partners' %></a></li>
+      <% end %>
 
-      <!--PROJECT-->
-      <li class="sub">
-        <a href="javascript:windowScrollTo('content')"><%= t 'frontend.the_project' %></a>
-        <ul>
-          <!--<li><a href="#">La Storia</a></li>-->
-          <li><a href="javascript:windowScrollTo('team');"><%= t 'frontend.who_we_are' %></a></li>
-          <li><a href="javascript:windowScrollTo('contact');"><%= t 'frontend.contact' %></a></li>
-          <!--<li><a href="/blog">Blog</a></li>-->
-        </ul>
-      </li>
 
       <!--BLOG-->
-      <!--<li><!%= link_to 'Blog', posts_path %></li>-->
+      <!--<li><!%= link_to 'Blog', blog_posts_path %></li>-->
+
+      <!--ONLUS: blog of Campaigns-->
+      <li><%= link_to t('campaigns.campaigns'), blog_campaigns_path %></li>
 
       <!--ONLUS, login/dashboard-->
       <li class="sub">
