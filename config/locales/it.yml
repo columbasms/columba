@@ -483,6 +483,8 @@ it:
     campaigns_index_title: "Campagne"
     organizations: "Associazioni"
     topics: "Tematiche"
+    running: "In Corso"
+    expires_at: "Scadenza:"
   menu:
     statistics: "Statistiche"
   meta:

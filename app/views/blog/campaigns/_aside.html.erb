@@ -4,9 +4,9 @@
     <h3>Campaigns</h3>
     <ul>
       <% if params[:running].present? and params[:running]=="true" %>
-          <li><%= link_to raw("Running <span>&#10004;"), blog_campaigns_path(running: false) %></li>
+          <li><%= link_to raw("#{t 'blog.running'} <span>&#10004;"), blog_campaigns_path(running: false) %></li>
       <% else %>
-          <li><%= link_to raw("Running <span>"), blog_campaigns_path(running: true) %></li>
+          <li><%= link_to raw("#{t 'blog.running'} <span>"), blog_campaigns_path(running: true) %></li>
       <% end %>
     </ul>
   </nav>

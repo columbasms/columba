@@ -502,6 +502,8 @@ en:
     campaigns_index_title: "Campaigns"
     organizations: "Organizations"
     topics: "Topics"
+    running: "Running"
+    expires_at: "Expiration:"
   menu:
     statistics: "Statistics"
   meta:

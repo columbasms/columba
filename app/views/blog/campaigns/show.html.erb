@@ -13,6 +13,10 @@
           <li><a href="javascript:;"><%= image_tag @campaign.organization.avatar.url(:thumb_48), width: 40, height: 40 %>
             <%= t 'frontent.by' %> <%= @campaign.organization %></a></li>
           <li><i class="icon-basic" data-icon="x"></i> <%= raw I18n.localize @campaign.created_at, format: '%d %B %Y' %></li>
+          <li>
+            <%= t 'blog.expires_at' %>
+            <i class="icon-basic" data-icon="x"></i> <%= raw I18n.localize @campaign.expires_at, format: '%d %B %Y' %>
+          </li>
         </ul>
       </header>
       <% if @campaign.photo.exists? %>
