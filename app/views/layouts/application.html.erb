@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <%= metamagic %>
   <title><%= yield(:title).presence || 'Columba' %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -9,6 +10,7 @@
   <meta name="theme-color" content="#009688">
   <meta content="" name="description" />
   <meta content="" name="author" />
+
   <%= yield :head_js %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <!--[if lte IE 9]>

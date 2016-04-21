@@ -486,6 +486,7 @@ it:
     topics: "Tematiche"
     running: "In Corso"
     expires_at: "Scadenza:"
+    twitter_card: " ha lanciato una nuova campagna su Columna: "
   menu:
     statistics: "Statistiche"
   meta:

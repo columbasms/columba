@@ -505,6 +505,7 @@ en:
     topics: "Topics"
     running: "Running"
     expires_at: "Expiration:"
+    twitter_card: " just shared a new campaign on Columba: "
   menu:
     statistics: "Statistics"
   meta:

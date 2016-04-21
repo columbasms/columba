@@ -1,19 +1,36 @@
 <% title @campaign.organization.organization_name %>
 
-<!-- Meta for Facebook -->
-<meta property="og:title" content="Columba SMS - <%= @campaign.organization.organization_name %>"/>
-<meta property="og:url" content="<%= blog_campaign_url %>"/>
-<meta property="og:description" content="<%= @campaign.message %>"/>
+<!--Meta general -->
+<%
+  meta  title: "Columba SMS - "+@campaign.organization.organization_name,
+        description: @campaign.message,
+        url: blog_campaign_url
+%>
 
 <!-- Meta for Google -->
-<meta name="title" content="Columba SMS - <%= @campaign.organization.organization_name %>" />
-<meta name="description" content="<%= @campaign.message %>" />
+<%
+  meta property:{
+        title: "Columba SMS - "+@campaign.organization.organization_name,
+        description: @campaign.message,
+        url: blog_campaign_url}
+%>
+
+<!-- Meta for Facebook -->
+<%
+  meta og:{
+        title: "Columba SMS - "+@campaign.organization.organization_name,
+        description: @campaign.message,
+        url: blog_campaign_url}
+%>
 
 <!-- Meta for Twitter -->
-<meta name="twitter:card" content="<%= @campaign.message %>" />
-<meta name="twitter:title" content="Columba SMS - <%= @campaign.organization.organization_name %>" />
-<meta name="twitter:description" content="<%= @campaign.message %>" />
-
+<%
+  meta twitter: {
+      card: @campaign.organization.organization_name+t('blog.twitter_card')+blog_campaign_url,
+      title: "Columba SMS - "+@campaign.organization.organization_name,
+      description: @campaign.message
+  }
+%>
 
 <article id="featured">
   <h2><%= @campaign.organization.organization_name %></h2>
@@ -35,16 +52,15 @@
         </ul>
       </header>
       <% if @campaign.photo.exists? %>
-          <meta property="og:image" content="<%= image_url(@campaign.photo) %>"/>
-          <meta name="twitter:image" content="<%= image_url(@campaign.photo) %>" />
-          <meta name="image" content="<%= image_url(@campaign.photo)%>" />
-
+          <% meta og:{ image: image_url(@campaign.photo) }%>
+          <% meta twitter:{ image: image_url(@campaign.photo) }%>
+          <% meta property:{ image: image_url(@campaign.photo) } %>
           <figure ><%= image_tag @campaign.photo.url(:original)%></figure>
       <%else%>
           <% if @campaign.organization.cover.exists? %>
-            <meta property="og:image" content="<%= image_url(@campaign.organization.cover) %>" />
-            <meta name="twitter:image" content="<%= image_url(@campaign.organization.cover )%>" />
-            <meta name="image" content="<%= image_url(@campaign.organization.cover) %>" />
+            <% meta og:{ image: image_url(@campaign.organization.cover) }%>
+            <% meta twitter:{ image: image_url(@campaign.organization.cover) }%>
+            <% meta property:{ image: image_url(@campaign.organization.cover) } %>
           <% end %>
       <% end %>
       <p><%= raw @campaign.message %></p>
