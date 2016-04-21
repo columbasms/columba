@@ -35,16 +35,16 @@
         </ul>
       </header>
       <% if @campaign.photo.exists? %>
-          <meta property="og:image" content="<%= @campaign.photo %>"/>
-          <meta name="twitter:image" content="<%= @campaign.photo %>" />
-          <meta name="image" content="<%= @campaign.photo %>" />
+          <meta property="og:image" content="<%= image_url(@campaign.photo) %>"/>
+          <meta name="twitter:image" content="<%= image_url(@campaign.photo) %>" />
+          <meta name="image" content="<%= image_url(@campaign.photo)%>" />
 
           <figure ><%= image_tag @campaign.photo.url(:original)%></figure>
       <%else%>
           <% if @campaign.organization.cover.exists? %>
-            <meta property="og:image" content="<%= @campaign.organization.cover %>"/>
-            <meta name="twitter:image" content="<%= @campaign.organization.cover %>" />
-            <meta name="image" content="<%= @campaign.organization.cover %>" />
+            <meta property="og:image" content="<%= image_url(@campaign.organization.cover) %>" />
+            <meta name="twitter:image" content="<%= image_url(@campaign.organization.cover )%>" />
+            <meta name="image" content="<%= image_url(@campaign.organization.cover) %>" />
           <% end %>
       <% end %>
       <p><%= raw @campaign.message %></p>
