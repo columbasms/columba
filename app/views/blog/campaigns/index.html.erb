@@ -2,10 +2,10 @@
 
 <article id="featured">
   <h2>
-    <% if @category %>
-        <%= @category.title %>
-    <% elsif @tag %>
-        <%= @tag.title %>
+    <% if @organization %>
+        <%= @organization.organization_name %>
+    <% elsif @topic %>
+        <%= @topic.name %>
     <% else %>
         Campaigns on Columba
     <% end %>

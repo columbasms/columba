@@ -3,13 +3,23 @@
 
   <nav class="nav-a">
     <!--ORGANITATIONS-->
-    <h3><%= t 'frontend.categories' %></h3>
+    <h3><%= t 'blog.organizations' %></h3>
+    <ul>
+      <% Organization.not_test.each do |organization| %>
+          <% if organization.campaigns_count>0 %>
+            <li><%= link_to raw("#{organization.organization_name} <span>#{organization.campaigns_count}</span>"), blog_campaigns_path(organization: organization.id) %></li>
+          <% end %>
+      <% end %>
+    </ul>
   </nav>
 
   <nav class="nav-a nav-a-new2">
     <!--TOPICS-->
-    <h3><%= t 'frontend.tags' %></h3>
+    <h3><%= t 'blog.topics' %></h3>
     <ul>
+      <% Topic.all.each do |topic| %>
+          <li><%= link_to topic.name, blog_campaigns_path(topic: topic.id) %></li>
+      <% end %>
     </ul>
   </nav>
 </aside>

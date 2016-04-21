@@ -498,6 +498,9 @@ en:
   frontent:
     rights: "All rights reserved"
     by: "By"
+  blog:
+    organizations: "Organizations"
+    topics: "Topics"
   menu:
     statistics: "Statistics"
   meta:

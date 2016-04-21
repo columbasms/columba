@@ -138,7 +138,7 @@ it:
         campaigns: "Campagne"
         created_at: "Creato il"
         enabled: "Attivo"
-        groups: "Grouppi"
+        groups: "Gruppi"
         organizations: "Organizzazioni"
         phone_number: "Numero di telefono"
         topics: "Topic"
@@ -479,6 +479,9 @@ it:
   frontent:
     rights: "Tutti i diritti riservati"
     by: "Di"
+  blog:
+    organizations: "Associazioni"
+    topics: "Tematiche"
   menu:
     statistics: "Statistiche"
   meta:

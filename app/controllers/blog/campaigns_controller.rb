@@ -6,6 +6,17 @@ class Blog::CampaignsController < ApplicationController
 
   def index
     @campaigns = Campaign.not_test
+
+    if params[:organization].present?
+      @campaigns = @campaigns.where(organization_id: params[:organization])
+      @organization = Organization.find(params[:organization])
+    end
+
+    if params[:topic].present?
+      @campaigns = @campaigns.includes(:topics).where(topics: { id: params[:topic] })
+      @topic = Topic.find params[:topic]
+    end
+
     @campaigns = @campaigns.paginate(page: params[:page], per_page: 5).order('campaigns.created_at DESC')
   end
 

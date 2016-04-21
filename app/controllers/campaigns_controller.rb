@@ -68,7 +68,7 @@ class CampaignsController < ApplicationController
     respond_to do |format|
       if @campaign.save
 
-        if DigitsClient.count > 0
+        if DigitsClient.exists?
           gcm = GCM.new(Rails.application.secrets[:gcm_api_key])
 
           options = {
