@@ -60,8 +60,10 @@ Rails.application.routes.draw do
     end
   end
 
-  scope 'blog' do
-    resources :posts, only: [:index, :show], path: '/'
+  namespace :blog do
+    # get '/' => 'campaigns#index'
+    resources :campaigns, only: [:index, :show]
+    resources :posts, only: [:index, :show]
   end
 
   scope 'dashboard' do

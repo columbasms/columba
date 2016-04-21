@@ -35,6 +35,9 @@ class Campaign < ActiveRecord::Base
 
   scope :not_expired, -> { where('expires_at >= ?', Date.today) }
 
+  # do not return the campaign of "Debugging"
+  scope :not_test, -> {where('organization_id != ?', 24 )}
+
   def expired?
     self.expires_at < Date.today
   end

@@ -1,0 +1,49 @@
+<% title t('frontend.blog') %>
+
+<article id="featured">
+  <h2>
+    <% if @organization %>
+        <%= @organization.organization_name %>
+    <% elsif @topic %>
+        <%= @topic.name %>
+    <% else %>
+        <%= t 'blog.campaigns_index_title' %>
+    <% end %>
+  </h2>
+</article>
+
+<section id="content">
+  <div class="cols-a">
+    <div class="news-e">
+      <% @campaigns.each do |campaign| %>
+          <article>
+            <header>
+              <% if campaign.photo.exists? %>
+                  <figure><%= image_tag campaign.photo.url(:normal), width: 700, height: 315 %></figure>
+              <% end %>
+
+              <!--TITLE-->
+              <h3><%= link_to campaign.organization.organization_name, blog_campaign_path(campaign.id) %></h3>
+
+              <ul>
+                <li><a href="javascript:;"><%= image_tag campaign.organization.avatar.url(:thumb_48), width: 40, height: 40 %>
+                  <%= t 'frontent.by' %> <%= campaign.organization %></a></li>
+                <li><i class="icon-basic" data-icon="x"></i> <%= raw I18n.localize campaign.created_at, format: '%d %B %Y' %></li>
+
+                <li>
+                  <%= t 'blog.expires_at' %>
+                  <i class="icon-basic" data-icon="x"></i> <%= raw I18n.localize campaign.expires_at, format: '%d %B %Y' %>
+                </li>
+              </ul>
+            </header>
+            <%= raw HTML_Truncator.truncate campaign.message, 50 %>
+            <p class="link-a"><%= link_to t('frontend.read_more'), blog_campaign_path(campaign.id) %></p>
+          </article>
+      <% end %>
+      <%= will_paginate @campaigns, next_label: t('frontend.next'), previous_label: t('frontend.previous') %>
+
+    </div>
+
+    <%= render partial: 'aside' %>
+  </div>
+</section>

@@ -10,6 +10,7 @@ class Organization < ActiveRecord::Base
                    lng_column_name: :lng
 
   scope :locked, -> { where(:locked_at => nil) }
+  scope :not_test, -> {where('id != ?', 24 )}
 
   has_attached_file :avatar, styles: {
       normal: '250x250#',
@@ -46,6 +47,10 @@ class Organization < ActiveRecord::Base
     o.validates :topics, presence: true
     o.validates :description, presence: true
     o.validates :website, presence: true
+  end
+
+  def campaigns_count
+    self.campaigns.count
   end
 
   before_create do
