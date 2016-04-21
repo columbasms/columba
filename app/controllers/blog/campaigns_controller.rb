@@ -7,6 +7,12 @@ class Blog::CampaignsController < ApplicationController
   def index
     @campaigns = Campaign.not_test
 
+    if params[:running].present?
+      if params[:running]=="true"
+        @campaigns=@campaigns.where('expires_at >= ?', Date.today)
+      end
+    end
+
     if params[:organization].present?
       @campaigns = @campaigns.where(organization_id: params[:organization])
       @organization = Organization.find(params[:organization])

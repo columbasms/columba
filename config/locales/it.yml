@@ -480,6 +480,7 @@ it:
     rights: "Tutti i diritti riservati"
     by: "Di"
   blog:
+    campaigns_index_title: "Campagne"
     organizations: "Associazioni"
     topics: "Tematiche"
   menu:

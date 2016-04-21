@@ -1,5 +1,15 @@
 <aside>
-  <!--ACTIVE switch-->
+  <nav class="nav-a">
+    <!--ACTIVE switch-->
+    <h3>Campaigns</h3>
+    <ul>
+      <% if params[:running].present? and params[:running]=="true" %>
+          <li><%= link_to raw("Running <span>&#10004;"), blog_campaigns_path(running: false) %></li>
+      <% else %>
+          <li><%= link_to raw("Running <span>"), blog_campaigns_path(running: true) %></li>
+      <% end %>
+    </ul>
+  </nav>
 
   <nav class="nav-a">
     <!--ORGANITATIONS-->

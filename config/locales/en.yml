@@ -499,6 +499,7 @@ en:
     rights: "All rights reserved"
     by: "By"
   blog:
+    campaigns_index_title: "Campaigns"
     organizations: "Organizations"
     topics: "Topics"
   menu:
