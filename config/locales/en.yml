@@ -500,6 +500,7 @@ en:
     by: "By"
   blog:
     campaigns_index_title: "Campaigns"
+    campaigns: "Campaigns"
     organizations: "Organizations"
     topics: "Topics"
     running: "Running"

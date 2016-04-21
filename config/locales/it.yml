@@ -481,6 +481,7 @@ it:
     by: "Di"
   blog:
     campaigns_index_title: "Campagne"
+    campaigns: "Campagne"
     organizations: "Associazioni"
     topics: "Tematiche"
     running: "In Corso"
