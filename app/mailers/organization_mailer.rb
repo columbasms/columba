@@ -1,6 +1,6 @@
 class OrganizationMailer < ApplicationMailer
   default from: 'no-reply@columbasms.com',
-          reply_to: 'info@columbasms.com'
+          reply_to: 'columbasms@gmail.com'
 
   def account_locked(organization)
     @organization = organization
@@ -9,7 +9,7 @@ class OrganizationMailer < ApplicationMailer
 
   def account_created(organization)
     @organization = organization
-    mail(to: 'info@columbasms.com', reply_to: @organization.email, subject: 'Una nuova organizzazione ha richiesto un account')
+    mail(to: 'columbasms@gmail.com', reply_to: @organization.email, subject: 'Una nuova organizzazione ha richiesto un account')
   end
 
 end
