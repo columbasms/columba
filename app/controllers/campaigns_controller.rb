@@ -43,7 +43,11 @@ class CampaignsController < ApplicationController
     respond_to do |f|
       if @campaign.update(campaign_params)
         # Spam check
-        Rails.logger.info "SPAM_SCORE:"+SpamController.new.check_spam_score(@campaign.message)
+        begin
+          Rails.logger.info "SPAM_SCORE:"+SpamController.new.check_spam_score(@campaign.message)
+        rescue
+          Rails.logger.info "SPAM_SCORE: spam service error"
+        end
 
         f.html { redirect_to @campaign, notice: t('campaigns.edited') }
         f.json { render json: @campaign, root: false }
@@ -63,7 +67,11 @@ class CampaignsController < ApplicationController
     @campaign.expires_at = date if date.present?
 
     # Spam check
-    Rails.logger.info "SPAM_SCORE:"+SpamController.new.check_spam_score(@campaign.message)
+    begin
+      Rails.logger.info "SPAM_SCORE:"+SpamController.new.check_spam_score(@campaign.message)
+    rescue
+      Rails.logger.info "SPAM_SCORE: spam service error"
+    end
 
     respond_to do |format|
       if @campaign.save
