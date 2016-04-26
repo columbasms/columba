@@ -68,4 +68,8 @@ class Campaign < ActiveRecord::Base
     URI.join(ActionController::Base.asset_host, self.photo.url(:normal)).to_s
   end
 
+  def photo_original
+    URI.join(ActionController::Base.asset_host, self.photo.url).to_s
+  end
+
 end
