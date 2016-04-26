@@ -1,5 +1,5 @@
 class Api::V1::CampaignSerializer < ActiveModel::Serializer
-  attributes :id, :message, :photo_mobile, :photo_original, :long_description, :expires_at, :created_at, :shared_at
+  attributes :id, :message, :photo_mobile, :photo_original, :photo_mobile_max, :long_description, :expires_at, :created_at, :shared_at
   has_one :organization, only: [:id, :organization_name, :avatar_normal]
   has_many :topics
   has_many :campaign_addresses

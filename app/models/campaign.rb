@@ -19,11 +19,13 @@ class Campaign < ActiveRecord::Base
   has_attached_file :photo, styles: {
       normal: '1280x720>',
       mobile: '800x450>',
-  }, default_url: '/images/invalid',
-                    convert_options: {
-                        normal: '-gravity center -extent 1280x720',
-                        mobile: '-gravity center -extent 800x450'
-                    }
+      mobile_max: '2048x2048>',
+  },  default_url: '/images/invalid',
+      convert_options: {
+          normal: '-gravity center -extent 1280x720',
+          mobile: '-gravity center -extent 800x450',
+          mobile_max: '-resize 2048x2048'
+      }
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\Z/
   crop_attached_file :photo, aspect: '16:9'
 
@@ -70,6 +72,10 @@ class Campaign < ActiveRecord::Base
 
   def photo_original
     URI.join(ActionController::Base.asset_host, self.photo.url).to_s
+  end
+
+  def photo_mobile_max
+    URI.join(ActionController::Base.asset_host, self.photo.url(:mobile_max)).to_s
   end
 
 end
