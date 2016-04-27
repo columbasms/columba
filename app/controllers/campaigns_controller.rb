@@ -82,6 +82,7 @@ class CampaignsController < ApplicationController
           options = {
               data: {
                   organization_name: current_organization.organization_name,
+                  avatar_normal: current_organization.avatar_normal,
                   message: @campaign.message,
                   campaign_id: @campaign.id
               }
