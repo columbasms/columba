@@ -38,3 +38,9 @@ Milestone 3 - Public live BETA
   - Log-in with your Google account
   - Click on "Become a Tester"
   - Follow the link "Download it on Play Store"
+
+Final Submission
+==============
+- [Documentation - Italian](https://docs.google.com/document/d/1FxTD274Apc8HeeSNLe3s2YiPvYg4D6hYgWR51n_Jdq0/edit?usp=sharing)
+- [Server-App Rest API Doc](https://columbasms.github.io/docs/)
+- [Google Play Store Official App Page](https://play.google.com/store/apps/details?id=com.columbasms.columbasms)
