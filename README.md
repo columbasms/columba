@@ -45,3 +45,4 @@ Final Submission
 - [Documentation - English](https://docs.google.com/document/d/1Wz7aB55q6w76zENvBb5fTsxkLa4qPjv0OsFZlEHPuMM/edit?usp=sharing)
 - [Server-App Rest API Doc](https://columbasms.github.io/docs/)
 - [Google Play Store Official App Page](https://play.google.com/store/apps/details?id=com.columbasms.columbasms)
+- [Video tour abot Android application](https://youtu.be/2LN9AUU4YmI)
